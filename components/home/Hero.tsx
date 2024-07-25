@@ -1,5 +1,5 @@
 import { FaEnvelope, FaPhone, FaCalendarAlt, FaTelegram } from "react-icons/fa";
-
+import Image from "next/image";
 export default function Hero() {
   return (
     <div className="relative w-full bg-white">
@@ -21,10 +21,10 @@ export default function Hero() {
           </p>
         </div>
         <div className="relative lg:col-span-5 lg:-mr-8 xl:col-span-6">
-          <img
+          <Image
             className="aspect-[3/2] bg-gray-50 object-cover lg:aspect-[4/3] lg:h-[700px] xl:aspect-[16/9]"
             src="https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-            alt=""
+            alt="image"
           />
         </div>
       </div>
