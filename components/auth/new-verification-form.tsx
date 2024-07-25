@@ -1,54 +1,58 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import { CardWrapper } from "./card-warpper";
-import {BeatLoader} from 'react-spinners'
-import { useCallback, useEffect,useState } from "react";
+import { BeatLoader } from 'react-spinners';
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { newVerification } from "@/actions/new-verification";
 
-export default function NewVerificationForm() {
-
-    const [error,setError] = useState<string| undefined>();
-    const [sucess, setSucess] = useState<string | undefined>();
+const VerificationProcess = () => {
+    const [error, setError] = useState<string | undefined>();
+    const [success, setSuccess] = useState<string | undefined>();
     const searchParams = useSearchParams();
 
     const token = searchParams.get("token");
 
-    const onSubmit = useCallback(()=>{
+    const onSubmit = useCallback(() => {
+        if (success || error) return;
 
-        if(sucess || error){
-            return;
-        }
-
-        if(!token){
+        if (!token) {
             setError('Missing Token');
             return;
         }
+
         newVerification(token)
-        .then((data)=>{
-            setSucess(data.sucess)
-            setError(data.error);
-        })
-        .catch(()=>{
-            setError("Something went Wrong")
-        })
-    },[token,sucess,error]);
+            .then((data) => {
+                setSuccess(data.sucess);
+                setError(data.error);
+            })
+            .catch(() => {
+                setError("Something went wrong");
+            });
+    }, [token, success, error]);
 
-
-    useEffect(()=>{
-        onSubmit()
-    },[onSubmit])
+    useEffect(() => {
+        onSubmit();
+    }, [onSubmit]);
 
     return (
-        <CardWrapper 
-        headerLabel="Conform Your Verification"
-        backButtonLabel="back to Login"
-        backButtonHref="/auth/login"
-        >
-            <div className="flex items-center w-full justify-center">
-                {!sucess && !error && (<BeatLoader/>)}
-                {sucess && !error && <p>Sucess</p>}
-                {!sucess &&  <p>Error</p> }
-            </div>  
-        </CardWrapper>
-    )
+        <div className="flex items-center w-full justify-center">
+            {!success && !error && <BeatLoader />}
+            {success && !error && <p>Success</p>}
+            {error && <p>Error: {error}</p>}
+        </div>
+    );
+};
+
+export default function NewVerificationForm() {
+    return (
+        <Suspense fallback={<BeatLoader />}>
+            <CardWrapper
+                headerLabel="Confirm Your Verification"
+                backButtonLabel="Back to Login"
+                backButtonHref="/auth/login"
+            >
+                <VerificationProcess />
+            </CardWrapper>
+        </Suspense>
+    );
 }
