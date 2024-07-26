@@ -59,6 +59,7 @@ export const NewPasswordForm = () => {
     return (
         <Suspense fallback={<div>Loading...</div>}>
             <CardWrapper
+                headerTitle="New Password"
                 headerLabel="Enter a New Password"
                 backButtonLabel="Back to Login"
                 backButtonHref="/auth/login"

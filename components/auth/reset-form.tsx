@@ -46,12 +46,14 @@ export const ResetForm = () => {
     return (
         <div>
             <CardWrapper
+                headerTitle=""
                 headerLabel="Forgot Your Password?"
                 backButtonLabel="Back to Login"
                 backButtonHref="/auth/login"
+                
             >
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
+                <Form {...form} >
+                    <form className="flex flex-col" onSubmit={form.handleSubmit(onSubmit)}>
                         <div>
                             <FormField
                                 control={form.control}
@@ -74,7 +76,7 @@ export const ResetForm = () => {
                         </div>
                         <FormSucess message={sucess} />
                         <FormError message={error} />
-                        <Button disabled={isPending} type="submit">Send reset email</Button>
+                        <Button className="mt-6" disabled={isPending} type="submit">Send reset email</Button>
                     </form>
                 </Form>
             </CardWrapper>

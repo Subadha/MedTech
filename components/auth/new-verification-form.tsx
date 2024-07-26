@@ -47,6 +47,7 @@ export default function NewVerificationForm() {
     return (
         <Suspense fallback={<BeatLoader />}>
             <CardWrapper
+                headerTitle="Verification"
                 headerLabel="Confirm Your Verification"
                 backButtonLabel="Back to Login"
                 backButtonHref="/auth/login"

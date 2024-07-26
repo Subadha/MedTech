@@ -22,8 +22,7 @@ export const Services = () => {
           </div>
           <h3 className="mt-8 text-lg font-semibold text-black">Fetel Parameters</h3>
           <p className="mt-4 text-sm text-gray-600">
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-            consequat duis enim velit mollit.
+            Fetel Parameter like fetel heart rate can be monitored continously and in real time
           </p>
         </div>
         <div className="bg-white py-10 px-6 rounded-md">
@@ -45,8 +44,7 @@ export const Services = () => {
           </div>
           <h3 className="mt-8 text-lg font-semibold text-black">Maternal Parameters</h3>
           <p className="mt-4 text-sm text-gray-600">
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-            consequat duis enim velit mollit.
+            Maternal parameters like maternal heart rate uterine contractions,monitored in real time
           </p>
         </div>
         <div className="bg-white py-10 px-6 rounded-md">
@@ -68,8 +66,7 @@ export const Services = () => {
           </div>
           <h3 className="mt-8 text-lg font-semibold text-black">Doctor Consultation</h3>
           <p className="mt-4 text-sm text-gray-600">
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia
-            consequat duis enim velit mollit.
+            Enable seamless healthcare collaboration by instantly sharing real-time patient date with docors for prommpt checkups and consulations
           </p>
         </div>
 

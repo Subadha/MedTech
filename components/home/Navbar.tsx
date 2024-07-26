@@ -8,7 +8,7 @@ import LoginButton from '../auth/login-button'
 const menuItems = [
   {
     name: 'Home',
-    href: '#',
+    href: '/',
   },
   {
     name: 'Product',

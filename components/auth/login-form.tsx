@@ -47,15 +47,20 @@ export const LoginForm = () => {
         })
     }
 
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     return (
         <div className="flex">
-            <div className="w-1/2 h-full">
-                <Image alt="image" src={img} width={0}
-                    height={500}
-                    sizes="100vw" className="object-cover" />
+            <div className="w-1/2">
+                <Image alt="image" src={img} height={600} />
             </div>
-            <div className="w-1/2 h-full">
+            <div className="w-1/2 flex justify-start items-center">
                 <CardWrapper
+                    headerTitle="Login"
                     headerLabel="Welcome Back"
                     backButtonLabel="Dont have an Account"
                     backButtonHref="/auth/register"
@@ -90,15 +95,26 @@ export const LoginForm = () => {
                                         <FormItem>
                                             <FormLabel>Password</FormLabel>
                                             <FormControl>
-                                                <Input
-                                                    disabled={isPending}
-                                                    {...field}
-                                                    placeholder="********"
-                                                    type="password"
-                                                />
+                                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                    <Input
+                                                        disabled={isPending}
+                                                        {...field}
+                                                        placeholder="********"
+                                                        type={showPassword ? "text" : "password"}
+                                                    />
+                                                    <Button
+                                                        type="button"
+                                                        size="sm"
+                                                        variant="link"
+                                                        onClick={togglePasswordVisibility}
+                                                        style={{ marginLeft: '8px' }}
+                                                    >
+                                                        {showPassword ? 'Hide' : 'Show'}
+                                                    </Button>
+                                                </div>
                                             </FormControl>
                                             <Button size="sm" variant="link" asChild className="px-0 font-normal">
-                                                <Link href="/auth/reset">Forgot Password ?</Link>
+                                                <Link href="/auth/reset">Forgot Password?</Link>
                                             </Button>
                                             <FormMessage />
                                         </FormItem>
@@ -107,7 +123,7 @@ export const LoginForm = () => {
                             </div>
                             <FormSucess message={sucess} />
                             <FormError message={error} />
-                            <Button disabled={isPending} type="submit">Login</Button>
+                            <Button className="w-full" disabled={isPending} type="submit">Login</Button>
                         </form>
                     </Form>
                 </CardWrapper>

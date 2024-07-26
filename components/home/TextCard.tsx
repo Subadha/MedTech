@@ -10,20 +10,11 @@ export const TextCard = () => {
           </h1>
 
           <p className="mt-8 text-lg text-gray-700">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
-            modi blanditiis dolores quasi eaque explicabo!,Lorem ipsum dolor sit
-            amet consectetur adipisicing elit. Consequatur modi blanditiis
-            dolores quasi eaque explicabo Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Consequatur modi blanditiis dolores quasi eaque
-            explicabo Lorem ipsum
+            Pregnacy related complications are a global issue in current world especially in developing countries.In 2017 about 29,50,000 women died during and following pregnacy and child birth.Every year about 2 million babies are still born of which 40 percent stillbirths occured during labour
+
           </p>
           <p className="mt-8 text-lg text-gray-700">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur
-            modi blanditiis dolores quasi eaque explicabo!,Lorem ipsum dolor sit
-            amet consectetur adipisicing elit. Consequatur modi blanditiis
-            dolores quasi eaque explicabo Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Consequatur modi blanditiis dolores quasi eaque
-            explicabo Lorem ipsum
+            To reduce the global burden , Kaustubha Medtech Pvt.Ltd purposes a werable pregnancy device Bhrunomatra ,fro monitoring pregnancy ,labour , delivery and post pregnancy for people who are in low resource settings
           </p>
         </div>
         <div className="h-[200px] w-[300px]">
@@ -35,32 +26,34 @@ export const TextCard = () => {
         </div>
         <div className=" h-[300px] w-[300px] mt-8 px-4 py-8 max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="flex items-center bottom-4 left-4 text-left" >
-              <FaRegCheckCircle className="text-blue-600 mx-2" />
-              <p className="mt-2 text-sm text-gray-800 bold">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Excepturi
-              </p>
+            <FaRegCheckCircle className="text-blue-600 mx-2" />
+            <p className="mt-2 text-sm text-gray-800 bold">
+              Continous monitoring for pregnancy
+            </p>
           </div>
           <div className="flex items-center bottom-4 left-4 text-left" >
-              <FaRegCheckCircle className="text-blue-600 mx-2" />
-              <p className="mt-2 text-sm text-gray-800 bold">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Excepturi
-              </p>
+            <FaRegCheckCircle className="text-blue-600 mx-2" />
+            <p className="mt-2 text-sm text-gray-800 bold">
+             Helps in photo charting
+            </p>
           </div>
           <div className="flex items-center bottom-4 left-4 text-left" >
-              <FaRegCheckCircle className="text-blue-600 mx-2" />
-              <p className="mt-2 text-sm text-gray-800 bold">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Excepturi
-              </p>
+            <FaRegCheckCircle className="text-blue-600 mx-2" />
+            <p className="mt-2 text-sm text-gray-800 bold">
+              Nonstress test (NST) & Contraction Stress Test (CST)
+            </p>
           </div>
           <div className="flex items-center bottom-4 left-4 text-left" >
-              <FaRegCheckCircle className="text-blue-600 mx-2" />
-              <p className="mt-2 text-sm text-gray-800 bold">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Excepturi
-              </p>
+            <FaRegCheckCircle className="text-blue-600 mx-2" />
+            <p className="mt-2 text-sm text-gray-800 bold">
+              Multiple parameter detection
+            </p>
+          </div>
+          <div className="flex items-center bottom-4 left-4 text-left" >
+            <FaRegCheckCircle className="text-blue-600 mx-2" />
+            <p className="mt-2 text-sm text-gray-800 bold">
+              Real World evidence.Cloud Computing & Deep learning for data
+            </p>
           </div>
         </div>
       </div>

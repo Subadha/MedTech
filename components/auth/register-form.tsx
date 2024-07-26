@@ -19,7 +19,8 @@ import {register} from "@/actions/register"
 import { useState, useTransition } from "react"
 import FormSucess from "./form-sucess"
 import FormError from "./form-error"
-
+import Image from "next/image"
+import img from "@/app/images/img1.jpg"
 
 export const RegisterForm = () => {
 
@@ -46,8 +47,13 @@ export const RegisterForm = () => {
     }
 
     return (
-        <div>
+        <div className="flex">
+            <div className="w-1/2">
+                <Image alt="image" src={img} height={600} />
+            </div>
+            <div className="w-1/2 flex justify-start items-center">
             <CardWrapper
+                headerTitle="Register"
                 headerLabel="Create an Account"
                 backButtonLabel="Already have an Account ?"
                 backButtonHref="/auth/login"
@@ -66,7 +72,7 @@ export const RegisterForm = () => {
                                             <Input
                                                 disabled={isPending}
                                                 {...field}
-                                                placeholder="Vignesh"
+                                                placeholder="Subadha"
                                                 type="name"
                                             />
                                         </FormControl>
@@ -115,10 +121,11 @@ export const RegisterForm = () => {
                         </div>
                         <FormSucess message={sucess} />
                         <FormError message={error} />
-                        <Button disabled={isPending} type="submit">Create an Account</Button>
+                        <Button className="mt-6 w-full" disabled={isPending} type="submit">Create an Account</Button>
                     </form>
                 </Form>
             </CardWrapper>
+        </div>
         </div>
     )
 }
