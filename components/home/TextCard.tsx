@@ -1,5 +1,6 @@
 import { FaRegCheckCircle } from "react-icons/fa";
 import Image from "next/image";
+import doc from "@/app/images/doc1.png"
 export const TextCard = () => {
   return (
     <div className="relative w-full bg-white">
@@ -17,41 +18,41 @@ export const TextCard = () => {
             To reduce the global burden , Kaustubha Medtech Pvt.Ltd purposes a werable pregnancy device Bhrunomatra ,fro monitoring pregnancy ,labour , delivery and post pregnancy for people who are in low resource settings
           </p>
         </div>
-        <div className="h-[200px] w-[300px]">
-          {/* <Image
-            className="aspect-[3/2] bg-gray-50 object-cover lg:aspect-[4/3] lg:h-[300px] xl:aspect-[16/9]"
-            src="https://images.pexels.com/photos/5215024/pexels-photo-5215024.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        <div className="h-screen w-[300px]">
+          <Image
+            className="aspect-[3/2] bg-gray-50 object-cover lg:aspect-[4/3] lg:h-[600px] xl:aspect-[16/9]"
+            src={doc}
             alt=""
-          /> */}
+          />
         </div>
-        <div className=" h-[300px] w-[300px] mt-8 px-4 py-8 max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className=" h-[300px] w-[400px] mt-[150px] px-4 ml-[200px] py-8 max-w-sm mx-auto bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="flex items-center bottom-4 left-4 text-left" >
-            <FaRegCheckCircle className="text-blue-600 mx-2" />
+            <FaRegCheckCircle size={22} className="text-blue-600 mx-2" />
             <p className="mt-2 text-sm text-gray-800 bold">
               Continous monitoring for pregnancy
             </p>
           </div>
           <div className="flex items-center bottom-4 left-4 text-left" >
-            <FaRegCheckCircle className="text-blue-600 mx-2" />
+            <FaRegCheckCircle size={22} className="text-blue-600 mx-2" />
             <p className="mt-2 text-sm text-gray-800 bold">
              Helps in photo charting
             </p>
           </div>
           <div className="flex items-center bottom-4 left-4 text-left" >
-            <FaRegCheckCircle className="text-blue-600 mx-2" />
+            <FaRegCheckCircle size={22} className="text-blue-600 mx-2" />
             <p className="mt-2 text-sm text-gray-800 bold">
               Nonstress test (NST) & Contraction Stress Test (CST)
             </p>
           </div>
           <div className="flex items-center bottom-4 left-4 text-left" >
-            <FaRegCheckCircle className="text-blue-600 mx-2" />
+            <FaRegCheckCircle size={22}  className="text-blue-600 mx-2" />
             <p className="mt-2 text-sm text-gray-800 bold">
               Multiple parameter detection
             </p>
           </div>
           <div className="flex items-center bottom-4 left-4 text-left" >
-            <FaRegCheckCircle className="text-blue-600 mx-2" />
-            <p className="mt-2 text-sm text-gray-800 bold">
+            <FaRegCheckCircle size={32} className="text-blue-600 mx-2 " />
+            <p className="mt-2 text-md text-gray-800 bold">
               Real World evidence.Cloud Computing & Deep learning for data
             </p>
           </div>

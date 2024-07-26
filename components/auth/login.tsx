@@ -1,15 +1,14 @@
 import React from 'react'
 import { ArrowRight } from 'lucide-react'
 import Image from 'next/image'
-// import loginBg from '../../public/images/Login.jpg'
-// import googleimg from '../../public/images/google.png';
-// import fbimg from '../../public/images/google.png';
+import loginBg from '@/app/images/Login.jpg'
+import googleimg from '@/app/images/google.png';
+import fbimg from '@/app/images/fb.png';
 
 export const Loginnew = () => {
     return (
         <section>
-            Hello
-            {/* <div className="grid grid-cols-1 lg:grid-cols-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2">
                 <div className="relative flex items-end px-4 pb-10 pt-60 sm:px-6 sm:pb-16 md:justify-center lg:px-8 lg:pb-24">
                     <div className="absolute inset-0">
                         <Image
@@ -124,7 +123,7 @@ export const Loginnew = () => {
                         </div>
                     </div>
                 </div>
-            </div> */}
+            </div>
         </section>
     )
 }
