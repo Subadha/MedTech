@@ -4,6 +4,8 @@ import React from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from '../ui/button'
 import LoginButton from '../auth/login-button'
+import Image from 'next/image'
+import logo from "@/app/images/logo.png"
 
 const menuItems = [
   {
@@ -39,7 +41,7 @@ export default function NavBar() {
     <div className="relative w-full bg-white border-2 border-gray-100">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
-          <span className="font-bold">Logo</span>
+          <Image src={logo} alt='logo' width={100} height={100}/>
         </div>
 
         <div className="hidden lg:block">
