@@ -1,11 +1,11 @@
-// import { LoginForm } from "@/components/auth/login-form";
-import { Loginnew } from '../../../components/auth/login';
+import { LoginOne } from "@/components/auth/Login";
+import { LoginForm } from "@/components/auth/login-form";
 
 
-export default function Login(){
+export default function Signup(){
     return(
         <div>
-            <Loginnew/>
+            <LoginOne/>
         </div>
     )
 }
