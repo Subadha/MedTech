@@ -10,7 +10,7 @@ export default function Photo() {
     const images = [p1, p2, p3, p4, p5, p6];
 
     return (
-        <div className="flex flex-col items-center sm:h-screen p-4">
+        <div className="flex flex-col items-center sm:h-screen sm:p-4 p-6">
             <h1 className="text-5xl font-bold mb-8 text-center">
                 See the Latest Photos
             </h1>
