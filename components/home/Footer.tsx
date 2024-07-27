@@ -1,54 +1,71 @@
-import { FaGoogle, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 export const Footer = () => {
   return (
-    <footer className="w-full bg-purple-900">
-      <div className="mx-auto flex max-w-6xl flex-col items-start space-x-8 md:flex-row py-8">
-        <div className="w-full px-4 md:w-1/2 flex flex-col items-center justify-center">
-          <h1 className="max-w-sm text-md text-white">Lorem ipsum dolor sit amet consectetur adipisicing elit sit amet consectetur sit amet consectetur</h1>
-          <div className="mt-4 inline-flex w-full items-center md:w-3/4">
-            <FaGoogle className='text-white mx-3' />
-            <FaFacebook className='text-white mx-3' />
-            <FaInstagram className='text-white mx-3' />
-            <FaTwitter className='text-white mx-3' />
+    <footer className="w-full bg-purple-900 text-white">
+      <div className="mx-auto flex flex-col px-4 py-8 md:flex-row md:space-x-8 max-w-6xl">
+        {/* Section with Social Icons and Heading */}
+        <div className="flex flex-col items-center justify-center w-full md:w-1/2">
+          <h1 className="text-md max-w-sm text-center md:text-left mb-4">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit amet consectetur sit amet consectetur.
+          </h1>
+          <div className="flex space-x-4">
+            <a href="https://www.linkedin.com/company/kaustubha-medtech-private-limited" aria-label="LinkedIn">
+              <FaLinkedin className='text-white text-xl' />
+            </a>
+            <a href="https://www.facebook.com/people/Kaustubha-Medtech/pfbid02riyqk8ErVMNeVKMZTdkPSLLtkHPpXX99mVnzMZbU9ak8MdZbv4acbvpdkQYSQnpBl/" aria-label="Facebook">
+              <FaFacebook className='text-white text-xl' />
+            </a>
+            <a href="https://www.instagram.com/kaustubhamedtech/" aria-label="Instagram">
+              <FaInstagram className='text-white text-xl' />
+            </a>
+            <a href="https://x.com/i/flow/login?redirect_after_login=%2FKaustubhamedtec" aria-label="Twitter">
+              <FaTwitter className='text-white text-xl' />
+            </a>
           </div>
         </div>
-        <div className="mt-8 grid grid-cols-2 gap-6 md:mt-0 lg:w-3/4 lg:grid-cols-3">
-          <div className="mb-8 lg:mb-0">
-            <p className="mb-6 text-lg font-semibold text-white ">Helpful Link</p>
+
+        {/* Links Section */}
+        <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 md:mt-0 lg:w-3/4">
+          <div className="mb-8">
+            <p className="text-lg font-semibold">Helpful Links</p>
             <hr className="my-4 border-t-2 border-blue-800 w-16" />
-            <ul className="flex flex-col space-y-4 text-[14px] font-medium text-white">
-              <li>Privacy Policy</li>
-              <li>Support</li>
-              <li>FAQ</li>
-              <li>Terms and Conditions</li>
+            <ul className="space-y-4 text-sm font-medium">
+              <li><a href="#" className="hover:underline">Privacy Policy</a></li>
+              <li><a href="#" className="hover:underline">Support</a></li>
+              <li><a href="#" className="hover:underline">FAQ</a></li>
+              <li><a href="#" className="hover:underline">Terms and Conditions</a></li>
             </ul>
           </div>
-          <div className="mb-8 lg:mb-0">
-            <p className="mb-6 text-lg font-semibold text-white ">Support</p>
+          <div className="mb-8">
+            <p className="text-lg font-semibold">Support</p>
             <hr className="my-4 border-t-2 border-blue-800 w-16" />
-            <ul className="flex flex-col space-y-4 text-[14px] font-medium text-white">
-              <li>Privacy Policy</li>
-              <li>Support</li>
-              <li>FAQ</li>
-              <li>Terms and Conditions</li>
+            <ul className="space-y-4 text-sm font-medium">
+              <li><a href="#" className="hover:underline">Privacy Policy</a></li>
+              <li><a href="#" className="hover:underline">Support</a></li>
+              <li><a href="#" className="hover:underline">FAQ</a></li>
+              <li><a href="#" className="hover:underline">Terms and Conditions</a></li>
             </ul>
           </div>
-          <div className="mb-8 lg:mb-0">
-            <p className="mb-6 text-lg font-semibold text-white ">Contact Us</p>
+          <div className="mb-8">
+            <p className="text-lg font-semibold">Contact Us</p>
             <hr className="my-4 border-t-2 border-blue-800 w-16" />
-            <ul className="flex flex-col space-y-4 text-[14px] font-medium text-white">
-              <li>C/O The Foundation for Center for Healthcare Entrepreneurship , Indian Institute of Technology , IIT Hyderabad Kandi,TG 502285 </li>
+            <ul className="space-y-4 text-sm font-medium">
+              <li>
+                <a href="https://www.google.com/maps/place/Technology+Innovation+Park+(TIP)/@17.588988,78.121867,13z/data=!4m6!3m5!1s0x3bcbf12e326be7e1:0x1b5bca249531e1a0!8m2!3d17.5889875!4d78.1218672!16s%2Fg%2F11t79vbbpt?hl=en&entry=tts&g_ep=EgoyMDI0MDcyMy4wKgBIAVAD" className="hover:underline">
+                  C/O The Foundation for Center for Healthcare Entrepreneurship, Indian Institute of Technology, IIT Hyderabad Kandi, TG 502285
+                </a>
+              </li>
             </ul>
           </div>
         </div>
       </div>
-      <hr className="my-4 border-gray-600 " />
-      <div className="mx-auto max-w-6xl items-center justify-center px-4 md:flex lg:px-0 sm:py-4">
-        <div className="my-4 md:mt-0 ">
-          <p className="text-sm font-medium text-white">Copyright © 2024. All rights reserved.</p>
-        </div>
+
+      {/* Footer Bottom Section */}
+      <hr className="my-4 border-gray-600" />
+      <div className="mx-auto max-w-6xl px-4 py-4 text-center">
+        <p className="text-sm font-medium">Copyright © 2024. All rights reserved.</p>
       </div>
     </footer>
-  )
-}
+  );
+};

@@ -26,7 +26,7 @@ export default function Team() {
     };
 
     return (
-        <div className="h-screen flex flex-col justify-center items-center text-center">
+        <div className="sm:h-screen pb-[100px] sm:pb-0 flex flex-col justify-center items-center text-center">
             <h1 className="text-5xl font-bold pb-[100px]">
                 Innovation at the heart of health: Meet our Visionary Team
             </h1>
