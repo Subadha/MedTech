@@ -1,20 +1,16 @@
-import {auth, signOut} from "@/auth";
+// settings/page.js
+import { auth } from "@/auth"; // Import the server action
+import SideNav from "@/components/home/SideNav";
 
-const Settings = async ()=>{
-    const session = await auth();
-    return(
+const Settings = async () => {
+    const session = await auth(); // Fetch user session data
+    const userName = session?.user.name || "User"; // Default to "User" if name is not available
+
+    return (
         <div>
-            {JSON.stringify(session?.user.name)}
-            <form action={async ()=>{
-                "use server";
-                await signOut();
-            }}>
-                <button type="submit">
-                    Sign Out
-                </button>
-            </form>
+            <SideNav userName={userName} />
         </div>
-    )
+    );
 }
 
 export default Settings;

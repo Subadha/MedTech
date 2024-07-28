@@ -4,7 +4,7 @@ import doc from "@/app/images/doc1.png";
 
 export const TextCard = () => {
   return (
-    <div className="w-full bg-white">
+    <div id="product" className="w-full bg-white">
       <div className="max-w-7xl mx-auto lg:flex lg:gap-x-8 lg:px-8">
         {/* Text Content */}
         <div className="flex flex-col justify-center lg:flex-1 px-6 sm:px-0 py-12 md:py-16">

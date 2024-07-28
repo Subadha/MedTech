@@ -14,11 +14,11 @@ const menuItems = [
   },
   {
     name: 'Product',
-    href: '#',
+    href: '#product',
   },
   {
     name: 'Team',
-    href: '#',
+    href: '#team',
   },
   {
     name: 'News',
@@ -70,8 +70,9 @@ export default function NavBar() {
               <div className="px-5 pb-6 pt-5">
                 <div className="flex items-center justify-between">
                   <div className="inline-flex items-center space-x-2">
-
-                    <span className="font-bold">Logo</span>
+                    <div className="inline-flex items-center space-x-2">
+                      <Image src={logo} alt='logo' width={100} height={100} />
+                    </div>
                   </div>
                   <div className="-mr-2">
                     <button
