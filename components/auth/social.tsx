@@ -1,8 +1,8 @@
 "use client";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { signIn } from "next-auth/react";
-import { FaGithub } from 'react-icons/fa';
-import { FcGoogle } from "react-icons/fc";
+import { FaFacebook } from 'react-icons/fa';
+import { FcGoogle  } from "react-icons/fc";
 
 import { IconType } from 'react-icons';
 
@@ -37,8 +37,8 @@ export const Social = () => {
                 onClick={() => onClick("google")}
             />
             <ButtonWithIcon
-                label="Sign up with GitHub"
-                Icon={FaGithub}
+                label="Sign up with FaceBook"
+                Icon={FaFacebook}
                 onClick={() => onClick("github")}
             />
         </div>
