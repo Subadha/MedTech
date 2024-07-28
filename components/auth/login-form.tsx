@@ -58,7 +58,7 @@ export const LoginForm = () => {
                 <Link href="/"><Image src={logo} alt="Logo" layout="fill" objectFit="contain" /></Link>
             </div>
             <div className="absolute top-10 right-10 z-10 text-gray-600">
-                <span>Don't have an account? <Link href="/auth/register" className="text-purple-700 font-bold-700">Sign up</Link> </span>
+                <span>Dont have an account? <Link href="/auth/register" className="text-purple-700 font-bold-700">Sign up</Link> </span>
             </div>
             <div className="relative w-[50vw] bg-black">
                 <Image
