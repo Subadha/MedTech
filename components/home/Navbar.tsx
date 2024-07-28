@@ -26,7 +26,7 @@ const menuItems = [
   },
   {
     name: 'Contact Us',
-    href: '#',
+    href: '#footer',
   },
 ]
 

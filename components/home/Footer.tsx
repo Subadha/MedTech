@@ -2,7 +2,7 @@ import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
 
 export const Footer = () => {
   return (
-    <footer className="w-full bg-purple-900 text-white">
+    <footer id="footer" className="w-full bg-purple-900 text-white">
       <div className="mx-auto flex flex-col px-4 py-8 md:flex-row md:space-x-8 max-w-6xl">
         {/* Section with Social Icons and Heading */}
         <div className="flex flex-col items-center justify-center w-full md:w-1/2">

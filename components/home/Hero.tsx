@@ -60,7 +60,6 @@ export default function Hero() {
             src={img2}
             alt="Health innovation image"
             layout="fill"
-            objectFit="cover"
             className="w-full h-full"
           />
         </div>
