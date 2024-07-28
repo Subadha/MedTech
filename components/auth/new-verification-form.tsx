@@ -1,9 +1,9 @@
 "use client";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { CardWrapper } from "./card-warpper";
-import { BeatLoader } from 'react-spinners';
-import { useCallback, useEffect, useState } from "react";
+import { BeatLoader } from "react-spinners";
 import { newVerification } from "@/actions/new-verification";
+import { CardWrapper } from "./card-warpper";
 import Link from "next/link";
 import Image from "next/image";
 import img from "@/app/images/doc1.png";
@@ -20,7 +20,7 @@ const VerificationProcess = () => {
         if (success || error) return; // Prevent re-running if we already have a result
 
         if (!token) {
-            setError('Missing token. Please check your email for the verification link.');
+            setError("Missing token. Please check your email for the verification link.");
             return;
         }
 
@@ -29,7 +29,7 @@ const VerificationProcess = () => {
                 if (data.error) {
                     setError(data.error);
                 } else {
-                    setSuccess('Your email has been verified successfully.');
+                    setSuccess("Your email has been verified successfully.");
                 }
             })
             .catch(() => {
@@ -71,7 +71,9 @@ export default function NewVerificationForm() {
                     backButtonLabel="Back to Login"
                     backButtonHref="/auth/login"
                 >
-                    <VerificationProcess />
+                    <Suspense fallback={<BeatLoader />}>
+                        <VerificationProcess />
+                    </Suspense>
                 </CardWrapper>
             </div>
         </div>
