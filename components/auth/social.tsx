@@ -13,7 +13,7 @@ export const Social = () => {
         onClick: () => void;
     }
 
-    const onClick = (provider: "google" | "github") => {
+    const onClick = (provider: "google" | "facebook") => {
         signIn(provider, {
             callbackUrl: DEFAULT_LOGIN_REDIRECT
         });
@@ -39,7 +39,7 @@ export const Social = () => {
             <ButtonWithIcon
                 label="Sign up with FaceBook"
                 Icon={FaFacebook}
-                onClick={() => onClick("github")}
+                onClick={() => onClick("facebook")}
             />
         </div>
     )

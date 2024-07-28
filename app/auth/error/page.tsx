@@ -5,3 +5,5 @@ const AuthErrorPage = () =>{
         <ErrorCard/>
     )
 }
+
+export default AuthErrorPage;
