@@ -31,3 +31,14 @@ export const NewPasswordSchema = z.object({
         message:"Minimum 6 Characters Required"
     }),
 })
+
+// Define the expected format for the date as a string in YYYY-MM-DD format
+export const Appointment = z.object({
+  email: z.string().email(),
+  phone: z.string()
+    .length(10, { message: "Phone number must be exactly 10 digits long." })
+    .regex(/^\d{10}$/, { message: "Phone number must contain only digits." }),
+  date: z.string().refine((val) => /^\d{4}-\d{2}-\d{2}$/.test(val), {
+    message: "Invalid date format. Expected format: YYYY-MM-DD",
+  }),
+});

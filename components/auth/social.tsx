@@ -1,12 +1,12 @@
 "use client";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { signIn } from "next-auth/react";
-import { FaGoogle, FaGithub } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
+import { FcGoogle } from "react-icons/fc";
+
 import { IconType } from 'react-icons';
 
-
 export const Social = () => {
-
     interface ButtonWithIconProps {
         label: string;
         Icon: IconType;
@@ -16,28 +16,31 @@ export const Social = () => {
     const onClick = (provider: "google" | "github") => {
         signIn(provider, {
             callbackUrl: DEFAULT_LOGIN_REDIRECT
-        })
+        });
     }
 
     const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({ label, Icon, onClick }) => (
-        <div className="flex items-center cursor-pointer" onClick={onClick}>
+        <div
+            className="flex items-center justify-center bg-white border rounded-md shadow-sm cursor-pointer hover:bg-gray-100 p-2 w-[13vw] mx-0 my-2"
+            onClick={onClick}
+        >
             <Icon className="w-5 h-5 mr-2" />
-            <button className="text-base bg-transparent border-none">{label}</button>
+            <span className="text-base">{label}</span>
         </div>
     );
+
     return (
-        <div className="flex gap-4">
+        <div className="flex space-x-4">
             <ButtonWithIcon
-                label="Google"
-                Icon={FaGoogle}
+                label="Sign up with Google"
+                Icon={FcGoogle}
                 onClick={() => onClick("google")}
             />
             <ButtonWithIcon
-                label="GitHub"
+                label="Sign up with GitHub"
                 Icon={FaGithub}
                 onClick={() => onClick("github")}
             />
         </div>
     )
 }
-

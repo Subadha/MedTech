@@ -12,6 +12,8 @@ export const Loginnew = () => {
                 <div className="relative flex items-end px-4 pb-10 pt-60 sm:px-6 sm:pb-16 md:justify-center lg:px-8 lg:pb-24">
                     <div className="absolute inset-0">
                         <Image
+                            width={500}
+                            height={500}
                             className="h-full w-full rounded-md object-cover object-top"
                             src={loginBg}
                             alt="login"
@@ -106,6 +108,8 @@ export const Loginnew = () => {
                                     className="h-6 w-6"
                                     src={googleimg}
                                     alt="google"
+                                    width={100}
+                                    height={100}
                                 />
                                 Sign up with Google
                             </button>
@@ -117,6 +121,8 @@ export const Loginnew = () => {
                                     className="h-6 w-6"
                                     src={fbimg}
                                     alt="fb"
+                                    width={100}
+                                    height={100}
                                 />
                                 Sign up with Facebook
                             </button>

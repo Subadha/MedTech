@@ -18,6 +18,7 @@ const font = Poppins({
 export default function Home() {
   return (
     <>
+    <NavBar/>
     <Hero/>
     <TextCard/>
     <Services/>

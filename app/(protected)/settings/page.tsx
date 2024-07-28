@@ -4,7 +4,7 @@ const Settings = async ()=>{
     const session = await auth();
     return(
         <div>
-            {JSON.stringify(session?.user.image)}
+            {JSON.stringify(session?.user.name)}
             <form action={async ()=>{
                 "use server";
                 await signOut();

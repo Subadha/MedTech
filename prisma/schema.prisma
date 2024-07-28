@@ -63,3 +63,12 @@ model PasswordReset{
 
   @@unique([email,token])
 }
+
+model Appointment {
+  id String @id @default(cuid())
+  email String
+  phone String
+  date DateTime
+
+  @@unique([email, phone])
+}

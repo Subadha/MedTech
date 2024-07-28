@@ -39,7 +39,7 @@ export default function NavBar() {
 
   return (
     <div className="relative w-full bg-white border-2 border-gray-100">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 sm:py-0 lg:px-8">
         <div className="inline-flex items-center space-x-2">
           <Image src={logo} alt='logo' width={100} height={100}/>
         </div>
