@@ -3,7 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import { LoginSchema } from "./schema";
 import { getUserByEmail } from "./data/user";
 import bcrypt from "bcryptjs";
-import GitHub from "next-auth/providers/facebook";
+import Facebook from "next-auth/providers/facebook";
 import Google from "next-auth/providers/google";
 
 export default {
@@ -12,7 +12,7 @@ export default {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-    GitHub({
+    Facebook({
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),

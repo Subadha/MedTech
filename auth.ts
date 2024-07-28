@@ -27,6 +27,10 @@ export const {
     signIn,//this can be used only in server actions or server component
     signOut,
 } = NextAuth({
+  pages:{
+    signIn:"/auth/login",
+    error:"/auth/error"
+  },
   events:{
     async linkAccount({user}){
       await db.user.update({
