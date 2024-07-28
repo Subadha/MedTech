@@ -27,7 +27,8 @@ import img from "@/app/images/doc1.png";
 import logo from "@/app/images/logo.png";
 import { useSearchParams } from "next/navigation";
 
-const useToken = () => {
+// Wrapper component for using useSearchParams
+const TokenComponent = () => {
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
 
@@ -43,7 +44,7 @@ export const NewPasswordForm = () => {
     const [error, setError] = useState<string | undefined>("");
     const [success, setSuccess] = useState<string | undefined>("");
     const [showPassword, setShowPassword] = useState(false);
-    const token = useToken();
+    const token = <TokenComponent />;
 
     const form = useForm<z.infer<typeof NewPasswordSchema>>({
         resolver: zodResolver(NewPasswordSchema),
@@ -54,7 +55,7 @@ export const NewPasswordForm = () => {
 
     const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
         startTransition(() => {
-            newPassword(values, token)
+            newPassword(values)
                 .then((data) => {
                     setError(data?.error);
                     setSuccess(data?.sucess);
@@ -70,67 +71,69 @@ export const NewPasswordForm = () => {
     };
 
     return (
-        <div className="flex justify-evenly h-[100vh]">
-            <div className="absolute top-4 left-10 z-10 w-20 h-20">
-                <Link href="/"><Image src={logo} alt="Logo" layout="fill" objectFit="contain" /></Link>
-            </div>
-            <div className="absolute top-10 right-10 z-10 text-gray-600">
-                <span>Back to <Link href="/auth/login" className="text-purple-700 font-bold-700">Login</Link> </span>
-            </div>
-            <div className="relative w-[50vw] bg-black">
-                <Image
-                    alt="New Password Image"
-                    src={img}
-                    className="w-screen h-full"
-                    fill
-                />
-            </div>
-            <div className="flex w-[50vw] justify-center items-center">
-                <CardWrapper
-                    headerTitle="New Password"
-                    headerLabel="Set a New Password"
-                    backButtonLabel="Back to Login"
-                    backButtonHref="/auth/login"
-                >
-                    <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)}>
-                            <div>
-                                <FormField
-                                    control={form.control}
-                                    name="password"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>New Password</FormLabel>
-                                            <FormControl>
-                                                <div className="relative">
-                                                    <Input
-                                                        disabled={isPending}
-                                                        {...field}
-                                                        placeholder="Enter your new password"
-                                                        type={showPassword ? "text" : "password"}
-                                                    />
-                                                    <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                                                        <button
-                                                            type="button"
-                                                            onClick={togglePasswordVisibility}
-                                                        >
-                                                            {showPassword ? <FaEyeSlash /> : <FaEye />}
-                                                        </button>
+        <Suspense fallback={<div>Loading...</div>}>
+            <div className="flex justify-evenly h-[100vh]">
+                <div className="absolute top-4 left-10 z-10 w-20 h-20">
+                    <Link href="/"><Image src={logo} alt="Logo" layout="fill" objectFit="contain" /></Link>
+                </div>
+                <div className="absolute top-10 right-10 z-10 text-gray-600">
+                    <span>Back to <Link href="/auth/login" className="text-purple-700 font-bold-700">Login</Link> </span>
+                </div>
+                <div className="relative w-[50vw] bg-black">
+                    <Image
+                        alt="New Password Image"
+                        src={img}
+                        className="w-screen h-full"
+                        fill
+                    />
+                </div>
+                <div className="flex w-[50vw] justify-center items-center">
+                    <CardWrapper
+                        headerTitle="New Password"
+                        headerLabel="Set a New Password"
+                        backButtonLabel="Back to Login"
+                        backButtonHref="/auth/login"
+                    >
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)}>
+                                <div>
+                                    <FormField
+                                        control={form.control}
+                                        name="password"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>New Password</FormLabel>
+                                                <FormControl>
+                                                    <div className="relative">
+                                                        <Input
+                                                            disabled={isPending}
+                                                            {...field}
+                                                            placeholder="Enter your new password"
+                                                            type={showPassword ? "text" : "password"}
+                                                        />
+                                                        <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                                                            <button
+                                                                type="button"
+                                                                onClick={togglePasswordVisibility}
+                                                            >
+                                                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                            {success && <FormSuccess message={success} />}
-                            {error && <FormError message={error} />}
-                            <Button className="w-full h-10 mt-5 bg-purple-700" disabled={isPending} type="submit">Reset Password</Button>
-                        </form>
-                    </Form>
-                </CardWrapper>
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                {success && <FormSuccess message={success} />}
+                                {error && <FormError message={error} />}
+                                <Button className="w-full h-10 mt-5 bg-purple-700" disabled={isPending} type="submit">Reset Password</Button>
+                            </form>
+                        </Form>
+                    </CardWrapper>
+                </div>
             </div>
-        </div>
+        </Suspense>
     );
 };
