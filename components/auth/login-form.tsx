@@ -35,7 +35,7 @@ export const LoginForm = () => {
     // Use useSearchParams() directly
     const searchParams = useSearchParams();
     const urlError = searchParams.get("error") === "OAuthAccountNotLinked"
-        ? "Email already in use with different Provider" : "";
+        ? "Email already in use with different Provider " : "";
 
     const form = useForm<z.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
