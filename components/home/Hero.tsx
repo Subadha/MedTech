@@ -1,5 +1,4 @@
 "use client"
-
 import { FaEnvelope, FaPhone, FaCalendarAlt, FaTelegram } from "react-icons/fa"
 import Image from "next/image"
 import img2 from "../../app/images/doc3.png"

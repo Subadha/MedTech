@@ -24,6 +24,28 @@ export const generatePasswordResetToken = async (email: string) => {
     return passwordReset;
 };
 
+
+// export const generateNumberResetToken = async (number: string) => {
+//     const token = uuidv4();
+//     const expires = new Date(Date.now() + 3600 * 1000); // 1 hour from now
+//     const existingToken = await getPasswordResetTokenByEmail(email);
+//     if (existingToken) {
+//         await db.passwordReset.delete({
+//             where: { id: existingToken.id },
+//         });
+//     }
+
+//     const passwordReset = await db.passwordReset.create({
+//         data: {
+//             email,
+//             token,
+//             expires,
+//         },
+//     });
+
+//     return passwordReset;
+// };
+
 export const getVerificationToken = async (email: string) => {
     const token = uuidv4();
     const expires = new Date(Date.now() + 3600 * 1000); // 1 hour from now

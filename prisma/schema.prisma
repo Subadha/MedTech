@@ -22,6 +22,7 @@ model User {
   role          UserRole @default(USER)
   image         String?
   accounts      Account[]
+  phone         String?  @unique
  
   @@map("users")
 }
@@ -71,4 +72,11 @@ model Appointment {
   date DateTime
 
   @@unique([email, phone])
+}
+
+model Otp {
+  id      Int      @id @default(autoincrement())
+  phone   String
+  otp     String
+  expiry  DateTime
 }

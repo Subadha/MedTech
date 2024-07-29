@@ -21,12 +21,15 @@ import Link from "next/link"
 import Image from "next/image"
 import img from "@/app/images/doc1.png"
 import logo from "@/app/images/logo.png"
-import { ResetSchema } from "@/schema"
+import { ResetSchema, ResetUsingNumber } from "@/schema"
+import {reset1} from "@/actions/reset-using-number"
 
 export const ResetForm = () => {
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | undefined>("");
     const [sucess, setSucess] = useState<string | undefined>("");
+    const [error1, setError1] = useState<string | undefined>("");
+    const [sucess1, setSucess1] = useState<string | undefined>("");
 
     const form = useForm<z.infer<typeof ResetSchema>>({
         resolver: zodResolver(ResetSchema),
@@ -44,6 +47,24 @@ export const ResetForm = () => {
                 })
         })
     }
+
+    const form1 = useForm<z.infer<typeof ResetUsingNumber>>({
+        resolver: zodResolver(ResetUsingNumber),
+        defaultValues: {
+            phone: "",
+        }
+    });
+
+    const onSubmit1 = (values: z.infer<typeof ResetUsingNumber>) => {
+        startTransition(() => {
+           reset1(values)
+                .then((data) => {
+                    setError1(data?.error);
+                    setSucess1(data?.success)
+                })
+        })
+    }
+
 
     return (
         <div className="flex justify-evenly h-[100vh]">
@@ -92,7 +113,37 @@ export const ResetForm = () => {
                             </div>
                             <FormSucess message={sucess} />
                             <FormError message={error} />
-                            <Button className="w-full h-10 mt-5 bg-purple-700" disabled={isPending} type="submit">Send reset email</Button>
+                            <Button className="w-full h-10 mt-5 bg-purple-700 hover:bg-purple-500" disabled={isPending} type="submit">Send reset email</Button>
+                        </form>
+                    </Form>
+                    <br></br>
+                    <span className="flex justify-center items-center">Or</span>
+                    
+                    <Form {...form1} >
+                        <form className="flex flex-col" onSubmit={form1.handleSubmit(onSubmit1)}>
+                            <div>
+                                <FormField
+                                    control={form1.control}
+                                    name="phone"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Phone Number</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    disabled={isPending}
+                                                    {...field}
+                                                    placeholder="Enter your Phone Number"
+                                                    type="text"
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
+                            <FormSucess message={sucess1} />
+                            <FormError message={error1} />
+                            <Button className="w-full h-10 mt-5 bg-purple-700 hover:bg-purple-500" disabled={isPending} type="submit">Send Otp</Button>
                         </form>
                     </Form>
                 </CardWrapper>

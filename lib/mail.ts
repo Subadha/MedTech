@@ -28,3 +28,7 @@ export const sendVerificationEmail = async (
         html:`<p>Click<a href="${conformLink}"> here </a> to conform mail</p>`
     });
 }
+
+// export const sendMobileVerifcation = async (
+    
+// )

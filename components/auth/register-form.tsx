@@ -37,6 +37,7 @@ export const RegisterForm = () => {
     const [error, setError] = useState<string | undefined>("");
     const [sucess, setSucess] = useState<string | undefined>("");
     const [showPassword, setShowPassword] = useState(false);  // State for password visibility
+    const [role, setRole] = useState<"USER" | "ADMIN">("USER");  // State for user role
 
     const form = useForm<z.infer<typeof ExtendedRegisterSchema>>({
         resolver: zodResolver(ExtendedRegisterSchema),
@@ -44,16 +45,18 @@ export const RegisterForm = () => {
             email: "",
             password: "",
             confirmPassword: "",
-            name: ""
+            name: "",
+            phone: "", 
+            role: "USER", 
         }
     })
 
     const onSubmit = (values: z.infer<typeof ExtendedRegisterSchema>) => {
         startTransition(() => {
-            register(values)
+            register({ ...values, role })
                 .then((data) => {
                     setError(data?.error);
-                    setSucess(data?.sucess)
+                    setSucess(data?.success)
                 })
         })
     }
@@ -64,20 +67,20 @@ export const RegisterForm = () => {
 
     return (
         <div className="flex justify-evenly h-[100vh]">
-            <div className="absolute sm:top-4 sm:left-10 z-10 w-20 h-20">
-                <Link href="/"><Image src={logo} alt="Logo" layout="fill" objectFit="contain" /></Link>
-            </div>
-            <div className="absolute sm:top-10 top-[100px] sm:right-10 z-20 text-gray-600">
-                <span>Already have an account? <Link href="/auth/login" className="text-purple-700 font-bold-700">Sign in</Link> </span>
-            </div>
-            <div className="sm:relative sm:visible invisible sm:w-[50vw] bg-black">
-                <Image
-                    alt="Register Image"
-                    src={img}
-                    className="w-screen h-full"
-                    fill
-                />
-            </div>
+                <div className="absolute sm:top-4 sm:left-10 z-10 w-20 h-20">
+                    <Link href="/"><Image src={logo} alt="Logo" layout="fill" objectFit="contain" /></Link>
+                </div>
+                <div className="absolute sm:top-10 top-[100px] sm:right-10 z-20 text-gray-600">
+                    <span>Already have an account? <Link href="/auth/login" className="text-purple-700 font-bold-700">Sign in</Link> </span>
+                </div>
+                <div className="sm:relative sm:visible invisible sm:w-[50vw] bg-black">
+                    <Image
+                        alt="Register Image"
+                        src={img}
+                        className="w-screen h-full"
+                        fill
+                    />
+                </div>
             <div className="sm:flex sm:w-[50vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
                 <CardWrapper
                     headerTitle="Register"
@@ -88,6 +91,22 @@ export const RegisterForm = () => {
                 >
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)}>
+                            <div className="flex justify-between mb-4">
+                                <Button
+                                    className={`w-1/2 mr-2 ${role === "USER" ? "bg-purple-700 hover:bg-purple-500" : "bg-purple-400 hover:bg-purple-300"}`}
+                                    type="button"
+                                    onClick={() => setRole("USER")}
+                                >
+                                    User
+                                </Button>
+                                <Button
+                                    className={`w-1/2 ml-2 ${role === "ADMIN" ? "bg-purple-700 hover:bg-purple-500" : "bg-purple-400 hover:bg-purple-300"}`}
+                                    type="button"
+                                    onClick={() => setRole("ADMIN")}
+                                >
+                                    Doctor
+                                </Button>
+                            </div>
                             <div>
                                 <FormField
                                     control={form.control}
@@ -180,10 +199,28 @@ export const RegisterForm = () => {
                                         </FormItem>
                                     )}
                                 />
+                                <FormField
+                                    control={form.control}
+                                    name="phone"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                            <FormLabel>Mobile Number</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    disabled={isPending}
+                                                    {...field}
+                                                    placeholder="Enter your mobile number"
+                                                    type="text"
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
                             </div>
                             <FormSucess message={sucess} />
                             <FormError message={error} />
-                            <Button className="w-full h-10 mt-5 bg-purple-700" disabled={isPending} type="submit">Register</Button>
+                            <Button className="w-full h-10 mt-5 bg-purple-700 hover:bg-purple-500" disabled={isPending} type="submit">Register</Button>
                         </form>
                     </Form>
                 </CardWrapper>

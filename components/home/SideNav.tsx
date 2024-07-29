@@ -29,9 +29,10 @@ const menuItems = [
 // Define the props type
 type SideNavProps = {
     userName: string;
+    role:string;
 };
 
-export default function SideNav({ userName }: SideNavProps) {
+export default function SideNav({ userName,role }: SideNavProps) {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false)
 
     const toggleMenu = () => {
@@ -79,7 +80,7 @@ export default function SideNav({ userName }: SideNavProps) {
                             <Menu className="h-6 w-6" />
                         </button>
                     </div>
-                    <h1 className="text-xl font-bold">Welcome, {userName}</h1>
+                    <h1 className="text-xl font-bold">Welcome, {userName} as {role}</h1>
                 </header>
                 <main>
                     {/* Main content goes here */}

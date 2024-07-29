@@ -4,38 +4,39 @@ import * as z from "zod";
 import bcrypt from "bcrypt";
 import { db } from "@/lib/db";
 import { getUserByEmail } from "@/data/user";
-import {getVerificationToken} from "@/lib/tokens"
+import { getVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
-export const  register = async (values:z.infer<typeof RegisterSchema>)=>{
-    // console.log(values)
-    const validate = RegisterSchema.safeParse(values);
-    if(!validate.success){
-        return{error : "Invalid Error"}
-    }   
 
-    const {email,password,name} = validate.data
+export const register = async (values: z.infer<typeof RegisterSchema>) => {
+  const validate = RegisterSchema.safeParse(values);
+  if (!validate.success) {
+    return { error: "Invalid data" };
+  }
 
-    const hashedPassword = await bcrypt.hash(password,10);//10 is salt
+  const { email, password, name, role, phone } = validate.data;
+  const normalizedEmail = email.toLowerCase();
+  const hashedPassword = await bcrypt.hash(password, 10);
 
-    const existingUser = await getUserByEmail(email);
+  const existingUser = await getUserByEmail(normalizedEmail);
+  if (existingUser) {
+    return { error: "Email already exists" };
+  }
 
-    if(existingUser){
-        return {error : "Email already Existed"}
-    }
+  await db.user.create({
+    data: {
+      name,
+      email: normalizedEmail,
+      password: hashedPassword,
+      role,
+      phone, 
+    },
+  });
 
-    await db.user.create({
-        data:{
-            name,
-            email,
-            password:hashedPassword
-        }
-    })
+  const verificationToken = await getVerificationToken(email);
+  await sendVerificationEmail(
+    verificationToken.email,
+    verificationToken.token
+  );
 
-    const verificationToken = await getVerificationToken(email);
-    await sendVerificationEmail(
-        verificationToken.email,
-        verificationToken.token
-    )
-
-    return {sucess :"Conformation Email Send"}
-}
+  return { success: "Confirmation email sent" };
+};

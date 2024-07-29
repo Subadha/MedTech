@@ -135,7 +135,7 @@ export const LoginForm = () => {
                             </div>
                             <FormSucess message={sucess} />
                             <FormError message={error || urlError} />
-                            <Button className="w-full h-10 mt-5 bg-purple-700" disabled={isPending} type="submit">Login</Button>
+                            <Button className="w-full h-10 mt-5 bg-purple-700 hover:bg-purple-500" disabled={isPending} type="submit">Login</Button>
                             <Button size="sm" variant="link" asChild className="text-blue-500 px-0 font-normal flex justify-end">
                                 <Link href="/auth/reset">Forgot Password?</Link>
                             </Button>

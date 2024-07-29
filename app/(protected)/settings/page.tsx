@@ -1,14 +1,14 @@
 // settings/page.js
-import { auth } from "@/auth"; // Import the server action
+import { auth } from "@/auth"; 
 import SideNav from "@/components/home/SideNav";
 
 const Settings = async () => {
-    const session = await auth(); // Fetch user session data
-    const userName = session?.user.name || "User"; // Default to "User" if name is not available
-
+    const session = await auth(); 
+    const userName = session?.user.name || "User";
+    const role = session?.user.role || "User";
     return (
         <div>
-            <SideNav userName={userName} />
+            <SideNav userName={userName} role={role}/>
         </div>
     );
 }

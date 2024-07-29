@@ -58,7 +58,7 @@ export default function NavBar() {
             ))}
           </ul>
           <LoginButton>
-            <Button className='bg-blue-600'>Sign in</Button>
+            <Button className='bg-blue-600 hover:bg-blue-500'>Sign in</Button>
           </LoginButton>
         </div>
         <div className="lg:hidden">

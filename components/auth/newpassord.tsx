@@ -118,7 +118,7 @@ export const NewPasswordForm = () => {
                             </div>
                             {success && <FormSuccess message={success} />}
                             {error && <FormError message={error} />}
-                            <Button className="w-full h-10 mt-5 bg-purple-700" disabled={isPending} type="submit">
+                            <Button className="w-full h-10 mt-5 bg-purple-700 hover:bg-purple-500" disabled={isPending} type="submit">
                                 Reset Password
                             </Button>
                         </form>
