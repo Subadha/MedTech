@@ -61,13 +61,13 @@ export const LoginForm = () => {
 
     return (
         <div className="flex justify-evenly h-[100vh]">
-            <div className="absolute top-4 left-10 z-10 w-20 h-20">
+            <div className="absolute sm:top-4 sm:left-10 z-10 w-20 h-20">
                 <Link href="/"><Image src={logo} alt="Logo" layout="fill" objectFit="contain" /></Link>
             </div>
-            <div className="absolute top-10 right-10 z-10 text-gray-600">
+            <div className="absolute sm:top-10 top-[100px] sm:right-10 z-20 text-gray-600">
                 <span>Dont have an account? <Link href="/auth/register" className="text-purple-700 font-bold-700">Sign up</Link> </span>
             </div>
-            <div className="relative w-[50vw] bg-black">
+            <div className="sm:relative sm:visible invisible sm:w-[50vw] bg-black">
                 <Image
                     alt="Login Image"
                     src={img}
@@ -75,7 +75,7 @@ export const LoginForm = () => {
                     fill
                 />
             </div>
-            <div className="flex w-[50vw] justify-center items-center">
+            <div className="sm:flex sm:w-[50vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
                 <CardWrapper
                     headerTitle="Sign in"
                     headerLabel="Welcome Back"

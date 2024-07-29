@@ -70,10 +70,10 @@ export const NewPasswordForm = () => {
 
     return (
         <div className="flex justify-evenly h-[100vh]">
-            <div className="absolute top-4 left-10 z-10 w-20 h-20">
+            <div className="absolute sm:top-4 sm:left-10 z-10 w-20 h-20">
                 <Link href="/"><Image src={logo} alt="Logo" layout="fill" objectFit="contain" /></Link>
             </div>
-            <div className="flex w-[50vw] justify-center items-center">
+            <div className="sm:flex sm:w-[50vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
                 <CardWrapper
                     headerTitle="New Password"
                     headerLabel="Enter a New Password"
