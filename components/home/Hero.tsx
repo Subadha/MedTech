@@ -10,6 +10,8 @@ import { useState, useTransition } from "react"
 import { book } from "@/actions/appoint"
 import FormSuccess from "../auth/form-sucess"
 import FormError from "../auth/form-error"
+import CharacterRevealText from "./TextReveal"
+import { motion } from "framer-motion";
 
 export default function Hero() {
   const [isPending, startTransition] = useTransition()
@@ -37,19 +39,27 @@ export default function Hero() {
         })
     })
   }
+  
 
   return (
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 100,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 1,
+        },
+      }}
+      viewport={{ once: true }}
+    >
     <div className="relative w-full h-auto bg-white">
       <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
         <div className="flex flex-col justify-center px-4 py-12 md:py-16 lg:col-span-7 lg:gap-x-6 lg:px-6 lg:py-24 xl:col-span-6">
-          <div className="mt-2 px-4 flex max-w-max items-center space-x-2 rounded-md bg-white p-1 border-2">
-            <p className="text-sm font-medium text-blue-500 text-center">
-              👋 Hey! We are Pregnant
-            </p>
-          </div>
-          <h1 className="mt-8 text-5xl sm:text-3xl font-bold tracking-tight text-black md:text-4xl lg:text-6xl sm:text-left text-center">
-            Innovation in <br /> every pulse
-          </h1>
+          <CharacterRevealText/>
           <p className="mt-8 text-lg text-gray-700 sm:text-left text-center">
             Sharing the future of health with breakthrough innovations that promote physical, mental, and spiritual wellness.
           </p>
@@ -148,5 +158,6 @@ export default function Hero() {
         </form>
       </div>
     </div>
+    </motion.div>
   )
 }

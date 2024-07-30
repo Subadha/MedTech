@@ -14,6 +14,21 @@ export const getUserByEmail = async (email:string)=>{
 }
 
 
+
+export const getUserOtp = async (otp:string)=>{
+    try{
+        const user = await db.otp.findFirst({
+            where:{
+                otp
+            }
+        })
+        return user
+    }catch{
+        return null;
+    }
+}
+
+
 export const getUserByNumber = async (phone: string) => {
     try {
         const user = await db.user.findUnique({

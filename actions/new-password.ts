@@ -27,7 +27,7 @@ export const newPassword = async (
 
     const hasExpired = new Date(existingToken.expires) < new Date();
     if(hasExpired){
-        return {error:"TOken has expired"}
+        return {error:"Token has expired"}
     }
 
     const existingUser = await getUserByEmail(existingToken.email);

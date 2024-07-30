@@ -1,15 +1,31 @@
+"use client"
 import Image from 'next/image';
-import p1 from "@/app/images/p1.png";
-import p2 from "@/app/images/p2.png";
-import p3 from "@/app/images/p3.png";
-import p4 from "@/app/images/p4.png";
+import p1 from "@/app/images/gallery-3.jpg";
+import p2 from "@/app/images/gallery-4.jpg";
+import p3 from "@/app/images/gallery-3.jpg";
+import p4 from "@/app/images/gallery-4.jpg";
 import p5 from "@/app/images/p5.png";
 import p6 from "@/app/images/p6.png";
+import { motion } from 'framer-motion';
 
 export default function Photo() {
     const images = [p1, p2, p3, p4, p5, p6];
 
     return (
+        <motion.div
+            initial={{
+                opacity: 0,
+                y: 100,
+            }}
+            whileInView={{
+                opacity: 1,
+                y: 0,
+                transition: {
+                    duration: 1,
+                },
+            }}
+            viewport={{ once: true }}
+        >
         <div className="flex flex-col items-center sm:h-screen sm:p-4 p-6">
             <h1 className="text-5xl font-bold mb-8 text-center">
                 See the Latest Photos
@@ -28,5 +44,6 @@ export default function Photo() {
                 ))}
             </div>
         </div>
+        </motion.div>
     );
 }

@@ -2,16 +2,22 @@
 import { useState } from "react";
 import { FaLinkedin, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Image from "next/image";
-import doc1 from "@/app/images/doc3.png";
+import img1 from "@/app/images/program-1.jpg";
+import img2 from "@/app/images/program-2.jpg";
+import img3 from "@/app/images/program-3.jpg";
+import img4 from "@/app/images/program-4.jpeg";
+import img5 from "@/app/images/program-5.jpg";
+
+import { motion } from "framer-motion";
 
 export default function Team() {
     const [currentIndex, setCurrentIndex] = useState(0);
     const teamMembers = [
-        { name: "Jimmy", title: "Orthodontist", image: doc1 },
-        { name: "Anna", title: "Dentist", image: doc1 },
-        { name: "David", title: "Surgeon", image: doc1 },
-        { name: "Sophie", title: "Pediatrician", image: doc1 },
-        { name: "Chris", title: "Cardiologist", image: doc1 },
+        { name: "Gurushankar", title: "Founder", image: img1 },
+        { name: "Veena C", title: "Consultant and Cofounder", image: img2 },
+        { name: "Renu John", title: "Mentor: Professor & Head CfHE, IITH", image: img3 },
+        { name: "Sushmee Badhulika", title: "Scientific advisor: Professor IITH", image: img4 },
+        { name: "Neeko Inees Chiriyankandath", title: "CScientific Advisor: Consultant Gynaecologist    ", image: img5 },
     ];
     const visibleItems = 3; // Number of visible items at once
 
@@ -26,6 +32,20 @@ export default function Team() {
     };
 
     return (
+        <motion.div
+            initial={{
+                opacity: 0,
+                y: 100,
+            }}
+            whileInView={{
+                opacity: 1,
+                y: 0,
+                transition: {
+                    duration: 1,
+                },
+            }}
+            viewport={{ once: true }}
+        >
         <div id="team" className="sm:h-screen pb-[100px] sm:pb-0 flex flex-col justify-center items-center text-center">
             <h1 className="sm:text-5xl text-4xl font-bold pb-[100px]">
                 Innovation at the heart of health: Meet our Visionary Team
@@ -50,7 +70,7 @@ export default function Team() {
                                         <div className="absolute top-0 right-0 p-3">
                                             <FaLinkedin size={30} className="text-blue-600" />
                                         </div>
-                                        <div className="absolute bottom-0 left-0 right-0 bg-white text-black justify-center items-center h-[60px] mx-[20px] rounded-md flex flex-col">
+                                        <div className="absolute bottom-0 left-0 right-0 bg-white text-black justify-center items-center h-[100px] mx-[20px] sm:mb-5 rounded-md flex flex-col">
                                             <span className="font-bold text-xl">{member.name}</span>
                                             <span>{member.title}</span>
                                         </div>
@@ -72,5 +92,6 @@ export default function Team() {
                 </div>
             </div>
         </div>
+        </motion.div>
     );
 }

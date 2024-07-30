@@ -23,6 +23,8 @@ import img from "@/app/images/doc1.png"
 import logo from "@/app/images/logo.png"
 import { ResetSchema, ResetUsingNumber } from "@/schema"
 import {reset1} from "@/actions/reset-using-number"
+import { redirect } from "next/navigation"
+import { useRouter } from 'next/navigation';
 
 export const ResetForm = () => {
     const [isPending, startTransition] = useTransition();
@@ -30,6 +32,7 @@ export const ResetForm = () => {
     const [sucess, setSucess] = useState<string | undefined>("");
     const [error1, setError1] = useState<string | undefined>("");
     const [sucess1, setSucess1] = useState<string | undefined>("");
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof ResetSchema>>({
         resolver: zodResolver(ResetSchema),
@@ -61,6 +64,9 @@ export const ResetForm = () => {
                 .then((data) => {
                     setError1(data?.error);
                     setSucess1(data?.success)
+                    if (data?.success) {
+                        router.push("/auth/otp");
+                    }
                 })
         })
     }

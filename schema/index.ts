@@ -53,3 +53,8 @@ export const Appointment = z.object({
     message: "Invalid date format. Expected format: YYYY-MM-DD",
   }),
 });
+
+
+export const otpVerify = z.object({
+    otp:z.string()
+})

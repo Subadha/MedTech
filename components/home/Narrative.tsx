@@ -1,9 +1,25 @@
+"use client"
 import Image from "next/image";
 import c10 from "@/app/images/p1.png";
 import c11 from "@/app/images/p2.png";
+import { motion } from "framer-motion";
 
 export default function Narrative() {
     return (
+        <motion.div
+            initial={{
+                opacity: 0,
+                y: 100,
+            }}
+            whileInView={{
+                opacity: 1,
+                y: 0,
+                transition: {
+                    duration: 1,
+                },
+            }}
+            viewport={{ once: true }}
+        >
         <div className="flex flex-col sm:flex-row items-center sm:h-screen bg-purple-100 px-4 md:px-[150px] py-10">
             <div className="text-center md:text-left mb-10 sm:mb-[350px]">
                 <p className="text-purple-700 font-bold mb-2">Our Testimonial</p>
@@ -35,5 +51,6 @@ export default function Narrative() {
                 </div>
             </div>
         </div>
+        </motion.div>
     );
 }

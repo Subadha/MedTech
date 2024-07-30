@@ -1,6 +1,22 @@
+"use client"
+import { motion } from "framer-motion"
 
 export const Services = () => {
   return (
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 100,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 1,
+        },
+      }}
+      viewport={{ once: true }}
+    >
     <div className="mx-auto max-w-7xl px-2 lg:px-8 lg:mb-10 bg-purple-200">
       <div className="grid grid-cols-1 gap-y-8 text-center sm:grid-cols-2 sm:gap-12 lg:grid-cols-3 py-12">
         <div className="bg-white py-10 px-6 rounded-md">
@@ -72,5 +88,6 @@ export const Services = () => {
 
       </div>
     </div>
+    </motion.div>
   )
 }

@@ -1,9 +1,25 @@
+"use client"
 import { FaRegCheckCircle } from "react-icons/fa";
 import Image from "next/image";
 import doc from "@/app/images/doc1.png";
+import { motion } from "framer-motion";
 
 export const TextCard = () => {
   return (
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 100,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 1,
+        },
+      }}
+      viewport={{ once: true }}
+    >
     <div id="product" className="w-full bg-white">
       <div className="max-w-7xl mx-auto lg:flex lg:gap-x-8 lg:px-8">
         {/* Text Content */}
@@ -46,5 +62,6 @@ export const TextCard = () => {
         </div>
       </div>
     </div>
+    </motion.div>
   );
 };

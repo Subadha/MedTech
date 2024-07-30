@@ -1,11 +1,29 @@
+"use client"
+import { motion } from "framer-motion";
+import Image from "next/image";
 import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
-
+import img1 from "@/app/images/bg_3.jpg"
 export const Footer = () => {
   return (
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 100,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 1,
+        },
+      }}
+      viewport={{ once: true }}
+    >
     <footer id="footer" className="w-full bg-purple-900 text-white">
       <div className="mx-auto flex flex-col px-4 py-8 md:flex-row md:space-x-8 max-w-6xl">
         {/* Section with Social Icons and Heading */}
         <div className="flex flex-col items-center justify-center w-full md:w-1/2">
+        <Image src={img1} width={350} height={200} alt=""/>
           <h1 className="text-md max-w-sm text-center md:text-left mb-4">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit amet consectetur sit amet consectetur.
           </h1>
@@ -67,5 +85,6 @@ export const Footer = () => {
         <p className="text-sm font-medium">Copyright © 2024. All rights reserved.</p>
       </div>
     </footer>
+    </motion.div>
   );
 };

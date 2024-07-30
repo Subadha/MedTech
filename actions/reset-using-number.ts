@@ -29,7 +29,7 @@ export const reset1 = async (values: z.infer<typeof ResetUsingNumber>) => {
     }
 
     // Generate a six-digit OTP
-    const otp = crypto.randomInt(100000, 999999);
+    const otp = crypto.randomInt(100000, 999999).toString();
     const hashedOtp = await bcrypt.hash(otp.toString(), 10);
 
     // Send OTP via SMS
@@ -45,11 +45,10 @@ export const reset1 = async (values: z.infer<typeof ResetUsingNumber>) => {
         await db.otp.create({
             data: {
                 phone,
-                otp: hashedOtp,
+                otp: otp,
                 expiry: new Date(Date.now() + 10 * 60 * 1000), // OTP expires after 10 minutes
             },
         });
-
         return { success: "OTP sent!" };
     } catch (err) {
         console.log(err);
