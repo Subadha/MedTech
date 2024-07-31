@@ -1,7 +1,7 @@
 "use client"
 import { FaRegCheckCircle } from "react-icons/fa";
 import Image from "next/image";
-import doc from "@/app/images/doc1.png";
+import doc from "@/app/images/intro.jpg";
 import { motion } from "framer-motion";
 
 export const TextCard = () => {
@@ -38,7 +38,7 @@ export const TextCard = () => {
         {/* Image */}
         <div className="relative lg:flex-1 h-[500px] lg:h-[500px] sm:mt-[100px] mt-0">
           <Image
-            className="object-cover"
+            className="object-fill"
             src={doc}
             alt="Illustration of the wearable pregnancy monitoring device"
             layout="fill"

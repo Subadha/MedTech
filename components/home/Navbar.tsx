@@ -22,7 +22,7 @@ const menuItems = [
   },
   {
     name: 'News',
-    href: '#',
+    href: '#news',
   },
   {
     name: 'Contact Us',
