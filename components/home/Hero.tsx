@@ -56,7 +56,7 @@ export default function Hero() {
       }}
       viewport={{ once: true }}
     >
-    <div className="relative w-full h-auto bg-white">
+    <div className="relative w-full h-[90vh] -mb-10 bg-white">
       <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
         <div className="flex flex-col justify-center px-4 py-12 md:py-16 lg:col-span-7 lg:gap-x-6 lg:px-6 lg:py-24 xl:col-span-6">
           <CharacterRevealText/>
@@ -64,7 +64,7 @@ export default function Hero() {
             Sharing the future of health with breakthrough innovations that promote physical, mental, and spiritual wellness.
           </p>
         </div>
-        <div className="relative lg:col-span-5 xl:col-span-6 h-64 lg:h-auto">
+        <div className="relative lg:col-span-5 xl:col-span-6 h-64 lg:h-[80vh]">
           <Image
             src={img2}
             alt="Health innovation image"
@@ -73,7 +73,7 @@ export default function Hero() {
           />
         </div>
       </div>
-      <div className="relative w-full max-w-5xl mx-auto p-4 bg-white shadow-md rounded-md flex flex-wrap sm:flex-nowrap items-start space-y-4 sm:space-y-0 sm:space-x-4 justify-center sm:justify-between">
+      {/* <div className="relative w-full max-w-5xl mx-auto p-4 bg-white shadow-md rounded-md flex flex-wrap sm:flex-nowrap items-start space-y-4 sm:space-y-0 sm:space-x-4 justify-center sm:justify-between">
         <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
           <Controller
             name="email"
@@ -156,7 +156,7 @@ export default function Hero() {
             Book Now
           </button>
         </form>
-      </div>
+      </div> */}
     </div>
     </motion.div>
   )

@@ -7,9 +7,9 @@ const CharacterRevealText: React.FC = () => {
 
     const texts = [
         "Innovation in every pulse",
-        "Empowering creativity",
-        "Driving progress forward",
-        "Discover new possibilities"
+        "Elevate Health, Enrich Lives",
+        "Cutting-Edge Health Tech.",
+        "Comfort Beyond Compare"
     ];
 
     const animateText = () => {
