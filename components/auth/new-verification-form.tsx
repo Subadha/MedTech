@@ -8,11 +8,13 @@ import Link from "next/link";
 import Image from "next/image";
 import img from "@/app/images/doc1.png";
 import logo from "@/app/images/logo.png";
+import { useRouter } from 'next/navigation';
 
 const VerificationProcess = () => {
     const [error, setError] = useState<string | undefined>();
     const [success, setSuccess] = useState<string | undefined>();
     const searchParams = useSearchParams();
+    const router = useRouter();
 
     const token = searchParams.get("token");
 
@@ -30,6 +32,7 @@ const VerificationProcess = () => {
                     setError(data.error);
                 } else {
                     setSuccess("Your email has been verified successfully.");
+                    router.push("/auth/login");
                 }
             })
             .catch(() => {
