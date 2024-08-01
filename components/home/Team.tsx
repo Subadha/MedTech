@@ -51,36 +51,37 @@ export default function Team() {
                 Innovation at the heart of health: Meet our Visionary Team
             </h1>
             <div className="relative flex flex-col items-center w-full">
-                <div className="relative flex items-center w-full  px-12">
-                    <div className="flex overflow-hidden w-full">
-                        <div
-                            className="flex transition-transform duration-500 ease-in-out"
-                            style={{ transform: `translateX(-${currentIndex * 100 / visibleItems}%)` }}
-                        >
-                            {teamMembers.map((member, index) => (
-                                <div key={index} className="flex-none w-[330px] mx-2">
-                                    <div className="relative w-full h-[400px] rounded-2xl overflow-hidden">
-                                        <Image
-                                            src={member.image}
-                                            alt={member.name}
-                                            layout="fill"
-                                            objectFit="cover"
-                                            className="rounded-2xl"
-                                        />
-                                        <div className="absolute top-0 right-0 p-3">
-                                            <FaLinkedin size={30} className="text-blue-600" />
+                    <div className="relative flex items-center w-full px-12">
+                        <div className="flex overflow-hidden w-full">
+                            <div
+                                className="flex transition-transform duration-500 ease-in-out"
+                                style={{ transform: `translateX(-${currentIndex * 100 / visibleItems}%)` }}
+                            >
+                                {teamMembers.map((member, index) => (
+                                    <div key={index} className="flex-none w-[330px] mx-2">
+                                        <div className="relative w-full h-[400px] rounded-2xl overflow-hidden">
+                                            <Image
+                                                src={member.image}
+                                                alt={member.name}
+                                                layout="fill"
+                                                objectFit="cover"
+                                                className="rounded-2xl"
+                                            />
+                                            <div className="absolute top-0 right-0 p-3">
+                                                <FaLinkedin size={30} className="text-blue-600" />
+                                            </div>
                                         </div>
-                                        <div className="absolute bottom-0 left-0 right-0 bg-white text-black justify-center items-center h-[70px] mx-[20px] sm:mb-2 rounded-md flex flex-col">
+                                        <div className="w-full bg-white text-black justify-center items-center h-[70px] mt-2 rounded-md flex flex-col">
                                             <span className="font-bold text-xl">{member.name}</span>
                                             <span>{member.title}</span>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="absolute flex justify-between gap-10 mt-[430px] max-w-3xl px-5">
+
+                <div className="absolute flex justify-between gap-10 mt-[480px] max-w-3xl px-5">
                     <FaArrowLeft
                         className="cursor-pointer text-3xl"
                         onClick={prevSlide}
