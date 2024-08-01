@@ -41,9 +41,7 @@ export const Footer = () => {
               <FaTwitter className='text-white text-xl' />
             </a>
           </div>
-            <script src=""></script>
-            <iframe src="https://www.youtube.com/embed/?listType=user_uploads&list=KaustubhaMedtech" width="480" height="400"></iframe>
-            <iframe src="http://www.gmodules.com/ig/ifr?url=http://www.google.com/ig/modules/youtube.xml&up_channel=@KaustubhaMedtech&synd=open&w=320&h=390&title=&border=%23ffffff%7C3px%2C1px+solid+%23999999&output=js" width="320" height="300" ></iframe>
+            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100090014336935&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" ></iframe>
         </div>
 
         {/* Links Section */}
