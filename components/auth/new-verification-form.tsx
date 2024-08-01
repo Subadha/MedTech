@@ -6,7 +6,7 @@ import { newVerification } from "@/actions/new-verification";
 import { CardWrapper } from "./card-warpper";
 import Link from "next/link";
 import Image from "next/image";
-import img from "@/app/images/doc1.png";
+import img from "@/app/images/preg.png";
 import logo from "@/app/images/logo.png";
 import { useRouter } from 'next/navigation';
 

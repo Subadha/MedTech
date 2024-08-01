@@ -1,7 +1,7 @@
 "use client"
 import { FaRegCheckCircle } from "react-icons/fa";
 import Image from "next/image";
-import doc from "@/app/images/intro.jpg";
+import doc from "@/app/images/preg.png";
 import { motion } from "framer-motion";
 
 export const TextCard = () => {

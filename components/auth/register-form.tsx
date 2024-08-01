@@ -21,7 +21,7 @@ import FormError from "./form-error"
 import Link from "next/link"
 import Image from "next/image"
 import { FaEye, FaEyeSlash } from 'react-icons/fa';  // Import eye icons
-import img from "@/app/images/doc1.png"
+import img from "@/app/images/preg.png"
 import logo from "@/app/images/logo.png"
 
 // Define the schema with confirmPassword field and custom validation

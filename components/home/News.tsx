@@ -28,7 +28,7 @@ export default function News() {
         >
             <div id="news" className="flex flex-col items-center sm:h-screen sm:p-4  p-6">
                 <h1 className="text-5xl font-bold mb-8 text-center">
-                    News
+                    Latest News
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-10 w-full max-w-4xl">
                     {images.map((image, index) => (

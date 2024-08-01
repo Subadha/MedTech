@@ -1,15 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 
-const CharacterRevealText: React.FC = () => {
+interface CharacterRevealTextProps {
+    onTextChange: (index: number, text: string) => void;
+}
+
+const CharacterRevealText: React.FC<CharacterRevealTextProps> = ({ onTextChange }) => {
     const textRef = useRef<HTMLHeadingElement>(null);
     const [currentIndex, setCurrentIndex] = useState(0);
 
     const texts = [
         "Innovation in every pulse",
-        "Empowering creativity",
-        "Driving progress forward",
-        "Discover new possibilities"
+        "Elevate Health, Enrich Lives",
+        "Cutting-Edge Health Tech.",
+        "Comfort Beyond Compare"
     ];
 
     const animateText = () => {
@@ -30,6 +34,8 @@ const CharacterRevealText: React.FC = () => {
                     duration: 0.5,
                     ease: 'power3.out',
                     onComplete: () => {
+                        // Notify parent component of the text change
+                        onTextChange(currentIndex, currentText);
                         // Change text after animation completes
                         setTimeout(() => {
                             setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length);
