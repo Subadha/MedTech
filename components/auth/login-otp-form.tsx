@@ -21,7 +21,7 @@ import FormError from "./form-error";
 import Link from "next/link";
 import Image from "next/image";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import img from "@/app/images/preg.png";
+import img from "@/app/images/bg_2.jpg";
 import logo from "@/app/images/logo.png";
 import { useSearchParams } from "next/navigation";
 import {
