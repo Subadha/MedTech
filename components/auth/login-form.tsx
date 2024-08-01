@@ -21,7 +21,7 @@ import FormSucess from "./form-sucess";
 import FormError from "./form-error";
 import Link from "next/link";
 import Image from "next/image";
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import img from "@/app/images/bg_2.jpg";
 import logo from "@/app/images/logo.png";
 import { useSearchParams } from "next/navigation";
@@ -49,13 +49,16 @@ export const LoginForm = () => {
 
   const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     const data = {
-        ...(validateEmailOrPhone(values.identifier) === "email" ? { email: values.identifier } :
-          validateEmailOrPhone(values.identifier) === "phone" ? { phone: values.identifier } : {}),
-        password: values.password,
+      ...(validateEmailOrPhone(values.identifier) === "email"
+        ? { email: values.identifier }
+        : validateEmailOrPhone(values.identifier) === "phone"
+        ? { phone: values.identifier }
+        : {}),
+      password: values.password,
     };
 
     startTransition(() => {
-      login(data).then((data) => {        
+      login(data).then((data) => {
         setError(data?.error);
         setSucess(data?.success);
       });
@@ -68,6 +71,9 @@ export const LoginForm = () => {
 
   return (
     <div className="flex justify-evenly h-[100vh]">
+      <div className="">
+        <Image alt="Login Image" src={img} fill />
+      </div>
       <div className="absolute sm:top-4 sm:left-10 z-10 w-20 h-20">
         <Link href="/">
           <Image src={logo} alt="Logo" layout="fill" objectFit="contain" />
@@ -80,9 +86,6 @@ export const LoginForm = () => {
             Sign up
           </Link>{" "}
         </span>
-      </div>
-      <div className="sm:relative sm:visible invisible sm:w-[50vw] bg-black">
-        <Image alt="Login Image" src={img} className="w-screen h-full" fill />
       </div>
       <div className="sm:flex sm:w-[50vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
         <CardWrapper
@@ -100,12 +103,12 @@ export const LoginForm = () => {
                   name="identifier"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email or Phone</FormLabel>
+                      <FormLabel>Email or Phone no.</FormLabel>
                       <FormControl>
                         <Input
                           disabled={isPending}
                           {...field}
-                          placeholder="Enter your email or phone"
+                          placeholder="Enter your email or phone no."
                           type="text"
                         />
                       </FormControl>

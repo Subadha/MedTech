@@ -64,6 +64,9 @@ export const LoginUsingOtpForm = () => {
 
   return (
     <div className="flex justify-evenly h-[100vh]">
+      <div className="">
+        <Image alt="Login Image" src={img} fill />
+      </div>
       <div className="absolute sm:top-4 sm:left-10 z-10 w-20 h-20">
         <Link href="/">
           <Image src={logo} alt="Logo" layout="fill" objectFit="contain" />
@@ -77,10 +80,7 @@ export const LoginUsingOtpForm = () => {
           </Link>{" "}
         </span>
       </div>
-      <div className="sm:relative sm:visible invisible sm:w-[50vw] bg-black">
-        <Image alt="Login Image" src={img} className="w-screen h-full" fill />
-      </div>
-      <div className="sm:flex sm:w-[50vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
+      <div className="sm:flex sm:w-[50vw] lg:w-[40vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
         <CardWrapper
           headerTitle="Sign in"
           headerLabel="Welcome Back"
