@@ -5,9 +5,9 @@
 "use client";
 import { FaEnvelope, FaPhone, FaCalendarAlt, FaTelegram } from "react-icons/fa";
 import Image from "next/image";
-import img2 from "../../app/images/doc3.png";
-import img3 from "../../app/images/doc1.png";
-import img4 from "../../app/images/Login.jpg"; // Additional images if needed
+import img2 from "../../app/images/front1.png";
+import img3 from "../../app/images/front2.png";
+import img4 from "../../app/images/front3.png"; // Additional images if needed
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";

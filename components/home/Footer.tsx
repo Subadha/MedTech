@@ -1,7 +1,7 @@
 "use client"
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import img1 from "@/app/images/bg_3.jpg"
 export const Footer = () => {
   return (
@@ -40,6 +40,9 @@ export const Footer = () => {
             <a href="https://x.com/i/flow/login?redirect_after_login=%2FKaustubhamedtec" aria-label="Twitter">
               <FaTwitter className='text-white text-xl' />
             </a>
+              <a href="https://www.youtube.com/@kaustubhamedtech" aria-label="Twitter">
+                <FaTwitter className='text-white text-xl' />
+              </a>
           </div>
             <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100090014336935&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" ></iframe>
         </div>
