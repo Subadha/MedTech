@@ -25,7 +25,7 @@ export default function Team() {
             name: "Veena C",
             title: "Consultant and Cofounder",
             image: img2,
-            linkedinUrl: "https://www.linkedin.com/in/veena-c"
+            linkedinUrl: "https://www.linkedin.com/in/veena-c-1986aa22b/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
         },
         {
             name: "Renu John",
