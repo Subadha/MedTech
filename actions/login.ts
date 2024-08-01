@@ -1,53 +1,65 @@
 "use server";
-import { LoginSchema } from "@/schema";
+import { LoginSchema, validateEmailOrPhone } from "@/schema";
 import { signIn } from "@/auth";
-import * as z from "zod";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
-import {getVerificationToken} from "@/lib/tokens"
-import { getUserByEmail } from "@/data/user";
+import { getVerificationToken } from "@/lib/tokens";
+import { getUserByEmail, getUserByNumber } from "@/data/user";
 import { sendVerificationEmail } from "@/lib/mail";
-export const  login = async (values:z.infer<typeof LoginSchema>)=>{
-    // console.log(values)
-    const validate = LoginSchema.safeParse(values);
-    if(!validate.success){
-        return{error : "Invalid Error"}
-    }   
+
+export const login = async (values: { email?: string; phone?: string; password: string }) => {
+    const identifier = values.email || values.phone;
+
+    const validate = LoginSchema.safeParse({ identifier, password: values.password });
+
+    if (!validate.success) {
+        console.error("Validation errors:", validate.error.format());
+        return { error: "Invalid input" };
+    }
+
+    const { identifier: validatedIdentifier, password } = validate.data;
+
+    const fieldType = validateEmailOrPhone(validatedIdentifier);
+    let user;
+
+    if (fieldType === "email") {
+        user = await getUserByEmail(validatedIdentifier);
+    } else if (fieldType === "phone") {
+        user = await getUserByNumber(validatedIdentifier);
+    } else {
+        return { error: "Invalid identifier type" };
+    }
     
-    const {email,password} = validate.data;
-
-
-    const existingUser = await getUserByEmail(email);
-
-    if(!existingUser || !existingUser.email || !existingUser.password){
-        return {error:"Email Doesnt Exist"}
+    if (!user || !user.email || !user.password) {
+        return { error: "User does not exist" };
     }
 
-    if(!existingUser.emailVerified){
-        const verificationToken = await getVerificationToken(existingUser.email)
+    if (!user.emailVerified) {
+         
+        const verificationToken = await getVerificationToken(user.email);
         await sendVerificationEmail(
-        verificationToken.email,
-        verificationToken.token
-    )
-
-        return {sucess:"Conformation Email Sent"}
+            verificationToken.email,
+            verificationToken.token
+        );
+        return { success: "Confirmation email sent" };
     }
 
-    try {
-        await signIn("credentials",{
-            email,
+    try {        
+        await signIn("credentials", {
+            identifier: user.email,
             password,
-            redirectTo:DEFAULT_LOGIN_REDIRECT,
-        })
-    }catch(error){
-        if(error instanceof AuthError){
-            switch(error.type){
+            redirectTo: DEFAULT_LOGIN_REDIRECT,
+        });        
+        return { success: "Successfully logged in" };
+    } catch (error) {        
+        if (error instanceof AuthError) {
+            switch (error.type) {
                 case "CredentialsSignin":
-                    return { error : "Invalid credentials"}
-                default :
-                    return {error :"Something went wrong"}
+                    return { error: "Invalid credentials" };
+                default:
+                    return { error: "Something went wrong" };
             }
         }
         throw error;
     }
-}
+};

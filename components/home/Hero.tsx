@@ -1,4 +1,5 @@
 
+
 // File: Hero.tsx
 
 "use client";
@@ -66,6 +67,7 @@ const Hero: React.FC = () => {
     }
   };
 
+
   return (
     <motion.div
       initial={{
@@ -100,6 +102,7 @@ const Hero: React.FC = () => {
           </div>
         </div>
       </div>
+
     </motion.div>
   );
 };
