@@ -22,7 +22,7 @@ import FormError from "./form-error";
 import Link from "next/link";
 import Image from "next/image";
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import img from "@/app/images/preg.png";
+import img from "@/app/images/bg_2.jpg";
 import logo from "@/app/images/logo.png";
 import { useSearchParams } from "next/navigation";
 
@@ -60,20 +60,19 @@ export const LoginForm = () => {
     };
 
     return (
-        <div className="flex justify-evenly h-[100vh]">
+        <div className="flex justify-evenly h-[100vh]" >
+            <div className="">
+                <Image
+                    alt="Login Image"
+                    src={img}
+                    fill
+                />
+            </div>
             <div className="absolute sm:top-4 sm:left-10 z-10 w-20 h-20">
                 <Link href="/"><Image src={logo} alt="Logo" layout="fill" objectFit="contain" /></Link>
             </div>
             <div className="absolute sm:top-10 top-[100px] sm:right-10 z-20 text-gray-600">
                 <span>Dont have an account? <Link href="/auth/register" className="text-purple-700 font-bold-700">Sign up</Link> </span>
-            </div>
-            <div className="sm:relative sm:visible invisible sm:w-[50vw] bg-black">
-                <Image
-                    alt="Login Image"
-                    src={img}
-                    className="w-screen h-full"
-                    fill
-                />
             </div>
             <div className="sm:flex sm:w-[50vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
                 <CardWrapper
