@@ -1,5 +1,4 @@
 "use client";
-import { Suspense } from "react"; // Import Suspense from React
 import { CardWrapper } from "../auth/card-warpper";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import * as z from "zod";
-import { LoginSchema, validateEmailOrPhone } from "@/schema";
+import { LoginSchema, LoginUsingOtpSchema } from "@/schema";
 import { Button } from "../ui/button";
 import { login } from "@/actions/login";
 import { useState, useTransition } from "react";
@@ -25,12 +24,18 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import img from "@/app/images/doc1.png";
 import logo from "@/app/images/logo.png";
 import { useSearchParams } from "next/navigation";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "../ui/input-otp";
+import { optlogin } from "@/actions/otp-login";
 
-export const LoginForm = () => {
+export const LoginUsingOtpForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [sucess, setSucess] = useState<string | undefined>("");
-  const [showPassword, setShowPassword] = useState(false);
 
   // Use useSearchParams() directly
   const searchParams = useSearchParams();
@@ -39,31 +44,22 @@ export const LoginForm = () => {
       ? "Email already in use with different Provider "
       : "";
 
-  const form = useForm<z.infer<typeof LoginSchema>>({
+  const form = useForm<z.infer<typeof LoginUsingOtpSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
-      identifier: "",
-      password: "",
+      phone: "",
+      otp: "",
     },
   });
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    const data = {
-        ...(validateEmailOrPhone(values.identifier) === "email" ? { email: values.identifier } :
-          validateEmailOrPhone(values.identifier) === "phone" ? { phone: values.identifier } : {}),
-        password: values.password,
-    };
+  const onSubmit = (values: z.infer<typeof LoginUsingOtpSchema>) => {
 
     startTransition(() => {
-      login(data).then((data) => {        
+      optlogin(values).then((data) => {
         setError(data?.error);
         setSucess(data?.success);
       });
     });
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
   };
 
   return (
@@ -97,17 +93,20 @@ export const LoginForm = () => {
               <div>
                 <FormField
                   control={form.control}
-                  name="identifier"
+                  name="phone"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email or Phone</FormLabel>
+                      <FormLabel>Phone no.</FormLabel>
                       <FormControl>
+                      <div className="flex w-full items-center gap-2">
                         <Input
                           disabled={isPending}
                           {...field}
-                          placeholder="Enter your email or phone"
+                          placeholder="Enter your phone"
                           type="text"
                         />
+                         <Button>Send OTP</Button>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -115,26 +114,25 @@ export const LoginForm = () => {
                 />
                 <FormField
                   control={form.control}
-                  name="password"
+                  name="otp"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>Otp</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <Input
-                            disabled={isPending}
-                            {...field}
-                            placeholder="Enter your password"
-                            type={showPassword ? "text" : "password"}
-                          />
-                          <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                            <button
-                              type="button"
-                              onClick={togglePasswordVisibility}
-                            >
-                              {showPassword ? <FaEyeSlash /> : <FaEye />}
-                            </button>
-                          </div>
+                          <InputOTP maxLength={6}>
+                            <InputOTPGroup>
+                              <InputOTPSlot index={0} />
+                              <InputOTPSlot index={1} />
+                              <InputOTPSlot index={2} />
+                            </InputOTPGroup>
+                            <InputOTPSeparator />
+                            <InputOTPGroup>
+                              <InputOTPSlot index={3} />
+                              <InputOTPSlot index={4} />
+                              <InputOTPSlot index={5} />
+                            </InputOTPGroup>
+                          </InputOTP>
                         </div>
                       </FormControl>
                       <FormMessage />

@@ -1,11 +1,8 @@
-import { LoginForm } from "@/components/auth/login-form";
 import { LoginUsingOtpForm } from "@/components/auth/login-otp-form";
 
-
-export default function Login(){
+export default function Page(){
     return(
         <div>
-            {/* <LoginForm/> */}
             <LoginUsingOtpForm/>
         </div>
     )

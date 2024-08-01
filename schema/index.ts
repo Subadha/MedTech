@@ -1,10 +1,43 @@
 import * as z from "zod";
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const phoneRegex = /^(\+?\d{1,3})?\d{10}$/;
+
+export const validateEmailOrPhone = (value: string): "email" | "phone" | false => {
+    if (emailRegex.test(value)) {
+        return "email";
+    }
+    if (phoneRegex.test(value)) {
+        return "phone";
+    }
+    return false;
+};
+
 export const LoginSchema = z.object({
-    email : z.string().email({
-        message:"Email is Required"
+    identifier: z.string().min(1, {
+        message: "Identifier is required",
+    }).refine(value => validateEmailOrPhone(value) !== false, {
+        message: "Invalid email or phone number",
     }),
-    password : z.string().min(1,{
-        message:"Password is Required"
+    password: z.string().min(1, {
+        message: "Password is required",
+    }),
+}).transform(data => {
+    const fieldType = validateEmailOrPhone(data.identifier);
+    if (fieldType === "email") {
+        return { ...data, email: data.identifier };
+    } else if (fieldType === "phone") {
+        return { ...data, phone: data.identifier };
+    }
+    return data;
+});
+
+export const LoginUsingOtpSchema = z.object({
+    phone : z.string().length(13,{
+        message:"Phone number is Required"
+    }),
+    otp : z.string().min(6,{
+        message:"OTP is Required"
     })
 })
 

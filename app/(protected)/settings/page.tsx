@@ -8,7 +8,8 @@ const Settings = async () => {
     const role = session?.user.role || "User";
     return (
         <div>
-            <SideNav userName={userName} role={role}/>
+            <h1>Dashboard</h1>
+            {/* <SideNav userName={userName} role={role}/> */}
         </div>
     );
 }

@@ -45,7 +45,7 @@ export const {
         if(account?.provider!=="credentials") return true;
 
         const existingUser = await getUserById(user.id);
-
+          
         //prevnet sign in without email verification
         if(!existingUser?.emailVerified) return false;
         return true
@@ -55,7 +55,6 @@ export const {
             if(token.sub && session.user){
                 session.user.id = token.sub
             }
-            console.log(token);
             if(token.role && session.user){
                 session.user.role = token.role as UserRole;
             }
