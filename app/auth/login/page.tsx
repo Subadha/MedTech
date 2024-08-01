@@ -5,8 +5,8 @@ import { LoginUsingOtpForm } from "@/components/auth/login-otp-form";
 export default function Login(){
     return(
         <div>
-            {/* <LoginForm/> */}
-            <LoginUsingOtpForm/>
+            <LoginForm/>
+            {/* <LoginUsingOtpForm/> */}
         </div>
     )
 }
