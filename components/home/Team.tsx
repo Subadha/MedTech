@@ -19,7 +19,7 @@ export default function Team() {
         { name: "Sushmee Badhulika", title: "Scientific advisor: Professor IITH", image: img4 },
         { name: "Neeko Inees Chiriyankandath", title: "CScientific Advisor: Consultant Gynaecologist    ", image: img5 },
     ];
-    const visibleItems = 3; // Number of visible items at once
+    const visibleItems = 4; // Number of visible items at once
 
     const nextSlide = () => {
         setCurrentIndex((prevIndex) =>
@@ -58,8 +58,8 @@ export default function Team() {
                             style={{ transform: `translateX(-${currentIndex * 100 / visibleItems}%)` }}
                         >
                             {teamMembers.map((member, index) => (
-                                <div key={index} className="flex-none w-[300px] mx-2">
-                                    <div className="relative w-full h-[340px] rounded-2xl overflow-hidden">
+                                <div key={index} className="flex-none w-[330px] mx-2">
+                                    <div className="relative w-full h-[400px] rounded-2xl overflow-hidden">
                                         <Image
                                             src={member.image}
                                             alt={member.name}
@@ -70,7 +70,7 @@ export default function Team() {
                                         <div className="absolute top-0 right-0 p-3">
                                             <FaLinkedin size={30} className="text-blue-600" />
                                         </div>
-                                        <div className="absolute bottom-0 left-0 right-0 bg-white text-black justify-center items-center h-[100px] mx-[20px] sm:mb-5 rounded-md flex flex-col">
+                                        <div className="absolute bottom-0 left-0 right-0 bg-white text-black justify-center items-center h-[70px] mx-[20px] sm:mb-2 rounded-md flex flex-col">
                                             <span className="font-bold text-xl">{member.name}</span>
                                             <span>{member.title}</span>
                                         </div>
@@ -80,7 +80,7 @@ export default function Team() {
                         </div>
                     </div>
                 </div>
-                <div className="absolute flex justify-between gap-10 mt-[380px] max-w-3xl px-5">
+                <div className="absolute flex justify-between gap-10 mt-[430px] max-w-3xl px-5">
                     <FaArrowLeft
                         className="cursor-pointer text-3xl"
                         onClick={prevSlide}
