@@ -57,7 +57,6 @@ export const LoginUsingOtpForm = () => {
     startTransition(() => {
       optlogin(values).then((data) => {
         setError(data?.error);
-        setSucess(data?.success);
       });
     });
   };
