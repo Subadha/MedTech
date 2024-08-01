@@ -11,7 +11,7 @@ export default async function Layout({
   const role = session?.user.role || "User";
   return (
     <>
-      <SideNav userName={userName} children={children} role={role} />
+      <SideNav userName={userName} role={role}> {children}</SideNav>
     </>
   );
 }
