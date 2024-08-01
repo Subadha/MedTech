@@ -36,14 +36,14 @@ export const TextCard = () => {
         </div>
 
         {/* Image */}
-        <div className="relative lg:flex-1 h-[500px] lg:h-[500px] sm:mt-[100px] mt-0">
+        {/* <div className="relative lg:flex-1 h-[500px] lg:h-[500px] sm:mt-[100px] mt-0">
           <Image
             className="object-fill"
             src={doc}
             alt="Illustration of the wearable pregnancy monitoring device"
             layout="fill"
           />
-        </div>
+        </div> */}
 
         {/* Features List */}
         <div className="lg:flex-1 sm:mt-[200px] mt-10 mb-12 pb-5 px-4 h-full bg-white shadow-lg rounded-lg">

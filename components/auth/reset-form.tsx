@@ -80,14 +80,14 @@ export const ResetForm = () => {
             <div className="absolute sm:top-10 top-[100px] sm:right-10 z-20 text-gray-600">
                 <span>Remembered your password? <Link href="/auth/login" className="text-purple-700 font-bold-700">Sign in</Link> </span>
             </div>
-            <div className="sm:relative sm:visible invisible sm:w-[50vw] bg-black">
+            {/* <div className="sm:relative sm:visible invisible sm:w-[50vw] bg-black">
                 <Image
                     alt="Reset Password Image"
                     src={img}
                     className="w-screen h-full"
                     fill
                 />
-            </div>
+            </div> */}
             <div className="sm:flex sm:w-[50vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
                 <CardWrapper
                     headerTitle="Reset Password"
