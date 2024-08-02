@@ -6,6 +6,7 @@ import Image from "next/image";
 import logo from "@/app/images/logo.png";
 import Link from "next/link";
 import { SignOut } from "@/actions/signout";
+import { SearchBar } from "../dashboard/search-bar";
 
 const menuItems = [
   {
@@ -92,16 +93,17 @@ export default function SideNav({ userName, role, children }: SideNavProps) {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 p-6 lg:ml-64">
-        <header className="flex items-center justify-between border-b border-gray-200 pb-4">
+      <div className="flex-1 p-5 lg:ml-64">
+        <header className="flex items-center justify-between border-b border-gray-200 pb-2">
           <div className="lg:hidden">
             <button onClick={toggleMenu} className="focus:outline-none">
               <Menu className="h-6 w-6" />
             </button>
           </div>
-          <h1 className="text-xl font-bold">
-            Welcome, {userName} as {role}
-          </h1>
+          <h3 className="text-xl font-bold">
+           <span className="text-base font-normal text-gray-600">Hi, {userName}</span><br/> Welcome Back
+          </h3>
+          {/* <SearchBar/> */}
         </header>
         <main className="h-full">{children}</main>
       </div>

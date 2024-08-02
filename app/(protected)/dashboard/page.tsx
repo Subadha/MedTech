@@ -1,5 +1,7 @@
 // settings/page.js
 import { auth } from "@/auth"; 
+import { MainCarausel } from "@/components/dashboard/carausel";
+import NearbyDoctors from "@/components/dashboard/nearby-doctors";
 import SideNav from "@/components/home/SideNav";
 
 const Settings = async () => {
@@ -7,9 +9,9 @@ const Settings = async () => {
     const userName = session?.user.name || "User";
     const role = session?.user.role || "User";
     return (
-        <div>
-            <h1>Dashboard</h1>
-            {/* <SideNav userName={userName} role={role}/> */}
+        <div className="p-3">
+            <MainCarausel/>
+            <NearbyDoctors/>
         </div>
     );
 }
