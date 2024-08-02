@@ -7,6 +7,7 @@ export const publicRoutes = [
 
 export const authRoutes = [
     "/auth/login",
+    "/auth/login-otp",
     "/auth/register",
     "/auth/reset",
     "/auth/new-password",
@@ -15,4 +16,4 @@ export const authRoutes = [
 
 export const apiAuthPrefix = "/api/auth"
 
-export const DEFAULT_LOGIN_REDIRECT = "/settings"
+export const DEFAULT_LOGIN_REDIRECT = "/dashboard"
