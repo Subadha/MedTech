@@ -7,6 +7,8 @@ import Team from "@/components/home/Team";
 import Photo from "@/components/home/Photos";
 import Narrative from "@/components/home/Narrative";
 import News from "@/components/home/News";
+
+
   
 export default function Home() {
   return (

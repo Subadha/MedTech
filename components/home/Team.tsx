@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FaLinkedin, FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import Image from "next/image";
 import Link from 'next/link';
@@ -14,6 +14,8 @@ import img5 from "@/app/images/program-5.jpg";
 
 export default function Team() {
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [visibleItems, setVisibleItems] = useState(3);
+
     const teamMembers = [
         {
             name: "Gurushankar",
@@ -46,7 +48,23 @@ export default function Team() {
             linkedinUrl: "https://www.linkedin.com/in/dr-neeko-inees-chiriyankdath-2b79a0196/"
         },
     ];
-    const visibleItems = 3;
+
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth < 640) {
+                setVisibleItems(1);
+            } else {
+                setVisibleItems(3);
+            }
+        };
+
+        window.addEventListener("resize", handleResize);
+
+        // Initial check
+        handleResize();
+
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     const nextSlide = () => {
         setCurrentIndex((prevIndex) =>
@@ -69,14 +87,14 @@ export default function Team() {
                     Innovation at the heart of health: Meet our Visionary Team
                 </h1>
                 <div className="relative flex flex-col items-center w-full">
-                    <div className="relative flex items-center w-full px-12">
+                    <div className="relative flex items-center px-12 mx-10">
                         <div className="flex overflow-hidden w-full">
                             <div
                                 className="flex transition-transform duration-500 ease-in-out"
-                                style={{ transform: `translateX(-${currentIndex * 100 / visibleItems}%)` }}
+                                style={{ transform: `translateX(-${currentIndex * (100 / visibleItems)}%)` }}
                             >
                                 {teamMembers.map((member, index) => (
-                                    <div key={index} className="flex-none w-[330px] mx-2">
+                                    <div key={index} className="flex-none w-full sm:w-[calc(100%/3)] mx-0 sm:px-5">
                                         <div className="relative w-full h-[400px] rounded-2xl overflow-hidden">
                                             <Image
                                                 src={member.image}
@@ -86,12 +104,12 @@ export default function Team() {
                                                 className="rounded-2xl"
                                             />
                                             <Link href={member.linkedinUrl} passHref>
-                                                <span  rel="noopener noreferrer" className="absolute top-0 right-0 p-3">
+                                                <span rel="noopener noreferrer" className="absolute top-0 right-0 p-3">
                                                     <FaLinkedin size={30} className="text-blue-600" />
                                                 </span>
                                             </Link>
                                         </div>
-                                        <div className="w-full bg-white text-black justify-center items-center h-[70px] mt-2 rounded-md flex flex-col">
+                                        <div className="w-full bg-white text-black justify-center text-center items-center h-[70px] mt-2 rounded-md flex flex-col">
                                             <span className="font-bold text-xl">{member.name}</span>
                                             <span>{member.title}</span>
                                         </div>
