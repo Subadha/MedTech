@@ -7,11 +7,12 @@ import logo from "@/app/images/logo.png";
 import Link from "next/link";
 import { SignOut } from "@/actions/signout";
 import { SearchBar } from "../dashboard/search-bar";
+import Header from "../dashboard/header";
 
 const menuItems = [
   {
     name: "Dashboard",
-    href: "/settings",
+    href: "/dashboard",
   },
   {
     name: "Calendar",
@@ -19,7 +20,7 @@ const menuItems = [
   },
   {
     name: "Book",
-    href: "/settings/book",
+    href: "/dashboard/book",
   },
   {
     name: "Profile",
@@ -93,19 +94,9 @@ export default function SideNav({ userName, role, children }: SideNavProps) {
       </aside>
 
       {/* Main Content */}
-      <div className="flex-1 p-5 lg:ml-64">
-        <header className="flex items-center justify-between border-b border-gray-200 pb-2">
-          <div className="lg:hidden">
-            <button onClick={toggleMenu} className="focus:outline-none">
-              <Menu className="h-6 w-6" />
-            </button>
-          </div>
-          <h3 className="text-xl font-bold">
-           <span className="text-base font-normal text-gray-600">Hi, {userName}</span><br/> Welcome Back
-          </h3>
-          {/* <SearchBar/> */}
-        </header>
-        <main className="h-full">{children}</main>
+      <div className="flex-1 h-full lg:ml-64">
+        <Header userName={userName} toggleMenu={toggleMenu} />
+        <main className="dashboard h-[calc(100vh-80px)] overflow-y-auto">{children}</main>
       </div>
     </div>
   );

@@ -10,8 +10,9 @@ export default async function Layout({
   const userName = session?.user.name || "User";
   const role = session?.user.role || "User";
   return (
-    <>
+    <div>
       <SideNav userName={userName} role={role}> {children}</SideNav>
-    </>
+   
+    </div>
   );
 }
