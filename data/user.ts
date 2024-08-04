@@ -39,8 +39,8 @@ export const getUserById = async (id: string): Promise<User | null> => {
     const user = await db.user.findUnique({
       where: { id },
     });
-    if (user && user.password !== null) {
-      return { ...user, password: user.password! } as User;
+    if (user) {
+      return user;
     }
     return null;
   } catch (error) {

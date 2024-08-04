@@ -48,7 +48,10 @@ export const RegisterwithPhoneSchema = z.object({
     role: z.enum(["USER", "ADMIN"]),
     phone: z.string()
     .length(13, { message: "Phone number must be exactly 10 digits long." })
-    .regex(/^\+\d{12}$/, { message: "Phone number must start with a + followed by 12 digits." })
+    .regex(/^\+\d{12}$/, { message: "Phone number must start with a + followed by 12 digits." }),
+    otp : z.string().min(6,{
+        message:"OTP is Required"
+    })
 })
 
 export const RegisterSchema = z.object({

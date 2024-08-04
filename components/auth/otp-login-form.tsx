@@ -93,7 +93,7 @@ export const LoginUsingOtpForm = () => {
       </div>
       <div className="absolute sm:top-10 top-[100px] sm:right-10 z-20 text-gray-600">
         <span>
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link href="/auth/register" className="text-purple-700 font-bold-700">
             Sign up
           </Link>{" "}
@@ -170,6 +170,7 @@ export const LoginUsingOtpForm = () => {
               >
                 Login
               </Button>
+              <div className="w-full flex mt-3 text-primary font-semibold hover:underline justify-end"><Link href={'/auth/login'}>Use email</Link></div>
               <Button
                 size="sm"
                 variant="link"
