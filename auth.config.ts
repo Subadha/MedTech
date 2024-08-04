@@ -1,6 +1,6 @@
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { LoginSchema, validateEmailOrPhone } from "./schema";
+import { LoginSchema, LoginUsingOtpSchema, validateEmailOrPhone } from "./schema";
 import { getUserByEmail, getUserByNumber, User } from "./data/user";
 import bcrypt from "bcryptjs";
 import Facebook from "next-auth/providers/facebook";
@@ -38,6 +38,30 @@ export default {
             }
           }
 
+
+          return null;
+        }
+
+        return null;
+      },
+    }),
+    Credentials({
+      id: "otp",
+      name: "OTP Login",
+      credentials: {
+        phone: { label: "Phone", type: "text" },
+        otp: { label: "OTP", type: "text" },
+      },
+      async authorize(credentials): Promise<User | null> {
+        const validateFields = LoginUsingOtpSchema.safeParse(credentials);
+
+        if (validateFields.success) {
+          const { phone, otp } = validateFields.data;
+          const user = await getUserByNumber(phone);
+
+          if (user && otp === "123456") {
+            return user;
+          }
 
           return null;
         }

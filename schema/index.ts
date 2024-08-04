@@ -41,6 +41,16 @@ export const LoginUsingOtpSchema = z.object({
     })
 })
 
+export const RegisterwithPhoneSchema = z.object({
+    name:z.string().min(1,{
+        message:"Name is Required"
+    }),
+    role: z.enum(["USER", "ADMIN"]),
+    phone: z.string()
+    .length(13, { message: "Phone number must be exactly 10 digits long." })
+    .regex(/^\+\d{12}$/, { message: "Phone number must start with a + followed by 12 digits." })
+})
+
 export const RegisterSchema = z.object({
     email : z.string().email({
         message:"Email is Required"

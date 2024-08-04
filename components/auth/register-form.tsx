@@ -81,7 +81,7 @@ export const RegisterForm = () => {
                 <div className="absolute sm:top-10 top-[100px] sm:right-10 z-20 text-gray-600">
                     <span>Already have an account? <Link href="/auth/login" className="text-purple-700 font-bold-700">Sign in</Link> </span>
                 </div>
-            <div className="sm:flex sm:w-[50vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
+            <div className="sm:flex sm:w-[50vw] w-[95vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
                 <CardWrapper
                     headerTitle="Register"
                     headerLabel="Create an Account"
@@ -221,6 +221,7 @@ export const RegisterForm = () => {
                             <FormSucess message={sucess} />
                             <FormError message={error} />
                             <Button className="w-full h-10 mt-5 bg-purple-700 hover:bg-purple-500" disabled={isPending} type="submit">Register</Button>
+                            <div className="w-full flex mt-3 text-primary font-semibold hover:underline justify-end"><Link href={'/auth/phone-register'}>Use Phone number</Link></div>
                         </form>
                     </Form>
                 </CardWrapper>

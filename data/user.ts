@@ -24,6 +24,9 @@ export const getUserByNumber = async (phone: string): Promise<User | null> => {
     if (user && user.password !== null) {
       return { ...user, password: user.password! } as User;
     }
+    if(user){
+      return user;
+    }
     return null;
   } catch (error) {
     console.error('Error fetching user by phone number:', error);
@@ -63,7 +66,8 @@ export type User = {
   name: string | null;
   email: string | null;
   emailVerified: Date | null;
-  password: string;
+  numberVerified: Boolean;
+  password: string | null;
   role: "USER" | "ADMIN";
   image: string | null;
   phone: string | null;

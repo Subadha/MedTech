@@ -22,7 +22,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
     return { error: "Email already exists" };
   }
 
-  await db.user.create({
+  const Val= await db.user.create({
     data: {
       name,
       email: normalizedEmail,
@@ -31,7 +31,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       phone, 
     },
   });
-
+ console.log(Val);
+ 
   const verificationToken = await getVerificationToken(email);
   await sendVerificationEmail(
     verificationToken.email,
