@@ -170,6 +170,7 @@ export const LoginUsingOtpForm = () => {
               >
                 Login
               </Button>
+              <div className="w-full flex mt-3 text-primary font-semibold hover:underline justify-end"><Link href={'/auth/login'}>Use email</Link></div>
               <Button
                 size="sm"
                 variant="link"

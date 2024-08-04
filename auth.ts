@@ -42,10 +42,12 @@ export const {
     },
   },
   callbacks: {
-    async signIn({ user, account }) {      
+    async signIn({ user, account }) {            
       if (account?.provider === "credentials" || account?.provider === "otp") {
         if (typeof user.id !== "string") return false;
         const existingUser = await getUserById(user.id);
+         console.log(existingUser);
+         
         if (!existingUser) return false;
 
         if (account.provider === "credentials" && !existingUser.emailVerified) {

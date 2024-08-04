@@ -25,11 +25,14 @@ export const optlogin = async (values: z.infer<typeof LoginUsingOtpSchema>) => {
   // if (!user || user.phone !== existingUser.phone) {
   //   return { error: "Resend otp" };
   // }
+  if(otp!='11111'){
+    return { error: "Invalid Otp" };
+  }
   try {
     await signIn("otp", {
-      identifier: existingUser.phone,
-      redirect: false,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      phone: existingUser.phone,
+      otp: otp,
+      callbackUrl: DEFAULT_LOGIN_REDIRECT,
     });
     return { success: "Successfully logged in" };
   } catch (error) {

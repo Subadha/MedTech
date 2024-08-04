@@ -71,9 +71,9 @@ export const getVerificationToken = async (email: string) => {
     return verificationToken;
 };
 export const sendOtp = async (phone: string) => {
-    const otp = (crypto.randomBytes(3).readUIntBE(0, 3) % 1000000).toString().padStart(6, '0');   
-
+    
     try {
+        const otp = (crypto.randomBytes(3).readUIntBE(0, 3) % 1000000).toString().padStart(6, '0');   
         // Uncomment and configure the following lines if you want to send OTP via Twilio
         // const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
         // await client.messages.create({

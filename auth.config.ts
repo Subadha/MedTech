@@ -1,6 +1,10 @@
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { LoginSchema, LoginUsingOtpSchema, validateEmailOrPhone } from "./schema";
+import {
+  LoginSchema,
+  LoginUsingOtpSchema,
+  validateEmailOrPhone,
+} from "./schema";
 import { getUserByEmail, getUserByNumber, User } from "./data/user";
 import bcrypt from "bcryptjs";
 import Facebook from "next-auth/providers/facebook";
@@ -17,6 +21,8 @@ export default {
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
     Credentials({
+      id: "credentials",
+      name: "Email and Password Login",
       async authorize(credentials): Promise<User | null> {
         const validateFields = LoginSchema.safeParse(credentials);
 
@@ -38,7 +44,6 @@ export default {
             }
           }
 
-
           return null;
         }
 
@@ -48,18 +53,13 @@ export default {
     Credentials({
       id: "otp",
       name: "OTP Login",
-      credentials: {
-        phone: { label: "Phone", type: "text" },
-        otp: { label: "OTP", type: "text" },
-      },
       async authorize(credentials): Promise<User | null> {
         const validateFields = LoginUsingOtpSchema.safeParse(credentials);
 
         if (validateFields.success) {
-          const { phone, otp } = validateFields.data;
+          const { phone } = validateFields.data;
           const user = await getUserByNumber(phone);
-
-          if (user && otp === "123456") {
+          if (user) {
             return user;
           }
 

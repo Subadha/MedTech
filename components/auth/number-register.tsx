@@ -24,9 +24,15 @@ import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 import img from "@/app/images/bg_2.jpg";
 import logo from "@/app/images/logo.png";
 import { NumberRegister } from "@/actions/number-register";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "../ui/input-otp";
+import { sendOtp } from "@/lib/tokens";
 
 // Define the schema with confirmPassword field and custom validation
-
 
 export const NumberRegisterForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -41,6 +47,7 @@ export const NumberRegisterForm = () => {
       name: "",
       phone: "",
       role: "USER",
+      otp: "",
     },
   });
 
@@ -51,6 +58,24 @@ export const NumberRegisterForm = () => {
         setSucess(data?.success);
       });
     });
+  };
+
+  const onSendOtp = () => {
+    const phone = form.getValues("phone");
+    if (phone) {
+      startTransition(() => {
+        sendOtp(phone).then((data) => {
+          if (data?.success) {
+            setSucess("OTP sent successfully!");
+            setError("");
+          } else {
+            setError(data?.error);
+          }
+        });
+      });
+    } else {
+      setError("Please enter a valid phone number.");
+    }
   };
   return (
     <div className="flex justify-evenly h-[100vh]">
@@ -135,12 +160,45 @@ export const NumberRegisterForm = () => {
                     <FormItem>
                       <FormLabel>Mobile Number</FormLabel>
                       <FormControl>
-                        <Input
-                          disabled={isPending}
-                          {...field}
-                          placeholder="Enter your mobile number"
-                          type="text"
-                        />
+                        <div className="flex w-full items-center gap-2">
+                          <Input
+                            disabled={isPending}
+                            {...field}
+                            placeholder="Enter your mobile number"
+                            type="text"
+                          />
+                          <Button type="button" onClick={onSendOtp}>
+                            Send OTP
+                          </Button>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="otp"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>OTP</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <InputOTP maxLength={6} {...field}>
+                            <InputOTPGroup>
+                              <InputOTPSlot index={0} />
+                              <InputOTPSlot index={1} />
+                              <InputOTPSlot index={2} />
+                            </InputOTPGroup>
+                            <InputOTPSeparator />
+                            <InputOTPGroup>
+                              <InputOTPSlot index={3} />
+                              <InputOTPSlot index={4} />
+                              <InputOTPSlot index={5} />
+                            </InputOTPGroup>
+                          </InputOTP>
+                        </div>
                       </FormControl>
                       <FormMessage />
                     </FormItem>
