@@ -23,7 +23,7 @@ model User {
   image         String?
   accounts      Account[]
   phone         String?  @unique
- 
+  numberVerified  Boolean  @default(false)
   @@map("users")
 }
 

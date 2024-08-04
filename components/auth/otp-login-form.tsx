@@ -12,15 +12,13 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import * as z from "zod";
-import { LoginSchema, LoginUsingOtpSchema } from "@/schema";
+import { LoginUsingOtpSchema } from "@/schema";
 import { Button } from "../ui/button";
-import { login } from "@/actions/login";
 import { useState, useTransition } from "react";
 import FormSucess from "./form-sucess";
 import FormError from "./form-error";
 import Link from "next/link";
 import Image from "next/image";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
 import img from "@/app/images/bg_2.jpg";
 import logo from "@/app/images/logo.png";
 import { useSearchParams } from "next/navigation";
@@ -30,22 +28,22 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "../ui/input-otp";
-import { optlogin } from "@/actions/otp-login";
+import { optlogin} from "@/actions/otp-login";
+import { sendOtp } from "@/lib/tokens";
 
 export const LoginUsingOtpForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
-  const [sucess, setSucess] = useState<string | undefined>("");
+  const [success, setSuccess] = useState<string | undefined>("");
 
-  // Use useSearchParams() directly
   const searchParams = useSearchParams();
   const urlError =
     searchParams.get("error") === "OAuthAccountNotLinked"
-      ? "Email already in use with different Provider "
+      ? "Email already in use with different Provider"
       : "";
 
   const form = useForm<z.infer<typeof LoginUsingOtpSchema>>({
-    resolver: zodResolver(LoginSchema),
+    resolver: zodResolver(LoginUsingOtpSchema),
     defaultValues: {
       phone: "",
       otp: "",
@@ -53,12 +51,34 @@ export const LoginUsingOtpForm = () => {
   });
 
   const onSubmit = (values: z.infer<typeof LoginUsingOtpSchema>) => {
-
     startTransition(() => {
       optlogin(values).then((data) => {
-        setError(data?.error);
+        if (data?.success) {
+          setSuccess("Login successful!");
+          setError("");
+        } else {
+          setError(data?.error);
+        }
       });
     });
+  };
+
+  const onSendOtp = () => {
+    const phone = form.getValues("phone");
+    if (phone) {
+      startTransition(() => {
+        sendOtp(phone).then((data) => {
+          if (data?.success) {
+            setSuccess("OTP sent successfully!");
+            setError("");
+          } else {
+            setError(data?.error);
+          }
+        });
+      });
+    } else {
+      setError("Please enter a valid phone number.");
+    }
   };
 
   return (
@@ -73,7 +93,7 @@ export const LoginUsingOtpForm = () => {
       </div>
       <div className="absolute sm:top-10 top-[100px] sm:right-10 z-20 text-gray-600">
         <span>
-          Dont have an account?{" "}
+          Don't have an account?{" "}
           <Link href="/auth/register" className="text-purple-700 font-bold-700">
             Sign up
           </Link>{" "}
@@ -83,7 +103,7 @@ export const LoginUsingOtpForm = () => {
         <CardWrapper
           headerTitle="Sign in"
           headerLabel="Welcome Back"
-          backButtonLabel="Dont have an Account"
+          backButtonLabel="Don't have an Account"
           backButtonHref="/auth/register"
           showSocial
         >
@@ -97,14 +117,16 @@ export const LoginUsingOtpForm = () => {
                     <FormItem>
                       <FormLabel>Phone no.</FormLabel>
                       <FormControl>
-                      <div className="flex w-full items-center gap-2">
-                        <Input
-                          disabled={isPending}
-                          {...field}
-                          placeholder="Enter your phone"
-                          type="text"
-                        />
-                         <Button>Send OTP</Button>
+                        <div className="flex w-full items-center gap-2">
+                          <Input
+                            disabled={isPending}
+                            {...field}
+                            placeholder="Enter your phone"
+                            type="text"
+                          />
+                          <Button type="button" onClick={onSendOtp}>
+                            Send OTP
+                          </Button>
                         </div>
                       </FormControl>
                       <FormMessage />
@@ -116,10 +138,10 @@ export const LoginUsingOtpForm = () => {
                   name="otp"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Otp</FormLabel>
+                      <FormLabel>OTP</FormLabel>
                       <FormControl>
                         <div className="relative">
-                          <InputOTP maxLength={6}>
+                          <InputOTP maxLength={6} {...field}>
                             <InputOTPGroup>
                               <InputOTPSlot index={0} />
                               <InputOTPSlot index={1} />
@@ -139,7 +161,7 @@ export const LoginUsingOtpForm = () => {
                   )}
                 />
               </div>
-              <FormSucess message={sucess} />
+              <FormSucess message={success} />
               <FormError message={error || urlError} />
               <Button
                 className="w-full h-10 mt-5 bg-purple-700 hover:bg-purple-500"
