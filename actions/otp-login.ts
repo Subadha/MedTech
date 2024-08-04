@@ -25,7 +25,7 @@ export const optlogin = async (values: z.infer<typeof LoginUsingOtpSchema>) => {
   // if (!user || user.phone !== existingUser.phone) {
   //   return { error: "Resend otp" };
   // }  
-  if(otp!='111111'){
+  if(otp!=='111111'){
     return { error: "Invalid Otp" };
   }
   try {
