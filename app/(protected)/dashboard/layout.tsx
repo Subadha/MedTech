@@ -1,5 +1,7 @@
 import { auth } from "@/auth";
+import Header from "@/components/dashboard/header";
 import SideNav from "@/components/home/SideNav";
+import React from "react";
 
 export default async function Layout({
   children,
@@ -9,8 +11,10 @@ export default async function Layout({
   const session = await auth();
   const userName = session?.user.name || "User";
   const role = session?.user.role || "User";
+
+  
   return (
-    <div>
+    <div className="flex min-h-screen">
       <SideNav userName={userName} role={role}> {children}</SideNav>
     </div>
   );

@@ -21,7 +21,7 @@ export const Social = () => {
 
     const ButtonWithIcon: React.FC<ButtonWithIconProps> = ({ label, Icon, onClick }) => (
         <div
-            className="flex items-center justify-center bg-white border rounded-md shadow-sm cursor-pointer hover:bg-gray-100 py-2 lg:w-[14vw] mx-0 my-2"
+            className="flex w-full items-center justify-center bg-white border rounded-md shadow-sm cursor-pointer hover:bg-gray-100 py-2 mx-0 my-2"
             onClick={onClick}
         >
             <Icon className="w-5 h-5 mr-2" />
@@ -30,16 +30,11 @@ export const Social = () => {
     );
 
     return (
-        <div className="flex space-x-2  lg:flex-row flex-col">
+        <div className="flex space-x-2 w-full lg:flex-row flex-col">
             <ButtonWithIcon
                 label="Sign up with Google"
                 Icon={FcGoogle}
                 onClick={() => onClick("google")}
-            />
-            <ButtonWithIcon
-                label="Sign up with Facebook"
-                Icon={(props) => <FaFacebook {...props} color="#1877F2" />} // Facebook blue color
-                onClick={() => onClick("facebook")}
             />
         </div>
     );

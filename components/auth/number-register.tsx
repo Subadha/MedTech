@@ -32,6 +32,8 @@ import {
 } from "../ui/input-otp";
 import { sendOtp } from "@/lib/tokens";
 import { registerOtp1 } from "@/actions/sendOtp";
+=======
+import { PhoneInput } from "react-international-phone";
 
 // Define the schema with confirmPassword field and custom validation
 
@@ -162,11 +164,12 @@ export const NumberRegisterForm = () => {
                       <FormLabel>Mobile Number</FormLabel>
                       <FormControl>
                         <div className="flex w-full items-center gap-2">
-                          <Input
+                          <PhoneInput
+                           defaultCountry="in"
+                            className="rounded-md border bg-transparent  text-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-300 focus:ring-offset-1"
+                            placeholder="Telephone"
                             disabled={isPending}
                             {...field}
-                            placeholder="Enter your mobile number"
-                            type="text"
                           />
                           <Button type="button" onClick={onSendOtp}>
                             Send OTP
