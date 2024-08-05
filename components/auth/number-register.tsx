@@ -31,6 +31,7 @@ import {
   InputOTPSlot,
 } from "../ui/input-otp";
 import { sendOtp } from "@/lib/tokens";
+import { registerOtp1 } from "@/actions/sendOtp";
 
 // Define the schema with confirmPassword field and custom validation
 
@@ -64,7 +65,7 @@ export const NumberRegisterForm = () => {
     const phone = form.getValues("phone");
     if (phone) {
       startTransition(() => {
-        sendOtp(phone).then((data) => {
+        registerOtp1({phone}).then((data) => {
           if (data?.success) {
             setSucess("OTP sent successfully!");
             setError("");

@@ -30,11 +30,15 @@ import {
 } from "../ui/input-otp";
 import { optlogin} from "@/actions/otp-login";
 import { sendOtp } from "@/lib/tokens";
+import { registerOtp1 } from "@/actions/sendOtp";
+import { registerOtp2 } from "@/actions/loginOtp";
+import { useRouter } from 'next/navigation';
 
 export const LoginUsingOtpForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
+  const router = useRouter();
 
   const searchParams = useSearchParams();
   const urlError =
@@ -46,9 +50,11 @@ export const LoginUsingOtpForm = () => {
     resolver: zodResolver(LoginUsingOtpSchema),
     defaultValues: {
       phone: "",
-      otp: "",
+      otp:""
     },
   });
+
+
 
   const onSubmit = (values: z.infer<typeof LoginUsingOtpSchema>) => {
     startTransition(() => {
@@ -67,7 +73,7 @@ export const LoginUsingOtpForm = () => {
     const phone = form.getValues("phone");
     if (phone) {
       startTransition(() => {
-        sendOtp(phone).then((data) => {
+        registerOtp2({phone}).then((data) => {
           if (data?.success) {
             setSuccess("OTP sent successfully!");
             setError("");
