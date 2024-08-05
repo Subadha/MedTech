@@ -18,9 +18,9 @@ export const optlogin = async (values: z.infer<typeof LoginUsingOtpSchema>) => {
   if (!existingUser) {
     return { error: "User Doesnt Exist" };
   }
-  if (!existingUser.numberVerified) {
-    return { error: "Otp is not verified in register" };
-  }
+  // if (!existingUser.numberVerified) {
+  //   return { error: "Otp is not verified in register" };
+  // }
   // const user = await getUserOtp(otp);
   // if (!user || user.phone !== existingUser.phone) {
   //   return { error: "Resend otp" };
