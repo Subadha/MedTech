@@ -51,23 +51,24 @@ export const getUserById = async (id: string): Promise<User | null> => {
     const user = await db.user.findUnique({
       where: { id },
       select: {
-      id: true,
-      email: true,
-      name: true,
-      role: true,
-      phone: true, // Include phone
-      emailVerified: true,
-    },
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+        phone: true,
+        emailVerified: true,
+        numberVerified: true, // Include numberVerified
+        password: true, // Include password
+        image: true, // Include image
+      },
     });
-    // if (user) {
-    //   return user;
-    // }
-    return null;
+    return user ?? null;
   } catch (error) {
     console.error('Error fetching user by ID:', error);
     return null;
   }
 };
+
 
 export const getUserOtp = async (otp: string) => {
   try {
