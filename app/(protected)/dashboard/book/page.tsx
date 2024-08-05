@@ -1,6 +1,7 @@
 "use client"
 import { book } from '@/actions/appoint'
 import FormError from '@/components/auth/form-error'
+import FormSucess from '@/components/auth/form-sucess'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Appointment } from '@/schema'
@@ -28,6 +29,8 @@ const Page = () => {
       startTransition(() => {
         book(values)
           .then((data) => {
+            console.log(data);
+            
             setError(data.error)
             setSuccess(data.success)
           })
@@ -82,6 +85,7 @@ const Page = () => {
               disabled={isPending}
               {...field}
             />
+            
             {fieldState.error && (
               <p className="text-red-500 text-sm mt-1">{fieldState.error.message}</p>
             )}
@@ -112,7 +116,7 @@ const Page = () => {
         )}
       />
 
-      {/* <FormSuccess message={success} /> */}
+      <FormSucess message={success} />
       <FormError message={error} />
       <Button
         type="submit"
