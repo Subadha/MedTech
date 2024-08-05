@@ -24,7 +24,7 @@ const menuItems = [
   },
   {
     name: "Profile",
-    href: "#",
+    href: "/dashboard/profile",
   },
   {
     name: "Help",
