@@ -13,37 +13,37 @@ import {
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import MobSideBar from "./mob-sidebar";
 
 type HeaderProps = {
   userName: string;
-  toggleMenu: any;
 };
-const Header = ({ toggleMenu, userName }: HeaderProps) => {
+const Header = ({ userName }: HeaderProps) => {
   return (
-    <header className="flex items-center justify-between border-b border-gray-200 h-20 p-4">
-      <div className="lg:hidden">
-        <button onClick={toggleMenu} className="focus:outline-none">
-          <Menu className="h-6 w-6" />
-        </button>
+    <header className="flex items-center justify-between border-b border-gray-200 lg:h-20 p-2 lg:p-4">
+      <div className=" block lg:hidden">
+       <MobSideBar/>
       </div>
-      <h3 className="text-xl font-bold">
+      <h3 className="text-xl lg:block hidden font-bold">
         <span className="text-base font-normal text-gray-600">
           Hi, {userName}
         </span>
         <br /> Welcome Back
       </h3>
 
-      <div className="flex items-center lg:gap-[5vw]">
+      <div className="flex items-center gap-3 lg:gap-[5vw]">
         <SearchBar />
-        <div className="flex items-center lg:gap-6">
+        <div className="flex items-center gap-3 lg:gap-6">
+          <div className=" lg:block hidden">
           <LanguageSelection />
+          </div>
           <GoBell className="text-xl" />
           <div className="flex items-center gap-2">
             <Avatar>
               <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <p className="text-sm font-medium">{userName.split(" ")[0]}</p>
+            <p className="text-sm lg:block hidden font-medium">{userName.split(" ")[0]}</p>
           </div>
         </div>
       </div>
