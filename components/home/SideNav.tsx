@@ -9,7 +9,7 @@ import { SignOut } from "@/actions/signout";
 import { SearchBar } from "../dashboard/search-bar";
 import Header from "../dashboard/header";
 
-const menuItems = [
+export const menuItems = [
   {
     name: "Dashboard",
     href: "/dashboard",
@@ -36,10 +36,9 @@ const menuItems = [
 type SideNavProps = {
   userName: string;
   role: string;
-  children: any;
 };
 
-export default function SideNav({ userName, role, children }: SideNavProps) {
+export default function SideNav({ userName, role}: SideNavProps) {
   const handleLogout = async (e: React.FormEvent) => {
     e.preventDefault();
     await SignOut(); // Sign out the user
@@ -47,7 +46,7 @@ export default function SideNav({ userName, role, children }: SideNavProps) {
 
   return (
       <aside
-        className={`fixed lg:block hidden top-0 left-0 h-full w-64  transform transition-transform lg:translate-x-0`}
+        className={` lg:block hidden h-full w-64`}
       >
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
           <div className="flex items-center">

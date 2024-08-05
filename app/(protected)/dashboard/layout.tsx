@@ -14,8 +14,14 @@ export default async function Layout({
 
   
   return (
-    <div className="flex min-h-screen">
-      <SideNav userName={userName} role={role}> {children}</SideNav>
+    <div className="flex h-screen">
+      <SideNav userName={userName} role={role}/>
+      <div className=" h-screen  w-[calc(100vw-256px)]">
+      <Header userName={userName}/>
+      <div className="w-full overflow-y-auto h-[calc(100vh-80px)]">
+      {children}
+      </div>
+      </div>
     </div>
   );
 }
