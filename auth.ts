@@ -48,7 +48,6 @@ export const {
       if (account?.provider === "credentials" || account?.provider === "otp") {
         if (typeof user.id !== "string") return false;
         const existingUser = await getUserById(user.id);
-         console.log(existingUser);
          
         if (!existingUser) return false;
 

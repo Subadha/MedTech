@@ -28,8 +28,9 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "../ui/input-otp";
-import { optlogin} from "@/actions/otp-login";
+import { optlogin } from "@/actions/otp-login";
 import { sendOtp } from "@/lib/tokens";
+import { PhoneInput } from "react-international-phone";
 
 export const LoginUsingOtpForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -118,11 +119,12 @@ export const LoginUsingOtpForm = () => {
                       <FormLabel>Phone no.</FormLabel>
                       <FormControl>
                         <div className="flex w-full items-center gap-2">
-                          <Input
+                          <PhoneInput
+                            defaultCountry="in"
+                            className="rounded-md border bg-transparent  text-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-300 focus:ring-offset-1"
+                            placeholder="Telephone"
                             disabled={isPending}
                             {...field}
-                            placeholder="Enter your phone"
-                            type="text"
                           />
                           <Button type="button" onClick={onSendOtp}>
                             Send OTP
@@ -170,7 +172,9 @@ export const LoginUsingOtpForm = () => {
               >
                 Login
               </Button>
-              <div className="w-full flex mt-3 text-primary font-semibold hover:underline justify-end"><Link href={'/auth/login'}>Use email</Link></div>
+              <div className="w-full flex mt-3 text-primary font-semibold hover:underline justify-end">
+                <Link href={"/auth/login"}>Use email</Link>
+              </div>
               <Button
                 size="sm"
                 variant="link"

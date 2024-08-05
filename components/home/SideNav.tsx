@@ -28,7 +28,7 @@ const menuItems = [
   },
   {
     name: "Help",
-    href: "#",
+    href: "/dashboard/help",
   },
 ];
 

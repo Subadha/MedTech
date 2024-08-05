@@ -33,7 +33,9 @@ export const login = async (values: { email?: string; phone?: string; password: 
     if (!user || !user.email || !user.password) {
         return { error: "User does not exist" };
     }
-
+  if (!user.password) {
+    return { error: "Login with social account" };
+  }
     if (!user.emailVerified) {
          
         const verificationToken = await getVerificationToken(user.email);
