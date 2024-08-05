@@ -103,12 +103,12 @@ export const LoginForm = () => {
                   name="identifier"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email or Phone no.</FormLabel>
+                      <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
                           disabled={isPending}
                           {...field}
-                          placeholder="Enter your email or phone no."
+                          placeholder="Enter your email"
                           type="text"
                         />
                       </FormControl>
