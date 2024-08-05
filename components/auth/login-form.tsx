@@ -103,7 +103,7 @@ export const LoginForm = () => {
                   name="identifier"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Email</FormLabel>
+                      <FormLabel>Email or Number</FormLabel>
                       <FormControl>
                         <Input
                           disabled={isPending}

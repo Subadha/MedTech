@@ -32,9 +32,16 @@ export const registerOtp1 = async (values: z.infer<typeof ResetUsingNumber>) => 
     const otp = crypto.randomInt(100000, 999999).toString();
     const hashedOtp = await bcrypt.hash(otp.toString(), 10);
 
+
+
     // Send OTP via SMS
     const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
     try {
+
+        if(!phone){
+            return {error:"Number Not found"}
+        }
+
         await client.messages.create({
             body: `Your OTP is: ${otp}`,
             from: process.env.TWILIO_PHONE_NUMBER,
