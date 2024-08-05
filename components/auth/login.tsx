@@ -54,7 +54,7 @@ export const Loginnew = () => {
                     className="text-base font-medium text-gray-900"
                   >
                     {" "}
-                    Email or phone no
+                    Email
                   </label>
                   <div className="mt-2">
                     <input
