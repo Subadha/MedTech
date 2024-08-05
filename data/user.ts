@@ -34,14 +34,34 @@ export const getUserByNumber = async (phone: string): Promise<User | null> => {
   }
 };
 
+export const getUserByNumber2 = async (phone: string): Promise<User | null> => {
+  try {
+    const user = await db.user.findUnique({
+      where: { phone },
+    });
+    return user;
+  } catch (error) {
+    console.error('Error fetching user by phone number:', error);
+    return null;
+  }
+};
+
 export const getUserById = async (id: string): Promise<User | null> => {
   try {
     const user = await db.user.findUnique({
       where: { id },
+      select: {
+      id: true,
+      email: true,
+      name: true,
+      role: true,
+      phone: true, // Include phone
+      emailVerified: true,
+    },
     });
-    if (user) {
-      return user;
-    }
+    // if (user) {
+    //   return user;
+    // }
     return null;
   } catch (error) {
     console.error('Error fetching user by ID:', error);

@@ -12,7 +12,6 @@ export default async function Layout({
   return (
     <div>
       <SideNav userName={userName} role={role}> {children}</SideNav>
-   
     </div>
   );
 }

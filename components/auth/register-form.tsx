@@ -126,7 +126,7 @@ export const RegisterForm = () => {
                                     )}
                                 />
                                 <FormField
-                                    control={form.control}
+                                    control={form.control}  
                                     name="email"
                                     render={({ field }) => (
                                         <FormItem>
