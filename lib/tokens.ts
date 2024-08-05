@@ -75,12 +75,12 @@ export const sendOtp = async (phone: string) => {
     try {
         const otp = (crypto.randomBytes(3).readUIntBE(0, 3) % 1000000).toString().padStart(6, '0');   
         // Uncomment and configure the following lines if you want to send OTP via Twilio
-        // const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-        // await client.messages.create({
-        //     body: `Your OTP is: ${otp}`,
-        //     from: process.env.TWILIO_PHONE_NUMBER,
-        //     to: phone,
-        // });
+        const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+        await client.messages.create({
+            body: `Your OTP is: ${otp}`,
+            from: process.env.TWILIO_PHONE_NUMBER,
+            to: phone,
+        });
 
         // Store the hashed OTP and phone number in the database
         await db.otp.create({

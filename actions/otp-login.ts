@@ -4,14 +4,14 @@ import { signIn } from "@/auth";
 import * as z from "zod";
 import { DEFAULT_LOGIN_REDIRECT } from "@/routes";
 import { AuthError } from "next-auth";
-import { getUserByNumber, getUserOtp } from "@/data/user";
+import { getOtp, getUserByNumber, getUserOtp } from "@/data/user";
 export const optlogin = async (values: z.infer<typeof LoginUsingOtpSchema>) => {
   const validate = LoginUsingOtpSchema.safeParse(values);
   if (!validate.success) {
     return { error: "Invalid Error" };
   }
 
-  const { phone, otp } = validate.data;
+  const { otp,phone } = validate.data;
 
   const existingUser = await getUserByNumber(phone);
 
@@ -24,8 +24,11 @@ export const optlogin = async (values: z.infer<typeof LoginUsingOtpSchema>) => {
   // const user = await getUserOtp(otp);
   // if (!user || user.phone !== existingUser.phone) {
   //   return { error: "Resend otp" };
-  // }  
-  if(otp!=='111111'){
+  // }
+  
+  const isValidOtp = await getOtp(otp);
+  
+  if(isValidOtp !== otp){
     return { error: "Invalid Otp" };
   }
   try {
