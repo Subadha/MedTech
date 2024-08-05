@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "./lib/db";
-import { getUserById } from "./data/user";
+import { getUserByEmail, getUserById } from "./data/user";
 import { type DefaultSession } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import { UserRole } from "@prisma/client";
@@ -36,11 +36,21 @@ export const {
     error: "/auth/error",
   },
   events: {
-    async linkAccount({ user }) {
-      await db.user.update({
-        where: { id: user.id },
-        data: { emailVerified: new Date() },
-      });
+    async linkAccount({ user, account }) {
+      if (account.provider === "google") {
+        if(typeof user.email== 'string'){
+            
+        const existingUser = await getUserByEmail(user.email);
+        if (existingUser) {
+          await db.user.update({
+            where: { id: existingUser.id },
+            data: {
+              emailVerified: new Date(),
+            },
+          });
+        }
+      }
+      }
     },
   },
   callbacks: {
