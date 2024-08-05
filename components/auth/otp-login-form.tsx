@@ -34,7 +34,7 @@ import { sendOtp } from "@/lib/tokens";
 import { registerOtp1 } from "@/actions/sendOtp";
 import { registerOtp2 } from "@/actions/loginOtp";
 import { useRouter } from 'next/navigation';
-=======
+
 import { PhoneInput } from "react-international-phone";
 
 

@@ -32,7 +32,6 @@ import {
 } from "../ui/input-otp";
 import { sendOtp } from "@/lib/tokens";
 import { registerOtp1 } from "@/actions/sendOtp";
-=======
 import { PhoneInput } from "react-international-phone";
 
 // Define the schema with confirmPassword field and custom validation
