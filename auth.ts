@@ -49,12 +49,12 @@ export const {
         if (typeof user.id !== "string") return false;
         const existingUser = await getUserById(user.id);
          
+        if (account.provider === "otp" ) {
+          return true;
+        }
         if (!existingUser) return false;
 
         if (account.provider === "credentials" && !existingUser.emailVerified) {
-          return false;
-        }
-        if (account.provider === "otp" && !existingUser.numberVerified) {
           return false;
         }
       }

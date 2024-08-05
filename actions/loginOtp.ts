@@ -44,13 +44,21 @@ export const registerOtp2 = async (
     });
 
     // Store the hashed OTP and phone number in the database
-  await db.otp.update({
-    where: { phone },
-    data: {
-      otp: otp,
-      expiry: new Date(Date.now() + 10 * 60 * 1000),
-    },
-  });
+
+await db.otp.deleteMany({
+  where: {
+    phone: phone,
+  },
+});
+
+await db.otp.create({
+  data: {
+    phone: phone,
+    otp: otp,
+    expiry: new Date(Date.now() + 10 * 60 * 1000),
+  },
+});
+
     return { success: "OTP sent!" };
   } catch (err) {
     console.log(err);
