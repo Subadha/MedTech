@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "./lib/db";
-import { getUserById } from "./data/user";
+import { getUserByEmail, getUserById } from "./data/user";
 import { type DefaultSession } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import { UserRole } from "@prisma/client";
@@ -10,7 +10,7 @@ import authConfig from "./auth.config";
 declare module "next-auth/jwt" {
   interface JWT {
     role?: UserRole;
-    phone?:string;
+    phone?: string;
   }
 }
 
@@ -36,19 +36,27 @@ export const {
     error: "/auth/error",
   },
   events: {
-    async linkAccount({ user }) {      
-      await db.user.update({
-        where: { id: user.id },
-        data: { emailVerified: new Date() },
-      });
+    async linkAccount({ user, account }) {
+      if (account.provider === "google" || account.provider === "facebook") {
+        if(typeof user.email=='string'){
+        const existingUser = await getUserByEmail(user.email);
+        if (existingUser) {
+          await db.user.update({
+            where: { id: existingUser.id },
+            data: {
+              emailVerified: new Date(),
+            },
+          });
+        }}
+      }
     },
   },
   callbacks: {
-    async signIn({ user, account }) {            
+    async signIn({ user, account }) {
       if (account?.provider === "credentials" || account?.provider === "otp") {
         if (typeof user.id !== "string") return false;
         const existingUser = await getUserById(user.id);
-         
+
         if (!existingUser) return false;
 
         if (account.provider === "credentials" && !existingUser.emailVerified) {
@@ -56,6 +64,21 @@ export const {
         }
         if (account.provider === "otp" && !existingUser.numberVerified) {
           return false;
+        }
+      } else {
+        if (!user.email) return false;
+        const existingUser = await getUserByEmail(user.email);
+        if (existingUser&&account!=null) {
+          await db.account.update({
+            where: {
+              provider_providerAccountId: {
+                provider: account.provider,
+                providerAccountId: account.providerAccountId,
+              },
+            },
+            data: { userId: existingUser.id },
+          });
+          user.id = existingUser.id;
         }
       }
       return true;
@@ -69,7 +92,7 @@ export const {
         session.user.role = token.role as UserRole;
       }
       if (token.phone && session.user) {
-         session.user.phone = token.phone ?? undefined; 
+        session.user.phone = token.phone ?? undefined;
       }
       return session;
     },
@@ -83,7 +106,7 @@ export const {
         return token;
       }
       token.role = existingUser.role;
-      token.phone = existingUser.phone ?? undefined; 
+      token.phone = existingUser.phone ?? undefined;
       return token;
     },
   },
