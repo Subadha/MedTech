@@ -10,6 +10,7 @@ import authConfig from "./auth.config";
 declare module "next-auth/jwt" {
   interface JWT {
     role?: UserRole;
+    phone?:string;
   }
 }
 
@@ -17,6 +18,7 @@ declare module "next-auth" {
   interface Session {
     user: {
       role: UserRole;
+      phone?: string;
       id: string;
     } & DefaultSession["user"];
   }
@@ -76,6 +78,9 @@ export const {
       if (token.role && session.user) {
         session.user.role = token.role as UserRole;
       }
+      if (token.phone && session.user) {
+         session.user.phone = token.phone ?? undefined; 
+      }
       return session;
     },
 
@@ -88,6 +93,7 @@ export const {
         return token;
       }
       token.role = existingUser.role;
+      token.phone = existingUser.phone ?? undefined; 
       return token;
     },
   },

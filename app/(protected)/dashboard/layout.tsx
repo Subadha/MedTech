@@ -16,10 +16,6 @@ export default async function Layout({
   return (
     <div className="flex min-h-screen">
       <SideNav userName={userName} role={role}> {children}</SideNav>
-      <div className="flex-1 h-full lg:ml-64">
-        <Header userName={userName}/>
-        <main className="dashboard h-[calc(100vh-80px)] overflow-y-auto">{children}</main>
-      </div>
     </div>
   );
 }
