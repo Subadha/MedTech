@@ -50,6 +50,8 @@ export const {
         const existingUser = await getUserById(user.id);
         if(existingUser?.password!==""){
           return false;
+        }else{
+          return true;
         }
         return false;
       }
