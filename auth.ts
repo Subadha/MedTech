@@ -31,10 +31,10 @@ export const {
   signOut,
 } = NextAuth({
   ...authConfig,
-  // pages: {
-  //   signIn: "/auth/login",
-  //   error: "/auth/error",
-  // },
+  pages: {
+    signIn: "/auth/login",
+    error: "/auth/error",
+  },
   events: {
     async linkAccount({ user }) {      
       await db.user.update({
