@@ -48,11 +48,10 @@ export const {
 if (account?.provider === "google") {
         if (typeof user.id !== "string") return false;
         const existingUser = await getUserById(user.id);
-          if (!existingUser || !existingUser.emailVerified) {
+          if (!existingUser || !existingUser.phone) {
                     return false;
                   }
         return true;
-
 }
       
       if (account?.provider === "credentials" || account?.provider === "otp") {
