@@ -5,17 +5,22 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { menuItems } from '../home/SideNav'
 import { SignOut } from '@/actions/signout'
 
-const MobSideBar = () => {
+type HeaderProps = {
+  userName: string;
+  role: string;
+};
+const MobSideBar = ({ userName, role }: HeaderProps) => {
   const handleLogout = async (e: React.FormEvent) => {
     e.preventDefault();
     await SignOut(); // Sign out the user
   };
+  
   return (
     <Sheet>
         <SheetTrigger asChild className="lg:hidden block">
         <Menu className="" />
       </SheetTrigger>
-      <SheetContent className="p-0 littleTransition">
+      <SheetContent side={'left'} className="p-0 littleTransition">
         <SheetHeader className=" h-44 p-4 items-start">
           <div className="my-3 flex w-full items-center pr-2 justify-between">
             <Avatar className="h-16 w-16 ">
@@ -24,13 +29,13 @@ const MobSideBar = () => {
                 src={`https://avatar.iran.liara.run/public`}
                 alt="@shadcn"
               />
-              <AvatarFallback></AvatarFallback>
+              <AvatarFallback>PP</AvatarFallback>
             </Avatar>
             
           </div>
-          <SheetTitle className="text-xl z-20 text-white"></SheetTitle>
-          <SheetDescription className="text-white opacity-85">
-            
+          <SheetTitle className="text-xl">{userName}</SheetTitle>
+          <SheetDescription className="opacity-85">
+            {role}
           </SheetDescription>
         </SheetHeader>
         <nav className="p-4 space-y-2">

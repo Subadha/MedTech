@@ -3,7 +3,7 @@ import { RegisterSchema } from "@/schema";
 import * as z from "zod";
 import bcrypt from "bcrypt";
 import { db } from "@/lib/db";
-import { getUserByEmail } from "@/data/user";
+import { getUserByEmail, getUserByNumber } from "@/data/user";
 import { getVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "@/lib/mail";
 
@@ -21,7 +21,10 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   if (existingUser) {
     return { error: "Email already exists" };
   }
-
+  const numberUsed = await getUserByNumber(phone);
+ if (numberUsed){
+  return { error: "Phone number is already used"}
+ }
   const Val= await db.user.create({
     data: {
       name,

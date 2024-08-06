@@ -5,7 +5,7 @@ import { FaAngleRight } from "react-icons/fa";
 
 const UpcomingAppointments = () => {
   return (
-    <Card className=" col-span-2">
+    <Card className="col-span-6  lg:col-span-2">
       <CardHeader className="p-3">
        <div className="flex justify-between">
        <h1 className="text-lg lg:text-[1.4vw] font-semibold">Upcoming Appointments</h1>
