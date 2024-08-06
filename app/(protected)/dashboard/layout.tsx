@@ -12,15 +12,14 @@ export default async function Layout({
   const userName = session?.user.name || "User";
   const role = session?.user.role || "User";
 
-  
   return (
     <div className="flex h-screen">
-      <SideNav userName={userName} role={role}/>
-      <div className=" h-screen  w-[calc(100vw-256px)]">
-      <Header userName={userName}/>
-      <div className="w-full overflow-y-auto h-[calc(100vh-80px)]">
-      {children}
-      </div>
+      <SideNav userName={userName} role={role} />
+      <div className=" h-screen  lg:w-[calc(100vw-256px)]">
+        <Header userName={userName} role={role} />
+        <div className="w-full overflow-y-auto h-[calc(100vh-80px)]">
+          {children}
+        </div>
       </div>
     </div>
   );

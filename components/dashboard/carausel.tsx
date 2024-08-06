@@ -28,7 +28,7 @@ export function MainCarausel() {
         {Array.from({ length: 5 }).map((_, index) => (
           <CarouselItem key={index}>
               <Card className="p-0">
-                <CardContent className="h-[20vw] rounded-xl p-0 w-full overflow-hidden flex items-center justify-center">
+                <CardContent className=" h-auto lg:h-[20vw] rounded-xl p-0 w-full overflow-hidden flex items-center justify-center">
                  <Image alt="Image" className="w-[110%] object-cover" width={600} height={300} src={img} />
                 </CardContent>
               </Card>

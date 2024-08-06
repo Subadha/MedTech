@@ -16,7 +16,7 @@ const NearbyDoctors = () => {
           View all <FaAngleRight />
         </span>
       </div>
-      <div className=" grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-6 gap-3">
         <NearDoctorCard />
         <NearDoctorCard />
         <NearDoctorCard />
@@ -29,7 +29,7 @@ export default NearbyDoctors;
 
 const NearDoctorCard = () => {
   return (
-    <div className=" col-span-1">
+    <div className=" col-span-3 lg:col-span-2">
       <Card className="p-2">
         <CardContent className="rounded-xl overflow-hidden p-0 flex items-center">
           <div className="flex gap-2 items-center">

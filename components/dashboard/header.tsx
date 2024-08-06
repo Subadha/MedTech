@@ -17,12 +17,13 @@ import MobSideBar from "./mob-sidebar";
 
 type HeaderProps = {
   userName: string;
+  role: string;
 };
-const Header = ({ userName }: HeaderProps) => {
+const Header = ({ userName,role }: HeaderProps) => {
   return (
     <header className="flex items-center justify-between border-b border-gray-200 lg:h-20 p-2 lg:p-4">
       <div className=" block lg:hidden">
-       <MobSideBar/>
+       <MobSideBar userName={userName} role={role} />
       </div>
       <h3 className="text-xl lg:block hidden font-bold">
         <span className="text-base font-normal text-gray-600">

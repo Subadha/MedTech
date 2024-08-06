@@ -20,7 +20,7 @@ const RecommendedDoctors = () => {
           View all <FaAngleRight />
         </span>
       </div>
-      <CardContent className=" grid grid-cols-3 gap-3">
+      <CardContent className=" grid grid-cols-6 gap-3">
         <DoctorCard />
         <DoctorCard />
         <DoctorCard />
@@ -33,7 +33,7 @@ export default RecommendedDoctors;
 
 const DoctorCard = () => {
   return (
-    <div className="col-span-1">
+    <div className=" col-span-6 md:col-span-3 lg:col-span-2">
       <Card className="p-2">
         <CardContent className="rounded-xl overflow-hidden p-2 flex items-center">
           <div className="flex gap-2">

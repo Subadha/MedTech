@@ -7,7 +7,7 @@ const Settings = async () => {
  
     return (
         <div className="p-3 grid gap-4 grid-cols-6">
-           <div className="col-span-4">
+           <div className=" col-span-6 lg:col-span-4">
            <MainCarausel/>
            <NearbyDoctors/>
            </div>
