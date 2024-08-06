@@ -32,7 +32,7 @@ export default function News() {
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-10 w-full max-w-4xl">
                     {images.map((image, index) => (
-                        <div key={index} className="relative w-full h-0 pb-[56.25%]"> {/* 16:9 Aspect Ratio */}
+                        <div key={index} className="relative w-full h-0 pb-[35vh]"> {/* 16:9 Aspect Ratio */}
                             <Image
                                 src={image}
                                 alt={`Photo ${index + 1}`}

@@ -53,6 +53,8 @@ export default function Team() {
         const handleResize = () => {
             if (window.innerWidth < 640) {
                 setVisibleItems(1);
+            } else if (window.innerWidth < 1024) {
+                setVisibleItems(2);
             } else {
                 setVisibleItems(3);
             }
@@ -81,20 +83,21 @@ export default function Team() {
             initial={{ opacity: 0, y: 100 }}
             whileInView={{ opacity: 1, y: 0, transition: { duration: 1 } }}
             viewport={{ once: true }}
+            className="w-full overflow-hidden"
         >
-            <div id="team" className="pb-[100px] sm:pb-10 flex flex-col justify-center items-center text-center">
+            <div id="team" className="pb-[100px] sm:pb-10 flex flex-col justify-center items-center text-center w-full overflow-hidden">
                 <h1 className="sm:text-5xl text-4xl font-bold pb-[100px]">
                     Innovation at the heart of health: Meet our Visionary Team
                 </h1>
-                <div className="relative flex flex-col items-center">
-                    <div className="relative flex items-center px-12 mx-10">
+                <div className="relative flex flex-col items-center w-full overflow-hidden">
+                    <div className="relative flex items-center w-full px-4 sm:px-12 mx-4 sm:mx-10">
                         <div className="flex overflow-hidden w-full">
                             <div
                                 className="flex transition-transform duration-500 ease-in-out"
                                 style={{ transform: `translateX(-${currentIndex * (100 / visibleItems)}%)` }}
                             >
                                 {teamMembers.map((member, index) => (
-                                    <div key={index} className="flex-none w-full sm:w-[calc(100%/3)] mx-0 sm:px-5">
+                                    <div key={index} className="flex-none w-full sm:w-[calc(100%/3)] px-2 sm:px-5 box-border">
                                         <div className="relative w-full h-[400px] rounded-2xl overflow-hidden">
                                             <Image
                                                 src={member.image}
@@ -103,10 +106,10 @@ export default function Team() {
                                                 objectFit="cover"
                                                 className="rounded-2xl"
                                             />
-                                            <Link href={member.linkedinUrl} passHref>
-                                                <span rel="noopener noreferrer" className="absolute top-0 right-0 p-3">
+                                            <Link href={member.linkedinUrl} passHref legacyBehavior>
+                                                <a rel="noopener noreferrer" className="absolute top-0 right-0 p-3">
                                                     <FaLinkedin size={30} className="text-blue-600" />
-                                                </span>
+                                                </a>
                                             </Link>
                                         </div>
                                         <div className="w-full bg-white text-black justify-center text-center items-center h-[70px] mt-2 rounded-md flex flex-col">
@@ -119,7 +122,7 @@ export default function Team() {
                         </div>
                     </div>
 
-                    <div className="absolute flex justify-between gap-10 mt-[480px] max-w-3xl px-5">
+                    <div className="absolute flex justify-between items-center w-full top-1/2 transform -translate-y-1/2 px-4">
                         <FaArrowLeft
                             className="cursor-pointer text-3xl"
                             onClick={prevSlide}

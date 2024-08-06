@@ -1,8 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import Image from "next/image";
 import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
-import img1 from "@/app/images/bg_3.jpg";
 
 export const Footer = () => {
   return (
@@ -47,6 +45,8 @@ export const Footer = () => {
             <iframe
               className="w-full h-64"
               src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100090014336935&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+              title="Facebook Page"
+              loading="lazy"
             ></iframe>
           </div>
 
@@ -118,6 +118,7 @@ export const Footer = () => {
                   <iframe
                     className="pt-10 w-full h-64"
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15213.15289780603!2d78.10387285541992!3d17.589043100000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcbf12e326be7e1%3A0x1b5bca249531e1a0!2sTIP%20Building!5e0!3m2!1sen!2sin!4v1705916013050!5m2!1sen!2sin"
+                    title="Google Maps"
                     loading="lazy"
                   ></iframe>
                 </li>
