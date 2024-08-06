@@ -83,7 +83,7 @@ const Hero: React.FC = () => {
       }}
       viewport={{ once: true }}
     >
-      <div className="relative w-full h-[77vh] -mb-10 bg-white">
+      <div className="relative w-full h-full mb-15 bg-white">
         <div className="mx-auto max-w-7xl lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-8">
           <div className="flex flex-col justify-center px-4 py-12 md:py-16 lg:col-span-7 lg:gap-x-6 lg:px-6 lg:py-24 xl:col-span-6">
             <CharacterRevealText onTextChange={handleTextChange} />

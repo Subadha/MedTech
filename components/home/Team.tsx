@@ -82,11 +82,11 @@ export default function Team() {
             whileInView={{ opacity: 1, y: 0, transition: { duration: 1 } }}
             viewport={{ once: true }}
         >
-            <div id="team" className="sm:h-screen pb-[100px] sm:pb-10 flex flex-col justify-center items-center text-center">
+            <div id="team" className="pb-[100px] sm:pb-10 flex flex-col justify-center items-center text-center">
                 <h1 className="sm:text-5xl text-4xl font-bold pb-[100px]">
                     Innovation at the heart of health: Meet our Visionary Team
                 </h1>
-                <div className="relative flex flex-col items-center w-full">
+                <div className="relative flex flex-col items-center">
                     <div className="relative flex items-center px-12 mx-10">
                         <div className="flex overflow-hidden w-full">
                             <div
