@@ -46,12 +46,9 @@ export const {
   callbacks: {
     async signIn({ user, account }) {  
       if (account?.provider === "google") {
-        if (typeof user.id !== "string") return false;
-
         try {
-          const existingUser = await getUserById(user.id);
-
-          if (existingUser?.password !== "") {
+          const existingUser = await getUserById(typeof user.id);
+          if (existingUser?.password) {
             return false;
           } else {
             return true;
