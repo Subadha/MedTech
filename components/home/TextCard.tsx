@@ -24,7 +24,7 @@ export const TextCard = () => {
       <div className="max-w-7xl mx-auto lg:flex lg:gap-x-8 lg:px-8">
         {/* Text Content */}
         <div className="flex flex-col justify-center lg:flex-1 px-6 sm:px-0 py-12">
-          <h1 className="mt-8 text-4xl sm:text-left text-center sm:text-2xl font-bold tracking-tight text-black md:text-4xl lg:text-5xl">
+          <h1 className="mt-8 text-4xl lg:text-left text-center sm:text-2xl font-bold tracking-tight text-black md:text-4xl lg:text-5xl">
             Bhrunomatra: Smart Wearable Pregnancy Monitoring Device
           </h1>
           <p className="mt-8 sm:text-left text-center text-lg text-gray-700">

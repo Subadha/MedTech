@@ -97,8 +97,8 @@ export default function Team() {
                                 style={{ transform: `translateX(-${currentIndex * (100 / visibleItems)}%)` }}
                             >
                                 {teamMembers.map((member, index) => (
-                                    <div key={index} className="flex-none w-full sm:w-[calc(100%/3)] px-2 sm:px-5 box-border">
-                                        <div className="relative w-full h-[400px] rounded-2xl overflow-hidden">
+                                    <div key={index} className="flex-none w-[calc(100%/1.5)]  sm:w-[calc(100%/3)] px-2 sm:px-5 box-border">
+                                        <div className="relative w-full h-[300px] sm:h-[400px] rounded-2xl overflow-hidden">
                                             <Image
                                                 src={member.image}
                                                 alt={member.name}
@@ -122,13 +122,14 @@ export default function Team() {
                         </div>
                     </div>
 
-                    <div className="absolute flex justify-between items-center w-full top-1/2 transform -translate-y-1/2 px-4">
+                    <div className="absolute flex justify-between items-center w-full top-1/2 transform -translate-y-1/2 px-4"
+                        style={{ padding: '0 16px' }}>
                         <FaArrowLeft
-                            className="cursor-pointer text-3xl"
+                            className="cursor-pointer text-3xl z-10"
                             onClick={prevSlide}
                         />
                         <FaArrowRight
-                            className="cursor-pointer text-3xl"
+                            className="cursor-pointer text-3xl z-10"
                             onClick={nextSlide}
                         />
                     </div>

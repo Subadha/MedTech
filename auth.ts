@@ -44,7 +44,16 @@ export const {
     },
   },
   callbacks: {
-    async signIn({ user, account }) {            
+    async signIn({ user, account }) {  
+      if (account?.provider === "google") {
+        if (typeof user.id !== "string") return false;
+        const existingUser = await getUserById(user.id);
+        if(existingUser?.password!==""){
+          return true;
+        }
+        return false;
+      }
+      
       if (account?.provider === "credentials" || account?.provider === "otp") {
         if (typeof user.id !== "string") return false;
         const existingUser = await getUserById(user.id);

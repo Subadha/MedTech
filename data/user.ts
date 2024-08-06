@@ -7,7 +7,7 @@ export const getUserByEmail = async (email: string): Promise<User | null> => {
       where: { email },
     });
     if (user && user.password !== null) {
-      return { ...user, password: user.password! } as User;
+      return { ...user, password: user.password! } as unknown as User;
     }
     return null;
   } catch (error) {
@@ -22,7 +22,7 @@ export const getUserByNumber = async (phone: string): Promise<User | null> => {
       where: { phone },
     });
     if (user && user.password !== null) {
-      return { ...user, password: user.password! } as User;
+      return { ...user, password: user.password! } as unknown as User;
     }
     if(user){
       return user;
