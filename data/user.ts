@@ -56,6 +56,7 @@ export const getUserById = async (id: string): Promise<User | null> => {
         name: true,
         role: true,
         phone: true,
+        about: true,
         emailVerified: true,
         numberVerified: true, // Include numberVerified
         password: true, // Include password
@@ -103,6 +104,7 @@ export type User = {
   numberVerified: Boolean;
   password: string | null;
   role: "USER" | "ADMIN";
+  about: string | null;
   image: string | null;
   phone: string | null;
 };

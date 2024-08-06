@@ -2,24 +2,38 @@
 
 import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
-import img from "@/app/images/p1.png";
+import img from "@/app/images/defaultuser.jpeg";
 import { useRouter } from "next/navigation";
 import { Modal } from "./Modal";
+import { startTransition, useEffect, useState } from "react";
+import { z } from "zod";
+import { getProfileData } from "@/actions/profile/getProfileData";
+import { User } from "@/data/user";
+
 
 interface ProfileProps {
-  email: string;
-  phone: string;
-  image: string | StaticImageData;
-  userName: string;
-}
+    id: string|undefined;}
 
 export default function Profile({
-  userName,
-  email,
-  image,
-  phone,
+    id,
 }: ProfileProps) {
-  const router = useRouter();
+
+    const [data, setData] = useState<User | null>(null);  
+    const handleFetchProfileData = () => {
+    startTransition(() => {
+      getProfileData(id).then((data) => {                
+          if (data){
+         setData(data); 
+        }
+        })
+        .catch((error) => {
+          console.error("Error fetching profile data:", error);
+        });
+    });
+  };
+
+ useEffect(() => handleFetchProfileData(),[])
+
 
   return (
     <>
@@ -29,51 +43,45 @@ export default function Profile({
         </div>
         <div className="sm:flex">
           <div className="bg-white shadow-xl box-border rounded-lg sm:w-[30vw] sm:mx-[100px] sm:h-[100vh] -mt-[50px] mb-[100px] sm:mb-0 pb-10 sm:pb-0">
-            <div className="flex justify-between px-20 py-4">
-              <div className="w-20 h-20 rounded-full overflow-hidden relative">
+            <div className="flex justify-between pr-2 lg:pr-4 pl-20 py-2 lg:py-4">
+             <div className="w-20 h-20 rounded-full overflow-hidden relative">
                 <Image
-                  src={image}
+                  src={data?.image || img}
                   alt="No Image"
                   layout="fill"
                   objectFit="cover"
                 />
               </div>
-              <div className="flex justify-center items-center">
-                <button>Upload Image</button>
-              </div>
-              <Modal details={{ userName, email, image, phone }} />
+              <Modal details={data} refresh={handleFetchProfileData} />
             </div>
             <div className="rounded-lg sm:mx-[30px] mx-[20px] sm:text-[1vw] text-[3vw] shadow-lg box-border pb-4 border-2 border-gray-300">
               <div className="flex flex-col mx-[20px] pt-2">
                 <p>Your Name</p>
                 <div className="flex justify-between pt-2">
-                  <p className="">{userName}</p>
+                  <p className="">{data?.name}</p>
                 </div>
               </div>
               <div className="flex flex-col mx-[20px] pt-2">
                 <p>Email</p>
                 <div className="flex justify-between pt-2">
-                  <p className="">{email}</p>
+                  <p className="">{data?.email}</p>
                 </div>
               </div>
               <div className="flex flex-col mx-[20px] pt-2">
                 <p>Phone Number</p>
                 <div className="flex justify-between pt-2">
-                  <p className="">{phone}</p>
+                  <p className="">{data?.phone}</p>
                 </div>
               </div>
             </div>
             <div className="rounded-lg sm:mx-[30px] mx-[20px] mt-4 sm:text-[1vw] text-[3vw] shadow-xl box-border pb-4 border-2 border-gray-300">
               <div className="flex justify-between mx-[20px] pt-2">
-                <p>About Sid</p>
+                <p>About </p>
               </div>
               <div className="mx-[20px] pt-2 ">
                 <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Ratione consectetur dicta soluta amet suscipit ea, harum
-                  distinctio tempora, perspiciatis consequuntur ipsa magnam hic
-                  necessitatibus culpa non nobis quis veniam sed.
-                </p>
+                {data?.about}
+                 </p>
               </div>
             </div>
             <div className="rounded-lg border-2 border-gray-300 sm:mx-[30px] mx-[20px] mt-4 sm:text-[1vw] text-[3vw] shadow-xl box-border pb-4">
