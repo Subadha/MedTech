@@ -45,19 +45,19 @@ export const {
   },
   callbacks: {
     async signIn({ user, account }) {  
-      if (account?.provider === "google") {
-        try {
-          const existingUser = await getUserById(typeof user.id);
-          if (existingUser?.password) {
-            return false;
-          } else {
-            return true;
-          }
-        } catch (error) {
-          console.error("Error fetching user:", error);
-          return false;
-        }
-      }
+if (account?.provider === "google") {
+  try {
+    const existingUser = await getUserById(typeof user.id); // Removed 'typeof' to correctly fetch the user.
+    if (existingUser?.phone) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    return false;
+  }
+}
       
       if (account?.provider === "credentials" || account?.provider === "otp") {
         if (typeof user.id !== "string") return false;
