@@ -26,9 +26,8 @@ import { Textarea } from "../ui/textarea";
 export function Modal({details,refresh}: any) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
-  const [sucess, setSucess] = useState<string | undefined>("");
-
-  const router = useRouter();
+  const [success, setSuccess] = useState<string | undefined>("");
+  const [dialogOpen, setDialogOpen] = useState(false);
   
   const form = useForm<z.infer<typeof UpdateProfileSchema>>({
     resolver: zodResolver(UpdateProfileSchema),
@@ -37,22 +36,27 @@ export function Modal({details,refresh}: any) {
       name: details?.name,
       about: details?.about,
       phone: details?.phone,
+      password: ""
     },
   });
  
   const onSubmit = (values: z.infer<typeof UpdateProfileSchema>) => {
     startTransition(() => {
         updateProfile({ ...values},details.id).then((data) => {
-          console.log(data);
-          refresh()
-        });
-    });
+          if (data.success) {
+            setSuccess(data.success);
+            refresh();
+            setDialogOpen(false);
+          } else if (data.error) {
+            setError(data.error);
+          }}
+   ) });
   };
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Edit<span className="md:block hidden">&nbsp;Profile</span></Button>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+      <DialogTrigger  asChild>
+        <Button variant="outline" onClick={() => setDialogOpen(true)}>Edit<span className="md:block hidden">&nbsp;Profile</span></Button>
       </DialogTrigger>
       <DialogOverlay>
         <DialogContent className="overflow-y-hidden">
@@ -115,6 +119,23 @@ export function Modal({details,refresh}: any) {
                     </FormItem>
                   )}
                 />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>New password</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="New password"
+                          disabled={isPending}
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
                   <FormField
                   control={form.control}
                   name="about"
@@ -134,7 +155,7 @@ export function Modal({details,refresh}: any) {
                   )}
                 />
               </div>
-              <FormSucess message={sucess} />
+              <FormSucess message={success} />
               <FormError message={error} />
               <Button
                 className="w-full h-10 mt-5 bg-purple-700 hover:bg-purple-500"
