@@ -47,13 +47,19 @@ export const {
     async signIn({ user, account }) {  
       if (account?.provider === "google") {
         if (typeof user.id !== "string") return false;
-        const existingUser = await getUserById(user.id);
-        if(existingUser?.password!==""){
+
+        try {
+          const existingUser = await getUserById(user.id);
+
+          if (existingUser?.password !== "") {
+            return false;
+          } else {
+            return true;
+          }
+        } catch (error) {
+          console.error("Error fetching user:", error);
           return false;
-        }else{
-          return true;
         }
-        return false;
       }
       
       if (account?.provider === "credentials" || account?.provider === "otp") {
