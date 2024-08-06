@@ -49,7 +49,7 @@ export const {
         if (typeof user.id !== "string") return false;
         const existingUser = await getUserById(user.id);
         if(existingUser?.password!==""){
-          return true;
+          return false;
         }
         return false;
       }
