@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { db } from "./lib/db";
-import { getUserById } from "./data/user";
+import { getUserByEmail, getUserById } from "./data/user";
 import { type DefaultSession } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import { UserRole } from "@prisma/client";
@@ -47,7 +47,7 @@ export const {
     async signIn({ user, account }) {  
 if (account?.provider === "google") {
   try {
-    const existingUser = await getUserById(typeof user.id); // Removed 'typeof' to correctly fetch the user.
+    const existingUser = await getUserByEmail(typeof user.email); // Removed 'typeof' to correctly fetch the user.
     if (existingUser?.phone) {
       return true;
     } else {
