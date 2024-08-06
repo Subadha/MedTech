@@ -46,17 +46,13 @@ export const {
   callbacks: {
     async signIn({ user, account }) {  
 if (account?.provider === "google") {
-  try {
-    const existingUser = await getUserByEmail(typeof user.email); // Removed 'typeof' to correctly fetch the user.
-    if (existingUser?.phone) {
-      return true;
-    } else {
-      return false;
-    }
-  } catch (error) {
-    console.error("Error fetching user:", error);
-    return false;
-  }
+        if (typeof user.id !== "string") return false;
+        const existingUser = await getUserById(user.id);
+          if (!existingUser || !existingUser.emailVerified) {
+                    return false;
+                  }
+        return true;
+
 }
       
       if (account?.provider === "credentials" || account?.provider === "otp") {
