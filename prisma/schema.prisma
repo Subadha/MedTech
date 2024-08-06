@@ -21,6 +21,7 @@ model User {
   password      String?
   role          UserRole @default(USER)
   image         String?
+  about         String?
   accounts      Account[]
   phone         String?  @unique
   numberVerified  Boolean  @default(false)

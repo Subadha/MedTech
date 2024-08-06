@@ -20,53 +20,45 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UpdateProfileSchema } from "@/schema/dashboard/profile";
 import { z } from "zod";
+import { updateProfile } from "@/actions/profile/updateProfile";
+import { Textarea } from "../ui/textarea";
 
-export function Modal({details}: any) {
+export function Modal({details,refresh}: any) {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [sucess, setSucess] = useState<string | undefined>("");
-  const [showPassword, setShowPassword] = useState(false); // State for password visibility
 
-  const [showExitConfirmation, setShowExitConfirmation] = useState(false);
   const router = useRouter();
   
   const form = useForm<z.infer<typeof UpdateProfileSchema>>({
     resolver: zodResolver(UpdateProfileSchema),
     defaultValues: {
-      email: details.email,
-      name: details.userName,
-      phone: details.phone,
+      email: details?.email,
+      name: details?.name,
+      about: details?.about,
+      phone: details?.phone,
     },
   });
-
-  const handleOpenChange = () => {
-    const isUserFormModified = localStorage.getItem("userFormModified");
-    if (isUserFormModified && JSON.parse(isUserFormModified)) {
-      setShowExitConfirmation(true);
-    } else {
-      router.back();
-    }
-  };
-
+ 
   const onSubmit = (values: z.infer<typeof UpdateProfileSchema>) => {
     startTransition(() => {
-      //   updateProfile({ ...values}).then((data) => {
-      //     setError(data?.error);
-      //     setSucess(data?.success);
-      //   });
+        updateProfile({ ...values},details.id).then((data) => {
+          console.log(data);
+          refresh()
+        });
     });
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant="outline">Edit<span className="md:block hidden">&nbsp;Profile</span></Button>
       </DialogTrigger>
       <DialogOverlay>
         <DialogContent className="overflow-y-hidden">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div>
+              <div className="flex flex-col gap-4">
                 <FormField
                   control={form.control}
                   name="name"
@@ -75,6 +67,7 @@ export function Modal({details}: any) {
                       <FormLabel>Name</FormLabel>
                       <FormControl>
                         <Input
+                          defaultValue={details?.name}
                           disabled={isPending}
                           {...field}
                           placeholder="Enter your name"
@@ -92,7 +85,7 @@ export function Modal({details}: any) {
                       <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input
-                        
+                          defaultValue={details?.email}
                           disabled={isPending}
                           {...field}
                           placeholder="Enter your email"
@@ -116,6 +109,24 @@ export function Modal({details}: any) {
                           placeholder="Telephone"
                           disabled={isPending}
                           {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                  <FormField
+                  control={form.control}
+                  name="about"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>About</FormLabel>
+                      <FormControl>
+                        <Textarea
+                          defaultValue={details?.about}
+                          disabled={isPending}
+                          {...field}
+                          placeholder="About you"
                         />
                       </FormControl>
                       <FormMessage />
