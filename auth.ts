@@ -37,10 +37,6 @@ export const {
   },
   events: {
     async linkAccount({ user }) {  
-       const existingUser = await getUserById(typeof user.id);
-      if(typeof existingUser?.phone!=="string"){
-          return;
-      }
       await db.user.update({
         where: { id: user.id },
         data: { emailVerified: new Date() },
@@ -62,6 +58,17 @@ export const {
           return false;
         }
       }
+
+           if (account?.provider === "google") {
+             if (!user.email) {
+               throw new Error("Google user email is not available");
+             }
+             const existingUser = await getUserByEmail(user.email);
+             if (!existingUser) {
+               throw new Error("User not found in the database");
+             }
+             return true;
+           }
       
       return true;
     },
