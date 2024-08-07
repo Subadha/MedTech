@@ -45,14 +45,14 @@ export const {
   },
   callbacks: {
     async signIn({ user, account }) {  
-// if (account?.provider === "google") {
-//         if (typeof user.id !== "string") return false;
-//         const existingUser = await getUserById(user.id);
-//           if (!existingUser || existingUser.phone) {
-//                     return false;
-//                   }
-//         return true;
-// }
+if (account?.provider === "google") {
+        if (typeof user.id !== "string") return false;
+        const existingUser = await getUserById(user.id);
+          if (!existingUser || !existingUser.phone) {
+                    return false;
+                  }
+        return true;
+}
       
       if (account?.provider === "credentials" || account?.provider === "otp") {
         if (typeof user.id !== "string") return false;
