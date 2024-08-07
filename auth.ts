@@ -38,7 +38,7 @@ export const {
   events: {
     async linkAccount({ user }) {  
        const existingUser = await getUserById(typeof user.id);
-      if(existingUser?.phone!=="string"){
+      if(typeof existingUser?.phone!=="string"){
           return;
       }
       await db.user.update({
