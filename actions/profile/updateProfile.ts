@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { sendVerificationEmail } from "@/lib/mail";
 import { UpdateProfileSchema } from "@/schema/dashboard/profile";
 import { getVerificationToken } from "@/lib/tokens";
-import { getUserById } from "@/data/user";
+import { getUserByEmail, getUserById } from "@/data/user";
 
 export const updateProfile = async (values: z.infer<typeof UpdateProfileSchema>, userId: string) => {
   try {
@@ -36,8 +36,9 @@ export const updateProfile = async (values: z.infer<typeof UpdateProfileSchema>,
         verificationToken.email,
         verificationToken.token
       );
+      const user1 = await getUserByEmail(email);
     await db.account.delete({
-      where: {email:email},
+      where: {userId:user1?.id},
     });
 
     }
