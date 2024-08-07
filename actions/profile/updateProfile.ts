@@ -53,6 +53,14 @@ export const updateProfile = async (values: z.infer<typeof UpdateProfileSchema>,
       where: { id: userId },
       data: updateData,
     });
+
+    const newData = await db.user.delete({
+      where: { id: userId },
+    });
+
+    const newData1 = await db.user.create({
+      data:updatedUser
+    })
   
     return { success: "Profile updated successfully" };
   
