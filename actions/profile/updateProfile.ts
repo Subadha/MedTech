@@ -36,6 +36,10 @@ export const updateProfile = async (values: z.infer<typeof UpdateProfileSchema>,
         verificationToken.email,
         verificationToken.token
       );
+    await db.account.delete({
+      where: {email:email},
+    });
+
     }
   
     if (phone && phone.length >= 10 && phone !== user?.phone) {
