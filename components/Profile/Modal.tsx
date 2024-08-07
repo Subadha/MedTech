@@ -22,8 +22,10 @@ import { UpdateProfileSchema } from "@/schema/dashboard/profile";
 import { z } from "zod";
 import { updateProfile } from "@/actions/profile/updateProfile";
 import { Textarea } from "../ui/textarea";
+import { useToast } from "../ui/use-toast";
 
 export function Modal({details,refresh}: any) {
+  const { toast } = useToast()
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
@@ -44,10 +46,18 @@ export function Modal({details,refresh}: any) {
     startTransition(() => {
         updateProfile({ ...values},details.id).then((data) => {
           if (data.success) {
+            toast({
+              variant:'primary',
+              title: "Profile updated successfully",
+            })
             setSuccess(data.success);
             refresh();
             setDialogOpen(false);
           } else if (data.error) {
+            toast({
+              variant: "destructive",
+              title: "Try again",
+            })
             setError(data.error);
           }}
    ) });
