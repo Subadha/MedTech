@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
-import Calendar from "react-awesome-calendar";
 import randomColor from "randomcolor";
-
+import dynamic from "next/dynamic";
+const Calendar = dynamic(() => import("react-awesome-calendar"), {
+  ssr: false,
+});
 const CalendarPage = () => {
   const events = [
     {
