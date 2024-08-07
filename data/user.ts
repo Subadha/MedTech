@@ -48,6 +48,9 @@ export const getUserByNumber2 = async (phone: string): Promise<User | null> => {
 
 export const getUserById = async (id: string): Promise<User | null> => {
   try {
+    if (typeof id !== 'string') {
+      throw new Error('Invalid ID format');
+    }
     const user = await db.user.findUnique({
       where: { id },
       select: {

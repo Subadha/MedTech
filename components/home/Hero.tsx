@@ -13,7 +13,7 @@ import * as z from "zod";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { Appointment } from "@/schema";
 import { useState, useTransition } from "react";
-import { book } from "@/actions/appoint";
+import { book } from "@/actions/appointment/appoint";
 import FormSuccess from "../auth/form-sucess";
 import FormError from "../auth/form-error";
 import CharacterRevealText from "./TextReveal"; 

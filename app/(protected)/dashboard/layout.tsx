@@ -13,9 +13,9 @@ export default async function Layout({
   const role = session?.user.role || "User";
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen w-[100vw]">
       <SideNav userName={userName} role={role} />
-      <div className=" h-screen  lg:w-[calc(100vw-256px)]">
+      <div className=" h-screen w-full  lg:w-[calc(100vw-256px)]">
         <Header userName={userName} role={role} />
         <div className="w-full overflow-y-auto h-[calc(100vh-80px)]">
           {children}
