@@ -1,5 +1,5 @@
 "use client";
-import { book } from "@/actions/appoint";
+import { book } from "@/actions/appointment/appoint";
 import FormError from "@/components/auth/form-error";
 import FormSucess from "@/components/auth/form-sucess";
 import { Button } from "@/components/ui/button";

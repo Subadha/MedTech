@@ -68,11 +68,11 @@ model PasswordReset{
 
 model Appointment {
   id String @id @default(cuid())
+  userId String
   email String
   phone String
   date DateTime
 
-  @@unique([email, phone])
 }
 
 model Otp {

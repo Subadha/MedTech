@@ -1,19 +1,23 @@
 import { db } from "@/lib/db";
 import { Appointment } from "@prisma/client";
 
-export const getIsAppointmentByEmail = async (email: string,phone:string): Promise<Appointment | null> => {
+  export const getIsAppointmentByUserId = async (id: string): Promise<Appointment[] | null> => {
     try {
-      const appointment = await db.appointment.findUnique({
+      if (!db || !db.appointment) {
+        throw new Error('Database or appointment model is not defined');
+      }
+  
+      const appointments = await db.appointment.findMany({
         where: {
-            email_phone: { 
-              email,
-              phone,
-            },
-          },
+          userId: id,
+        },
       });
-      return appointment;
+  
+      return appointments;
     } catch (error) {
-      console.error('Error fetching user by email:', error);
+      console.error('Error fetching appointments by user ID:', error);
       return null;
     }
   };
+  
+  
