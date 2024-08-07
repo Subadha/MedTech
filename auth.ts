@@ -36,7 +36,11 @@ export const {
     error: "/auth/error",
   },
   events: {
-    async linkAccount({ user }) {      
+    async linkAccount({ user }) {  
+       const existingUser = await getUserById(typeof user.id);
+      if(existingUser?.phone!=="string"){
+          return;
+      }
       await db.user.update({
         where: { id: user.id },
         data: { emailVerified: new Date() },
@@ -45,13 +49,6 @@ export const {
   },
   callbacks: {
     async signIn({ user, account }) {  
-    if (account?.provider === "google") {
-            if (typeof user.id !== "string") return false;
-            const existingUser = await getUserById(user.id);
-            if (typeof existingUser?.phone !== "string") return false;
-            return true;
-    }
-      
       if (account?.provider === "credentials" || account?.provider === "otp") {
         if (typeof user.id !== "string") return false;
         const existingUser = await getUserById(user.id);
