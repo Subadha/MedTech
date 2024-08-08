@@ -6,7 +6,6 @@
   height: 100%;
 } */
 
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -64,7 +63,6 @@
   }
 }
 
-
 @layer base {
   * {
     @apply border-border;
@@ -116,6 +114,177 @@
 .read-the-docs {
   color: #888;
 }
-.react-international-phone-input{
+.react-international-phone-input {
   width: 100% !important;
+}
+
+/* Customize the default FullCalendar buttons */
+
+.fc .fc-header-toolbar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  border-radius: 10px !important;
+}
+.fc-header-toolbar > .fc-toolbar-chunk:nth-child(2) {
+  display: flex;
+}
+
+/* Event card */
+
+/** row */ 
+.fc .fc-timeGrid .fc-scroller-canvas .fc-timeGrid-col {
+  min-height: 80px; /* Adjust this value as needed */
+}
+
+/* Adjust the event card padding to match the increased row height */
+.fc .fc-event {
+  background-color: white !important;;
+  border: 0;
+  height: 100% !important;
+  padding: 0px !important;
+}
+
+
+
+
+
+/* Optionally, increase the size of the event title and time */
+.fc-event-title, .fc-event-time {
+  
+  font-size: 14px !important; /* Adjust font size */
+}
+.fc .fc-timegrid-slot {
+  height: 80px; /* Adjust this value as needed */
+}
+.fc-scrollgrid{
+  height: 100% !important;
+  border-radius: 10px !important;
+}
+.fc-scroller::-webkit-scrollbar {
+  display: none;
+  width: 0px !important;
+}
+
+/* Hide scrollbar for Firefox */
+.fc-scroller {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+/* General button styles */
+.fc .fc-button {
+  margin-left: 5px !important;
+  background-color: white !important; /* Background color */
+  color: rgb(163, 163, 163) !important; /* Text color */
+  border: 0.1em solid rgb(211, 211, 211) !important; /* Border */
+  padding: 8px 15px !important; /* Padding */
+  border-radius: 50px !important; /* Rounded corners */
+  cursor: pointer !important; /* Pointer cursor */
+  font-size: 14px !important; /* Font size */
+  box-shadow: none !important; /* Remove box-shadow */
+}
+
+/* Hover effect for buttons */
+.fc .fc-button:hover {
+  background-color: #f6f6f6 !important; /* Background color on hover */
+}
+
+/* Active and focus states */
+.fc .fc-button:active,
+.fc .fc-button:focus {
+  outline: none !important; /* Remove outline */
+  border: 0 !important; /* Remove border */
+  background-color: #ffffff !important; /* Background color on active/focus */
+  box-shadow: none !important; /* Remove box-shadow */
+}
+.fc .fc-button[aria-pressed="true"] {
+  color: #000000 !important;
+  border: 0.1em solid rgb(0, 0, 0) !important; /* Border */
+
+}
+
+/* Customize "Today" button */
+.fc .fc-today-button {
+  background-color: #ffffff !important; /* Background color */
+  color: rgb(0, 0, 0) !important; /* Text color */
+  border: 0.1em solid rgb(211, 211, 211) !important; /* Border */
+  padding: 8px !important; /* Padding */
+  border-radius: 50px !important; /* Rounded corners */
+  cursor: pointer !important; /* Pointer cursor */
+  font-size: 14px !important; /* Font size */
+}
+
+/* Hover effect for "Today" button */
+.fc .fc-today-button:hover {
+  background-color: #ffffff !important; /* Background color on hover */
+  color: rgb(0, 0, 0) !important; /* Text color on hover */
+  border: 1px solid #000000 !important; /* Border on hover */
+}
+
+/* Active and focus states for "Today" button */
+.fc .fc-today-button:active,
+.fc .fc-today-button:focus {
+  background-color: #ffffff !important; /* Background color on active/focus */
+  color: rgb(0, 0, 0) !important; /* Text color on active/focus */
+  border: 1px solid #000000 !important; /* Border on active/focus */
+  box-shadow: none !important; /* Remove box-shadow */
+}
+
+/* Customize prev/next buttons */
+.fc .fc-prev-button,
+.fc .fc-next-button {
+  padding: 8px 12px !important; /* Padding */
+  border-radius: 50px !important; /* Rounded corners */
+  background-color: #ffffff !important; /* Background color */
+  color: rgb(0, 0, 0) !important; /* Text color */
+  border: 0 !important; /* Remove border */
+}
+
+/* Active and focus states for prev/next buttons */
+.fc .fc-prev-button:active,
+.fc .fc-next-button:active,
+.fc .fc-prev-button:focus,
+.fc .fc-next-button:focus {
+  border: 0 !important; /* Remove border */
+  background-color: #e5e5e5 !important; /* Background color on active/focus */
+  box-shadow: none !important; /* Remove box-shadow */
+}
+.fc-toolbar-title{
+  font-size: 25px !important;
+}
+
+@media (max-width: 767px) {
+  .fc .fc-header-toolbar {
+    flex-direction: column;
+    align-items: flex-start; /* Adjust alignment as needed */
+    padding: 5px; /* Adjust padding for mobile */
+  }
+  
+  /* Adjust child elements if needed */
+  .fc .fc-toolbar-chunk {
+    width: 100%; /* Full width for each toolbar chunk on mobile */
+    margin-bottom: 10px; /* Space between toolbar chunks */
+  }
+  .fc-toolbar-title{
+    font-size: 20px !important;
+  }
+  .fc-view{
+    height: 90vh !important;
+  }
+  .fc-col-header-cell, .fc-daygrid-day, .fc-timegrid-day, .fc-list-day {
+    /* Increase column width for mobile view */
+    width: 80px !important; /* Adjust width as needed */
+  }
+  .fc-event {
+    width: 80px; /* Adjust width as needed */
+  }
+  /* Apply horizontal scroll */
+  .fc-scroller {
+    overflow-x: auto; /* Enable horizontal scrolling */
+  }
+  .fc-timegrid-slot .fc-timegrid-slot-lane{
+    width: 80px !important;
+  }
+ 
 }
