@@ -15,6 +15,10 @@ export const menuItems = [
     href: "/dashboard",
   },
   {
+    name: "Appointment",
+    href: "/dashboard/appointment",
+  },
+  {
     name: "Calendar",
     href: "/dashboard/calender",
   },
