@@ -22,10 +22,10 @@ export const menuItems = [
     name: "Calendar",
     href: "/dashboard/calender",
   },
-  {
-    name: "Book",
-    href: "/dashboard/book",
-  },
+  // {
+  //   name: "Book",
+  //   href: "/dashboard/book",
+  // },
   {
     name: "Profile",
     href: "/dashboard/profile",
