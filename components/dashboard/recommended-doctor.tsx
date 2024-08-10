@@ -8,6 +8,7 @@ import { Badge } from "../ui/badge";
 import { GiTwoCoins } from "react-icons/gi";
 import { IoMdTime } from "react-icons/io";
 import { Button } from "../ui/button";
+import { Span } from "next/dist/trace";
 
 const RecommendedDoctors = () => {
   return (
@@ -21,9 +22,9 @@ const RecommendedDoctors = () => {
         </span>
       </div>
       <CardContent className=" grid grid-cols-6 gap-3">
-        <DoctorCard />
-        <DoctorCard />
-        <DoctorCard />
+      {dummyData.map((data,ind) => (
+        <DoctorCard key={ind} data={data} />
+      ))}
       </CardContent>
     </Card>
   );
@@ -31,7 +32,7 @@ const RecommendedDoctors = () => {
 
 export default RecommendedDoctors;
 
-const DoctorCard = () => {
+export const DoctorCard = ({ data }: any) => {
   return (
     <div className=" col-span-6 md:col-span-3 lg:col-span-2">
       <Card className="p-2">
@@ -45,12 +46,12 @@ const DoctorCard = () => {
               <AvatarFallback>DR</AvatarFallback>
             </Avatar>
             <div className=" flex flex-col items-start gap-1">
-              <p className="text-base font-semibold">Dr. Madhukar</p>
+              <p className="text-base font-semibold">{data.name}</p>
               <div className="text-[12px] flex text-gray-600">
-                <span>Gynecologist</span>&nbsp;|&nbsp;
+                <span>Specialist</span>&nbsp;|&nbsp;
                 <span>12 years experience</span>
               </div>
-              <Badge variant="secondary">Gynecologist</Badge>
+              <Badge variant="secondary">{data.specialization}</Badge>
             </div>
           </div>
         </CardContent>
@@ -60,7 +61,13 @@ const DoctorCard = () => {
             <div className="flex gap-1 ">
               <IoMdTime />
               <div>
-                <p className="text-md leading-none font-medium">Tue, Thu</p>
+                <p className="text-md leading-none flex font-medium">
+                  {data.available_days.length <= 3
+                    ? data.available_days.join(", ")
+                    : `${data.available_days[0]} - ${
+                        data.available_days[data.available_days.length - 1]
+                      }`}
+                </p>{" "}
                 <span className="text-[12px] text-gray-600">
                   10:00 AM-01:00PM
                 </span>
@@ -80,3 +87,29 @@ const DoctorCard = () => {
     </div>
   );
 };
+
+const dummyData = [
+  {
+    "name": "Dr. Madhukar",
+    "specialization": "Gynecologist",
+    "experience": "12 years",
+    "available_days": ["Tue", "Thu", "Fri", "Sat"],
+    "timing": "10:00 AM - 01:00 PM",
+    "fee": "Rs. 300"
+  },
+  {
+    "name": "Dr. Aditi Sharma",
+    "specialization": "Pediatrician",
+    "experience": "8 years",
+    "available_days": ["Mon", "Wed"],
+    "timing": "09:00 AM - 12:00 PM",
+    "fee": "Rs. 250"
+  },
+  {
+    "name": "Dr. Rohan Mehta",
+    "specialization": "Cardiologist",
+    "experience": "15 years",
+    "available_days": ["Mon", "Fri", "Sat"],
+    "timing": "11:00 AM - 02:00 PM",
+    "fee": "Rs. 500"
+  }]
