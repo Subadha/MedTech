@@ -1,11 +1,12 @@
-"use client"
-import Script from 'next/script';
-import React from 'react'
+"use client";
+import Faq from "@/components/help/faq";
+import Script from "next/script";
+import React from "react";
 
 const page = () => {
   return (
-    <>
-       <Script
+    <div className="flex flex-col relative h-full w-full pt-20 items-center gap-10">
+      <Script
         id="tawk-to"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
@@ -22,10 +23,12 @@ const page = () => {
           `,
         }}
       />
-    <div>page</div>
-      
-      </>
-  )
-}
+      <h1 className="text-2xl">Hello, how can we help? </h1>
+      <div className="flex relative w-full p-10 items-center gap-10">
+        <Faq />
+      </div>
+    </div>
+  );
+};
 
-export default page
+export default page;
