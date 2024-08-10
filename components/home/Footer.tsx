@@ -5,27 +5,18 @@ import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react
 export const Footer = () => {
   return (
     <motion.div
-      initial={{
-        opacity: 0,
-        y: 100,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-        transition: {
-          duration: 1,
-        },
-      }}
+      initial={{ opacity: 0, y: 100 }}
+      whileInView={{ opacity: 1, y: 0, transition: { duration: 1 } }}
       viewport={{ once: true }}
     >
       <footer id="footer" className="w-full bg-purple-900 text-white">
-        <div className="mx-auto flex flex-col px-4 py-8 md:flex-row md:space-x-8 max-w-6xl">
-          {/* Section with Social Icons and Heading */}
-          <div className="flex flex-col items-center justify-center w-full md:w-1/2">
+        <div className="mx-auto flex flex-col px-4 py-8 max-w-6xl space-y-8 md:space-y-0 md:flex-row md:justify-between">
+          {/* Section with Social Icons and Facebook Embed */}
+          <div className="flex flex-col items-center md:items-start md:w-1/2">
             <h1 className="text-md max-w-sm text-center md:text-left mb-4">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit amet consectetur sit amet consectetur.
             </h1>
-            <div className="flex pb-10 space-x-4">
+            <div className="flex space-x-4 pb-10">
               <a href="https://www.linkedin.com/company/kaustubha-medtech-private-limited" aria-label="LinkedIn">
                 <FaLinkedin className="text-white text-xl" />
               </a>
@@ -42,17 +33,22 @@ export const Footer = () => {
                 <FaYoutube className="text-white text-xl" />
               </a>
             </div>
-            <iframe
-              className="w-full h-[70vh]"
-              src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100090014336935&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
-              title="Facebook Page"
-              loading="lazy"
-            ></iframe>
+            <div className="w-full">
+              <div className="relative pb-[56.25%] h-[60vh]"> {/* 16:9 Aspect Ratio */}
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D100090014336935&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                  title="Facebook Page"
+                  loading="lazy"
+                  allowFullScreen={true}
+                ></iframe>
+              </div>
+            </div>
           </div>
 
           {/* Links Section */}
-          <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 md:mt-0 lg:w-3/4">
-            <div className="mb-8">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 md:w-1/2">
+            <div>
               <p className="text-lg font-semibold">Helpful Links</p>
               <hr className="my-4 border-t-2 border-blue-800 w-16" />
               <ul className="space-y-4 text-sm font-medium">
@@ -78,7 +74,7 @@ export const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="mb-8">
+            <div>
               <p className="text-lg font-semibold">Support</p>
               <hr className="my-4 border-t-2 border-blue-800 w-16" />
               <ul className="space-y-4 text-sm font-medium">
@@ -104,7 +100,7 @@ export const Footer = () => {
                 </li>
               </ul>
             </div>
-            <div className="mb-8">
+            <div>
               <p className="text-lg font-semibold">Contact Us</p>
               <hr className="my-4 border-t-2 border-blue-800 w-16" />
               <ul className="space-y-4 text-sm font-medium">
@@ -115,12 +111,16 @@ export const Footer = () => {
                   >
                     C/O The Foundation for Center for Healthcare Entrepreneurship, Indian Institute of Technology, IIT Hyderabad Kandi, TG 502285
                   </a>
-                  <iframe
-                    className="pt-10 w-full h-64"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15213.15289780603!2d78.10387285541992!3d17.589043100000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcbf12e326be7e1%3A0x1b5bca249531e1a0!2sTIP%20Building!5e0!3m2!1sen!2sin!4v1705916013050!5m2!1sen!2sin"
-                    title="Google Maps"
-                    loading="lazy"
-                  ></iframe>
+                  <div className="relative overflow-hidden pt-[70%] mt-4"> {/* Increased height */}
+                    <iframe
+                      className="absolute top-0 left-0 w-full h-full"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15213.15289780603!2d78.10387285541992!3d17.589043100000005!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcbf12e326be7e1%3A0x1b5bca249531e1a0!2sTIP%20Building!5e0!3m2!1sen!2sin!4v1705916013050!5m2!1sen!2sin"
+                      title="Google Maps"
+                      loading="lazy"
+                      frameBorder="0"
+                      allowFullScreen={true}
+                    ></iframe>
+                  </div>
                 </li>
               </ul>
             </div>

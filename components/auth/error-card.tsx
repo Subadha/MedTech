@@ -10,7 +10,7 @@ export const ErrorCard=()=>{
     return(
         <Card className="w-[400px] shadow-md">
             <CardHeader>
-                <Header label="Oops Something went wrong" title=""/>
+                <Header label="Please Register Before Signin" title=""/>
             </CardHeader>
             <CardFooter>
                 <BackButton
