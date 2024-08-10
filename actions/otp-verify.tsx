@@ -18,11 +18,10 @@ export const verifyOtp = async (values: z.infer<typeof otpVerify>) => {
         // Assuming getUserOtp can return a token or you can modify it to do so
         const number = isValidOtp.phone; // Extract token if available
         const user = await getUserByNumber(number);
-        console.log(user?.email);
         if (user && user.email) {
             const x = await generatePasswordResetToken(user.email);
             const token = x?.token; 
-            console.log(token);
+            // console.log(token);
             
             return { success: "OTP verified successfully", error: null, token: token };
         } else {

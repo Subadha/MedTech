@@ -18,3 +18,15 @@ export const UpdateProfileSchema = z.object({
     }).optional(),
   }).partial();
   
+
+export const VerifyNumber = z.object({
+  phone: z.string().regex(/^\+\d{10,}$/, {
+    message: "Phone number must start with a + and be at least 10 digits long.",
+  }),
+  otp: z.string().min(6, {
+    message: "OTP is required",
+  }),
+  current: z.string().regex(/^\+\d{10,}$/, {
+    message: "Phone number must start with a + and be at least 10 digits long.",
+  }),
+});

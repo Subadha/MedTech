@@ -99,5 +99,8 @@ export const Appointment = z.object({
 });
 
 export const otpVerify = z.object({
-    otp: z.string()
+  otp: z.string(),
+  phone: z.string().regex(/^\+\d{10,}$/, {
+    message: "Phone number must start with a + and be at least 10 digits long.",
+  }),
 });

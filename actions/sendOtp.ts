@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
 import * as z from "zod";
 import { ResetUsingNumber } from "@/schema"
-import { getUserByNumber } from "@/data/user";
+import { getUserByNumber, getUserOtp } from "@/data/user";
 import twilio from 'twilio';
 import { db } from '@/lib/db';
 
@@ -17,12 +17,16 @@ export const registerOtp1 = async (values: z.infer<typeof ResetUsingNumber>) => 
 
     const { phone } = validatedFields.data;
     
-    
+    const otpData = await getUserOtp(phone);
+
+    if(otpData?.otp!==""){
+        return{error:"OTP Already Sent"}
+    }
 
     // Check if user exists with the provided phone number
     const existingUser = await getUserByNumber(phone);
 
-    console.log(existingUser);
+    //console.log(existingUser);
 
     if (existingUser) {
         return { error: "Number Already Exists" };
@@ -56,6 +60,8 @@ export const registerOtp1 = async (values: z.infer<typeof ResetUsingNumber>) => 
                 expiry: new Date(Date.now() + 10 * 60 * 1000), // OTP expires after 10 minutes
             },
         });
+        console.log(otp);
+        
         return { success: "OTP sent!" };
     } catch (err) {
         console.log(err);

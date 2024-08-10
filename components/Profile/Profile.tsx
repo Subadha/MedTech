@@ -9,6 +9,7 @@ import { startTransition, useEffect, useState } from "react";
 import { z } from "zod";
 import { getProfileData } from "@/actions/profile/getProfileData";
 import { User } from "@/data/user";
+import { PhoneVerify } from "./PhoneVerify";
 
 
 interface ProfileProps {
@@ -33,7 +34,6 @@ export default function Profile({
   };
 
  useEffect(() => handleFetchProfileData(),[])
-
 
   return (
     <>
@@ -72,6 +72,7 @@ export default function Profile({
                 <div className="flex justify-between pt-2">
                   <p className="">{data?.phone}</p>
                 </div>
+                {!data?.numberVerified && <PhoneVerify details={data} data1={data?.phone} refresh={handleFetchProfileData} />}
               </div>
             </div>
             <div className="rounded-lg sm:mx-[30px] mx-[20px] mt-4 sm:text-[1vw] text-[3vw] shadow-xl box-border pb-4 border-2 border-gray-300">
