@@ -22,7 +22,7 @@ import FormError from "./form-error";
 import Link from "next/link";
 import Image from "next/image";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import img from "@/app/images/bg_4.jpg";
+import img from "@/app/images/Display.png";
 import logo from "@/app/images/logo.png";
 import { useSearchParams } from "next/navigation";
 
@@ -80,7 +80,7 @@ export const LoginForm = () => {
         </Link>
       </div>
       <div className="absolute sm:top-10 top-[100px] sm:right-10 z-20 text-gray-600">
-        <span>
+        <span className="font-bold">
           Dont have an account?{" "}
           <Link href="/auth/register" className="text-purple-700 font-bold-700">
             Sign up

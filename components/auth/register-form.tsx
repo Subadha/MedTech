@@ -21,7 +21,7 @@ import FormError from "./form-error";
 import Link from "next/link";
 import Image from "next/image";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
-import img from "@/app/images/bg_4.jpg";
+import img from "@/app/images/Display.png";
 import logo from "@/app/images/logo.png";
 import { PhoneInput } from "react-international-phone";
 
@@ -81,7 +81,7 @@ export const RegisterForm = () => {
         </Link>
       </div>
       <div className="absolute sm:top-10 top-[100px] sm:right-10 z-20 text-gray-600">
-        <span>
+        <span className="font-bold">
           Already have an account?{" "}
           <Link href="/auth/login" className="text-purple-700 font-bold-700">
             Sign in
