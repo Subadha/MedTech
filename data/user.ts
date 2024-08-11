@@ -99,6 +99,19 @@ export const getOtp = async (otp: string) => {
   }
 };
 
+
+export const getOtpData = async (phone: string) => {
+  try {
+    const user = await db.otp.findFirst({
+      where: { phone },
+    });
+    return user?.otp;
+  } catch (error) {
+    console.error("Error fetching user OTP Details:", error);
+    return null;
+  }
+};
+
 export type User = {
   id: string;
   name: string | null;

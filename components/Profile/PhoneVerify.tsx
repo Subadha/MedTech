@@ -64,7 +64,6 @@ export const PhoneVerify = ({ details,data1, refresh }: any)=> {
 
     const onSendOtp = () => {
         const phone = form.getValues("phone");
-        console.log(form.getValues("otp"));
         if (phone) {
             startTransition(() => {
                 registerOtp1({ phone }).then((data) => {

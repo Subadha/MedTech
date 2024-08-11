@@ -48,6 +48,8 @@ export const updateProfile = async (values: z.infer<typeof UpdateProfileSchema>,
       }
       updateData.phone = phone;
     }
+    
+    updateData.numberVerified = false;
   
     const updatedUser = await db.user.update({
       where: { id: userId },
