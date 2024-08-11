@@ -6,7 +6,7 @@ import { otpVerify } from "@/schema";
 import { VerifyNumber } from "@/schema/dashboard/profile";
 import { z } from "zod";
 
-export const verifyOtp1 = async (values: z.infer<typeof VerifyNumber>) => {
+export const verifyOtp1 = async (values: z.infer<typeof VerifyNumber>,current:string) => {
   // Validate the OTP and phone number
   const otpValidation = VerifyNumber.safeParse(values);
   console.log("Hello");
@@ -15,7 +15,7 @@ export const verifyOtp1 = async (values: z.infer<typeof VerifyNumber>) => {
     return { error: "Invalid input data." };
   }
 
-  const { otp, phone, current } = otpValidation.data;
+  const { otp, phone,} = otpValidation.data;
 
   // Retrieve the OTP details from the database
   const isValidOtp = await getUserOtp(otp.toString());

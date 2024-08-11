@@ -34,11 +34,11 @@ export const menuItems: MenuItem[] = [
     icon: "Calendar",
     href: "/dashboard/calender",
   },
-  {
-    name: "Book",
-    icon: "UserRoundCheck",
-    href: "/dashboard/book",
-  },
+  // {
+  //   name: "Book",
+  //   icon: "UserRoundCheck",
+  //   href: "/dashboard/book",
+  // },
   {
     name: "Profile",
     icon: "CircleUserRound",

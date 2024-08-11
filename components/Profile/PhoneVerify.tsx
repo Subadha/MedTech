@@ -1,5 +1,4 @@
 "use client";
-
 import { Dialog, DialogOverlay, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useState, useTransition } from "react";
 import {
@@ -26,10 +25,9 @@ import { registerOtp1 } from "@/actions/sendOtp";
 import { PhoneInput } from "react-international-phone";
 import FormSucess from "../auth/form-sucess";
 import FormError from "../auth/form-error";
-import { verifyOtp } from "@/actions/otp-verify";
 import { verifyOtp1 } from "@/actions/profileOtp";
 
-export function PhoneVerify({ details,data1, refresh }: any) {
+export const PhoneVerify = ({ details,data1, refresh }: any)=> {
     const { toast } = useToast();
     const [isPending, startTransition] = useTransition();
     const [error, setError] = useState<string | undefined>("");
@@ -41,24 +39,32 @@ export function PhoneVerify({ details,data1, refresh }: any) {
         defaultValues: {
             phone: "",
             otp: "",
-            current:data1,
         },
     });
 
-    const onSubmit = (values: z.infer<typeof VerifyNumber>) => {
-        startTransition(() => {
-            verifyOtp1(values).then((data)=>{
-                if (data?.success) {
-                    setSuccess("OTP Verified successfully!");
-                } else {
-                    setError("Error Occured");
-                }
-            })
-        });
+    const onSubmit = async (values: z.infer<typeof VerifyNumber>) => {
+        try {
+            startTransition(() => {
+                verifyOtp1({...values},data1).then((data) => {
+                    if (data?.success) {
+                        setSuccess("OTP Verified successfully!");
+                        setError("");
+                        refresh();
+                        setDialogOpen(false);
+                    } else {
+                        setError("Error Occurred");
+                    }
+                });
+            });
+        } catch (err) {
+            setError("An unexpected error occurred.");
+            console.error(err); // Log the error
+        }
     };
 
     const onSendOtp = () => {
         const phone = form.getValues("phone");
+        console.log(form.getValues("otp"));
         if (phone) {
             startTransition(() => {
                 registerOtp1({ phone }).then((data) => {
