@@ -4,7 +4,6 @@ import { icons, LogOut } from "lucide-react";
 import Image from "next/image";
 import logo from "@/app/images/logo.png";
 import Link from "next/link";
-import { SignOut } from "@/actions/signout";
 import { usePathname } from "next/navigation";
 
 interface MenuItem {
@@ -49,6 +48,12 @@ export const menuItems: MenuItem[] = [
     icon: "MessageCircleQuestion",
     href: "/dashboard/help",
   },
+  {
+    name: "Sign Out",
+    icon: "LogOut",
+    href: "/dashboard/signout",
+  },
+
 ];
 
 type SideNavProps = {
@@ -58,10 +63,7 @@ type SideNavProps = {
 
 export default function SideNav({ userName, role }: SideNavProps) {
   const location = usePathname();
-  const handleLogout = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await SignOut(); // Sign out the user
-  };
+
 
   return (
     <aside className={`lg:block hidden h-full w-64`}>
@@ -76,7 +78,7 @@ export default function SideNav({ userName, role }: SideNavProps) {
         {menuItems.map((item) => {
           const Icon = icons[item.icon];
           return (
-            <a
+            <Link
               key={item.name}
               href={item.href}
               className={`flex gap-2 py-2 px-3 rounded ${item.href === location ? "bg-primary text-white" : ""}`}
@@ -85,10 +87,10 @@ export default function SideNav({ userName, role }: SideNavProps) {
                 <Icon className="w-5" />
               </span>
               {item.name}
-            </a>
+            </Link>
           );
         })}
-        <form onSubmit={handleLogout} className="mt-4">
+        {/* <form onSubmit={handleLogout} className="mt-4">
           <button
             type="submit"
             className="w-full flex gap-2 py-2 px-3 text-left rounded hover:bg-primary hover:text-white"
@@ -96,7 +98,7 @@ export default function SideNav({ userName, role }: SideNavProps) {
             <LogOut className="w-5" />
             Sign Out
           </button>
-        </form>
+        </form> */}
       </nav>
     </aside>
   );

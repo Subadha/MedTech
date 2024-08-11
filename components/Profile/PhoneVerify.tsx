@@ -48,11 +48,19 @@ export const PhoneVerify = ({ details,data1, refresh }: any)=> {
                 verifyOtp1({...values},data1).then((data) => {
                     if (data?.success) {
                         setSuccess("OTP Verified successfully!");
+                        toast({
+                            variant: 'primary',
+                            title: "Profile updated successfully",
+                        })
                         setError("");
                         refresh();
                         setDialogOpen(false);
                     } else {
                         setError("Error Occurred");
+                        toast({
+                            variant: "destructive",
+                            title: "Try again",
+                        })
                     }
                 });
             });

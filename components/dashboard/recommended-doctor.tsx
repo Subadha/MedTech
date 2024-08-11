@@ -9,6 +9,7 @@ import { GiTwoCoins } from "react-icons/gi";
 import { IoMdTime } from "react-icons/io";
 import { Button } from "../ui/button";
 import { Span } from "next/dist/trace";
+import Link from "next/link";
 
 const RecommendedDoctors = () => {
   return (
@@ -81,7 +82,7 @@ export const DoctorCard = ({ data }: any) => {
               </div>
             </div>
           </div>
-          <Button className="w-full">Book an appointment</Button>
+          <Link href={`consult/${data.id}`}><Button className="w-full">Book an appointment</Button></Link>
         </CardFooter>
       </Card>
     </div>
