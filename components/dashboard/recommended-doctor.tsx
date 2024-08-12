@@ -82,7 +82,7 @@ export const DoctorCard = ({ data }: any) => {
               </div>
             </div>
           </div>
-          <Link href={`consult/${data.id}`}><Button className="w-full">Book an appointment</Button></Link>
+          <Link className="w-full" href={`consult/${data.id}`}><Button className="w-full">Book an appointment</Button></Link>
         </CardFooter>
       </Card>
     </div>
