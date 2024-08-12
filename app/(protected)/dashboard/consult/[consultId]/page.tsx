@@ -20,7 +20,7 @@ export default function ConsultDoctor({ params }: ConsultDoctorProps) {
     const data = dummyData.find(doctor => doctor.id === parseInt(params.consultId));
 
     return (
-        <div className="w-[80vw] pl-[2vw] pt-[2vw] h-full">
+        <div className="w-[80vw] pl-[2vw] pt-[2vw] pb-[2vw]">
             <div className="flex rounded-xl border-gray-400 box-border border-2 p-5">
                 <div className="w-[8vw]">
                     <Image src={img} alt="Doctor" objectFit="true" />
@@ -65,14 +65,14 @@ export default function ConsultDoctor({ params }: ConsultDoctorProps) {
                     </div>
                 </div>
             </div>
-            <div className="mt-[2vw] flex flex-col rounded-xl border-gray-400 box-border border-2 p-5">
+            <div className="mt-[2vw] flex flex-col rounded-xl border-gray-400 box-border border-2 p-5 mb-10">
                 <div className="flex w-full justify-center items-center text-center">
                     <span className="font-bold text-[1.8vw]">OverView</span>
                     <hr className="text-gray-500" />
                 </div>
                 <div className="flex flex-col mt-[1vw]">
                     <p className="text-purple-500 text-[1.5vw] font-bold">Personal Statement</p>
-                    <div className="rounded-md border-gray-400 box-border border-2 p-5 mr-auto bg-gray-100">
+                    <div className="rounded-md border-gray-400 box-border border-2 p-5 mr-auto bg-gray-100 w-[60vw]">
                         <p>I am one of the highly qualified and an expert Family Medical Techniques with an invaluable experience of over 11 years. My residence is in Bareilly, Uttar Pradesh, India. I can fluently communicate with you in English, Hindi, Urdu, Russian, Punjabi. I will be happy to assist you via video and audio online medical consultation.</p>
                     </div>
                 </div>
@@ -136,8 +136,35 @@ export default function ConsultDoctor({ params }: ConsultDoctorProps) {
                 </div>
                 <div className="flex flex-col mt-[1vw]">
                     <p className="text-purple-500 text-[1.5vw] font-bold">Patient Reviews</p>
-                    <div className="p-5 mr-auto">
-                        
+                    <div className="flex p-5 mr-auto">
+                        <div className="w-[4vw] h-[4vw] rounded-full overflow-hidden">
+                            <Image src={img} alt="reviews" objectFit="cover" />
+                        </div>
+                        <div className="pl-[3vw]">
+                            <h1 className="font-bold text-[1vw]">Jenifer Lopez</h1>
+                            <p>Nov 2023</p>
+                            <p>Dr. Deep Sorthiya is very kind and gives me detailed explanations</p>
+                        </div>
+                    </div>
+                    <div className="flex p-5 mr-auto">
+                        <div className="w-[4vw] h-[4vw] rounded-full overflow-hidden">
+                            <Image src={img} alt="reviews" objectFit="cover" />
+                        </div>
+                        <div className="pl-[3vw]">
+                            <h1 className="font-bold text-[1vw]">Jenifer Lopez</h1>
+                            <p>Nov 2023</p>
+                            <p>Dr. Deep Sorthiya is very kind and gives me detailed explanations</p>
+                        </div>
+                    </div>
+                    <div className="flex p-5 mr-auto">
+                        <div className="w-[4vw] h-[4vw] rounded-full overflow-hidden">
+                            <Image src={img} alt="reviews" objectFit="cover" />
+                        </div>
+                        <div className="pl-[3vw]">
+                            <h1 className="font-bold text-[1vw]">Jenifer Lopez</h1>
+                            <p>Nov 2023</p>
+                            <p>Dr. Deep Sorthiya is very kind and gives me detailed explanations</p>
+                        </div>
                     </div>
                 </div>
             </div>
