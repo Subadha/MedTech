@@ -38,7 +38,7 @@ export function PercentageCard({
   } satisfies ChartConfig;
 
   return (
-    <Card className="flex col-span-2 h-[80%] flex-col">
+    <Card className="flex md:col-span-2 col-span-6 flex-col">
       <CardHeader className=" flex-row justify-between items-center pb-0">
         <CardTitle>Sleep</CardTitle>
         <Selection/>
@@ -53,8 +53,8 @@ export function PercentageCard({
               data={chartData}
               dataKey="visitors"
               nameKey="browser"
-              innerRadius={70}
-              strokeWidth={4}
+              innerRadius={65}
+              strokeWidth={3}
             >
               <Label
                 content={({ viewBox }) => {
