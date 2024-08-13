@@ -13,8 +13,8 @@ export const Loginnew = () => {
         <div className="relative flex items-end px-4 pb-10 pt-60 sm:px-6 sm:pb-16 md:justify-center lg:px-8 lg:pb-24">
           <div className="absolute inset-0">
             <Image
-              width={500}
-              height={500}
+              width={1400}
+              height={1000}
               className="h-full w-full rounded-md object-cover object-top"
               src={loginBg}
               alt="login"

@@ -19,6 +19,11 @@ export const menuItems: MenuItem[] = [
     href: "/dashboard",
   },
   {
+    name: "Tracker",
+    icon: "AudioWaveform",
+    href: "/dashboard/tracker",
+  },
+  {
     name: "Appointment",
     icon: "UserRoundCheck",
     href: "/dashboard/appointment",
