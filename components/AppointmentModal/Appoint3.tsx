@@ -18,7 +18,7 @@ export default function Appoint3({user}:any){
             </div>
             <hr/>
             <div className="flex flex-col p-3">
-                <h1 className="text-lg font-bold">You're step away from Online Consultaion</h1>
+                <h1 className="text-lg font-bold">You are one step away from Online Consultaion</h1>
                 <p className="text-gray-700">Select Your consultaion type</p>
             </div>
             <div className="flex flex-col p-3 gap-4">
