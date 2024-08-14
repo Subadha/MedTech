@@ -1,52 +1,47 @@
-"use client"
+"use client";
 import { useMail } from "@/components/chat/chat";
 import ContactList from "@/components/chat/ContactList";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
-import React from "react";
-import {useCookies} from "react-cookie";
+import React, { useEffect, useState, useCallback } from "react";
+import { useCookies } from "react-cookie";
 
 interface MailItem {
-    id: string;
-    creator: {
-      name: string;
-    };
-    read: boolean;
-    updated_at: string;
-    labels: string[];
-  }
-  interface MailProps {
-    mails: MailItem[];
-    defaultLayout: number[] | undefined;
-    defaultCollapsed?: boolean;
-    navCollapsedSize: number;
-  }
+  id: string;
+  creator: {
+    name: string;
+  };
+  read: boolean;
+  updated_at: string;
+  labels: string[];
+}
 
-const page = ({defaultLayout = [265, 360, 655] }: MailProps) => {
+const defaultLayout = [265, 360, 655]
+
+const Page = () => {
   const [mail] = useMail();
-  const [isMobile, setIsMobile] = React.useState(false);
-  const [message, setMessage] = React.useState([]);
-  const [sheetState, setSheetState] = React.useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [message, setMessage] = useState([]);
+  const [sheetState, setSheetState] = useState(false);
   const [cookie, setCookie] = useCookies([
     "react-resizable-panels:collapsed",
     "react-resizable-panels:layout",
   ]);
 
-  const GetMessages = async () => {
+  const GetMessages = useCallback(async () => {
     if (!mail.selected) {
       return;
     }
-    let data: any = await fetch(
+    let data = await fetch(
       `https://devapi.beyondchats.com/api/get_chat_messages?chat_id=${mail.selected}`
     );
     data = await data.json();
-    setMessage(data);
-  };
-
-  React.useEffect(() => {
-    GetMessages();
   }, [mail.selected]);
 
-  React.useEffect(() => {
+  useEffect(() => {
+    GetMessages();
+  }, [mail.selected, GetMessages]);
+
+  useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 768);
     };
@@ -79,10 +74,12 @@ const page = ({defaultLayout = [265, 360, 655] }: MailProps) => {
         {isMobile ? (
           mail.selected ? (
             <ResizablePanel defaultSize={defaultLayout[2]}>
+              {/* Add content here */}
             </ResizablePanel>
           ) : null
         ) : (
           <ResizablePanel defaultSize={defaultLayout[2]}>
+            {/* Add content here */}
           </ResizablePanel>
         )}
       </ResizablePanelGroup>
@@ -90,7 +87,8 @@ const page = ({defaultLayout = [265, 360, 655] }: MailProps) => {
   );
 };
 
-export default page;
+export default Page;
+
 
 const mails =[  {
     id: '1',
