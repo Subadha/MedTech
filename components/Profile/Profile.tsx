@@ -1,12 +1,10 @@
 "use client";
 
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import img from "@/app/images/defaultuser.jpeg";
-import { useRouter } from "next/navigation";
 import { Modal } from "./Modal";
 import { startTransition, useEffect, useState } from "react";
-import { z } from "zod";
 import { getProfileData } from "@/actions/profile/getProfileData";
 import { User } from "@/data/user";
 import { PhoneVerify } from "./PhoneVerify";

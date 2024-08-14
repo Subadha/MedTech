@@ -1,4 +1,3 @@
-import img from "@/app/images/p1.png"
 import { auth } from "@/auth";
 import Profile from "@/components/Profile/Profile";
 
