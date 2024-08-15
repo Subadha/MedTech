@@ -1,4 +1,11 @@
-import { ArrowLeft, MoreVertical, Paperclip, Search, Smile } from "lucide-react";
+import {
+  ArrowLeft,
+  MoreVertical,
+  Paperclip,
+  Search,
+  Smile,
+  X,
+} from "lucide-react";
 
 import {
   Tooltip,
@@ -15,7 +22,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { format, formatDistanceToNow, isSameDay } from "date-fns";
+import { format, formatDistanceToNow, isSameDay, set } from "date-fns";
 import { Input } from "@/components/ui/input";
 import EmojiPicker from "emoji-picker-react";
 import {
@@ -24,13 +31,26 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useMail } from "./chat";
+import { useEffect, useState } from "react";
 
 export function ChatDisplay({ data, removedata }: any) {
   const [mail, setMail] = useMail();
+  const [message, setMessage] = useState("");
+  const [open, setOpen] = useState(true);
+
   const Remove = () => {
     setMail({ selected: null, name: "" });
     removedata();
   };
+
+  const handleEmojiClick = (event:any) => {   
+    setOpen(false) 
+    setMessage((prevMessage: any) => prevMessage + event.emoji);
+  };
+  useEffect(()=>{
+    setOpen(false);
+    setMessage("");
+  },[removedata,data])
   return (
     <div className="flex relative h-full flex-col">
       <div className="flex items-center h-16 p-3">
@@ -62,7 +82,7 @@ export function ChatDisplay({ data, removedata }: any) {
           <span className="text-sm font-medium">{mail.name}</span>
         </div>
         <div className="ml-auto flex items-center gap-2">
-        <Search size={20} />
+          <Search size={20} />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="icon" disabled={!mail.selected}>
@@ -70,7 +90,10 @@ export function ChatDisplay({ data, removedata }: any) {
                 <span className="sr-only">More</span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="flex flex-col gap-1 bg-muted">
+            <DropdownMenuContent
+              align="end"
+              className="flex flex-col gap-1 bg-muted"
+            >
               <DropdownMenuItem>Mute</DropdownMenuItem>
               <DropdownMenuItem>Select Messages</DropdownMenuItem>
               <DropdownMenuItem>Report</DropdownMenuItem>
@@ -105,10 +128,16 @@ export function ChatDisplay({ data, removedata }: any) {
                   )}
                   <div
                     key={index}
-                    className={`flex ${item?.sender_id === 1 ? "justify-end" : "justify-start"} `}
+                    className={`flex ${
+                      item?.sender_id === 1 ? "justify-end" : "justify-start"
+                    } `}
                   >
                     <div
-                      className={`lg:max-w-[40%] max-w-[80%] px-2 py-1 font-normal rounded-t-md ${item?.sender_id === 1 ? " rounded-l-md bg-primary text-white" : " rounded-e-md bg-muted text-foreground"} `}
+                      className={`lg:max-w-[40%] max-w-[80%] px-2 py-1 font-normal rounded-t-md ${
+                        item?.sender_id === 1
+                          ? " rounded-l-md bg-primary text-white"
+                          : " rounded-e-md bg-muted text-foreground"
+                      } `}
                     >
                       <p>{item.message}</p>
                       <div className="w-full flex justify-end">
@@ -133,8 +162,9 @@ export function ChatDisplay({ data, removedata }: any) {
                   {data?.data?.length} messages ,
                 </span>
                 <span className="text-sm text-muted-foreground">
-                  Convertation started {formatDistanceToNow(
-                    new Date(data?.data[data?.data?.length - 1]?.updated_at),
+                  Convertation started{" "}
+                  {formatDistanceToNow(
+                    new Date(data?.data[data?.data?.length - 1]?.updated_at)
                   )}{" "}
                   ago
                 </span>
@@ -142,32 +172,42 @@ export function ChatDisplay({ data, removedata }: any) {
             )}
           </div>
         </div>
-  
       </ScrollArea>
-      {mail.selected&&<div className="sticky right-0 lg:h-24 lg:bg-background bottom-0 w-full flex items-start justify-center">
-    <div className="flex gap-2 h-14 items-center w-full lg:w-[70%] py-3 px-4 bg-muted lg:rounded-t-md lg:rounded-l-md">
-        <Popover>
-          <PopoverTrigger asChild>
-            <Smile size={25}/>
-          </PopoverTrigger>
-          <PopoverContent className="p-1 w-full">
-            <EmojiPicker />
-          </PopoverContent>
-        </Popover>
-        <Input placeholder="Message" className="border-none shadow-none focus:outline-none focus-visible:outline-none focus-visible:ring-0"/>
-        
-        <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-        <Paperclip size={25} />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="flex flex-col gap-1 bg-muted">
-          <DropdownMenuItem>Photo of Video</DropdownMenuItem>
-          <DropdownMenuItem>File</DropdownMenuItem>
-          <DropdownMenuItem>Poll</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-      </div>
-    </div>}
+      {mail.selected && (
+        <div className="sticky right-0 lg:h-24 lg:bg-background bottom-0 w-full flex items-start justify-center">
+          <div className="flex gap-2 h-14 items-center w-full lg:w-[70%] py-3 px-4 bg-muted lg:rounded-t-md lg:rounded-l-md">
+            <Popover open={open} >
+              <PopoverTrigger asChild>
+                <Smile size={25} onClick={() => setOpen(true)} />
+              </PopoverTrigger>
+              <PopoverContent className="p-1 w-full">
+                <X size={25} className="ml-auto" onClick={() => setOpen(false)} />
+                <EmojiPicker onEmojiClick={handleEmojiClick} />
+              </PopoverContent>
+            </Popover>
+            <Input
+              placeholder="Message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="border-none shadow-none focus:outline-none focus-visible:outline-none focus-visible:ring-0"
+            />
+
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Paperclip size={25} />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="flex flex-col gap-1 bg-muted"
+              >
+                <DropdownMenuItem>Photo of Video</DropdownMenuItem>
+                <DropdownMenuItem>File</DropdownMenuItem>
+                <DropdownMenuItem>Poll</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
