@@ -1,5 +1,6 @@
 "use client";
 import { useMail } from "@/components/chat/chat";
+import { ChatDisplay } from "@/components/chat/chatDisplay";
 import ContactList from "@/components/chat/ContactList";
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable";
 import React, { useEffect, useState, useCallback } from "react";
@@ -74,13 +75,13 @@ const Page = () => {
         {isMobile ? (
           mail.selected ? (
             <ResizablePanel defaultSize={defaultLayout[2]}>
-              {/* Add content here */}
+              <ChatDisplay data={message} removedata={() => setMessage([])} />
             </ResizablePanel>
           ) : null
         ) : (
           <ResizablePanel defaultSize={defaultLayout[2]}>
-            {/* Add content here */}
-          </ResizablePanel>
+              <ChatDisplay data={message} removedata={() => setMessage([])} />
+              </ResizablePanel>
         )}
       </ResizablePanelGroup>
     </div>
