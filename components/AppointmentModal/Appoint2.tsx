@@ -50,7 +50,7 @@ export default function Appoint2({ onChangeApp }: any) {
                         <div className="pt-3">
                             <input
                                 className="border-2 rounded-sm p-4 w-full"
-                                placeholder="Vignesh"
+                                placeholder="Swetha"
                                 {...form.register("name")}
                             />
                         </div>

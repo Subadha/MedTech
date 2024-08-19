@@ -112,6 +112,16 @@ export const getOtpData = async (phone: string) => {
   }
 };
 
+export const getDoctors = async () =>{
+  try{
+    const doctor = await db.doctor.findMany();
+    return doctor;
+  }catch(error){
+    return null;
+  }
+}
+
+
 export type User = {
   id: string;
   name: string | null;

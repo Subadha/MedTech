@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/auth/new-verification", "components/home/Phone.jsx", "app/model/page.tsx", "app/modal/[id]/page.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/auth/new-verification", "components/home/Phone.jsx", "app/model/page.tsx", "app/modal/[id]/page.jsx", "app/(protected)/dashboard/consult/[consultId]/page.jsx"],
   "exclude": ["node_modules"]
 }

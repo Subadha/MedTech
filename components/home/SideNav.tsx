@@ -12,6 +12,30 @@ interface MenuItem {
   href: string;
 }
 
+export const docItems : MenuItem[] = [
+  {
+    name: "Dashboard",
+    icon: "LayoutDashboard",
+    href: "/dashboard",
+  },
+  {
+    name: "Profile",
+    icon: "CircleUserRound",
+    href: "/dashboard/docProfile",
+  },
+  {
+    name: "Help",
+    icon: "MessageCircleQuestion",
+    href: "/dashboard/help",
+  },
+  {
+    name: "Sign Out",
+    icon: "LogOut",
+    href: "/dashboard/signout",
+  },
+
+]
+
 export const menuItems: MenuItem[] = [
   {
     name: "Dashboard",
@@ -80,7 +104,8 @@ export default function SideNav({ userName, role }: SideNavProps) {
         </div>
       </div>
       <nav className="p-4 space-y-2">
-        {menuItems.map((item) => {
+
+        {role==="USER" && menuItems.map((item) => {
           const Icon = icons[item.icon];
           return (
             <Link
@@ -95,15 +120,22 @@ export default function SideNav({ userName, role }: SideNavProps) {
             </Link>
           );
         })}
-        {/* <form onSubmit={handleLogout} className="mt-4">
-          <button
-            type="submit"
-            className="w-full flex gap-2 py-2 px-3 text-left rounded hover:bg-primary hover:text-white"
-          >
-            <LogOut className="w-5" />
-            Sign Out
-          </button>
-        </form> */}
+
+        {role === "ADMIN" && docItems.map((item) => {
+          const Icon = icons[item.icon];
+          return (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={`flex gap-2 py-2 px-3 rounded ${item.href === location ? "bg-primary text-white" : ""}`}
+            >
+              <span>
+                <Icon className="w-5" />
+              </span>
+              {item.name}
+            </Link>
+          );
+        })}
       </nav>
     </aside>
   );
