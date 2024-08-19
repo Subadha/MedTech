@@ -19,6 +19,11 @@ export const docItems : MenuItem[] = [
     href: "/dashboard",
   },
   {
+    name: "Patients",
+    icon: "Users",
+    href: "/dashboard/patient",
+  },
+  {
     name: "Profile",
     icon: "CircleUserRound",
     href: "/dashboard/docProfile",

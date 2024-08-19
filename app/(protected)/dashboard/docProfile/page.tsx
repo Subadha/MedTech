@@ -8,8 +8,6 @@ export default async function DocPage() {
     const session = await auth();
     const doc = session?.user
 
-    
-
     return (
         <DocProfile doc={doc}/>
     )
