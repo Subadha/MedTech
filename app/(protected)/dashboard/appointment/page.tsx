@@ -1,6 +1,7 @@
 import { AppointmentTable } from '@/components/appointment/AppointmentTable'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import Link from 'next/link'
 import React from 'react'
 
 const Page = () => {
@@ -12,7 +13,7 @@ const Page = () => {
             <Input placeholder='Search'></Input>
             <Button>Search</Button>
             </div>
-        <Button>+ Book Appointment</Button>
+        <Link href="consult"><Button>+ Book Appointment</Button></Link>
         </div>
         <AppointmentTable/>
         </div>

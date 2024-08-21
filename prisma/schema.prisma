@@ -22,9 +22,10 @@ model User {
   role          UserRole @default(USER)
   image         String?
   about         String?
-  accounts      Account[]
   phone         String?  @unique
   numberVerified  Boolean  @default(false)
+  accounts      Account[]
+  doctor_appointments DoctorAppointment[]
   @@map("users")
 }
 
@@ -123,3 +124,37 @@ model Otp {
   otp     String
   expiry  DateTime
 }
+
+model Doctor {
+  id      Int    @id @default(autoincrement())
+  name           String  @unique
+  specialization String
+  experience     String
+  available_days String[]
+  timing         String
+  fee            String
+  personal_statement String
+  Education      String
+  Address        String
+  Slots          Json
+}
+
+model DoctorAppointment {
+  id           Int    @id @default(autoincrement())
+  userId       String
+  time         String
+  doctorName   String @map("doctor_name")
+  problem      String
+  reschedule   String
+  status       String
+  mode         String
+  age          String
+  name         String
+  gender       String
+  appId        String @map("app_id")
+
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("doctor_appointments")
+}
+

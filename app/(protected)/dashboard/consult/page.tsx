@@ -1,8 +1,13 @@
 import { DoctorCard } from '@/components/dashboard/recommended-doctor'
+import { getDoctors } from '@/data/user'
 import { dummyData } from '@/dummydata'
 import React from 'react'
 
-const page = () => {
+const page = async () => {
+
+
+  const doc = await getDoctors();
+
   return (
     <>
       <div className="p-4 flex flex-col lg:flex-row justify-between h-20 lg:items-center gap-4">
@@ -10,8 +15,8 @@ const page = () => {
       <span className=' text-primary font-medium'>Filter</span>
     </div>
     <div className='grid grid-cols-6 gap-3 p-4'>
-      {dummyData.map((data,ind) => (
-        <DoctorCard key={ind} data={data} />
+      {doc?.map((data) => (
+        <DoctorCard key={data.id} data={data} />
       ))}
     </div>
     </>

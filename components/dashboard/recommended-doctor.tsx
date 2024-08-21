@@ -10,8 +10,15 @@ import { IoMdTime } from "react-icons/io";
 import { Button } from "../ui/button";
 import { Span } from "next/dist/trace";
 import Link from "next/link";
+import { consultDoc } from "@/actions/consult/consultDoc";
+
+
 
 const RecommendedDoctors = () => {
+
+
+  const doc = consultDoc();
+
   return (
     <Card className=" col-span-6">
       <div className="p-3 flex justify-between items-center">
@@ -23,8 +30,8 @@ const RecommendedDoctors = () => {
         </span>
       </div>
       <CardContent className=" grid grid-cols-6 gap-3">
-      {dummyData.map((data,ind) => (
-        <DoctorCard key={ind} data={data} />
+      {dummyData.map((data,id) => (
+        <DoctorCard key={id} data={data} />
       ))}
       </CardContent>
     </Card>
