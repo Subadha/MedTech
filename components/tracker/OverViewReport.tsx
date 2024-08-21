@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/chart";
 import { Button } from "../ui/button";
 
-const chartData = [
+const OverviewReport = [
   { week: "Day 1", this_month: 186, prev_month: 80 },
   { week: "Week 1", this_month: 186, prev_month: 80 },
   { week: "Week 2", this_month: 305, prev_month: 200 },
@@ -53,7 +53,7 @@ export function OverViewReport() {
         <ChartContainer config={chartConfig}>
           <AreaChart
             accessibilityLayer
-            data={chartData}
+            data={OverviewReport}
             margin={{
               left: 12,
               right: 12,

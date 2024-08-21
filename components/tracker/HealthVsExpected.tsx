@@ -17,21 +17,21 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+const healthVsexpected = [
+  { month: "January", health: 186, expected: 80 },
+  { month: "February", health: 305, expected: 200 },
+  { month: "March", health: 237, expected: 120 },
+  { month: "April", health: 73, expected: 190 },
+  { month: "May", health: 209, expected: 130 },
+  { month: "June", health: 214, expected: 140 },
 ];
 
 const chartConfig = {
-  desktop: {
+  health: {
     label: "Your health",
     color: "#4AB58E",
   },
-  mobile: {
+  expected: {
     label: "Expected health",
     color: "#FFCF00",
   },
@@ -45,7 +45,7 @@ export function HealthVsExpected() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={chartData}>
+          <BarChart accessibilityLayer data={healthVsexpected}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="month"
@@ -58,8 +58,8 @@ export function HealthVsExpected() {
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-            <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+            <Bar dataKey="health" fill="var(--color-health)" radius={4} />
+            <Bar dataKey="expected" fill="var(--color-expected)" radius={4} />
           </BarChart>
         </ChartContainer>
       </CardContent>

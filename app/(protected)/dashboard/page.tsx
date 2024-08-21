@@ -9,12 +9,12 @@ import PatientList from "@/components/doctor-dashboard/doc-patientList";
 
 const Settings = async () => {
   const session = await auth();
-  const id = session?.user.id;
-  console.log(session?.user.role);
+  const id = session?.user.id||'';
   const role = session?.user.role;
 
   return (
     <div className="p-3 grid gap-4 grid-cols-6">
+     
       {role === "USER" ? <User id={id} /> : <Doctor id={id} />}
     </div>
   );
@@ -46,3 +46,4 @@ const Doctor = ({ id }: any) => {
     </>
   );
 };
+
