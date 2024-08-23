@@ -6,13 +6,10 @@ import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import {
-  ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
@@ -41,7 +38,7 @@ const chartConfig = {
 
 type ChartField = keyof typeof chartConfig;
 export function HealthMonitoring() {
-  const chartData = [
+  const HealthMonitoring = [
     { month: "January", stress_level: 186, pulse: 80, temperature: 98.6, calories_burned: 300 },
     { month: "February", stress_level: 305, pulse: 200, temperature: 80.1, calories_burned: 350 },
     { month: "March", stress_level: 237, pulse: 120, temperature: 97.9, calories_burned: 320 },
@@ -101,7 +98,7 @@ export function HealthMonitoring() {
         <ChartContainer config={chartConfig}>
           <AreaChart
             accessibilityLayer
-            data={chartData}
+            data={HealthMonitoring}
             margin={{
               left: 12,
               right: 12,
