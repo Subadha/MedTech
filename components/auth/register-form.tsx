@@ -130,11 +130,11 @@ export const RegisterForm = () => {
                     <FormItem>
                       <FormLabel>Name</FormLabel>
                       <FormControl>
-                        <Input
-                          disabled={isPending}
-                          {...field}
-                          placeholder="Enter your name"
-                        />
+                          <Input
+                            disabled={isPending}
+                            {...field}
+                            placeholder="Enter your name"
+                          />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
