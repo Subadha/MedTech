@@ -26,10 +26,6 @@ export default function Appoint1({ details, onChangeApp }: any) {
         },
     });
 
-    console.log(details.available_days);
-    console.log(details.Slots);
-
-    
     
     const slots = [
         { day: "Today", slotsAvailable: "5 slots Available" },
@@ -71,10 +67,10 @@ export default function Appoint1({ details, onChangeApp }: any) {
             setError("Select Time");
         } else {
             setError("");
-            onChangeApp();
+            onChangeApp(values);
         }
     };
-
+   
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 p-6 bg-white shadow-lg rounded-lg">
             <div className="text-center">

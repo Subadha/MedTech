@@ -13,7 +13,6 @@ import * as z from "zod";
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { Appointment } from "@/schema";
 import { useState, useTransition } from "react";
-import { book } from "@/actions/appointment/appoint";
 import FormSuccess from "../auth/form-sucess";
 import FormError from "../auth/form-error";
 import CharacterRevealText from "./TextReveal"; 
@@ -36,18 +35,7 @@ const Hero: React.FC = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<FormValues> = (values) => {
-    startTransition(() => {
-      book(values)
-        .then((data) => {
-          setError(data.error);
-          setSuccess(data.success);
-        })
-        .catch(() => {
-          setError("An unexpected error occurred.");
-        });
-    });
-  };
+ 
 
   const handleTextChange = (index: number, newText: string) => {
     // Update the image based on the text index or text content

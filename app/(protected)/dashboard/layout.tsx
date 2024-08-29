@@ -1,3 +1,5 @@
+
+import { UserProvider } from "@/app/context/userContext";
 import { auth } from "@/auth";
 import Header from "@/components/dashboard/header";
 import SideNav from "@/components/home/SideNav";
@@ -12,8 +14,11 @@ export default async function Layout({
   const session = await auth();
   const userName = session?.user.name || "User";
   const role = session?.user.role || "User";
+  const id = session?.user.id || "";
+  const email = session?.user.email || "";
 
   return (
+    <UserProvider userName={userName} role={role} id={id} email={email} >
     <TooltipProvider>
     <div className="flex h-screen w-[100vw]">
       <SideNav userName={userName} role={role} />
@@ -25,5 +30,6 @@ export default async function Layout({
       </div>
     </div>
     </TooltipProvider>
+    </UserProvider>
   );
 }

@@ -112,14 +112,19 @@ export const getOtpData = async (phone: string) => {
   }
 };
 
-export const getDoctors = async () =>{
-  try{
-    const doctor = await db.doctor.findMany();
-    return doctor;
-  }catch(error){
+export const getDoctors = async () => {
+  try {
+    const doctors = await db.user.findMany({
+      where: {
+        role: 'DOCTOR',
+      },
+    });
+    return doctors;
+  } catch (error) {
+    console.error('Error fetching doctors:', error);
     return null;
   }
-}
+};
 
 
 export type User = {
@@ -129,7 +134,7 @@ export type User = {
   emailVerified: Date | null;
   numberVerified: Boolean;
   password: string | null;
-  role: "USER" | "ADMIN";
+  role: "USER" | "ADMIN"|"DOCTOR";
   about: string | null;
   image: string | null;
   phone: string | null;

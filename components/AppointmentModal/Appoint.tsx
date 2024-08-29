@@ -1,46 +1,70 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from "../ui/dialog";
 import { MdHealthAndSafety } from "react-icons/md";
 import Appoint1 from "./Appoint1";
 import Appoint2 from "./Appoint2";
 import Appoint3 from "./Appoint3";
+import { BookAppointment } from "@/actions/appointment/appoint";
 
-export default function Appoint({ details,user }: any){
+export default function Appoint({ details, user }: any) {
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [appointStep, setAppointStep] = useState(0);
+  const [appointmentData, setAppointmentData] = useState({
+    slot: null,
+    time: "",
+    purpose: "",
+    name: "",
+    date: "",
+    age: null,
+    gender: "",
+    doctor_id:details?.id,
+    userId:user?.id
+  });
+ 
+  const handleAppoint1Data = (data: any) => {
+    setAppointmentData((prevData) => ({ ...prevData, slot: data.slot, time: data.time }));
+    setAppointStep(1);
+  };
 
-    const [dialogOpen, setDialogOpen] = useState(false);
-    const [appoint,setAppoint] = useState(0);
+  const handleAppoint2Data = (data: any) => {
+    setAppointmentData((prevData) => ({
+      ...prevData,
+      purpose: data.purpose,
+      name: data.name,
+      age: data.age,
+      gender: data.gender,
+    }));
+    Submit()
+    //setAppointStep(2);
+  };
 
-    function onAppointment(){
-        setAppoint(1);
-    }
-    function onAppointment1() {
-        setAppoint(2);
-    }
+ const Submit = async ()=>{
+  const result = BookAppointment(appointmentData)
+ }
 
-    return(
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <DialogTrigger asChild>
-                <button onClick={() => setDialogOpen(true)}>Consult Online</button>
-            </DialogTrigger>
-            <DialogOverlay>
-                <DialogContent className="p-0 overflow-hidden bg-white">
-                    <div className="bg-purple-700 text-white p-4">
-                        <div className="flex justify-between items-center">
-                            <div className="flex items-center">
-                                <MdHealthAndSafety />
-                                <span className="ml-4">Appointment</span>
-                            </div>
-                            <div className="pr-5">
-                                <span>800 Fees</span>
-                            </div>
-                        </div>
-                    </div> 
-                    {appoint === 0 && <Appoint1 details={details} onChangeApp = {onAppointment}/>}
-                    {appoint === 1 && <Appoint2 onChangeApp={onAppointment1} />}
-                    {appoint===2 && <Appoint3 user={user}/>}
-                </DialogContent>
-        </DialogOverlay>
-        </Dialog >
-    )
+  return (
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+      <DialogTrigger onClick={() => setDialogOpen(true)} asChild>
+        <h2>Consult Online</h2>
+      </DialogTrigger>
+      <DialogOverlay>
+        <DialogContent className="p-0 overflow-hidden bg-white">
+          <div className="bg-purple-700 text-white p-4">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center">
+                <MdHealthAndSafety />
+                <span className="ml-2">Appointment</span>
+              </div>
+            </div>
+          </div>
+          <div className="p-4">
+            {appointStep === 0 && <Appoint1 details={details} onChangeApp={handleAppoint1Data} />}
+            {appointStep === 1 && <Appoint2 onChangeApp={handleAppoint2Data} />}
+            {appointStep === 2 && <Appoint3 user={user} />}
+          </div>
+        </DialogContent>
+      </DialogOverlay>
+    </Dialog>
+  );
 }

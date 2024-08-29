@@ -9,14 +9,14 @@ import { Card, CardContent, CardHeader } from "../ui/card";
 import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa";
 import { getUpcomingAppointment } from "@/actions/dashboard/getUpcomingAppointment";
-import { Appointment } from "@prisma/client";
 import { createTrackerData } from "@/actions/tracker/createTrack";
+import { DoctorAppointment } from "@prisma/client";
 
 interface ProfileProps {
   id: string | undefined;
 }
 const UpcomingAppointments = ({ id }: ProfileProps) => {
-  const [data, setData] = useState<Appointment[]>([]);
+  const [data, setData] = useState<DoctorAppointment[]>([]);
   const [isPending, startTransition] = useTransition();
   
   const handleFetchAppointment = () => {
@@ -66,7 +66,7 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
                   <div className="h-10 w-10 bg-primary rounded-full" />
                   <div>
                     <div className="text-sm font-medium">
-                      {appointment?.email}
+                      {appointment?.name}
                     </div>
                     <div className="text-[10px] text-primary">
                       {formatDate(appointment.date)}

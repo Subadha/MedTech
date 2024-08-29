@@ -130,8 +130,22 @@ export default function SideNav({ userName, role }: SideNavProps) {
             </Link>
           );
         })}
-
-        {role === "ADMIN" && docItems.map((item) => {
+        {role === "ADMIN" && menuItems.map((item) => {
+          const Icon = icons[item.icon];
+          return (
+            <Link
+              key={item.name}
+              href={item.href}
+              className={`flex gap-2 py-2 px-3 rounded ${item.href === location ? "bg-primary text-white" : ""}`}
+            >
+              <span>
+                <Icon className="w-5" />
+              </span>
+              {item.name}
+            </Link>
+          );
+        })}
+        {role === "DOCTOR" && docItems.map((item) => {
           const Icon = icons[item.icon];
           return (
             <Link

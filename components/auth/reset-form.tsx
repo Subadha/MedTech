@@ -23,7 +23,6 @@ import img from "@/app/images/Display.png"
 import logo from "@/app/images/logo.png"
 import { ResetSchema, ResetUsingNumber } from "@/schema"
 import {reset1} from "@/actions/reset-using-number"
-import { redirect } from "next/navigation"
 import { useRouter } from 'next/navigation';
 
 export const ResetForm = () => {

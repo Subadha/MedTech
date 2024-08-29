@@ -17,14 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-const healthVsexpected = [
-  { month: "January", health: 186, expected: 80 },
-  { month: "February", health: 305, expected: 200 },
-  { month: "March", health: 237, expected: 120 },
-  { month: "April", health: 73, expected: 190 },
-  { month: "May", health: 209, expected: 130 },
-  { month: "June", health: 214, expected: 140 },
-];
+
 
 const chartConfig = {
   health: {
@@ -37,7 +30,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function HealthVsExpected() {
+export function HealthVsExpected({data}:any) {
   return (
     <Card className="col-span-2 ">
       <CardHeader>
@@ -45,7 +38,7 @@ export function HealthVsExpected() {
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
-          <BarChart accessibilityLayer data={healthVsexpected}>
+          <BarChart accessibilityLayer data={data}>
             <CartesianGrid vertical={false} />
             <XAxis
               dataKey="month"
