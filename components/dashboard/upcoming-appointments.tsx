@@ -1,6 +1,5 @@
 "use client";
 import React, {
-  startTransition,
   useEffect,
   useState,
   useTransition,
@@ -8,23 +7,22 @@ import React, {
 import { Card, CardContent, CardHeader } from "../ui/card";
 import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa";
-import { getUpcomingAppointment } from "@/actions/dashboard/getUpcomingAppointment";
 import { createTrackerData } from "@/actions/tracker/createTrack";
-import { DoctorAppointment } from "@prisma/client";
+import { getAllAppointment } from "@/actions/appointment/getOppintments";
 
 interface ProfileProps {
   id: string | undefined;
 }
 const UpcomingAppointments = ({ id }: ProfileProps) => {
-  const [data, setData] = useState<DoctorAppointment[]>([]);
+  const [data, setData] = useState<any>([]);
   const [isPending, startTransition] = useTransition();
   
   const handleFetchAppointment = () => {
     startTransition(() => {
-      getUpcomingAppointment(id || "")
+      getAllAppointment(id || "")
         .then((appointments) => {
           if (appointments) {
-            setData(appointments);
+            setData(appointments.data);
           }
         })
         .catch((error) => {
@@ -32,7 +30,8 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
         });
     });
   };
-
+ console.log(data);
+ 
   useEffect(() => handleFetchAppointment(), []);
 
   const formatDate = (date: Date) => {
@@ -50,7 +49,7 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
           </h1>
           <Link
             className=" text-sm text-primary font-medium gap-1 flex items-center hover:underline"
-            href={"#"}
+            href={"/dashboard/appointment"}
           >
             View all
             <FaAngleRight />
@@ -60,13 +59,13 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
       <CardContent>
         {data.length > 0 ? (
           <div className=" flex flex-col gap-4">
-            {data.map((appointment,index) => (
+            {data.map((appointment:any,index:number) => (
               <div key={appointment.id} className="flex items-center gap-2">
                 <span className=" font-bold">{++index}.</span>
                   <div className="h-10 w-10 bg-primary rounded-full" />
                   <div>
                     <div className="text-sm font-medium">
-                      {appointment?.name}
+                      {appointment?.doctorName}
                     </div>
                     <div className="text-[10px] text-primary">
                       {formatDate(appointment.date)}

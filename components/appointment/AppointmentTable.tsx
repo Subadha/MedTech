@@ -2,23 +2,17 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import {
   CalendarDays,
-  CheckCircle,
   CircleCheck,
-  CircleCheckBig,
   Clock8,
-  LucideIcon,
   MessageCircle,
   Phone,
-  XCircle,
 } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
@@ -31,94 +25,19 @@ import {
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
 
-const appointments = [
-  {
-    id: "klnfklsdnger3",
-    time: "18:15 - 19:00",
-    doctor: "Dianne Russell",
-    problem: "Upper Abdomen General – Test Code 2705",
-    status: "Scheduled",
-    confirmed: true,
-  },
-  {
-    id: "klnfklsdngwe3",
-    time: "17:45 - 18:00",
-    doctor: "Bessie Cooper",
-    problem: "Gynecologic Disorders",
-    status: "Not confirmed",
-    confirmed: false,
-  },
-  {
-    id: "kl234klsdnger3",
-    time: "17:00 - 17:30",
-    doctor: "Marvin McKinney",
-    problem: "Brain, Spinal Cord, and Nerve Disorders",
-    status: "Scheduled",
-    confirmed: true,
-  },
-  {
-    id: "klnfklsd234rer3",
-    time: "15:45 - 16:30",
-    doctor: "Esther Howard",
-    problem: "Digestive Disorders",
-    status: "Scheduled",
-    confirmed: true,
-  },
-  {
-    id: "klnfkl324nger3",
-    time: "14:00 - 15:30",
-    doctor: "Marvin McKinney",
-    problem: "Upper Abdomen General – Test Code 365",
-    status: "Not confirmed",
-    confirmed: false,
-  },
-  {
-    id: "klnfkl3rer3",
-    time: "12:00 - 12:30",
-    doctor: "Annette Black",
-    problem: "Digestive Disorders",
-    status: "Scheduled",
-    confirmed: true,
-  },
-  {
-    id: "klnf3re2dnger3",
-    time: "11:00 - 11:30",
-    doctor: "Cameron Williamson",
-    problem: "Liver and Gallbladder Disorders",
-    status: "Scheduled",
-    confirmed: true,
-  },
-  {
-    id: "klnfkewf3fger3",
-    time: "09:30 - 09:45",
-    doctor: "Jerome Bell",
-    problem: "Urinary Tract Disorders",
-    status: "Not confirmed",
-    confirmed: false,
-  },
-  {
-    id: "klnf32r4dnger3",
-    time: "9:00 - 9:15",
-    doctor: "Guy Hawkins",
-    problem: "Medical Care During Pregnancy",
-    status: "Visited",
-    confirmed: true,
-  },
-];
 
-export function AppointmentTable() {
+export function AppointmentTable({data}:any) {
   const [selected, setSelected] = useState<string[]>([]);
 
   function changeSelection(id: string) {
-    console.log(id);
-
     if (selected.includes(id)) {
       setSelected(selected.filter((item) => item !== id));
     } else {
       setSelected([...selected, id]);
     }
   }
-
+ console.log(data);
+ 
   return (
     <>
       <div className="flex mt-4 gap-4 lg:h-20 lg:flex-row flex-col items-center justify-between">
@@ -165,7 +84,7 @@ export function AppointmentTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {appointments.map((appointment, index) => (
+          {data?.map((appointment:any, index:number) => (
             <TableRow
               key={index}
               className={
@@ -182,8 +101,8 @@ export function AppointmentTable() {
                 />
                 <span className="ml-2">{appointment.time}</span>
               </TableCell>
-              <TableCell>{appointment.doctor}</TableCell>
-              <TableCell>{appointment.problem}</TableCell>
+              <TableCell>{appointment.doctorName}</TableCell>
+              <TableCell>{appointment.purpose}</TableCell>
               <TableCell>
                 <Button variant="link" className="pl-0">
                   Reschedule

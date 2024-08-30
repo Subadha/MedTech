@@ -26,7 +26,6 @@ model User {
   image         String?
   about         String?
   accounts         Account[]
-  doctor_appointments DoctorAppointment[]
   @@map("users")
 }
 
@@ -159,21 +158,20 @@ model Otp {
 }
 
 
-model DoctorAppointment {
+model BookedAppointment {
   id           Int    @id @default(autoincrement())
   userId       String
   doctor_id    String
   time         String
   date         DateTime
-  slot         String
+  slot         Float
   doctorName   String 
   purpose      String
   reschedule   String
   status       String
   mode         String
-  age          String
+  age          Float
   name         String
   gender       String
-  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 

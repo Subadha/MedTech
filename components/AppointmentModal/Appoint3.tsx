@@ -1,8 +1,13 @@
+import { useEffect } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa6";
 
-export default function Appoint3({user}:any){
+export default function Appoint3({user,Submit}:any){
     
+    useEffect(()=>{
+        Submit()
+    },[])
+
     return(
         <div className="flex flex-col p-5 text-center">
             <div className="pb-3">

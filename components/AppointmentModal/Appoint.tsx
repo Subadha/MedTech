@@ -35,8 +35,7 @@ export default function Appoint({ details, user }: any) {
       age: data.age,
       gender: data.gender,
     }));
-    Submit()
-    //setAppointStep(2);
+    setAppointStep(2);
   };
 
  const Submit = async ()=>{
@@ -61,7 +60,7 @@ export default function Appoint({ details, user }: any) {
           <div className="p-4">
             {appointStep === 0 && <Appoint1 details={details} onChangeApp={handleAppoint1Data} />}
             {appointStep === 1 && <Appoint2 onChangeApp={handleAppoint2Data} />}
-            {appointStep === 2 && <Appoint3 user={user} />}
+            {appointStep === 2 && <Appoint3 user={user}  Submit={Submit} />}
           </div>
         </DialogContent>
       </DialogOverlay>
