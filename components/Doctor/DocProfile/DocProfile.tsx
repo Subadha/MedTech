@@ -3,15 +3,24 @@ import Image from "next/image";
 import img from "@/app/images/doc1.png"
 import { CgAwards } from "react-icons/cg";
 import { IoMdPeople } from "react-icons/io";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Review from "./Review";
 import About from "./About";
 import Edit from "./Edit";
 import Password from "./Password";
+import { GetDoctorById } from "@/actions/consult/GetDoctorById";
 
-export default function DocProfile({ doc }: any) {
-
+export default function DocProfile({id}:any) {
+   useEffect(()=>{
+    getDetails()
+   },[])
+   const getDetails =async()=>{
+    const resp=await GetDoctorById(id)
+    setData(resp)
+   }
+   const[data,setData]=useState<any>([])
     const [current, setCurrent] = useState(1);
+console.log(data);
 
     return (
         <div className="flex flex-col md:flex-row p-5 gap-10 md:pl-5">
@@ -21,13 +30,13 @@ export default function DocProfile({ doc }: any) {
                     <Image src={img} alt="doc" className="object-cover" />
                 </div>
                 <div className="flex flex-col gap-3">
-                    <h1 className="text-lg md:text-xl font-semibold">{doc.name}</h1>
-                    <h2 className="text-sm md:text-md">Ophthalmology</h2>
+                    <h1 className="text-lg md:text-xl font-semibold">{data?.profile?.legalName}</h1>
+                    <h2 className="text-sm md:text-md">{data?.profile?.specialization}</h2>
                     <h2 className="text-sm md:text-md">⭐ 4.5 Stars</h2>
                     <div className="flex gap-5">
                         <div className="flex gap-2 items-center">
                             <CgAwards className="text-lg md:text-xl" />
-                            <h3 className="text-sm md:text-md">7 Years</h3>
+                            <h3 className="text-sm md:text-md">{data?.profile?.experienceYears} Years</h3>
                         </div>
                         <div className="flex gap-2 items-center">
                             <IoMdPeople className="text-lg md:text-xl" />
@@ -50,9 +59,9 @@ export default function DocProfile({ doc }: any) {
 
                 {/* Conditional Rendering of Components */}
                 <div className="w-full">
-                    {current === 1 && <About />}
+                    {current === 1 && <About id={id} refresh={getDetails} about={data?.about} />}
                     {current === 2 && <Review />}
-                    {current === 3 && <Edit />}
+                    {current === 3 && <Edit id={id} refresh={getDetails} profileImage={data.image} />}
                     {current === 4 && <Password />}
                 </div>
             </div>
