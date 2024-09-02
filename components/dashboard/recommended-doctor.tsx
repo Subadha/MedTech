@@ -52,7 +52,7 @@ export const DoctorCard = ({ data }: any) => {
                 <span>{data?.profile?.specialization}</span>&nbsp;|&nbsp;
                 <span>{data?.profile?.experienceYears} Years</span>
               </div>
-              <Badge variant="secondary">{data.profile.subSpecialist}</Badge>
+              <Badge variant="secondary">{data?.profile?.subSpecialist}</Badge>
             </div>
           </div>
         </CardContent>
@@ -65,8 +65,8 @@ export const DoctorCard = ({ data }: any) => {
                 <p className="text-md leading-none flex font-medium">
                   {data?.availability?.availableDays?.length <= 3
                     ? data?.availability.availableDays.join(", ")
-                    : `${data.available_days[0]} - ${
-                        data.available_days[data.available_days?.length - 1]
+                    : `${data?.available_days[0]} - ${
+                        data?.available_days[data.available_days?.length - 1]
                       }`}
                 </p>{" "}
                 <span className="text-[12px] text-gray-600">
