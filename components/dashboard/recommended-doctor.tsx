@@ -9,10 +9,7 @@ import { IoMdTime } from "react-icons/io";
 import { Button } from "../ui/button";
 import Link from "next/link";
 
-
-
 const RecommendedDoctors = () => {
-
   return (
     <Card className=" col-span-6">
       <div className="p-3 flex justify-between items-center">
@@ -23,9 +20,7 @@ const RecommendedDoctors = () => {
           View all <FaAngleRight />
         </span>
       </div>
-      <CardContent className=" grid grid-cols-6 gap-3">
-      
-      </CardContent>
+      <CardContent className=" grid grid-cols-6 gap-3"></CardContent>
     </Card>
   );
 };
@@ -33,7 +28,6 @@ const RecommendedDoctors = () => {
 export default RecommendedDoctors;
 
 export const DoctorCard = ({ data }: any) => {
-  
   return (
     <div className=" col-span-6 md:col-span-3 lg:col-span-2">
       <Card className="p-2">
@@ -47,7 +41,9 @@ export const DoctorCard = ({ data }: any) => {
               <AvatarFallback>DR</AvatarFallback>
             </Avatar>
             <div className=" flex flex-col items-start gap-1">
-              <p className="text-base font-semibold">{data?.profile?.legalName}</p>
+              <p className="text-base font-semibold">
+                {data?.profile?.legalName}
+              </p>
               <div className="text-[12px] flex text-gray-600">
                 <span>{data?.profile?.specialization}</span>&nbsp;|&nbsp;
                 <span>{data?.profile?.experienceYears} Years</span>
@@ -62,27 +58,35 @@ export const DoctorCard = ({ data }: any) => {
             <div className="flex gap-1 ">
               <IoMdTime />
               <div>
-                {/* <p className="text-md leading-none flex font-medium">
-                  {data?.availability?.availableDays?.length&&data?.availability?.availableDays?.length <= 3
-                    ? data?.availability.availableDays.join(", ")
-                    : `${data?.available_days[0]} - ${
-                        data?.available_days[data.available_days?.length - 1]
-                      }`}
-                </p>{" "} */}
+                <p className="text-md leading-none flex font-medium">
+                  {data?.availability?.availableDays?.length >= 1 &&
+                  data?.availability?.availableDays?.length <= 3
+                    ? data.availability.availableDays.join(", ")
+                    : data?.available_days?.length > 0
+                    ? `${data.available_days[0]} - ${
+                        data.available_days[data.available_days.length - 1]
+                      }`
+                    : "No available days"}
+                </p>
                 <span className="text-[12px] text-gray-600">
-                  {data?.availability?.availableTimeFrom} AM - {data?.availability?.availableTimeTo} PM
+                  {data?.availability?.availableTimeFrom} AM -{" "}
+                  {data?.availability?.availableTimeTo} PM
                 </span>
               </div>
             </div>
             <div className="flex pl-2 gap-1 border-l">
               <GiTwoCoins />
               <div>
-                <p className="text-md leading-none font-medium">Rs.{data?.profile?.consultationFees}</p>
+                <p className="text-md leading-none font-medium">
+                  Rs.{data?.profile?.consultationFees}
+                </p>
                 <span className="text-[12px] text-gray-600">Starting</span>
               </div>
             </div>
           </div>
-          <Link className="w-full" href={`consult/${data.id}`}><Button className="w-full">Book an appointment</Button></Link>
+          <Link className="w-full" href={`consult/${data.id}`}>
+            <Button className="w-full">Book an appointment</Button>
+          </Link>
         </CardFooter>
       </Card>
     </div>
