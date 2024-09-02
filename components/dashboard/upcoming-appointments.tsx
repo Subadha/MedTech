@@ -57,9 +57,9 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
         </div>
       </CardHeader>
       <CardContent>
-        {data.length > 0 ? (
+        {data?.length > 0 ? (
           <div className=" flex flex-col gap-4">
-            {data.map((appointment:any,index:number) => (
+            {data?.map((appointment:any,index:number) => (
               <div key={appointment.id} className="flex items-center gap-2">
                 <span className=" font-bold">{++index}.</span>
                   <div className="h-10 w-10 bg-primary rounded-full" />

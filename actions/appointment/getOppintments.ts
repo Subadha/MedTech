@@ -13,7 +13,7 @@ export const getAllAppointment = async (id: string) => {
       where: { userId: id },
     });
 
-    if (!appointments || appointments.length === 0) {
+    if (!appointments || appointments?.length === 0) {
       return { success: true, message: "No appointments found for this user." };
     }
 

@@ -14,7 +14,7 @@ const Page = () => {
 
   const getAllAppointments = async () => {
     const data = await getAllAppointment(id);
-    if (data.data && data.data.length) {
+    if (data.data && data.data?.length) {
       setList(data.data);
     }
   };

@@ -43,7 +43,7 @@ export default function Appoint1({ details, onChangeApp }: any) {
     const slidesToShow = 3;
 
     const nextSlide = () => {
-        if (currentSlide < slots.length - slidesToShow) {
+        if (currentSlide < slots?.length - slidesToShow) {
             setCurrentSlide(currentSlide + 1);
         }
     };
@@ -106,14 +106,14 @@ export default function Appoint1({ details, onChangeApp }: any) {
                     <button
                         type="button"
                         onClick={nextSlide}
-                        disabled={currentSlide >= slots.length - slidesToShow}
+                        disabled={currentSlide >= slots?.length - slidesToShow}
                         className="text-gray-600 hover:text-purple-600 transition duration-300"
                     >
                         &gt;
                     </button>
                 </div>
                 <div className="flex justify-center mt-4 space-x-2">
-                    {Array.from({ length: Math.ceil(slots.length / slidesToShow) }).map((_, index) => (
+                    {Array.from({ length: Math.ceil(slots?.length / slidesToShow) }).map((_, index) => (
                         <button
                             key={index}
                             onClick={() => goToSlide(index)}

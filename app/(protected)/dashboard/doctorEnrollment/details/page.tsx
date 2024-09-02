@@ -214,7 +214,7 @@ export default function Page() {
                                             <Popover>
                                                 <PopoverTrigger asChild>
                                                     <Button variant="outline" className="w-full sm:w-[20vw] text-left">
-                                                        {field.value.length > 0
+                                                        {field.value?.length > 0
                                                             ? `Selected: ${field.value.join(", ")}`
                                                             : "Select languages"}
                                                     </Button>

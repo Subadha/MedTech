@@ -63,10 +63,10 @@ export const DoctorCard = ({ data }: any) => {
               <IoMdTime />
               <div>
                 <p className="text-md leading-none flex font-medium">
-                  {data?.availability?.availableDays.length <= 3
+                  {data?.availability?.availableDays?.length <= 3
                     ? data?.availability.availableDays.join(", ")
                     : `${data.available_days[0]} - ${
-                        data.available_days[data.available_days.length - 1]
+                        data.available_days[data.available_days?.length - 1]
                       }`}
                 </p>{" "}
                 <span className="text-[12px] text-gray-600">
