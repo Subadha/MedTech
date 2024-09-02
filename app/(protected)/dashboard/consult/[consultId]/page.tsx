@@ -18,7 +18,7 @@ export default async function ConsultDoctor({ params }: ConsultDoctorProps) {
   const data = await GetDoctorById(params.consultId);
     return (
       <>
-   {(data&&data.profile&&data.availability)?<div className="p-4 sm:p-8 w-full">
+   {(data&&data.profile&&data?.availability)?<div className="p-4 sm:p-8 w-full">
        <div className="flex flex-col text-center sm:text-left md:flex-row rounded-xl border border-gray-300 shadow-lg p-5 bg-white">
          <div className="w-full md:w-1/4 text-center sm:text-left flex flex-col items-center">
            <Image src={img} alt="Doctor" className="object-contain w-full h-auto rounded-lg" />
@@ -27,14 +27,14 @@ export default async function ConsultDoctor({ params }: ConsultDoctorProps) {
            </p>
          </div>
          <div className="mt-6 md:mt-0 md:ml-8 w-full md:w-3/4 flex flex-col">
-           <h1 className="text-purple-600 font-bold text-xl md:text-3xl">{data?.profile.legalName}</h1>
+           <h1 className="text-purple-600 font-bold text-xl md:text-3xl">{data?.profile?.legalName}</h1>
            <div className="flex flex-wrap items-center text-sm md:text-lg mt-2">
-             <p>{data?.profile.specialization}</p>
-             <p className="ml-4">{data?.profile.experienceYears} Years</p>
+             <p>{data?.profile?.specialization}</p>
+             <p className="ml-4">{data?.profile?.experienceYears} Years</p>
            </div>
            <div className="flex items-center mt-3 text-sm md:text-lg text-gray-600">
              <FaUserDoctor className="text-purple-500 mr-2" />
-             <p className="font-bold">{data?.profile.specialization}</p>
+             <p className="font-bold">{data?.profile?.specialization}</p>
            </div>
            <div className="flex items-center mt-3 text-sm md:text-lg text-gray-600">
              <IoStarSharp className="text-yellow-400 mr-2" />
@@ -46,17 +46,17 @@ export default async function ConsultDoctor({ params }: ConsultDoctorProps) {
            </div>
            <div className="flex items-center mt-3 text-sm md:text-lg text-gray-600">
              <MdOutlineAddHomeWork className="text-red-500 mr-2" />
-             <p>{data?.profile.address}</p>
+             <p>{data?.profile?.address}</p>
            </div>
          </div>
          <div className="w-full md:w-[20vw] mt-6 md:mt-0 flex flex-col items-end text-right">
            <div className="flex items-center text-sm md:text-lg text-gray-700">
              <FaRegMoneyBillAlt className="text-green-500 mr-2" />
-             <span>INR {data?.profile.consultationFees}</span>
+             <span>INR {data?.profile?.consultationFees}</span>
            </div>
            <div className="flex items-center text-sm md:text-lg text-gray-700 mt-4">
              <MdAccessTime className="text-blue-500 mr-2" />
-             <span>10 - {data?.availability.sessionLength} min Consultation</span>
+             <span>10 - {data?.availability?.sessionLength} min Consultation</span>
            </div>
            <div className="mt-6 md:mt-10 w-full">
              <button className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-full w-full transition-all duration-300">
@@ -85,19 +85,19 @@ export default async function ConsultDoctor({ params }: ConsultDoctorProps) {
                <div className="flex flex-col pl-5 space-y-2">
                  <div>
                    <h1 className="text-base md:text-lg font-bold">Speciality</h1>
-                   <p>{data?.profile.specialization}</p>
+                   <p>{data?.profile?.specialization}</p>
                  </div>
                  <div>
                    <h1 className="text-base md:text-lg font-bold">Other Treatment Area</h1>
-                   <p>{data?.profile.subSpecialist}</p>
+                   <p>{data?.profile?.subSpecialist}</p>
                  </div>
                  <div>
                    <h1 className="text-base md:text-lg font-bold">Education</h1>
-                   <p>{data?.profile.qualification}</p>
+                   <p>{data?.profile?.qualification}</p>
                  </div>
                  <div>
                    <h1 className="text-base md:text-lg font-bold">Past Experience</h1>
-                   <p>{data?.profile.experienceYears}</p>
+                   <p>{data?.profile?.experienceYears}</p>
                  </div>
                </div>
              </div>

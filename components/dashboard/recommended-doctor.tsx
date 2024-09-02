@@ -49,8 +49,8 @@ export const DoctorCard = ({ data }: any) => {
             <div className=" flex flex-col items-start gap-1">
               <p className="text-base font-semibold">{data?.profile?.legalName}</p>
               <div className="text-[12px] flex text-gray-600">
-                <span>{data.profile.specialization}</span>&nbsp;|&nbsp;
-                <span>{data.profile.experienceYears} Years</span>
+                <span>{data?.profile?.specialization}</span>&nbsp;|&nbsp;
+                <span>{data?.profile?.experienceYears} Years</span>
               </div>
               <Badge variant="secondary">{data.profile.subSpecialist}</Badge>
             </div>
@@ -70,14 +70,14 @@ export const DoctorCard = ({ data }: any) => {
                       }`}
                 </p>{" "}
                 <span className="text-[12px] text-gray-600">
-                  {data?.availability.availableTimeFrom} AM - {data?.availability.availableTimeTo} PM
+                  {data?.availability?.availableTimeFrom} AM - {data?.availability?.availableTimeTo} PM
                 </span>
               </div>
             </div>
             <div className="flex pl-2 gap-1 border-l">
               <GiTwoCoins />
               <div>
-                <p className="text-md leading-none font-medium">Rs.{data?.profile.consultationFees}</p>
+                <p className="text-md leading-none font-medium">Rs.{data?.profile?.consultationFees}</p>
                 <span className="text-[12px] text-gray-600">Starting</span>
               </div>
             </div>
