@@ -36,7 +36,6 @@ export function AppointmentTable({data}:any) {
       setSelected([...selected, id]);
     }
   }
- console.log(data);
  
   return (
     <>

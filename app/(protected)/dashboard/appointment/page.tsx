@@ -39,7 +39,7 @@ const Page = () => {
           />
           <Button>Search</Button>
         </div>
-        <Link href="/consult">
+        <Link href="/dashboard/consult">
           <Button>+ Book Appointment</Button>
         </Link>
       </div>

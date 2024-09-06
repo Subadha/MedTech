@@ -1,9 +1,16 @@
+"use client"
 import { getAllDoctorsWithDetails } from "@/actions/consult/consultDoc";
 import { DoctorCard } from "@/components/dashboard/recommended-doctor";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const page = async () => {
-  const doc = await getAllDoctorsWithDetails();
+const page = () => {
+  const [doctors,setDoctors]= useState<any>([])
+  useEffect(()=>{
+    (async()=>{
+      const doc = await getAllDoctorsWithDetails();
+      setDoctors(doc)
+    })()
+  },[])
 
   return (
     <>
@@ -12,7 +19,7 @@ const page = async () => {
         <span className=" text-primary font-medium">Filter</span>
       </div>
       <div className="grid grid-cols-6 gap-3 p-4">
-        {doc?.map((data: any) => (
+        {doctors?.map((data: any) => (
           <DoctorCard key={data.id} data={data} />
         ))}
       </div>
