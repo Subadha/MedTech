@@ -3,7 +3,7 @@ import { getAllDoctorsWithDetails } from "@/actions/consult/consultDoc";
 import { DoctorCard } from "@/components/dashboard/recommended-doctor";
 import React, { useEffect, useState } from "react";
 
-const page = () => {
+const Page = () => {
   const [doctors,setDoctors]= useState<any>([])
   useEffect(()=>{
     (async()=>{
@@ -27,4 +27,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
