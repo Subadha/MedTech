@@ -17,10 +17,10 @@ export default function DocProfile({id}:any) {
    const getDetails =async()=>{
     const resp=await GetDoctorById(id)
     setData(resp)
-   }
-   const[data,setData]=useState<any>([])
+}
+const[data,setData]=useState<any>([])
+console.log(data)
     const [current, setCurrent] = useState(1);
-console.log(data);
 
     return (
         <div className="flex flex-col md:flex-row p-5 gap-10 md:pl-5">
@@ -30,7 +30,7 @@ console.log(data);
                     <Image src={img} alt="doc" className="object-cover" />
                 </div>
                 <div className="flex flex-col gap-3">
-                    <h1 className="text-lg md:text-xl font-semibold">{data?.profile?.legalName}</h1>
+                    <h1 className="text-lg md:text-xl font-semibold">{data?.name}</h1>
                     <h2 className="text-sm md:text-md">{data?.profile?.specialization}</h2>
                     <h2 className="text-sm md:text-md">⭐ 4.5 Stars</h2>
                     <div className="flex gap-5">
@@ -61,8 +61,8 @@ console.log(data);
                 <div className="w-full">
                     {current === 1 && <About id={id} refresh={getDetails} about={data?.about} />}
                     {current === 2 && <Review />}
-                    {current === 3 && <Edit id={id} refresh={getDetails} profileImage={data.image} />}
-                    {current === 4 && <Password />}
+                    {current === 3 && <Edit id={id} refresh={getDetails} data={data} />}
+                    {current === 4 && <Password id={id} />}
                 </div>
             </div>
         </div>
