@@ -15,12 +15,11 @@ export default auth((req)=>{
     const {nextUrl} = req;
     const isLoggedIn = !!req.auth;//to convert to boolean
     const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix)
-    const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+    const isPublicRoute = () => {  
+        return publicRoutes.some(publicRoute => nextUrl.pathname.startsWith(publicRoute));
+    };
+    
     const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-
-    if(isApiAuthRoute){
-        return ;
-    }
 
     if(isAuthRoute){
         if(isLoggedIn){
@@ -28,9 +27,12 @@ export default auth((req)=>{
         }
         return ;
     }
-
-    if(!isLoggedIn && !isPublicRoute){
+    if(!isLoggedIn && !isPublicRoute()){        
         return Response.redirect(new URL("/auth/login",nextUrl));
+    }
+    
+    if(isApiAuthRoute){
+        return ;
     }
 
     return;
