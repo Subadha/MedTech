@@ -7,6 +7,7 @@ import { useToast } from "../ui/use-toast";
 import { useState } from "react";
 import FormSuccess from "../auth/form-sucess";
 import FormError from "../auth/form-error";
+import { Card } from "../ui/card";
 
 const AppointmentSchema = z.object({
     slot: z.number(),
@@ -25,11 +26,8 @@ export default function Appoint1({ details, onChangeApp }: any) {
             time: "",
         },
     });
-
-    console.log(details.available_days);
-    console.log(details.Slots);
-
-    
+   console.log("Where",details);
+   
     
     const slots = [
         { day: "Today", slotsAvailable: "5 slots Available" },
@@ -47,7 +45,7 @@ export default function Appoint1({ details, onChangeApp }: any) {
     const slidesToShow = 3;
 
     const nextSlide = () => {
-        if (currentSlide < slots.length - slidesToShow) {
+        if (currentSlide < slots?.length - slidesToShow) {
             setCurrentSlide(currentSlide + 1);
         }
     };
@@ -71,10 +69,10 @@ export default function Appoint1({ details, onChangeApp }: any) {
             setError("Select Time");
         } else {
             setError("");
-            onChangeApp();
+            onChangeApp(values);
         }
     };
-
+   
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 p-6 bg-white shadow-lg rounded-lg">
             <div className="text-center">
@@ -86,63 +84,30 @@ export default function Appoint1({ details, onChangeApp }: any) {
             <div>
                 <hr className="border-gray-300 my-4" />
                 <div className="flex items-center justify-between">
-                    <button
-                        type="button"
-                        onClick={prevSlide}
-                        disabled={currentSlide === 0}
-                        className="text-gray-600 hover:text-purple-600 transition duration-300"
-                    >
-                        &lt;
-                    </button>
-                    <div className="flex overflow-hidden">
-                        {slots.slice(currentSlide, currentSlide + slidesToShow).map((slot, index) => (
+                   
+                    <div className="flex flex-wrap overflow-hidden">
+                        {details?.availability?.availableDays?.map((slot:string, index:number) => (
                             <div
                                 key={index}
                                 onClick={() => form.setValue("slot", currentSlide + index)}
                                 className={`p-4 cursor-pointer m-4 rounded-lg border-2 border-gray-300 ${form.watch("slot") === currentSlide + index ? 'bg-blue-100 border-blue-500' : ''
                                     }`}
                             >
-                                <h3 className="font-semibold text-lg">{slot.day}</h3>
-                                <p className="text-green-600 text-sm">{slot.slotsAvailable}</p>
+                                <h3 className="font-semibold text-lg">{slot}</h3>
                             </div>
                         ))}
                     </div>
-                    <button
-                        type="button"
-                        onClick={nextSlide}
-                        disabled={currentSlide >= slots.length - slidesToShow}
-                        className="text-gray-600 hover:text-purple-600 transition duration-300"
-                    >
-                        &gt;
-                    </button>
-                </div>
-                <div className="flex justify-center mt-4 space-x-2">
-                    {Array.from({ length: Math.ceil(slots.length / slidesToShow) }).map((_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => goToSlide(index)}
-                            className={`w-3 h-3 rounded-full ${index === currentSlide ? 'bg-blue-500' : 'bg-gray-400'}`}
-                        />
-                    ))}
                 </div>
                 <hr className="border-gray-300 my-4" />
             </div>
-
-            <div>
-                <h3 className="text-xl font-bold mb-3">Available Times</h3>
-                <div className="flex flex-wrap gap-4">
-                    {times.map((time, index) => (
-                        <div
-                            key={index}
-                            onClick={() => form.setValue("time", time)}
-                            className={`p-4 cursor-pointer rounded-lg border-2 border-gray-300 ${form.watch("time") === time ? 'bg-blue-100 border-blue-500' : ''
-                                }`}
-                        >
-                            <p className="text-lg">{time}</p>
-                        </div>
-                    ))}
-                </div>
-            </div>
+                <h3 className="text-xl font-bold">Available Times</h3>
+               <div onClick={() => form.setValue("time",`${details.availability.availableTimeFrom}-${details.availability.availableTimeTo}`)} className="flex h-16 gap-3">
+               <Card className="flex items-center px-3"><p><span className="font-semibold">From:</span> {details.availability.availableTimeFrom}</p>
+                 </Card>
+                <Card className="flex items-center px-3">
+                <p><span className="font-semibold">To:</span> {details.availability.availableTimeTo}</p>
+                 </Card>
+               </div>
             <FormSuccess message={success} />
             <FormError message={error} />
 

@@ -37,18 +37,7 @@ const chartConfig = {
 };
 
 type ChartField = keyof typeof chartConfig;
-export function HealthMonitoring() {
-  const HealthMonitoring = [
-    { month: "January", stress_level: 186, pulse: 80, temperature: 98.6, calories_burned: 300 },
-    { month: "February", stress_level: 305, pulse: 200, temperature: 80.1, calories_burned: 350 },
-    { month: "March", stress_level: 237, pulse: 120, temperature: 97.9, calories_burned: 320 },
-    { month: "April", stress_level: 73, pulse: 100, temperature: 95.3, calories_burned: 280 },
-    { month: "May", stress_level: 209, pulse: 90, temperature: 98.7, calories_burned: 290 },
-    { month: "June", stress_level: 214, pulse: 110, temperature: 99.0, calories_burned: 310 },
-  ];
-  
-  
- 
+export function HealthMonitoring({data}:any) {
 
   const [selected, setSelected] = useState<{
     field: ChartField;
@@ -66,7 +55,6 @@ export function HealthMonitoring() {
     });
   };
 
-  console.log(selected);
   
   return (
     <Card className="col-span-6">
@@ -98,7 +86,7 @@ export function HealthMonitoring() {
         <ChartContainer config={chartConfig}>
           <AreaChart
             accessibilityLayer
-            data={HealthMonitoring}
+            data={data}
             margin={{
               left: 12,
               right: 12,

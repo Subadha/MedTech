@@ -3,10 +3,6 @@ import { RegisterwithPhoneSchema } from "@/schema";
 import * as z from "zod";
 import { db } from "@/lib/db";
 import { getUserByNumber, getUserOtp } from "@/data/user";
-import crypto from "crypto";
-import bcrypt from "bcryptjs";
-import twilio from "twilio";
-import { generatePasswordResetToken } from "@/lib/tokens";
 
 export const NumberRegister = async (
   values: z.infer<typeof RegisterwithPhoneSchema>
@@ -28,7 +24,9 @@ export const NumberRegister = async (
   // }
 
   const isValidOtp = await getUserOtp(otp.toString());
-
+  if(!isValidOtp){
+    return { error: "Invalid otp" };
+  }
   const valid = await db.otp.findFirst({
     where: {
       phone,
@@ -47,7 +45,7 @@ export const NumberRegister = async (
     if (result?.id) {
       return { success: "Registered successfully" };
     }
-    return { error: "Failed to send otp" };
+    return { error: "Failed to register" };
   }
 
 };

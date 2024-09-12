@@ -9,7 +9,7 @@ import {
 } from "lucide-react";
 
 import EmojiPicker from "emoji-picker-react";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import { format, formatDistanceToNow, isSameDay } from "date-fns";
 import { useMail } from "./chat";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
@@ -21,7 +21,7 @@ import { ScrollArea } from "../ui/scroll-area";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Input } from "../ui/input";
 
-const socket = io("http://localhost:8000"); // Adjust with your server URL
+// const socket = io("http://localhost:8000"); // Adjust with your server URL
 
 export function ChatDisplay({ data, removedata }:any) {
   const [mail, setMail] = useMail();
@@ -29,43 +29,43 @@ export function ChatDisplay({ data, removedata }:any) {
   const [messages, setMessages] = useState([]);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
-    if (data?.conversationId) {
-      // Join the room for this conversation
-      socket.emit("joinConversation", data.conversationId);
+  // useEffect(() => {
+  //   if (data?.conversationId) {
+  //     // Join the room for this conversation
+  //     socket.emit("joinConversation", data.conversationId);
 
-      // Load initial messages
-      setMessages(data.data);
+  //     // Load initial messages
+  //     setMessages(data.data);
 
-      // Listen for new messages
-      socket.on("receiveMessage", (newMessage:any) => {
-        setMessages((prevMessages):any => [...prevMessages, newMessage]);
-      });
+  //     // Listen for new messages
+  //     socket.on("receiveMessage", (newMessage:any) => {
+  //       setMessages((prevMessages):any => [...prevMessages, newMessage]);
+  //     });
 
-      // Cleanup on component unmount
-      return () => {
-        socket.off("receiveMessage");
-        setMessages([]);
-      };
-    }
-  }, [data]);
+  //     // Cleanup on component unmount
+  //     return () => {
+  //       socket.off("receiveMessage");
+  //       setMessages([]);
+  //     };
+  //   }
+  // }, [data]);
 
   const handleEmojiClick = (event:any) => {
     setOpen(false);
     setMessage((prev) => prev + event.emoji);
   };
 
-  const sendMessage = () => {
-    if (message.trim() && mail.selected) {
-      socket.emit("sendMessage", {
-        conversationId: data.conversationId,
-        senderId: 1, 
-        receiverId: mail.selected,
-        content: message,
-      });
-      setMessage("");
-    }
-  };
+  // const sendMessage = () => {
+  //   if (message.trim() && mail.selected) {
+  //     socket.emit("sendMessage", {
+  //       conversationId: data.conversationId,
+  //       senderId: 1, 
+  //       receiverId: mail.selected,
+  //       content: message,
+  //     });
+  //     setMessage("");
+  //   }
+  // };
 
   const Remove = () => {
     setMail({ selected: null, name: "" });
@@ -134,8 +134,8 @@ export function ChatDisplay({ data, removedata }:any) {
       <Separator />
       <ScrollArea className="h-[calc(100%-96px)] relative overflow-auto">
         <div className="flex lg:w-[70%] mx-auto p-4 pb-8 gap-2 flex-col">
-          {messages.length > 0 ? (
-            messages.map((item, index) => {
+          {/* {messages?.length > 0 ? (
+            messages?.map((item, index) => {
               const currentDate = new Date(item?.updated_at||'');
               const previousDate =
                 index > 0 ? new Date(messages[index - 1].updated_at) : null;
@@ -179,9 +179,9 @@ export function ChatDisplay({ data, removedata }:any) {
             <div className="p-8 text-center text-muted-foreground">
               No message selected
             </div>
-          )}
+          )} */}
           <div>
-            {messages.length > 0 && (
+            {/* {messages.length > 0 && (
               <div className="flex justify-center items-center gap-2">
                 <span className="text-sm text-muted-foreground">
                   {messages.length} messages ,
@@ -194,7 +194,7 @@ export function ChatDisplay({ data, removedata }:any) {
                   ago
                 </span>
               </div>
-            )}
+            )} */}
           </div>
         </div>
       </ScrollArea>
@@ -219,7 +219,7 @@ export function ChatDisplay({ data, removedata }:any) {
               value={message}
               onChange={(e: any) => setMessage(e.target.value)}
               className="border-none shadow-none focus:outline-none focus-visible:outline-none focus-visible:ring-0"
-              onKeyPress={(e: any) => e.key === "Enter" && sendMessage()}
+            //  onKeyPress={(e: any) => e.key === "Enter" && sendMessage()}
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

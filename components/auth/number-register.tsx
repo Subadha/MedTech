@@ -30,8 +30,7 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "../ui/input-otp";
-import { sendOtp } from "@/lib/tokens";
-import { registerOtp1 } from "@/actions/sendOtp";
+import { registerOtp } from "@/actions/registerOtp";
 
 import { PhoneInput } from "react-international-phone";
 
@@ -64,10 +63,12 @@ export const NumberRegisterForm = () => {
   };
 
   const onSendOtp = () => {
+    console.log('onSendOtp');
+    
     const phone = form.getValues("phone");
     if (phone) {
       startTransition(() => {
-        registerOtp1({phone}).then((data) => {
+        registerOtp({phone}).then((data) => {
           if (data?.success) {
             setSucess("OTP sent successfully!");
             setError("");

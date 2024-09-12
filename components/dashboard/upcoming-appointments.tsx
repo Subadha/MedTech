@@ -1,6 +1,5 @@
 "use client";
 import React, {
-  startTransition,
   useEffect,
   useState,
   useTransition,
@@ -8,23 +7,22 @@ import React, {
 import { Card, CardContent, CardHeader } from "../ui/card";
 import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa";
-import { getUpcomingAppointment } from "@/actions/dashboard/getUpcomingAppointment";
-import { Appointment } from "@prisma/client";
 import { createTrackerData } from "@/actions/tracker/createTrack";
+import { getAllAppointment } from "@/actions/appointment/getOppintments";
 
 interface ProfileProps {
   id: string | undefined;
 }
 const UpcomingAppointments = ({ id }: ProfileProps) => {
-  const [data, setData] = useState<Appointment[]>([]);
+  const [data, setData] = useState<any>([]);
   const [isPending, startTransition] = useTransition();
   
   const handleFetchAppointment = () => {
     startTransition(() => {
-      getUpcomingAppointment(id || "")
+      getAllAppointment(id || "")
         .then((appointments) => {
           if (appointments) {
-            setData(appointments);
+            setData(appointments.data);
           }
         })
         .catch((error) => {
@@ -32,7 +30,8 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
         });
     });
   };
-
+ console.log(data);
+ 
   useEffect(() => handleFetchAppointment(), []);
 
   const formatDate = (date: Date) => {
@@ -50,7 +49,7 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
           </h1>
           <Link
             className=" text-sm text-primary font-medium gap-1 flex items-center hover:underline"
-            href={"#"}
+            href={"/dashboard/appointment"}
           >
             View all
             <FaAngleRight />
@@ -58,15 +57,15 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
         </div>
       </CardHeader>
       <CardContent>
-        {data.length > 0 ? (
+        {data?.length > 0 ? (
           <div className=" flex flex-col gap-4">
-            {data.map((appointment,index) => (
+            {data?.map((appointment:any,index:number) => (
               <div key={appointment.id} className="flex items-center gap-2">
                 <span className=" font-bold">{++index}.</span>
                   <div className="h-10 w-10 bg-primary rounded-full" />
                   <div>
                     <div className="text-sm font-medium">
-                      {appointment?.email}
+                      {appointment?.doctorName}
                     </div>
                     <div className="text-[10px] text-primary">
                       {formatDate(appointment.date)}

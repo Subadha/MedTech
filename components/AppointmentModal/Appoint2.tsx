@@ -26,8 +26,7 @@ export default function Appoint2({ onChangeApp }: any) {
     });
 
     const onSubmit = async (values: AppointmentFormInputs) => {
-        onChangeApp();
-        console.log(values);
+        onChangeApp(values);
     };
 
     return (
