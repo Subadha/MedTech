@@ -21,7 +21,7 @@ import {
     InputOTPSeparator,
     InputOTPSlot,
 } from "../ui/input-otp";
-import { registerOtp1 } from "@/actions/sendOtp";
+import { loginOtp } from "@/actions/loginOtp";
 import { PhoneInput } from "react-international-phone";
 import FormSucess from "../auth/form-sucess";
 import FormError from "../auth/form-error";
@@ -74,7 +74,7 @@ export const PhoneVerify = ({ details,data1, refresh }: any)=> {
         const phone = form.getValues("phone");
         if (phone) {
             startTransition(() => {
-                registerOtp1({ phone }).then((data) => {
+                loginOtp({ phone }).then((data) => {
                     if (data?.success) {
                         setSuccess("OTP sent successfully!");
                         setError("");
