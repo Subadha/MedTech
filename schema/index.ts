@@ -129,11 +129,11 @@ export const docEnroll = z.object({
   specialization: z.string().min(1, "Specialization is required"),
   subSpecialist: z.string().min(1, "Sub Specialist is required"),
   experienceYears: z
-    .number()
+    .string()
     .min(1, "Experience must be at least 1 year")
     .max(50, "Experience can't exceed 50 years"),
   consultationFees: z
-    .number()
+    .string()
     .min(0, "Consultation fees must be a positive number"),
   address: z.string().min(1, "Address is required"),
   country: z.string().min(1, "Country is required"),
