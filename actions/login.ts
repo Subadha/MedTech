@@ -13,7 +13,6 @@ export const login = async (values: { email?: string; phone?: string; password: 
     const validate = LoginSchema.safeParse({ identifier, password: values.password });
 
     if (!validate.success) {
-        console.error("Validation errors:", validate.error.format());
         return { error: "Invalid input" };
     }
 

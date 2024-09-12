@@ -7,7 +7,7 @@ import { getUserByNumber } from "@/data/user";
 import twilio from "twilio";
 import { db } from "@/lib/db";
 
-export const registerOtp2 = async (
+export const loginOtp = async (
   values: z.infer<typeof ResetUsingNumber>
 ) => {
   const validatedFields = ResetUsingNumber.safeParse(values);
@@ -20,8 +20,6 @@ export const registerOtp2 = async (
 
   // Check if user exists with the provided phone number
   const existingUser = await getUserByNumber(phone);
-
-  console.log(existingUser);
 
   if (!existingUser) {
     return { error: "Number Not Register" };

@@ -7,7 +7,7 @@ import { getOtpData, getUserByNumber, getUserOtp } from "@/data/user";
 import twilio from "twilio";
 import { db } from "@/lib/db";
 
-export const registerOtp1 = async (
+export const registerOtp = async (
   values: z.infer<typeof ResetUsingNumber>
 ) => {
   const validatedFields = ResetUsingNumber.safeParse(values);
@@ -20,8 +20,6 @@ export const registerOtp1 = async (
 
   
   const otpData = await getOtpData(phone);
-
-  console.log(otpData);
   
 
   const existingUser = await getUserByNumber(phone);
@@ -31,12 +29,12 @@ export const registerOtp1 = async (
   }
 
   const otp = crypto.randomInt(100000, 999999).toString();
-  const hashedOtp = await bcrypt.hash(otp.toString(), 10);
 
   const client = twilio(
     process.env.TWILIO_ACCOUNT_SID,
     process.env.TWILIO_AUTH_TOKEN
   );
+  
   try {
     if (otpData==null) {
       await db.otp.create({
@@ -57,11 +55,12 @@ export const registerOtp1 = async (
       });
     }
 
-        await client.messages.create({
+  const result= await client.messages.create({
           body: `Your OTP is: ${otp}`,
           from: process.env.TWILIO_PHONE_NUMBER,
           to: phone,
         });
+console.log(result);
 
     return { success: "OTP sent!" };
   } catch (err) {
