@@ -1,0 +1,1 @@
+{"version":1,"functions":{"/api/v1/auth/login/otp-login":{},"/api/v1/auth/login/password-login":{},"/api/v1/auth/login/send-otp":{},"/api/v1/auth/register/phone-register":{},"/api/v1/auth/register/email-register":{},"/api/v1/auth/register/send-otp":{},"/api/v1/auth/register/verify-email":{},"/api/v1/doctor/doctor-list":{}}}
