@@ -38,7 +38,7 @@ export const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [sucess, setSucess] = useState<string | undefined>("");
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
-  const [role, setRole] = useState<"USER" | "ADMIN"|"DOCTOR">("USER"); // State for user role
+  const [role, setRole] = useState<"USER" | "ADMIN" | "DOCTOR">("USER"); // State for user role
 
   const form = useForm<z.infer<typeof ExtendedRegisterSchema>>({
     resolver: zodResolver(ExtendedRegisterSchema),
@@ -95,28 +95,26 @@ export const RegisterForm = () => {
           headerLabel="Create an Account"
           backButtonLabel="Already have an Account?"
           backButtonHref="/auth/login"
-          
+
         >
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="flex justify-between mb-4">
                 <Button
-                  className={`w-1/2 mr-2 ${
-                    role === "USER"
+                  className={`w-1/2 mr-2 ${role === "USER"
                       ? "bg-purple-700 hover:bg-purple-500"
                       : "bg-purple-400 hover:bg-purple-300"
-                  }`}
+                    }`}
                   type="button"
                   onClick={() => setRole("USER")}
                 >
                   User
                 </Button>
                 <Button
-                  className={`w-1/2 ml-2 ${
-                    role === "DOCTOR"
+                  className={`w-1/2 ml-2 ${role === "DOCTOR"
                       ? "bg-purple-700 hover:bg-purple-500"
                       : "bg-purple-400 hover:bg-purple-300"
-                  }`}
+                    }`}
                   type="button"
                   onClick={() => setRole("DOCTOR")}
                 >
@@ -131,11 +129,11 @@ export const RegisterForm = () => {
                     <FormItem>
                       <FormLabel>Name</FormLabel>
                       <FormControl>
-                          <Input
-                            disabled={isPending}
-                            {...field}
-                            placeholder="Enter your name"
-                          />
+                        <Input
+                          disabled={isPending}
+                          {...field}
+                          placeholder="Enter your name"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
