@@ -19,8 +19,13 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
 
   const existingUser = await getUserByEmail(normalizedEmail);
   if (existingUser) {
-    return { error: "Email already exists" };
+   if(existingUser.emailVerified==null){
+    await sendVerificationEmail(normalizedEmail);
+    return {error:"Verify email",data:existingUser}
+   }
+    return { error: "Email already exists",data:existingUser };
   }
+  
   const numberUsed = await getUserByNumber(phone);
  if (numberUsed){
   return { error: "Phone number is already used"}
@@ -36,11 +41,8 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   });
 
  
-  const verificationToken = await getVerificationToken(email);
-  await sendVerificationEmail(
-    verificationToken.email,
-    verificationToken.token
-  );
+  //const verificationToken = await getVerificationToken(email);
+  await sendVerificationEmail(normalizedEmail);
 
   return { success: "Confirmation email sent" };
 };

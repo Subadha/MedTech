@@ -1,5 +1,7 @@
 import {Resend} from "resend"
 import nodemailer from "nodemailer";
+import { db } from "./db";
+import crypto from "crypto";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const domain = process.env.NEXT_PUBLIC_URL;
@@ -60,8 +62,7 @@ export const sendPasswordReset = async (email:string, token:string) => {
 //     });
 // }
 
-export const sendVerificationEmail = async (email:string, token:string) => {
-  const confirmLink = `${domain}/auth/new-verification?token=${token}`;
+export const sendVerificationEmail = async (email:string) => {
 
   // Create a transporter using nodemailer
   const transporter = nodemailer.createTransport({
@@ -75,15 +76,26 @@ export const sendVerificationEmail = async (email:string, token:string) => {
   });
 
   try {
+    await db.emailOtp.deleteMany({
+      where: { email },
+    });
+    const otp = crypto.randomInt(100000, 999999).toString();
     // Send email
+    await db.emailOtp.create({
+      data: {
+        email,
+        otp,
+        expiry: new Date(Date.now() + 10 * 60 * 1000),
+      },
+    });
+
     await transporter.sendMail({
       from: "onboarding@resend.dev",
       to: email,
-      subject: "Confirm your email",
-      html: `<p>Click <a href="${confirmLink}">here</a> to confirm your email</p>`,
+      subject: "OTP for verification",
+      html: `<p>Your OTP for verification is: <strong>${otp}</strong></p>`,
     });
 
-    console.log("Verification email sent successfully.");
   } catch (error) {
     console.error("Error sending verification email:", error);
     throw new Error("Failed to send verification email.");

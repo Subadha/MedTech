@@ -24,7 +24,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 import img from "@/app/images/Display.png";
 import logo from "@/app/images/logo.png";
 import { PhoneInput } from "react-international-phone";
-
+import { useRouter } from "next/navigation";
 // Define the schema with confirmPassword field and custom validation
 const ExtendedRegisterSchema = RegisterSchema.extend({
   confirmPassword: z.string().min(1, "Confirm password is required"),
@@ -39,7 +39,7 @@ export const RegisterForm = () => {
   const [sucess, setSucess] = useState<string | undefined>("");
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
   const [role, setRole] = useState<"USER" | "ADMIN" | "DOCTOR">("USER"); // State for user role
-
+  const router = useRouter();
   const form = useForm<z.infer<typeof ExtendedRegisterSchema>>({
     resolver: zodResolver(ExtendedRegisterSchema),
     defaultValues: {
@@ -57,7 +57,9 @@ export const RegisterForm = () => {
       register({ ...values, role }).then((data) => {
         setError(data?.error);
         setSucess(data?.success);
-        console.log(data)
+        if(!data.data?.emailVerified){
+         router.push('/auth/verify-email')
+        }
       });
     });
   };
