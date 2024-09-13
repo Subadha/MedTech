@@ -34,7 +34,6 @@ export const updateProfile = async (values: z.infer<typeof UpdateProfileSchema>,
       const verificationToken = await getVerificationToken(email);
       await sendVerificationEmail(
         verificationToken.email,
-        verificationToken.token
       );
     }
   
