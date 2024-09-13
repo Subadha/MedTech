@@ -17,8 +17,8 @@ export const Footer = () => {
           {/* Section with Social Icons and Facebook Embed */}
           <div className="flex flex-col items-center md:items-start md:w-1/2">
             <Image alt="logo" src={logo} height={150} width={100} />
-            <h1 className="text-md font-medium max-w-sm text-center md:text-left mb-4">
-            Sharing the future of health with breakthrough innovations that promote physical, mental, and spiritual wellness.</h1> 
+            <iframe allowFullScreen={true} src="https://www.youtube.com/embed/_Y66177Gtg8" className="text-md font-medium max-w-sm text-center md:text-left mb-4">
+            </iframe> 
             <Button variant='link' className="px-0 uppercase font-semibold">Get in touch &gt;</Button>
             {/* <div className="w-full">
               <div className="relative pb-[56.25%] h-[60vh]"> 
