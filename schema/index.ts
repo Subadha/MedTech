@@ -71,7 +71,7 @@ export const RegisterSchema = z.object({
   name: z.string().min(1, {
     message: "Name is required",
   }),
-  role: z.enum(["USER","DOCTOR", "ADMIN"]),
+  role: z.enum(["USER", "DOCTOR", "ADMIN"]),
   phone: z.string().regex(/^\+\d{10,}$/, {
     message: "Phone number must start with a + and be at least 10 digits long.",
   }),
@@ -128,14 +128,15 @@ export const docEnroll = z.object({
   qualification: z.string().min(1, "Qualification is required"),
   specialization: z.string().min(1, "Specialization is required"),
   subSpecialist: z.string().min(1, "Sub Specialist is required"),
-  experienceYears:z.string().min(1,"Experience must be at least 1 year"),
-  consultationFees:z.string().min(1,"Consultation fees must be a positive number"),
+  experienceYears: z.string().min(1, "Experience must be at least 1 year"),
+  consultationFees: z
+    .string()
+    .min(1, "Consultation fees must be a positive number"),
   address: z.string().min(1, "Address is required"),
   country: z.string().min(1, "Country is required"),
   state: z.string().min(1, "State is required"),
   city: z.string().min(1, "City is required"),
 });
-
 
 export const docDeatail = z.object({
   availableTimeFrom: z.string().min(1, "Start Time is Required"),

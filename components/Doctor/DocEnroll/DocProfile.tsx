@@ -1,20 +1,20 @@
-// "use client";
-// import { docEnroll } from "@/schema";
-// import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-// import { Input } from "@/components/ui/input";
-// import { Country, State, City } from 'country-state-city';
-// import FormSucess from "@/components/auth/form-sucess";
-// import FormError from "@/components/auth/form-error";
-// import { Button } from "@/components/ui/button";
-// import * as z from "zod";
-// import { useForm } from "react-hook-form";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import { useTransition } from "react";
+// // "use client";
+// // import { docEnroll } from "@/schema";
+// // import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+// // import { Input } from "@/components/ui/input";
+// // import { Country, State, City } from 'country-state-city';
+// // import FormSucess from "@/components/auth/form-sucess";
+// // import FormError from "@/components/auth/form-error";
+// // import { Button } from "@/components/ui/button";
+// // import * as z from "zod";
+// // import { useForm } from "react-hook-form";
+// // import { zodResolver } from "@hookform/resolvers/zod";
+// // import { useTransition } from "react";
 
-// export default function DocProfile(){
+// // export default function DocProfile(){
 
 
-//     const [isPending, startTransition] = useTransition();
+// //     const [isPending, startTransition] = useTransition();
 
 //     const form = useForm<z.infer<typeof docEnroll>>({
 //         resolver: zodResolver(docEnroll),
@@ -25,8 +25,8 @@
 //             qualification: "",
 //             specialization: "",
 //             subSpecialist: "",
-//             experienceYears: 0,
-//             consultationFees: 0,
+//             experienceYears: "",
+//             consultationFees: "",
 //             address: "",
 //             country: "",
 //             state: "",
@@ -47,11 +47,16 @@
 //         form.setValue('city', '');
 //     };
 
+//     const onSubmit = (values: z.infer<typeof docEnroll>) => {
+//         startTransition(() => {
+//             console.log(values);
+//         });
+//     };
 
 //     return(
 //         <div className="flex flex-col justify-center items-center w-full p-5 mb-5">
 //             <Form {...form}>
-//                 <form>
+//                 <form onSubmit={form.handleSubmit(onSubmit)}>
 //                     <div className="flex flex-col sm:flex-row sm:mb-5 sm:gap-10">
 //                         <div className="flex">
 //                             <FormField
@@ -259,7 +264,10 @@
 //                                                 <FormControl>
 //                                                     <select
 //                                                         {...field}
-//                                                         onChange={handleCountryChange}
+//                                                         onChange={(event) => {
+//                                                             handleCountryChange(event);
+//                                                             field.onChange(event);
+//                                                         }}
 //                                                         disabled={isPending}
 //                                                         className="flex h-9 sm:w-[20vw] w-[50vw] items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1"
 //                                                     >
@@ -290,7 +298,10 @@
 //                                             <FormControl>
 //                                                 <select
 //                                                     {...field}
-//                                                     onChange={handleStateChange}
+//                                                     onChange={(event) => {
+//                                                         handleStateChange(event);
+//                                                         field.onChange(event);
+//                                                     }}
 //                                                     disabled={!form.watch('country') || isPending}
 //                                                     className="flex h-9 sm:w-[20vw] w-[50vw] items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1"
 //                                                 >
