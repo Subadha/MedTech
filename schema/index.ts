@@ -71,7 +71,7 @@ export const RegisterSchema = z.object({
   name: z.string().min(1, {
     message: "Name is required",
   }),
-  role: z.enum(["USER", "ADMIN"]),
+  role: z.enum(["USER", "DOCTOR", "ADMIN"]),
   phone: z.string().regex(/^\+\d{10,}$/, {
     message: "Phone number must start with a + and be at least 10 digits long.",
   }),
@@ -119,34 +119,30 @@ export const docEnroll = z.object({
   }),
   dateOfBirth: z.string().refine(
     (value) => {
-      return /^\d{2}\/\d{2}\/\d{2}$/.test(value);
+      return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
     },
     {
-      message: "Date of birth must be in the format mm/dd/yy",
+      message: "Date of birth must be in the format mm/dd/yyyy",
     }
   ),
   qualification: z.string().min(1, "Qualification is required"),
   specialization: z.string().min(1, "Specialization is required"),
   subSpecialist: z.string().min(1, "Sub Specialist is required"),
-  experienceYears: z
-    .string()
-    .min(1, "Experience must be at least 1 year")
-    .max(50, "Experience can't exceed 50 years"),
+  experienceYears: z.string().min(1, "Experience must be at least 1 year"),
   consultationFees: z
     .string()
-    .min(0, "Consultation fees must be a positive number"),
+    .min(1, "Consultation fees must be a positive number"),
   address: z.string().min(1, "Address is required"),
   country: z.string().min(1, "Country is required"),
   state: z.string().min(1, "State is required"),
   city: z.string().min(1, "City is required"),
 });
 
-
 export const docDeatail = z.object({
-  startTime: z.string().min(1, "Start Time is Required"),
-  endTime: z.string().min(1, "End Time is Required"),
-  week: z.array(z.string()).min(1, "At least one day is required"),
-  fee: z.string().min(1, "Fee is Required"),
+  availableTimeFrom: z.string().min(1, "Start Time is Required"),
+  availableTimeTo: z.string().min(1, "End Time is Required"),
+  availableDays: z.array(z.string()).min(1, "At least one day is required"),
+  sessionFees: z.string().min(1, "Fee is Required"),
   sessionLength: z.string().min(1, "Session length is Required"),
-  language: z.array(z.string()).min(1, "At least one language is required"),
+  languages: z.array(z.string()).min(1, "At least one language is required"),
 });

@@ -10,24 +10,65 @@ generator client {
 
 enum UserRole{
   USER
+  DOCTOR
   ADMIN
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  password      String?
-  role          UserRole @default(USER)
+  id               String    @id @default(cuid())
+  name             String?
+  email            String?   @unique
+  emailVerified    DateTime? @map("email_verified")
+  password         String?
+  role             UserRole  @default(USER)
+  phone            String?   @unique
+  numberVerified   Boolean   @default(false)
   image         String?
   about         String?
-  phone         String?  @unique
-  numberVerified  Boolean  @default(false)
-  accounts      Account[]
-  doctor_appointments DoctorAppointment[]
+  accounts         Account[]
   @@map("users")
 }
+
+
+model DoctorProfile {
+  userId           String @unique
+  id                 Int       @id @default(autoincrement())
+  legalName          String    
+  gender             String
+  dateOfBirth                String
+  address            String
+  country            String
+  state              String
+  city               String
+  qualification      String
+  specialization     String
+  subSpecialist  String
+  experienceYears         String
+  consultationFees        String
+}
+
+model DoctorAvailabilityDetails {
+   userId           String 
+   id                 Int       @id @default(autoincrement())
+ sessionFees        String
+  sessionLength      String
+  languages          String[]
+   availableDays      String[]
+  availableTimeFrom  String
+  availableTimeTo    String
+}
+
+model DoctorLicense {
+   userId           String 
+  id                    Int    @id @default(autoincrement())
+  imageUrl1            String
+  publicId1            String
+  imageUrl2            String
+  publicId2            String
+  registrationNumber1  String
+  registrationNumber2  String
+}
+
 
 model Account {
   id                 String  @id @default(cuid())
@@ -109,15 +150,6 @@ model HealthExpected {
   tracker    Tracker  @relation(fields: [trackerId], references: [id], onDelete: Cascade)
 }
 
-model Appointment {
-  id String @id @default(cuid())
-  userId String
-  email String
-  phone String
-  date DateTime
-
-}
-
 model Otp {
   id      Int      @id @default(autoincrement())
   phone   String   @unique
@@ -125,36 +157,21 @@ model Otp {
   expiry  DateTime
 }
 
-model Doctor {
-  id      Int    @id @default(autoincrement())
-  name           String  @unique
-  specialization String
-  experience     String
-  available_days String[]
-  timing         String
-  fee            String
-  personal_statement String
-  Education      String
-  Address        String
-  Slots          Json
-}
 
-model DoctorAppointment {
+model BookedAppointment {
   id           Int    @id @default(autoincrement())
   userId       String
+  doctor_id    String
   time         String
-  doctorName   String @map("doctor_name")
-  problem      String
+  date         DateTime
+  slot         Float
+  doctorName   String 
+  purpose      String
   reschedule   String
   status       String
   mode         String
-  age          String
+  age          Float
   name         String
   gender       String
-  appId        String @map("app_id")
-
-  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("doctor_appointments")
 }
 

@@ -19,14 +19,6 @@ import {
 } from "@/components/ui/chart";
 import { Button } from "../ui/button";
 
-const OverviewReport = [
-  { week: "Day 1", this_month: 186, prev_month: 80 },
-  { week: "Week 1", this_month: 186, prev_month: 80 },
-  { week: "Week 2", this_month: 305, prev_month: 200 },
-  { week: "Week 3", this_month: 237, prev_month: 120 },
-  { week: "Week 4", this_month: 73, prev_month: 190 },
-  { week: "Week 5", this_month: 209, prev_month: 130 },
-];
 
 const chartConfig = {
   last: {
@@ -39,7 +31,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function OverViewReport() {
+export function OverViewReport({data}:any) {
   return (
     <Card className=" col-span-2">
       <CardHeader className="flex-row items-center">
@@ -53,7 +45,7 @@ export function OverViewReport() {
         <ChartContainer config={chartConfig}>
           <AreaChart
             accessibilityLayer
-            data={OverviewReport}
+            data={data}
             margin={{
               left: 12,
               right: 12,

@@ -14,8 +14,8 @@ const Settings = async () => {
 
   return (
     <div className="p-3 grid gap-4 grid-cols-6">
-     
-      {role === "USER" ? <User id={id} /> : <Doctor id={id} />}
+
+      {role&&role === "USER" ? <User id={id} /> : <Doctor id={id} />}
     </div>
   );
 };

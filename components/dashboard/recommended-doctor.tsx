@@ -3,22 +3,13 @@ import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { FaAngleRight } from "react-icons/fa";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Separator } from "../ui/separator";
-import { RiMapPin2Line } from "react-icons/ri";
 import { Badge } from "../ui/badge";
 import { GiTwoCoins } from "react-icons/gi";
 import { IoMdTime } from "react-icons/io";
 import { Button } from "../ui/button";
-import { Span } from "next/dist/trace";
 import Link from "next/link";
-import { consultDoc } from "@/actions/consult/consultDoc";
-
-
 
 const RecommendedDoctors = () => {
-
-
-  const doc = consultDoc();
-
   return (
     <Card className=" col-span-6">
       <div className="p-3 flex justify-between items-center">
@@ -29,11 +20,7 @@ const RecommendedDoctors = () => {
           View all <FaAngleRight />
         </span>
       </div>
-      <CardContent className=" grid grid-cols-6 gap-3">
-      {dummyData.map((data,id) => (
-        <DoctorCard key={id} data={data} />
-      ))}
-      </CardContent>
+      <CardContent className=" grid grid-cols-6 gap-3"></CardContent>
     </Card>
   );
 };
@@ -54,12 +41,14 @@ export const DoctorCard = ({ data }: any) => {
               <AvatarFallback>DR</AvatarFallback>
             </Avatar>
             <div className=" flex flex-col items-start gap-1">
-              <p className="text-base font-semibold">{data.name}</p>
+              <p className="text-base font-semibold">
+                {data?.profile?.legalName}
+              </p>
               <div className="text-[12px] flex text-gray-600">
-                <span>Specialist</span>&nbsp;|&nbsp;
-                <span>12 years experience</span>
+                <span>{data?.profile?.specialization}</span>&nbsp;|&nbsp;
+                <span>{data?.profile?.experienceYears} Years</span>
               </div>
-              <Badge variant="secondary">{data.specialization}</Badge>
+              <Badge variant="secondary">{data?.profile?.subSpecialist}</Badge>
             </div>
           </div>
         </CardContent>
@@ -70,54 +59,36 @@ export const DoctorCard = ({ data }: any) => {
               <IoMdTime />
               <div>
                 <p className="text-md leading-none flex font-medium">
-                  {data.available_days.length <= 3
-                    ? data.available_days.join(", ")
-                    : `${data.available_days[0]} - ${
+                  {data?.availability?.availableDays?.length >= 1 &&
+                  data?.availability?.availableDays?.length <= 3
+                    ? data.availability.availableDays.join(", ")
+                    : data?.available_days?.length > 0
+                    ? `${data.available_days[0]} - ${
                         data.available_days[data.available_days.length - 1]
-                      }`}
-                </p>{" "}
+                      }`
+                    : "No available days"}
+                </p>
                 <span className="text-[12px] text-gray-600">
-                  10:00 AM-01:00PM
+                  {data?.availability?.availableTimeFrom} AM -{" "}
+                  {data?.availability?.availableTimeTo} PM
                 </span>
               </div>
             </div>
             <div className="flex pl-2 gap-1 border-l">
               <GiTwoCoins />
               <div>
-                <p className="text-md leading-none font-medium">Rs.300</p>
+                <p className="text-md leading-none font-medium">
+                  Rs.{data?.profile?.consultationFees}
+                </p>
                 <span className="text-[12px] text-gray-600">Starting</span>
               </div>
             </div>
           </div>
-          <Link className="w-full" href={`consult/${data.id}`}><Button className="w-full">Book an appointment</Button></Link>
+          <Link className="w-full" href={`consult/${data.id}`}>
+            <Button className="w-full">Book an appointment</Button>
+          </Link>
         </CardFooter>
       </Card>
     </div>
   );
 };
-
-const dummyData = [
-  {
-    "name": "Dr. Madhukar",
-    "specialization": "Gynecologist",
-    "experience": "12 years",
-    "available_days": ["Tue", "Thu", "Fri", "Sat"],
-    "timing": "10:00 AM - 01:00 PM",
-    "fee": "Rs. 300"
-  },
-  {
-    "name": "Dr. Aditi Sharma",
-    "specialization": "Pediatrician",
-    "experience": "8 years",
-    "available_days": ["Mon", "Wed"],
-    "timing": "09:00 AM - 12:00 PM",
-    "fee": "Rs. 250"
-  },
-  {
-    "name": "Dr. Rohan Mehta",
-    "specialization": "Cardiologist",
-    "experience": "15 years",
-    "available_days": ["Mon", "Fri", "Sat"],
-    "timing": "11:00 AM - 02:00 PM",
-    "fee": "Rs. 500"
-  }]
