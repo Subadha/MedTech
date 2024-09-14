@@ -1,13 +1,27 @@
-"use server"
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
-import { NextResponse } from 'next/server';
 
-export const createTrackerData = async (id: string, data: any) => {
-  if (id) {    
-    const user = await getUserById(id);    
+export const createOrUpdateTrackerData = async (id: string, data: any) => {
+  try {
+    if (!id) return null;
+
+    // Fetch the user by ID
+    const user = await getUserById(id);
     if (!user) return null;
 
+    // Check if the tracker already exists for the user
+    const existingTracker = await db.tracker.findFirst({
+      where: { user_id: id },
+    });
+
+    if (existingTracker) {
+      // Delete the existing tracker and all related records
+      await db.tracker.delete({
+        where: { id: existingTracker.id },
+      });
+    }
+
+    // Create a new tracker with the new data
     const newTracker = await db.tracker.create({
       data: {
         user_id: id,
@@ -32,23 +46,9 @@ export const createTrackerData = async (id: string, data: any) => {
     });
 
     return newTracker;
-  }
 
-  return null;
-};
-
-export async function POST(request: Request) {
-  try {
-    const body = await request.json();
-    const { userId, data } = body;
-
-    const tracker = await createTrackerData(userId, data);
-    if (!tracker) {
-      return NextResponse.json({ error: 'Tracker creation failed' }, { status: 400 });
-    }
-
-    return NextResponse.json(tracker, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    console.error("Error in createOrUpdateTrackerData:", error);
+    return null;
   }
-}
+};

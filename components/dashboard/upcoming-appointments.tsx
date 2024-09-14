@@ -7,7 +7,7 @@ import React, {
 import { Card, CardContent, CardHeader } from "../ui/card";
 import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa";
-import { createTrackerData } from "@/actions/tracker/createTrack";
+import { createOrUpdateTrackerData } from "@/actions/tracker/createTrack";
 import { getAllAppointment } from "@/actions/appointment/getOppintments";
 
 interface ProfileProps {
@@ -40,7 +40,7 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
 
   return (
     <Card className="col-span-6  lg:col-span-2">
-       <h1 onClick={()=>{createTrackerData(id||'',dummydata),console.log('called');
+       <h1 onClick={()=>{createOrUpdateTrackerData(id||'',dummydata),console.log('called');
        }}>Add track data</h1>
       <CardHeader className="p-3">
         <div className="flex justify-between">
