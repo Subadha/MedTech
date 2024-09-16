@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input"
 import * as z from "zod";
 import { Button } from "../ui/button"
-import { reset } from "@/actions/reset"
+import { reset } from "@/actions/auth/reset"
 import { useState, useTransition } from "react"
 import FormSucess from "./form-sucess"
 import FormError from "./form-error"
@@ -22,7 +22,7 @@ import Image from "next/image"
 import img from "@/app/images/Display.png"
 import logo from "@/app/images/logo.png"
 import { ResetSchema, ResetUsingNumber } from "@/schema"
-import {reset1} from "@/actions/reset-using-number"
+import {reset1} from "@/actions/auth/reset-using-number"
 import { useRouter } from 'next/navigation';
 
 export const ResetForm = () => {

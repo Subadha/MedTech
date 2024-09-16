@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import * as z from "zod";
 import { Button } from "../ui/button";
-import { newPassword } from "@/actions/new-password";
+import { newPassword } from "@/actions/auth/new-password";
 import { useState, useTransition } from "react";
 import FormSuccess from "./form-sucess";
 import FormError from "./form-error";

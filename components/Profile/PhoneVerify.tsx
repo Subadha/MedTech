@@ -21,11 +21,11 @@ import {
     InputOTPSeparator,
     InputOTPSlot,
 } from "../ui/input-otp";
-import { loginOtp } from "@/actions/loginOtp";
+import { loginOtp } from "@/actions/auth/loginOtp";
 import { PhoneInput } from "react-international-phone";
 import FormSucess from "../auth/form-sucess";
 import FormError from "../auth/form-error";
-import { verifyOtp1 } from "@/actions/profileOtp";
+import { verifyOtp1 } from "@/actions/auth/profileOtp";
 
 export const PhoneVerify = ({ details,data1, refresh }: any)=> {
     const { toast } = useToast();

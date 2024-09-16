@@ -1,4 +1,4 @@
-import { VerifyOtp } from "@/actions/VerifyEmailOtp";
+import { VerifyOtp } from "@/actions/auth/VerifyEmailOtp";
 import { NextResponse } from "next/server";
 
 export const POST = async(req:any)=>{

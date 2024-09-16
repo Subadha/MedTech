@@ -1,4 +1,4 @@
-import { optlogin } from "@/actions/otp-login";
+import { optlogin } from "@/actions/auth/otp-login";
 import { NextResponse } from "next/server";
 
 export const POST = async(req:any)=>{

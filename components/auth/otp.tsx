@@ -7,7 +7,7 @@ import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import FormSuccess from "./form-sucess";
 import FormError from "./form-error";
 import { otpVerify } from "@/schema";
-import { verifyOtp } from "@/actions/otp-verify";
+import { verifyOtp } from "@/actions/auth/otp-verify";
 import Link from "next/link";
 import Image from "next/image";
 import logo from "@/app/images/logo.png";

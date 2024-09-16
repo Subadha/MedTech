@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import * as z from "zod";
 import { LoginSchema, validateEmailOrPhone } from "@/schema";
 import { Button } from "../ui/button";
-import { login } from "@/actions/login";
+import { login } from "@/actions/auth/login";
 import { useState, useTransition } from "react";
 import FormSucess from "./form-sucess";
 import FormError from "./form-error";

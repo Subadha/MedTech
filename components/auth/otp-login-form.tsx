@@ -28,11 +28,12 @@ import {
   InputOTPSeparator,
   InputOTPSlot,
 } from "../ui/input-otp";
-import { optlogin } from "@/actions/otp-login";
-import { loginOtp } from "@/actions/loginOtp";
+//import { optlogin } from "@/actions/auth/loginOtp";
+import { loginOtp } from "@/actions/auth/loginOtp";
 import { useRouter } from 'next/navigation';
 
 import { PhoneInput } from "react-international-phone";
+import { optlogin } from "@/actions/auth/otp-login";
 
 
 export const LoginUsingOtpForm = () => {

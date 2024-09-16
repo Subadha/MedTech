@@ -10,7 +10,7 @@ import {
 import { icons, Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { menuItems } from "../home/SideNav";
-import { SignOut } from "@/actions/signout";
+import { SignOut } from "@/actions/auth/signout";
 import { usePathname } from "next/navigation";
 
 type HeaderProps = {

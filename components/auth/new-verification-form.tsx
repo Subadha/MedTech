@@ -2,7 +2,7 @@
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { BeatLoader } from "react-spinners";
-import { newVerification } from "@/actions/new-verification";
+import { newVerification } from "@/actions/auth/new-verification";
 import { CardWrapper } from "./card-warpper";
 import Link from "next/link";
 import Image from "next/image";

@@ -1,4 +1,4 @@
-import { loginOtp } from "@/actions/loginOtp";
+import { loginOtp } from "@/actions/auth/loginOtp";
 import { NextResponse } from "next/server";
 
 export const POST = async(req:any)=>{

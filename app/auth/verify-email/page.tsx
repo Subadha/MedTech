@@ -7,7 +7,7 @@ import img from "@/app/images/Display.png";
 import { Card } from "@/components/ui/card";
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
 import { Button } from "@/components/ui/button";
-import { VerifyOtp } from "@/actions/VerifyEmailOtp";
+import { VerifyOtp } from "@/actions/auth/VerifyEmailOtp";
 import { useRouter } from "next/navigation";
 import FormError from "@/components/auth/form-error";
 

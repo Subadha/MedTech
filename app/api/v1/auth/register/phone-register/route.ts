@@ -1,4 +1,4 @@
-import { NumberRegister } from "@/actions/number-register";
+import { NumberRegister } from "@/actions/auth/number-register";
 import { NextResponse } from "next/server";
 
 export const POST = async(req:any)=>{
