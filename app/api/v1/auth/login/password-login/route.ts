@@ -1,7 +1,4 @@
-import { login } from "@/actions/login";
 import { sendVerificationEmail } from "@/lib/mail";
-import { getVerificationToken } from "@/lib/tokens";
-
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs"; // Assuming bcrypt is used for password hashing
 import { validateEmailOrPhone } from "@/schema";
