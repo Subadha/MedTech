@@ -60,7 +60,6 @@ export const registerOtp = async (
           from: process.env.TWILIO_PHONE_NUMBER,
           to: phone,
         });
-console.log(result);
 
     return { success: "OTP sent!" };
   } catch (err) {
