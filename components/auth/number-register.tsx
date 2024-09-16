@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import * as z from "zod";
 import { RegisterSchema, RegisterwithPhoneSchema } from "@/schema";
 import { Button } from "../ui/button";
-import { register } from "@/actions/register";
+import { register } from "@/actions/auth/register";
 import { useState, useTransition } from "react";
 import FormSucess from "./form-sucess";
 import FormError from "./form-error";
@@ -23,14 +23,14 @@ import Image from "next/image";
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Import eye icons
 import img from "@/app/images/Display.png";
 import logo from "@/app/images/logo.png";
-import { NumberRegister } from "@/actions/number-register";
+import { NumberRegister } from "@/actions/auth/number-register";
 import {
   InputOTP,
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
 } from "../ui/input-otp";
-import { registerOtp } from "@/actions/registerOtp";
+import { registerOtp } from "@/actions/auth/registerOtp";
 
 import { PhoneInput } from "react-international-phone";
 

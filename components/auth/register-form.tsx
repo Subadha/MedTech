@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import * as z from "zod";
 import { RegisterSchema } from "@/schema";
 import { Button } from "../ui/button";
-import { register } from "@/actions/register";
+import { register } from "@/actions/auth/register";
 import { useState, useTransition } from "react";
 import FormSucess from "./form-sucess";
 import FormError from "./form-error";

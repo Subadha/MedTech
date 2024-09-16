@@ -1,4 +1,4 @@
-import { login } from "@/actions/login";
+import { login } from "@/actions/auth/login";
 import { NextResponse } from "next/server";
 
 export const POST = async(req:any)=>{
