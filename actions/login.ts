@@ -45,11 +45,13 @@ export const login = async (values: { email?: string; phone?: string; password: 
     }
 
     try {        
-        await signIn("credentials", {
+       const result= await signIn("credentials", {
             identifier: user.email,
             password,
             redirectTo: DEFAULT_LOGIN_REDIRECT,
-        });        
+        });    
+          console.log(result);
+          
         return { success: "Successfully logged in",user };
     } catch (error) {        
         if (error instanceof AuthError) {
