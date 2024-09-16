@@ -22,7 +22,6 @@ export const VerifyOtp = async(otp:string,email:string)=>{
           where:{id:exisitingUser.id},
           data:{  
               emailVerified:new Date(),
-              email:email
           }
       })}
       return exisitingUser

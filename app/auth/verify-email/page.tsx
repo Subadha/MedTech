@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, startTransition } from "react";
+import React, { useState, startTransition, useEffect } from "react";
 import Image from "next/image";
 import logo from "@/app/images/logo.png";
 import Link from "next/link";
@@ -15,19 +15,25 @@ const Page = () => {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState<string | undefined>("");
   const router = useRouter()
+  const [email, setEmail] = useState<string | null>(null);
   const handleOtpChange = (value: string) => {
     setOtp(value); 
   };
-  const email = localStorage.getItem("email") as string
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedEmail = localStorage.getItem("email");
+      setEmail(storedEmail);
+    }
+  }, []);
  
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     startTransition(async() => {
-      const result = await VerifyOtp(otp,email)
+     if(email){ const result = await VerifyOtp(otp,email)
       if(result){
         router.push('/auth/login')
       }
-      setError("Enter valid otp")
+      setError("Enter valid otp")}
     });
   };
 
