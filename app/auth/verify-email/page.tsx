@@ -18,11 +18,12 @@ const Page = () => {
   const handleOtpChange = (value: string) => {
     setOtp(value); 
   };
-
+  const email = localStorage.getItem("email") as string
+ 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     startTransition(async() => {
-      const result = await VerifyOtp(otp)
+      const result = await VerifyOtp(otp,email)
       if(result){
         router.push('/auth/login')
       }

@@ -41,6 +41,7 @@ const InputOTPPattern: React.FC<InputOTPPatternProps> = ({ control }) => (
         )}
     />
 );
+const email = localStorage.getItem("email")
 
 export const OtpVerification: React.FC = () => {
     const [isPending, startTransition] = useTransition();
