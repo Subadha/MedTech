@@ -55,7 +55,6 @@ export const RegisterForm = () => {
   const onSubmit = (values: z.infer<typeof ExtendedRegisterSchema>) => {
     startTransition(() => {
       register({ ...values, role }).then((data) => {
-        console.log(data.data?.email);
         if(data.data){localStorage.setItem('email', data?.data.email||'');}
         setError(data?.error);
         setSucess(data?.success);
