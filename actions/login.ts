@@ -50,7 +50,7 @@ export const login = async (values: { email?: string; phone?: string; password: 
             password,
             redirectTo: DEFAULT_LOGIN_REDIRECT,
         });        
-        return { success: "Successfully logged in" };
+        return { success: "Successfully logged in",user };
     } catch (error) {        
         if (error instanceof AuthError) {
             switch (error.type) {
