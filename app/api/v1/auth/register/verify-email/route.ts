@@ -3,10 +3,8 @@ import { NextResponse } from "next/server";
 
 export const POST = async(req:any)=>{
      try{
-      const body = await req.json();
-      console.log(body);
-      
-      const data = await VerifyOtp(body.otp)
+      const body = await req.json();      
+      const data = await VerifyOtp(body.otp,body.email)
       return NextResponse.json({email:data});
      }catch(err){
         console.log(err);     
