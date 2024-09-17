@@ -91,7 +91,6 @@ export const getOtp = async (otp: string) => {
     const user = await db.otp.findFirst({
       where: { otp },
     });
-    console.log(user);
     return user?.otp;
   } catch (error) {
     console.error("Error fetching user by OTP:", error);
