@@ -24,7 +24,8 @@ export const VerifyOtp = async(otp:string,email:string)=>{
               emailVerified:new Date(),
           }
       })}
-      return exisitingUser
+      const updatedUser = await getUserByEmail(email);
+      return updatedUser
      }
        return null
    } catch (error) {
