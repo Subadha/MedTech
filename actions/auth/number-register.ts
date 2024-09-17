@@ -43,7 +43,7 @@ export const NumberRegister = async (
       },
     });
     if (result?.id) {
-      return { success: "Registered successfully" };
+      return { success: "Registered successfully",user:result };
     }
     return { error: "Failed to register" };
   }

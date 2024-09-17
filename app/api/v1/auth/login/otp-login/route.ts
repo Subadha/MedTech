@@ -37,7 +37,7 @@ export const POST = async(req: any) => {
       });
     }
 
-    return NextResponse.json(updatedUser);
+    return NextResponse.json({success:"Login successful", user:updatedUser});
 
   } catch (err) {
     console.error(err);
