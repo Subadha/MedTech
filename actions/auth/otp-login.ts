@@ -37,7 +37,7 @@ export const optlogin = async (values: z.infer<typeof LoginUsingOtpSchema>) => {
       otp: otp,
       callbackUrl: DEFAULT_LOGIN_REDIRECT,
     });
-    return { success: "Successfully logged in" };
+    return { success: "Successfully logged in",user:existingUser };
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {

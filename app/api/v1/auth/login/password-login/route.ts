@@ -9,7 +9,7 @@ export const POST = async (req: any) => {
     const body = await req.json();
     const { identifier, password } = body;
 
-    const fieldType = validateEmailOrPhone(identifier);
+    const fieldType = await validateEmailOrPhone(identifier);
 
     let user;
     
@@ -32,10 +32,10 @@ export const POST = async (req: any) => {
 
     if (!user.emailVerified&&user.email) {
       await sendVerificationEmail(user.email);
-      return NextResponse.json({ success: "Confirmation email sent", data: user }, { status: 200 });
+      return NextResponse.json({ success: "Confirmation email sent", user: user }, { status: 200 });
     }
     
-    return NextResponse.json({ success: "Login successful", user }, { status: 200 });
+    return NextResponse.json({ success: "Login successful..", user:user }, { status: 200 });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
