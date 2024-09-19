@@ -11,7 +11,7 @@ export const createOrUpdateTrackerData = async (id: string, data: any) => {
 
     // Check if the tracker already exists for the user
     const existingTracker = await db.tracker.findFirst({
-      where: { user_id: id },
+      where: { userId: id },
     });
 
     if (existingTracker) {
@@ -24,7 +24,7 @@ export const createOrUpdateTrackerData = async (id: string, data: any) => {
     // Create a new tracker with the new data
     const newTracker = await db.tracker.create({
       data: {
-        user_id: id,
+        userId: id,
         activity: data.activity,
         sleep: data.sleep,
         wellness: data.wellness,

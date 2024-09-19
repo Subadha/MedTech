@@ -1,30 +1,35 @@
-"use server"
+"use server";
 import { db } from "@/lib/db";
-import { NextResponse } from 'next/server';
 
-export async function GetTrack(userId:string) {
-  try {
-
+export async function GetTrack(userId: string) {
+  try {    
     if (!userId) {
-      return { error:"user id not provided" };
+      return { error: "User ID not provided" };
     }
 
-    const trackers = await db.tracker.findFirst({
-      where: { user_id: userId },
-      include: {
-        overview_report: true,
-        health_monitoring: true,
-        health_expected: true,
-      },
+    const overview = await db.overview.findFirst({
+      where: { userId: userId },
     });
-  
-    if (!trackers) {
-      return { error: 'No trackers found for this user' };
-    }
 
-    return trackers;
+    const healthExpected = await db.healthExpected.findFirst({
+      where: { userId: userId },
+    });
+
+    const healthMonitoring = await db.healthMonitoring.findFirst({
+      where: { userId: userId },
+    });
+
+    if (!overview && !healthExpected && !healthMonitoring) {
+      return { error: 'No data found for this user' };
+    }   
+    return {
+      overview,
+      healthExpected,
+      healthMonitoring,
+    };
   } catch (error) {
-    console.error('Error fetching trackers:', error);
+    console.error('Error fetching data:', error);
     return { error: 'Internal Server Error' };
   }
 }
+

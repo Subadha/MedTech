@@ -1,8 +1,5 @@
-"use client";
-
-import { TrendingUp } from "lucide-react";
+import { useState } from "react";
 import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
-
 import {
   Card,
   CardContent,
@@ -15,7 +12,14 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 const chartConfig = {
   stress_level: {
@@ -37,8 +41,8 @@ const chartConfig = {
 };
 
 type ChartField = keyof typeof chartConfig;
-export function HealthMonitoring({data}:any) {
 
+export function HealthMonitoring({ data }: any) {
   const [selected, setSelected] = useState<{
     field: ChartField;
     color: string;
@@ -46,6 +50,8 @@ export function HealthMonitoring({data}:any) {
     field: "stress_level",
     color: chartConfig.stress_level.color,
   });
+
+  const [timeframe, setTimeframe] = useState("monthly");
 
   const handleTabChange = (value: string) => {
     const field = value as ChartField;
@@ -55,50 +61,56 @@ export function HealthMonitoring({data}:any) {
     });
   };
 
-  
+  // Filter data based on timeframe
+  const filteredData = () => {
+    if (timeframe === "monthly") {
+      return data?.monthly_monitoring.slice(-4); // last 4 months
+    } else if (timeframe === "weekly") {
+      return data.weekly_monitoring; // weekly data for current month
+    } else if (timeframe === "daily") {
+      return data.daily_monitoring; // daily data for current week
+    }
+  };
+
   return (
     <Card className="col-span-6">
-      <CardHeader className=" md:p-4 p-2 ">
-        <CardTitle>Health Monitoring</CardTitle>
+      <CardHeader className="md:p-4 p-2">
+        <div className="flex justify-between">
+          <CardTitle>Health Monitoring</CardTitle>
+          <Selection setTimeframe={setTimeframe} />
+        </div>
         <Tabs defaultValue="stress_level" onValueChange={handleTabChange}>
           <div className="flex items-center md:px-4 md:py-2">
-            <TabsList className="m-auto h-12 w-full justify-between " >
-              <TabsTrigger value="stress_level" className="md:text-base text-[12px] p-2 w-1/4 data-[state=active]:bg-[#3788E5] data-[state=active]:text-white ">
-                Stress level
-              </TabsTrigger>
-              <TabsTrigger value="pulse" className="md:text-base text-[12px] p-2 w-1/4 data-[state=active]:bg-[#EC594D] data-[state=active]:text-white ">
-                Pulse
-              </TabsTrigger>
-              <TabsTrigger
-                value="temperature"
-                className={`p-2 w-1/4 md:text-base text-[12px] data-[state=active]:bg-[#F79500] data-[state=active]:text-white `}
-              >
-                Temp<span className=" hidden md:block">erature</span>
-              </TabsTrigger>
-              <TabsTrigger value="calories_burned" className=" md:text-base text-[12px] w-1/4 p-2 data-[state=active]:bg-[#3B0058] data-[state=active]:text-white ">
-                <p className=" whitespace-nowrap flex">Cal<span className=" hidden md:block">ories</span>&nbsp;burned</p>
-              </TabsTrigger>
+            <TabsList className="m-auto h-12 w-full justify-between">
+              {Object.keys(chartConfig).map((key) => (
+                <TabsTrigger
+                  key={key}
+                  value={key}
+                  className={`md:text-base text-[12px] p-2 w-1/4 data-[state=active]:bg-white data-[state=active]:text-primary`}
+                >
+                  {chartConfig[key as ChartField].label}
+                </TabsTrigger>
+              ))}
             </TabsList>
           </div>
         </Tabs>
       </CardHeader>
-      <CardContent className=" md:p-4 p-2 ">
+      <CardContent className="md:p-4 p-2">
         <ChartContainer config={chartConfig}>
           <AreaChart
             accessibilityLayer
-            data={data}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
+            data={filteredData()} 
+            margin={{ left: 12, right: 12 }}
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey={timeframe === "monthly" ? "month" : timeframe === "weekly" ? "week" : "day"}
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) =>
+                timeframe === "monthly" ? value.slice(0, 3) : value
+              }
             />
             <ChartTooltip
               cursor={false}
@@ -107,14 +119,30 @@ export function HealthMonitoring({data}:any) {
             <Area
               dataKey={selected.field}
               type="linear"
-              fill={`var(--color-${selected.field})`}
+              fill={selected.color}
               fillOpacity={0.4}
-              stroke={`var(--color-${selected.field})`}
+              stroke={selected.color}
             />
           </AreaChart>
         </ChartContainer>
       </CardContent>
-      
     </Card>
+  );
+}
+
+function Selection({ setTimeframe }: { setTimeframe: (value: string) => void }) {
+  return (
+    <Select onValueChange={(value) => setTimeframe(value)}>
+      <SelectTrigger className="w-[80px]">
+        <SelectValue placeholder="Monthly" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectItem value="daily">Daily</SelectItem>
+          <SelectItem value="weekly">Weekly</SelectItem>
+          <SelectItem value="monthly">Monthly</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 }

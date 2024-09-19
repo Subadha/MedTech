@@ -95,7 +95,6 @@ model VerificationToken{
   email String
   token String @unique
   expires DateTime
-
   @@unique([email,token])
 }
 
@@ -104,50 +103,37 @@ model PasswordReset{
   email   String
   token   String @unique
   expires DateTime
-
   @@unique([email,token])
 }
 
 model Tracker {
   id              String       @id @default(uuid())
-  user_id         String
+  userId         String
   activity        Float
   sleep           Float
-  wellness        Float
-  overview_report Overview[]  
-  health_monitoring HealthMonitoring[] 
-  health_expected HealthExpected[]     
+  wellness        Float    
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
 }
 
 model Overview {
   id        String   @id @default(uuid())
-  trackerId  String
-  week String
-  this_month   Float
-  prev_month   Float
-  tracker   Tracker  @relation(fields: [trackerId], references: [id], onDelete: Cascade)
+  userId  String @unique
+  report  Json[]
 }
 
 model HealthMonitoring {
   id         String   @id @default(uuid())
-  trackerId  String
-  month     String
-  stress_level     Float
- pulse  Float
-  temperature     Float
-  calories_burned     Float
-  tracker    Tracker  @relation(fields: [trackerId], references: [id], onDelete: Cascade)
+  userId  String @unique
+  monthly_monitoring     Json
+  weekly_monitoring     Json
+  daily_monitoring     Json
 }
 
 model HealthExpected {
   id         String   @id @default(uuid())
-  trackerId  String
-  month     String
-  health     Float
-  expected     Float
-  tracker    Tracker  @relation(fields: [trackerId], references: [id], onDelete: Cascade)
+  userId  String @unique
+  report  Json[]
 }
 
 model Otp {
