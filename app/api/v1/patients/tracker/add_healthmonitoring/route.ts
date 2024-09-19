@@ -18,7 +18,6 @@ export async function POST(request: Request) {
           daily_monitoring: data.daily_monitoring      
         }
       });
-
       return NextResponse.json(created);
     }
 
