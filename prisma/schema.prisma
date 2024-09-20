@@ -109,9 +109,9 @@ model PasswordReset{
 model Tracker {
   id              String       @id @default(uuid())
   userId         String
-  activity        Float
-  sleep           Float
-  wellness        Float    
+  activity        Json
+  sleep           Json
+  wellness        Json    
   createdAt       DateTime     @default(now())
   updatedAt       DateTime     @updatedAt
 }

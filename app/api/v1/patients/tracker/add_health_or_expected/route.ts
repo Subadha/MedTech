@@ -9,7 +9,7 @@ export async function POST(request: Request) {
     const { userId, data } = body;
 
     const user = await getUserById(userId);
-
+    
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
@@ -18,8 +18,7 @@ export async function POST(request: Request) {
       where: {
         userId: user.id
       }
-    });
-
+    });   
     let updatedOverview;
 
     if (existingOverview) {
@@ -27,6 +26,7 @@ export async function POST(request: Request) {
 
       let newReportArray = Array.isArray(currentReport) ? [...currentReport, data] : [data];
 
+      // Maintain a limit of 5 reports
       if (newReportArray.length > 5) {
         newReportArray.shift(); 
       }
@@ -40,16 +40,17 @@ export async function POST(request: Request) {
         }
       });
     } else {
-      updatedOverview = await db.overview.create({
+      updatedOverview = await db.healthExpected.create({
         data: {
           userId: user.id,
-          report: [data]  
+          report: [data]  // Create the new report
         }
       });
     }
 
     return NextResponse.json(updatedOverview);
   } catch (err) {
-    return NextResponse.json({ error: err }, { status: 500 });
+    console.error("Error in /api/v1/patients/tracker/add_health_or_expected:", err);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }

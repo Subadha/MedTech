@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useState } from "react";
 import { Label, Pie, PieChart } from "recharts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartConfig, ChartContainer } from "@/components/ui/chart";
@@ -15,19 +16,21 @@ import {
 } from "@/components/ui/select";
 
 interface PercentageCardProps {
-  progress: number;
+  progress: {
+    daily: number;
+    weekly: number;
+    monthly: number;
+  };
   color: string;
   title: string;
 }
 
-export function PercentageCard({
-  progress,
-  color,
-  title,
-}: PercentageCardProps) {
+export function PercentageCard({ progress, color, title }: PercentageCardProps) {
+  const [selectedPeriod, setSelectedPeriod] = useState<"daily" | "weekly" | "monthly">("daily");
+
   const chartData = [
-    { browser: "completed", visitors: progress, fill: color },
-    { browser: "remaining", visitors: 100 - progress, fill: "#E0E0E0" },
+    { browser: "completed", visitors: progress[selectedPeriod]||0, fill: color },
+    { browser: "remaining", visitors: 100 - progress[selectedPeriod]||0, fill: "#E0E0E0" },
   ];
 
   const chartConfig = {
@@ -40,8 +43,8 @@ export function PercentageCard({
   return (
     <Card className="flex md:col-span-2 col-span-6 flex-col">
       <CardHeader className=" flex-row justify-between items-center pb-0">
-        <CardTitle>Sleep</CardTitle>
-        <Selection/>
+        <CardTitle>{title}</CardTitle>
+        <Selection selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />
       </CardHeader>
       <CardContent className="flex-1 pb-0">
         <ChartContainer
@@ -71,7 +74,7 @@ export function PercentageCard({
                           y={viewBox.cy}
                           className="fill-foreground text-3xl font-bold"
                         >
-                          {progress.toLocaleString()}%
+                          {progress[selectedPeriod].toLocaleString()}%
                         </tspan>
                       </text>
                     );
@@ -86,15 +89,23 @@ export function PercentageCard({
   );
 }
 
+interface SelectionProps {
+  selectedPeriod: "daily" | "weekly" | "monthly";
+  setSelectedPeriod: React.Dispatch<React.SetStateAction<"daily" | "weekly" | "monthly">>;
+}
 
-function Selection() {
+function Selection({ selectedPeriod, setSelectedPeriod }: SelectionProps) {
   return (
-    <Select>
-      <SelectTrigger className="w-[80px]">
-        <SelectValue placeholder="Daily" />
+    <Select
+      onValueChange={(value) => setSelectedPeriod(value as "daily" | "weekly" | "monthly")}
+      value={selectedPeriod}
+    >
+      <SelectTrigger className="w-[100px]">
+        <SelectValue placeholder="Select Period" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
+          <SelectLabel>Select Period</SelectLabel>
           <SelectItem value="daily">Daily</SelectItem>
           <SelectItem value="weekly">Weekly</SelectItem>
           <SelectItem value="monthly">Monthly</SelectItem>
