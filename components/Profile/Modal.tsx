@@ -37,7 +37,6 @@ export function Modal({details,refresh}: any) {
       email: details?.email,
       name: details?.name,
       about: details?.about,
-      phone: details?.phone,
       password: ""
     },
   });
@@ -104,25 +103,6 @@ export function Modal({details,refresh}: any) {
                           {...field}
                           placeholder="Enter your email"
                           type="email"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                <FormField
-                  control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Mobile Number</FormLabel>
-                      <FormControl>
-                        <PhoneInput
-                          defaultCountry="in"
-                          className="rounded-md border bg-transparent  text-sm placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-300 focus:ring-offset-1"
-                          placeholder="Telephone"
-                          disabled={isPending}
-                          {...field}
                         />
                       </FormControl>
                       <FormMessage />

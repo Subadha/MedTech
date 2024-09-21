@@ -4,7 +4,6 @@ import { db } from "@/lib/db";
 
 export const EnrollDoctorCretificate = async (id: string, data: any) => {
   try {
-    console.log(data);
 
     const user = await getUserById(id);
     if (!user) {

@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import { sendVerificationEmail } from "@/lib/mail";
 import { UpdateProfileSchema } from "@/schema/dashboard/profile";
 import { getVerificationToken } from "@/lib/tokens";
-import { getUserByEmail, getUserById } from "@/data/user";
+import  {getUserById } from "@/data/user";
 
 export const updateProfile = async (values: z.infer<typeof UpdateProfileSchema>, userId: string) => {
   try {
@@ -14,7 +14,7 @@ export const updateProfile = async (values: z.infer<typeof UpdateProfileSchema>,
       return { error: "Invalid data" };
     }  
     
-    const { email, name, password, phone, about } = validate.data;
+    const { email, name, password, about } = validate.data;
     let hashedPassword = undefined;
   
     if (password) {
@@ -36,34 +36,13 @@ export const updateProfile = async (values: z.infer<typeof UpdateProfileSchema>,
         verificationToken.email,
       );
     }
-  
-    if (phone && phone.length >= 10 && phone !== user?.phone) {
-      const phoneExists = await db.user.findUnique({
-        where: { phone },
-        select: { id: true },
-      });
-      if (phoneExists) {
-        return { error: "Phone number is already in use" };
-      }
-      updateData.phone = phone;
-    }
     
-    updateData.numberVerified = false;
-  
     const updatedUser = await db.user.update({
       where: { id: userId },
       data: updateData,
     });
 
-    const newData = await db.user.delete({
-      where: { id: userId },
-    });
-
-    const newData1 = await db.user.create({
-      data:updatedUser
-    })
-  
-    return { success: "Profile updated successfully" };
+    return { success: "Profile updated successfully",user:updatedUser };
   
   } catch (error) {
     console.error(error);

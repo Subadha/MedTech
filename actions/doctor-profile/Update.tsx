@@ -14,8 +14,8 @@ export const UpdateAbout = async (id:string,about:string)=>{
    } catch (error) {
     return{error:'error'}
    }
-
 }
+
 export const UpdateProfilePicture = async (id:string,imageUrl:string)=>{
    try {
      const updatedUser = await db.user.update({
