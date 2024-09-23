@@ -41,6 +41,7 @@ model DoctorProfile {
   state              String
   city               String
   qualification      String
+  BookedAppointment  Float
   specialization     String
   subSpecialist  String
   experienceYears         String

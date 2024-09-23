@@ -32,7 +32,6 @@ export const BookAppointment = async (data: any) => {
       name: data.name as string, 
       gender: data.gender as string,
     };
-   console.log(details);
    
     const appointment = await db.bookedAppointment.create({
       data: details,
