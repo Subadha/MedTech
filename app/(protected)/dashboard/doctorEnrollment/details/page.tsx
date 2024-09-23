@@ -5,29 +5,26 @@ import { docDeatail } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { startTransition, useState } from "react";
+import { startTransition, useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import FormSucess from "@/components/auth/form-sucess";
+import FormSuccess from "@/components/auth/form-sucess";
 import FormError from "@/components/auth/form-error";
 import { EnrollDoctorDetails } from "@/actions/DoctorEnroll/enrollDoctorDetail";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/app/context/userContext";
 
 export default function Page() {
-    const router = useRouter();  
-    const {id,role}= useUser()
-
-  
+    const router = useRouter();
+    const { id, role } = useUser();
 
     const form = useForm<z.infer<typeof docDeatail>>({
         resolver: zodResolver(docDeatail),
         defaultValues: {
             availableTimeFrom: "",
-            availableTimeTo: "",
+            availableTimeTo: [],
             availableDays: [],
             sessionFees: "",
             sessionLength: "",
@@ -36,28 +33,45 @@ export default function Page() {
     });
 
     const [isPending] = useState(false);
-    const languages = ["English", "Hindi", "Telugu", "Tamil", "Marathi", "Kanada"];
+    const languages = ["English", "Hindi", "Telugu", "Tamil", "Marathi", "Kannada","Other"];
 
-    const toggleLanguage = (language: string) => {
-        const currentLanguages = form.getValues("languages");
-        const updatedLanguages = currentLanguages.includes(language)
-            ? currentLanguages.filter((lang) => lang !== language)
-            : [...currentLanguages, language];
-        form.setValue("languages", updatedLanguages);
-    };
-       
-    const onSubmit = (values:any) => {        
+    // Time slots available for selection
+    const timeSlots = [
+        "08:00", "08:30", "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+        "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30",
+        "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00"
+    ];
+
+    const [availableTimes, setAvailableTimes] = useState(timeSlots); // Initialize available times with all time slots
+    const [isStartTimeSelected, setIsStartTimeSelected] = useState(false); // Track if start time is selected
+
+    const onSubmit = (values: any) => {
         startTransition(() => {
-            EnrollDoctorDetails(id,values).then((data:any) => {  
-               if(data.success){
-                router.push('/dashboard/doctorEnrollment/certificate-verification') }
-          });
+            EnrollDoctorDetails(id, values).then((data: any) => {
+                if (data.success) {
+                    router.push('/dashboard/doctorEnrollment/certificate-verification');
+                }
+            });
         });
-      };
-      if(role!=="DOCTOR"){
-        router.push('/dashboard')
-        return(<h2>Only for doctors</h2>)
+    };
+
+    useEffect(() => {
+        const selectedStartTime = form.getValues("availableTimeFrom");
+        if (selectedStartTime) {
+            const filteredTimes = timeSlots.filter((time) => time > selectedStartTime);
+            setAvailableTimes(filteredTimes);
+            setIsStartTimeSelected(true); // Mark start time as selected
+        } else {
+            setIsStartTimeSelected(false); // Reset if no start time is selected
+            setAvailableTimes(timeSlots); // Reset available times to all
+        }
+    }, [form.watch("availableTimeFrom")]); // Trigger when availableTimeFrom changes
+
+    if (role !== "DOCTOR") {
+        router.push('/dashboard');
+        return (<h2>Only for doctors</h2>);
     }
+
     return (
         <div className="flex flex-col p-5 sm:p-10 gap-8 sm:gap-10">
             <div className="flex flex-col text-center sm:text-left">
@@ -66,62 +80,80 @@ export default function Page() {
             </div>
             <div className="flex sm:flex-row flex-col sm:text-left text-center gap-8 sm:gap-10">
                 <Form {...form}>
-                     <form onSubmit={form.handleSubmit(onSubmit)}>
+                    <form onSubmit={form.handleSubmit(onSubmit)}>
                         <div className="flex sm:flex-row flex-col gap-5">
-                            <div className="flex flex-col gap-3 mb-5 w-full sm:w-auto">
-                                <FormField
-                                    control={form.control}
-                                    name="availableTimeFrom"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel className="font-semibold text-lg">Time when you will be available</FormLabel>
-                                            <FormControl className=" text-center sm:text-left">
-                                                <Select
-                                                 onValueChange={field.onChange}
-                                                 value={field.value}
-                                                >
-                                                    <SelectTrigger className="w-full sm:w-[20vw]">
-                                                        <SelectValue placeholder="Select start time" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value="08:00">08:00 AM</SelectItem>
-                                                        <SelectItem value="09:00">09:00 AM</SelectItem>
-                                                        <SelectItem value="10:00">10:00 AM</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </div>
-                            <div className="flex flex-col gap-3 mt-auto mb-5 w-full sm:w-auto">
-                                <FormField
-                                    control={form.control}
-                                    name="availableTimeTo"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormControl className="text-center sm:text-left">
-                                                <Select
-                                                  onValueChange={field.onChange}
-                                                  value={field.value}
-                                                >
-                                                    <SelectTrigger className="w-full sm:w-[20vw]">
-                                                        <SelectValue placeholder="Select end time" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value="17:00">05:00 PM</SelectItem>
-                                                        <SelectItem value="18:00">06:00 PM</SelectItem>
-                                                        <SelectItem value="19:00">07:00 PM</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                            <div className="flex flex-col">
+                                <div className="flex flex-col gap-3 mb-5 w-full sm:w-auto">
+                                    <FormField
+                                        control={form.control}
+                                        name="availableTimeFrom"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel className="font-semibold text-lg">Select Start Time</FormLabel>
+                                                <FormControl className="text-center sm:text-left">
+                                                    <Select onValueChange={(value) => {
+                                                        field.onChange(value);
+                                                    }} value={field.value}>
+                                                        <SelectTrigger className="w-full sm:w-[20vw]">
+                                                            <SelectValue placeholder="Select start time" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {timeSlots.map((time) => (
+                                                                <SelectItem key={time} value={time}>
+                                                                    {time} {time.endsWith("00") ? "AM" : "PM"}
+                                                                </SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+
+                                {/* Show available times only if start time is selected */}
+                                {isStartTimeSelected && (
+                                    <div className="flex flex-col gap-3 mb-5">
+                                        <FormField
+                                            control={form.control}
+                                            name="availableTimeTo"
+                                            render={({ field }) => (
+                                                <FormItem className="flex flex-col">
+                                                    <FormLabel className="font-semibold text-lg">Available Times</FormLabel>
+                                                    <FormControl className="text-center sm:text-left">
+                                                        <div className="flex flex-wrap gap-4 justify-center sm:justify-start">
+                                                            {availableTimes.map((time) => (
+                                                                <div key={time} className="flex items-center">
+                                                                    <label className="flex items-center gap-2">
+                                                                        <Checkbox
+                                                                            checked={field.value.includes(time)}
+                                                                            onCheckedChange={(checked) => {
+                                                                                const currentSelectedTimes = field.value;
+
+                                                                                if (checked) {
+                                                                                    form.setValue("availableTimeTo", [...currentSelectedTimes, time]);
+                                                                                } else {
+                                                                                    form.setValue("availableTimeTo", currentSelectedTimes.filter(t => t !== time));
+                                                                                }
+                                                                            }}
+                                                                        />
+                                                                        <span>{time}</span>
+                                                                    </label>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
+                                )}
                             </div>
                         </div>
+
+                        {/* Other form fields remain unchanged */}
                         <div className="flex mb-5 flex-col gap-3">
                             <FormField
                                 control={form.control}
@@ -163,6 +195,7 @@ export default function Page() {
                                 )}
                             />
                         </div>
+
                         <div className="flex sm:flex-row flex-col gap-5">
                             <div className="flex flex-col gap-3 mb-5 w-full sm:w-auto">
                                 <FormField
@@ -189,12 +222,12 @@ export default function Page() {
                                     name="sessionLength"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel className="font-semibold text-lg">Session Length (minutes)</FormLabel>
+                                            <FormLabel className="font-semibold text-lg sm:text-left text-center">Session Length</FormLabel>
                                             <FormControl className="text-center sm:text-left">
                                                 <Input
                                                     disabled={isPending}
                                                     {...field}
-                                                    placeholder="Enter session length"
+                                                    placeholder="Enter session length in minutes"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -203,52 +236,53 @@ export default function Page() {
                                 />
                             </div>
                         </div>
-                        <div className="flex flex-col gap-3 mb-5">
+                        <div className="flex mb-5 flex-col gap-3">
                             <FormField
                                 control={form.control}
                                 name="languages"
                                 render={({ field }) => (
-                                    <FormItem className="flex flex-col ">
-                                        <FormLabel className="font-semibold text-lg">Select the Known Languages</FormLabel>
-                                        <FormControl className="text-center sm:text-left">
-                                            <Popover>
-                                                <PopoverTrigger asChild>
-                                                    <Button variant="outline" className="w-full sm:w-[20vw] text-left">
-                                                        {field.value?.length > 0
-                                                            ? `Selected: ${field.value.join(", ")}`
-                                                            : "Select languages"}
-                                                    </Button>
-                                                </PopoverTrigger>
-                                                <PopoverContent className="w-full sm:w-[20vw]">
-                                                    {languages.map((language) => (
-                                                        <div key={language} className="flex items-center space-x-2">
-                                                            <Checkbox
-                                                                checked={field.value.includes(language)}
-                                                                onCheckedChange={() => toggleLanguage(language)}
-                                                                id={language}
-                                                            />
-                                                            <label htmlFor={language} className="text-sm font-medium">
-                                                                {language}
-                                                            </label>
+                                    <FormItem>
+                                        <FormLabel className="font-semibold text-lg">Choose the languages you speak.</FormLabel>
+                                        <FormControl>
+                                            <div className="flex pt-4 flex-wrap gap-4 justify-center sm:justify-start">
+                                                {languages.map((language) => (
+                                                    <label key={language} className="flex items-center">
+                                                        <input
+                                                            type="checkbox"
+                                                            value={language}
+                                                            className="hidden"
+                                                            checked={field.value.includes(language)}
+                                                            onChange={(e) => {
+                                                                const selectedLanguages = [...field.value];
+                                                                if (e.target.checked) {
+                                                                    selectedLanguages.push(language);
+                                                                } else {
+                                                                    const index = selectedLanguages.indexOf(language);
+                                                                    if (index > -1) {
+                                                                        selectedLanguages.splice(index, 1);
+                                                                    }
+                                                                }
+                                                                field.onChange(selectedLanguages);
+                                                            }}
+                                                        />
+                                                        <div className={`w-32 h-10 flex items-center justify-center border-2 rounded-md ${field.value.includes(language) ? 'bg-purple-600' : 'bg-gray-200'} cursor-pointer`}>
+                                                            <span className={`${field.value.includes(language) ? 'text-white' : 'text-gray-800'}`}>{language}</span>
                                                         </div>
-                                                    ))}
-                                                </PopoverContent>
-                                            </Popover>
+                                                    </label>
+                                                ))}
+                                            </div>
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>
                                 )}
                             />
                         </div>
-                        <FormSucess message="" />
-                        <FormError message="" />
-                        <Button
-                            className="w-[20vw] h-10 mt-5 bg-purple-700 hover:bg-purple-500"
-                            disabled={isPending}
-                            type="submit"
-                        >
-                            Next
-                        </Button>
+
+                        <div className="flex justify-center">
+                            <Button disabled={isPending} type="submit">
+                                {isPending ? "Processing..." : "Save"}
+                            </Button>
+                        </div>
                     </form>
                 </Form>
             </div>

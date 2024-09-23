@@ -55,7 +55,7 @@ model DoctorAvailabilityDetails {
   languages          String[]
    availableDays      String[]
   availableTimeFrom  String
-  availableTimeTo    String
+  availableTimeTo    String[]
 }
 
 model DoctorLicense {
