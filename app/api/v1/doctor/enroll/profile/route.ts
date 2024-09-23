@@ -18,13 +18,13 @@ export const POST =async(req:any)=>{
       return { error: "Doctor profile already exists for this user" };
     }
 
-    await db.doctorProfile.create({
+   const result= await db.doctorProfile.create({
       data: {
         ...values,
         userId: id,
       },
     });
-
+    return NextResponse.json(result)
   } catch (error) {
     return NextResponse.json(error)
   }
