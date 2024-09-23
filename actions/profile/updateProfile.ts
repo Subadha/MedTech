@@ -27,6 +27,7 @@ export const updateProfile = async (values: z.infer<typeof UpdateProfileSchema>,
       name,
       about,
       password: hashedPassword || user?.password,
+      emailVerified: email?null:user?.emailVerified,
     };
   
     if (email && email.toLowerCase() !== user?.email) {
