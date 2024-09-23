@@ -1,7 +1,7 @@
 import { db } from "@/lib/db"
 import { NextResponse } from "next/server"
 
-export const GET = async (req:any)=>{
+export const GET = async ()=>{
     try {
         const recommendedDoctors= await db.doctorProfile.findMany()
         const top3Doctors = recommendedDoctors
