@@ -10,8 +10,6 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-import FormSuccess from "@/components/auth/form-sucess";
-import FormError from "@/components/auth/form-error";
 import { EnrollDoctorDetails } from "@/actions/DoctorEnroll/enrollDoctorDetail";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/app/context/userContext";
@@ -23,7 +21,6 @@ export default function Page() {
     const form = useForm<z.infer<typeof docDeatail>>({
         resolver: zodResolver(docDeatail),
         defaultValues: {
-            availableTimeFrom: "",
             availableTimeTo: [],
             availableDays: [],
             sessionFees: "",

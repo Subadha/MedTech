@@ -8,7 +8,7 @@ export const POST = async (req: any) => {
     const body = await req.json();
     const isValidOtp = await getUserOtp(body.otp.toString());
     if (!isValidOtp) {
-      return NextResponse.json({ error: "Invalid otp" });
+      return NextResponse.json({ status: true, message: "Invalid otp" });
     }
     const user = await getUserByNumber(body.phone.toString());
     if (user) {
@@ -17,11 +17,11 @@ export const POST = async (req: any) => {
         data: { numberVerified: true },
       });
       return NextResponse.json({
-        user: updatedUser,
+        status: true,
         message: "Verified Successfully",
       });
     }
-    return NextResponse.json({ error: "User not found" });
+    return NextResponse.json({ status: true, message: "User not found" });
   } catch (err) {
     console.log(err);
     return NextResponse.json(err);

@@ -6,7 +6,6 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/app/context/userContext";
 import { useRouter } from "next/navigation";
-import { EnrollDoctorCretificate } from "@/actions/DoctorEnroll/enrollDoctorCertificate";
 
 export default function Page() {
   const { id, role } = useUser();
@@ -17,53 +16,28 @@ export default function Page() {
 
   const formSchema = z.object({
     document1: z
-        .any()
-        .refine((file) => file instanceof File && file.size !== 0, "Please upload a valid image"),
+      .any()
+      .refine(
+        (file) => file instanceof File && file.size !== 0,
+        "Please upload a valid image"
+      ),
     document2: z
-        .any()
-        .refine((file) => file instanceof File && file.size !== 0, "Please upload a valid image"),
+      .any()
+      .refine(
+        (file) => file instanceof File && file.size !== 0,
+        "Please upload a valid image"
+      ),
     registrationNumber1: z.string().min(1, "Registration number is required"),
-    registrationNumber2: z.string().min(1, "Registration number is required"),
-});
+    registrationNumber2: z
+      .string()
+      .min(1, "Medical license number is required"),
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
   });
 
-
-
-  const onSubmit = async (data:any) => {
-    const [document1, document2] = await Promise.all([
-      uploadImageToCloudinary(form.getValues("document1")),
-      uploadImageToCloudinary(form.getValues("document2")),
-    ]);
-
-    // Use the returned URLs and other data to create the updated data object
-    const updatedData = {
-      publicId1:document1.publicId,
-      imageUrl1:document1.secureUrl,
-      publicId2:document2.publicId,
-      imageUrl2:document2.secureUrl,
-      registrationNumber1:form.getValues("registrationNumber1"),
-      registrationNumber2:form.getValues("registrationNumber2")
-    };
-    startTransition(async () => {
-      EnrollDoctorCretificate(id, updatedData)
-      .then((response) => {
-        if (!response.success) {
-          console.error("Error submitting form:");
-        } else {
-          console.log("Form submitted successfully!");
-        }
-        if(data.success){
-          router.push('/dashboard') }
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
-      });
-    });
-  };
   const handleFileChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     setPreview: React.Dispatch<React.SetStateAction<string | null>>,
@@ -77,40 +51,38 @@ export default function Page() {
     }
   };
 
-  const uploadImageToCloudinary = async (file:any) => {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", "ypij3fxm");
-    formData.append("cloud_name", "cloud-space"); 
-  
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/cloud-space/image/upload`,
-      {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    try {
+      const formData = new FormData();
+      formData.append("userId", id);
+      formData.append("registrationNumber1", data.registrationNumber1);
+      formData.append("registrationNumber2", data.registrationNumber2);
+      formData.append("document1", data.document1);
+      formData.append("document2", data.document2);
+
+      // Post the data to the server (including files)
+      await fetch("/api/v1/doctor/enroll/certificate", {
         method: "POST",
-        body: formData,
-      }
-    );
-  
-    if (!response.ok) throw new Error("Failed to upload image");
-  
-    const data = await response.json();
-    return {
-      secureUrl: data.secure_url,
-      publicId: data.public_id
-    };
+        body: formData, // Use FormData directly
+      });
+
+      // router.push("/dashboard");
+    } catch (error) {
+      console.error("Error uploading documents: ", error);
+    }
   };
+
   if (role !== "DOCTOR") {
     router.push("/dashboard");
     return <h2>Only for doctors</h2>;
   }
+
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="p-5">
       <div className="flex flex-col px-5 md:px-10 space-y-4">
         <h1 className="font-bold text-lg text-gray-800">
           Attach the Documents shown below
         </h1>
-        <p className="text-gray-600">Medical Certificate</p>
-        <p className="text-gray-600">Medical Licensing</p>
 
         {/* Document 1 Upload */}
         <div className="flex flex-col md:flex-row items-center w-full sm:w-[50vw]">
@@ -130,16 +102,12 @@ export default function Page() {
             <input
               type="file"
               accept=".jpg,.png,.svg"
-              className="mt-2 block w-full text-sm text-gray-600
-                                    file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0
-                                    file:text-sm file:font-semibold
-                                    file:bg-purple-700 file:text-white
-                                    hover:file:bg-purple-400"
+              className="mt-2 block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-700 file:text-white hover:file:bg-purple-400"
               onChange={(e) => handleFileChange(e, setPreview1, "document1")}
             />
             {form.formState.errors.document1?.message && (
               <p className="text-red-500 text-sm mt-2">
-                {String(form.formState.errors.document1.message)}
+                {String(form.formState.errors.document1?.message)}
               </p>
             )}
           </div>
@@ -155,7 +123,7 @@ export default function Page() {
             />
             {form.formState.errors.registrationNumber1?.message && (
               <p className="text-red-500 text-sm mt-2">
-                {String(form.formState.errors.registrationNumber1.message)}
+                {form.formState.errors.registrationNumber1.message}
               </p>
             )}
           </div>
@@ -179,16 +147,12 @@ export default function Page() {
             <input
               type="file"
               accept=".jpg,.png,.svg"
-              className="mt-2 block w-full text-sm text-gray-600
-                                    file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0
-                                    file:text-sm file:font-semibold
-                                    file:bg-purple-700 file:text-white
-                                    hover:file:bg-purple-400"
+              className="mt-2 block w-full text-sm text-gray-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-purple-700 file:text-white hover:file:bg-purple-400"
               onChange={(e) => handleFileChange(e, setPreview2, "document2")}
             />
             {form.formState.errors.document2?.message && (
               <p className="text-red-500 text-sm mt-2">
-                {String(form.formState.errors.document2.message)}
+                {String(form.formState.errors.document2?.message)}
               </p>
             )}
           </div>
@@ -200,11 +164,11 @@ export default function Page() {
               type="text"
               {...form.register("registrationNumber2")}
               className="mt-2 p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter registration number"
+              placeholder="Enter medical license number"
             />
             {form.formState.errors.registrationNumber2?.message && (
               <p className="text-red-500 text-sm mt-2">
-                {String(form.formState.errors.registrationNumber2.message)}
+                {form.formState.errors.registrationNumber2.message}
               </p>
             )}
           </div>

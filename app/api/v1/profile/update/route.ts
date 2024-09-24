@@ -19,6 +19,7 @@ export const POST= async(req:any)=>{
      name,
      about,
      phone,
+     email,
      numberVerified:phone?false:user?.numberVerified,
      password: hashedPassword || user?.password,
      emailVerified: email?null:user?.emailVerified,
