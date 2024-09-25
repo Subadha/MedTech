@@ -1,15 +1,12 @@
 "use server";
 import crypto from "crypto";
-import bcrypt from "bcryptjs";
 import * as z from "zod";
 import { ResetUsingNumber } from "@/schema";
 import { getOtpData, getUserByNumber, getUserOtp } from "@/data/user";
 import twilio from "twilio";
 import { db } from "@/lib/db";
 
-export const registerOtp = async (
-  values: z.infer<typeof ResetUsingNumber>
-) => {
+export const registerOtp = async (values: z.infer<typeof ResetUsingNumber>) => {
   const validatedFields = ResetUsingNumber.safeParse(values);
 
   if (!validatedFields.success) {
@@ -18,9 +15,7 @@ export const registerOtp = async (
 
   const { phone } = validatedFields.data;
 
-  
   const otpData = await getOtpData(phone);
-  
 
   const existingUser = await getUserByNumber(phone);
 
@@ -34,9 +29,9 @@ export const registerOtp = async (
     process.env.TWILIO_ACCOUNT_SID,
     process.env.TWILIO_AUTH_TOKEN
   );
-  
+
   try {
-    if (otpData==null) {
+    if (otpData == null) {
       await db.otp.create({
         data: {
           phone,
@@ -46,7 +41,7 @@ export const registerOtp = async (
       });
     } else {
       await db.otp.update({
-        where:{phone:phone},
+        where: { phone: phone },
         data: {
           phone,
           otp: otp,
@@ -55,13 +50,13 @@ export const registerOtp = async (
       });
     }
 
-  const result= await client.messages.create({
-          body: `Your OTP is: ${otp}`,
-          from: process.env.TWILIO_PHONE_NUMBER,
-          to: phone,
-        });
+    const result = await client.messages.create({
+      body: `Your OTP is: ${otp}`,
+      from: process.env.TWILIO_PHONE_NUMBER,
+      to: phone,
+    });
 
-    return { success: "OTP sent!",result };
+    return { success: "OTP sent!", result };
   } catch (err) {
     console.log(err);
     return { error: "Could not send OTP" };

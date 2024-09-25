@@ -18,7 +18,7 @@ export const POST = async (req: any) => {
       return NextResponse.json({ error: "No appointments found." });
     }
 
-    return { success: "Success", data: appointments };
+    return NextResponse.json({ success: "Success", data: appointments });
   } catch (err) {
     console.error("Error fetching appointments:", err);
     return NextResponse.json({ error: "Internal server error" });
