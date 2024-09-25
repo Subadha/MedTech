@@ -68,7 +68,7 @@ export const NumberRegisterForm = () => {
     const phone = form.getValues("phone");
     if (phone) {
       startTransition(() => {
-        registerOtp({phone}).then((data) => {
+        registerOtp(phone).then((data) => {
           if (data?.success) {
             setSucess("OTP sent successfully!");
             setError("");
