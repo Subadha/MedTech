@@ -6,14 +6,9 @@ import { getOtpData, getUserByNumber, getUserOtp } from "@/data/user";
 import twilio from "twilio";
 import { db } from "@/lib/db";
 
-export const registerOtp = async (values: z.infer<typeof ResetUsingNumber>) => {
-  const validatedFields = ResetUsingNumber.safeParse(values);
+export const registerOtp = async (phone:string) => {
 
-  if (!validatedFields.success) {
-    return { error: "Enter a valid number" };
-  }
 
-  const { phone } = validatedFields.data;
 
   const otpData = await getOtpData(phone);
 
