@@ -63,9 +63,7 @@ model DoctorLicense {
    userId           String 
   id                    Int    @id @default(autoincrement())
   imageUrl1            String
-  publicId1            String
   imageUrl2            String
-  publicId2            String
   registrationNumber1  String
   registrationNumber2  String
 }

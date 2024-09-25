@@ -1,4 +1,3 @@
-import multer from "multer";
 import path from "path";
 import DatauriParser from "datauri/parser";
 import { NextResponse } from "next/server";

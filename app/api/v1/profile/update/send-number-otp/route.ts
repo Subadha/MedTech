@@ -6,7 +6,12 @@ export const POST = async(req:any)=>{
       const body = await req.json();
       const {phone} = body
       const data = await registerOtp(phone)
-      return NextResponse.json({status:true, message:"Send Successfully"});
+      if(data){
+
+         return NextResponse.json({success:"Send Successfully",data:data});
+      }
+      return NextResponse.json({error:"Unable to Send Otp"});
+
      }catch(err){
         console.log(err);     
      }

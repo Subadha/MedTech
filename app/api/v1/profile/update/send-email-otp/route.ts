@@ -8,7 +8,7 @@ export const POST = async(req:any)=>{
       const {email}=body
       const normalizedEmail = email.toLowerCase();
       await sendVerificationEmail(normalizedEmail);
-      return NextResponse.json({status:true, message:"Send Successfully"});
+      return NextResponse.json({success:"Send Successfully"});
      }catch(err){
         return NextResponse.json(err);
     }

@@ -15,13 +15,12 @@ export const POST = async (req: any) => {
           data: { emailVerified: Date.now().toString() },
         });
         return NextResponse.json({
-          status: true,
-          message: "Verified Successfully",
+          success: "Verified Successfully",
         });
       }
-      return NextResponse.json({ status: false, message: "User not found" });
+      return NextResponse.json({error: "User not found" });
     }
-    return NextResponse.json({ status: false, message: "Invalid values" });
+    return NextResponse.json({error: "Invalid values" });
   } catch (err) {
     console.log(err);
     return NextResponse.json(err);

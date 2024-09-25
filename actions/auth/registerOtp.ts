@@ -61,7 +61,7 @@ export const registerOtp = async (
           to: phone,
         });
 
-    return { success: "OTP sent!" };
+    return { success: "OTP sent!",result };
   } catch (err) {
     console.log(err);
     return { error: "Could not send OTP" };

@@ -17,11 +17,10 @@ export const POST = async (req: any) => {
         data: { numberVerified: true },
       });
       return NextResponse.json({
-        status: true,
-        message: "Verified Successfully",
+        success: "Verified Successfully",
       });
     }
-    return NextResponse.json({ status: true, message: "User not found" });
+    return NextResponse.json({error: "User not found" });
   } catch (err) {
     console.log(err);
     return NextResponse.json(err);
