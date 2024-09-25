@@ -6,7 +6,7 @@ import React from "react";
 const page = () => {
   return (
     <div className="flex flex-col relative h-full w-full pt-20 items-center gap-10">
-      <Script
+      {/* <Script
         id="tawk-to"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
@@ -22,7 +22,7 @@ const page = () => {
             })();
           `,
         }}
-      />
+      /> */}
       <h1 className="text-2xl">Hello, how can we help? </h1>
       <div className="flex relative w-full p-10 items-center gap-10">
         <Faq />

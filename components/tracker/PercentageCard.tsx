@@ -27,7 +27,9 @@ interface PercentageCardProps {
 
 export function PercentageCard({ progress, color, title }: PercentageCardProps) {
   const [selectedPeriod, setSelectedPeriod] = useState<"daily" | "weekly" | "monthly">("daily");
-
+ if(!progress) {
+  return (<></>)
+ }
   const chartData = [
     { browser: "completed", visitors: progress[selectedPeriod]||0, fill: color },
     { browser: "remaining", visitors: 100 - progress[selectedPeriod]||0, fill: "#E0E0E0" },

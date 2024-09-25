@@ -2,9 +2,7 @@
 import { db } from "@/lib/db";
 
 export const getAllAppointment = async (id: string) => {
-  try {
-    console.log(id);
-    
+  try {    
     if (typeof id !== 'string' || !id.trim()) {
       throw new Error('Invalid ID format');
     }

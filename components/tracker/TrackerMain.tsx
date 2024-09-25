@@ -27,7 +27,7 @@ const TrackerMain = ({ id }: any) => {
 
   return (
     <div className="grid grid-cols-6 gap-4 p-4">
-      <div className="lg:col-span-4 col-span-6 grid grid-cols-6 gap-4">
+    <div className="lg:col-span-4 col-span-6 grid grid-cols-6 gap-4">
        {data&&<><PercentageCard progress={data?.tracks?.activity} color="#E53761" title="Activity" />
         <PercentageCard progress={data?.tracks?.sleep} color="#27A468" title="Sleep" />
         <PercentageCard progress={data?.tracks?.wellness} color="#F2A735" title="Welness" /></>}
