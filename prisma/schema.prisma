@@ -56,7 +56,7 @@ model DoctorAvailabilityDetails {
   languages          String[]
    availableDays      String[]
   availableTimeFrom  String
-  availableTimeTo    String[]
+  availableTimeSlot    String[]
 }
 
 model DoctorLicense {
@@ -155,7 +155,6 @@ model BookedAppointment {
   doctor_id    String
   time         String
   date         DateTime
-  slot         Float
   doctorName   String 
   purpose      String
   reschedule   String

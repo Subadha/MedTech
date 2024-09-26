@@ -12,7 +12,9 @@ export const POST = async (req: any) => {
       if (user) {
         const updatedUser = await db.user.update({
           where: { id: user.id },
-          data: { emailVerified: Date.now().toString() },
+          data:{  
+            emailVerified:new Date(),
+        }
         });
         return NextResponse.json({
           success: "Verified Successfully",

@@ -21,7 +21,7 @@ export const BookAppointment = async (data: any) => {
       userId: user.id,
       doctor_id: doctor.id,
       time: data.time as string, 
-      date: new Date(), 
+      date: data.date, 
       slot: data.slot, 
       doctorName: doctor.name?? "",
       purpose: data.purpose as string, 
@@ -36,11 +36,10 @@ export const BookAppointment = async (data: any) => {
     const appointment = await db.bookedAppointment.create({
       data: details,
     });
-    console.log(details);
-    
-  console.log(appointment);
-  
-    return { success: "Appointment successfully booked." };
+    if(appointment){
+      return { success: "Appointment successfully booked.",user:appointment };
+    }
+    return { error: "Failed to book." };
   } catch (error) {
     console.log(error);
     

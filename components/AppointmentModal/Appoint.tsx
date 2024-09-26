@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import {useState } from "react";
 import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from "../ui/dialog";
 import { MdHealthAndSafety } from "react-icons/md";
 import Appoint1 from "./Appoint1";
@@ -11,7 +11,6 @@ export default function Appoint({ details, user }: any) {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [appointStep, setAppointStep] = useState(0);
   const [appointmentData, setAppointmentData] = useState({
-    slot: null,
     time: "",
     purpose: "",
     name: "",
@@ -22,8 +21,8 @@ export default function Appoint({ details, user }: any) {
     userId:user?.id
   });
  
-  const handleAppoint1Data = (data: any) => {
-    setAppointmentData((prevData) => ({ ...prevData, slot: data.slot, time: data.time }));
+  const handleAppoint1Data = (data: any) => {    
+    setAppointmentData((prevData) => ({ ...prevData, date: data.date, time: data.time }));
     setAppointStep(1);
   };
 
@@ -37,7 +36,6 @@ export default function Appoint({ details, user }: any) {
     }));
     setAppointStep(2);
   };
-
  const Submit = async ()=>{
   const result = BookAppointment(appointmentData)
  }

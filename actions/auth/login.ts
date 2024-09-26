@@ -59,7 +59,6 @@ export const login = async (values: {
       password,
       redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
-    console.log(result);
 
     return { success: "Successfully logged in", user };
   } catch (error) {

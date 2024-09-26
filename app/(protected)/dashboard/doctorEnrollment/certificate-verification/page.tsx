@@ -10,10 +10,9 @@ import { useRouter } from "next/navigation";
 export default function Page() {
   const { id, role } = useUser();
   const router = useRouter();
-  const [isPending, startTransition] = useTransition();
   const [preview1, setPreview1] = useState<string | null>(null);
   const [preview2, setPreview2] = useState<string | null>(null);
-
+const [loading,setLoading]=useState(false)
   const formSchema = z.object({
     document1: z
       .any()
@@ -53,6 +52,7 @@ export default function Page() {
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
+      setLoading(true)
       const formData = new FormData();
       formData.append("userId", id);
       formData.append("registrationNumber1", data.registrationNumber1);
@@ -65,8 +65,8 @@ export default function Page() {
         method: "POST",
         body: formData, // Use FormData directly
       });
-
-      // router.push("/dashboard");
+      setLoading(false)
+      router.push("/dashboard");
     } catch (error) {
       console.error("Error uploading documents: ", error);
     }
@@ -176,10 +176,10 @@ export default function Page() {
 
         <Button
           className="w-full md:w-[20vw] h-10 mt-5 bg-purple-700 hover:bg-purple-500"
-          disabled={isPending}
+          disabled={loading}
           type="submit"
         >
-          Submit
+         {loading?"Uploading":'Submit'}
         </Button>
       </div>
     </form>

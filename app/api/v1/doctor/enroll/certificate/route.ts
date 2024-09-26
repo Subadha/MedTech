@@ -71,10 +71,6 @@ export const POST = async (req: any) => {
         resource_type: "image",
       }
     );
-    console.log(createdImage1, createdImage2);
-
-   
-
     const result = await db.doctorLicense.create({
       data: {
         userId: userId,

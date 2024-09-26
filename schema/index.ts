@@ -141,7 +141,7 @@ export const docEnroll = z.object({
 
 export const docDeatail = z.object({
   availableTimeFrom: z.string().min(1, "Start Time is Required"),
-  availableTimeTo: z.array(z.string()),
+  availableTimeSlot: z.array(z.string()),
   availableDays: z.array(z.string()).min(1, "At least one day is required"),
   sessionFees: z.string().min(1, "Fee is Required"),
   sessionLength: z.string().min(1, "Session length is Required"),

@@ -8,7 +8,7 @@ export const VerifyOtp = async(otp:string,email:string)=>{
     if(!otp ||!email){ 
       return {error: "Enter valid email and otp"}
 
-    }
+    }    
      const result = await db.emailOtp.findFirst({
          where: {
            otp: otp, 
