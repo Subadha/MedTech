@@ -37,7 +37,6 @@ const Page = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <Button>Search</Button>
         </div>
         <Link href="/dashboard/consult">
           <Button>+ Book Appointment</Button>

@@ -37,8 +37,7 @@ const [loading,setLoading]=useState(false)
     mode: "onBlur",
   });
 
-  const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>,
     setPreview: React.Dispatch<React.SetStateAction<string | null>>,
     fieldName: "document1" | "document2"
   ) => {

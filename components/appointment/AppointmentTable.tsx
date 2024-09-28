@@ -39,6 +39,7 @@ export function AppointmentTable({data}:any) {
  
   return (
     <>
+    
       <div className="flex mt-4 gap-4 lg:h-20 lg:flex-row flex-col items-center justify-between">
         <div className="flex items-center">
           <p className="text-sm font-bold">

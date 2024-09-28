@@ -74,7 +74,7 @@ export default async function ConsultDoctor({ params }: ConsultDoctorProps) {
          <div className="flex flex-col mt-5">
            <p className="text-purple-500 text-lg md:text-xl font-bold">Personal Statement</p>
            <div className="rounded-md border border-gray-300 p-5 bg-gray-100 mt-2">
-             <p></p>
+             <p>{data?.about}</p>
            </div>
          </div>
          <div className="flex flex-col mt-5">

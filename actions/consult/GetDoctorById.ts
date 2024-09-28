@@ -28,10 +28,17 @@ export const GetDoctorById = async (id: string) => {
       },
     });
 
+    const liscense = await db.doctorLicense.findFirst({
+      where: {
+        userId: doctor.id,
+      },
+    });
+
     const doctorWithDetails = {
       ...doctor,
       profile,
       availability,
+      liscense
     };
 
     return doctorWithDetails;

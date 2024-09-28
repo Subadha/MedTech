@@ -14,7 +14,7 @@ export const POST=async (req:any)=>{
             return NextResponse.json({error: "No appointments found for this user." });
           }
           
-          return NextResponse.json({ success: true, data: appointments });
+          return NextResponse.json({ success:"Successfully fetched", data: appointments });
     }
     catch (err) {
         console.log(err);

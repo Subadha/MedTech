@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import randomColor from "randomcolor";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -8,26 +8,48 @@ import dynamic from "next/dynamic";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useUser } from "@/app/context/userContext";
 
 const FullCalendar = dynamic(() => import("@fullcalendar/react"), {
   ssr: false,
 });
-const CalendarPage = () => {
-  const events = [
-    {
-      title: "Dr. Deep sorthiya",
-      start: "2024-08-09T08:00:00",
-      end: "2024-08-09T10:00:00",
-      backgroundColor: "#FFCCCC",
-    },
-    {
-      title: "Dr. Mahesh Pokal",
-      start: "2024-08-09T12:00:00",
-      end: "2024-08-09T13:00:00",
-      backgroundColor: "#CCFFCC",
-    },
-  ];
 
+
+
+const CalendarPage = () => {
+  const {id}= useUser()
+  const [data, setData] = useState<any>([]);
+useEffect(() => {
+  const GetData = async () => {
+    try {
+      const data = await fetch("/api/v1/patients/calender", {
+        method: "POST",
+        body: JSON.stringify({ userId: id || '' }),
+      });
+      const result = await data.json();
+      if(result.success){
+        setData(result.data);
+      }
+      
+    } catch (error) {
+      console.log(error);
+      
+     }
+  };
+  GetData();
+}, []);
+
+  const updatedEvents = data.map((event:any) => {
+    const color = randomColor();
+    const formattedDate = new Date(event.date).toISOString().slice(0, 19);
+    return {
+      title: event.doctorName,
+      start:formattedDate,
+      backgroundColor: color,
+    };
+  });
+ console.log(updatedEvents);
+ 
   return (
     <div className="pt-10 px-6 min-h-[90vh] lg:py-10 lg:px-12">
       <Card className="lg:p-4 p-1 h-[calc(100vh-100px)] lg:h-full overflow-y-auto">
@@ -40,7 +62,7 @@ const CalendarPage = () => {
             right: "dayGridMonth,timeGridWeek,timeGridDay,listYear",
           }}
           weekends={true}
-          events={events}
+          events={updatedEvents}
           eventContent={renderEventContent}
           slotLabelFormat={{
             hour: "2-digit",
@@ -49,7 +71,7 @@ const CalendarPage = () => {
             hour12: false,
           }}
           slotMinTime="08:00:00"
-          slotMaxTime="18:00:00"
+          slotMaxTime="20:00:00"
         />
       </Card>
     </div>
@@ -59,6 +81,7 @@ const CalendarPage = () => {
 export default CalendarPage;
 
 function renderEventContent(eventInfo: any) {
+  console.log(eventInfo)
   const { backgroundColor } = eventInfo;
   let bgColorWithOpacity = backgroundColor;
 
@@ -90,7 +113,7 @@ function renderEventContent(eventInfo: any) {
           </Badge>
 
           <div className=" mt-4 leading-tight font-medium">
-            <p>Meeting with {eventInfo.event.title}</p>
+            <p>Meeting with Dr.{eventInfo.event.title}</p>
           </div>
         </div>
         <Avatar>
