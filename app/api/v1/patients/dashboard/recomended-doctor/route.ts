@@ -5,7 +5,7 @@ export const GET = async ()=>{
     try {
         const recommendedDoctors= await db.doctorProfile.findMany()
         const top3Doctors = recommendedDoctors
-        .sort((a, b) => b.BookedAppointment - a.BookedAppointment)
+        .sort((a, b) => b.bookedAppointment - a.bookedAppointment)
         .slice(0, 3);
         return NextResponse.json({data:top3Doctors})
     } catch (error) {
