@@ -15,58 +15,75 @@ enum UserRole{
 }
 
 model User {
-  id               String    @id @default(cuid())
-  name             String?
-  email            String?   @unique
-  emailVerified    DateTime? 
-  password         String?
-  role             UserRole  @default(USER)
-  phone            String?   @unique
-  numberVerified   Boolean   @default(false)
-  image         String?
-  about         String?
-  accounts         Account[]
+  id                       String    @id @default(cuid())
+  name                     String?
+  email                    String?   @unique
+  emailVerified            DateTime?
+  password                 String?
+  role                     UserRole  @default(USER)
+  phone                    String?   @unique
+  numberVerified           Boolean   @default(false)
+  image                    String?
+  about                    String?
+  accounts                 Account[]
+  
+  // One-to-one relationship with DoctorProfile
+  doctorProfile            DoctorProfile?
+
+  // One-to-many relationship with DoctorAvailabilityDetails
+  doctorAvailabilityDetails DoctorAvailabilityDetails[]
+
   @@map("users")
 }
 
-
 model DoctorProfile {
-  userId           String @unique
-  id                 Int       @id @default(autoincrement())
-  legalName          String    
-  gender             String
-  dateOfBirth                String
-  address            String
-  country            String
-  state              String
-  city               String
-  qualification      String
-  BookedAppointment  Float
-  specialization     String
-  subSpecialist  String
-  experienceYears         String
-  consultationFees        String
+  id                    Int    @id @default(autoincrement())
+  userId                String @unique
+  user                  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  legalName             String
+  gender                String
+  dateOfBirth           String
+  address               String
+  country               String
+  state                 String
+  city                  String
+  qualification         String
+  bookedAppointment     Float
+  specialization        String
+  subSpecialist         String
+  experienceYears       String
+  consultationFees      String
+
+  @@map("doctor_profiles")
 }
 
 model DoctorAvailabilityDetails {
-   userId           String 
-   id                 Int       @id @default(autoincrement())
- sessionFees        String
-  sessionLength      String
-  languages          String[]
-   availableDays      String[]
-  availableTimeFrom  String
-  availableTimeSlot    String[]
+  id                    Int     @id @default(autoincrement())
+  userId                String
+  user                  User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  sessionFees           String
+  sessionLength         String
+  languages             String[]
+  availableDays         String[]
+  availableTimeFrom     String
+  availableTimeSlot     String[]
+
+  @@map("doctor_availability_details")
 }
 
 model DoctorLicense {
-   userId           String 
   id                    Int    @id @default(autoincrement())
-  imageUrl1            String
-  imageUrl2            String
-  registrationNumber1  String
-  registrationNumber2  String
+  userId                String
+  imageUrl1             String
+  imageUrl2             String
+  registrationNumber1   String
+  registrationNumber2   String
+
+  @@map("doctor_licenses")
 }
+
 
 
 model Account {
