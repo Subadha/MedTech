@@ -27,11 +27,9 @@ model User {
   about                    String?
   accounts                 Account[]
   
-  // One-to-one relationship with DoctorProfile
   doctorProfile            DoctorProfile?
-
-  // One-to-many relationship with DoctorAvailabilityDetails
   doctorAvailabilityDetails DoctorAvailabilityDetails[]
+  doctorLicenses           DoctorLicense[]  // One-to-many relation with DoctorLicense
 
   @@map("users")
 }
@@ -76,6 +74,8 @@ model DoctorAvailabilityDetails {
 model DoctorLicense {
   id                    Int    @id @default(autoincrement())
   userId                String
+  user                  User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   imageUrl1             String
   imageUrl2             String
   registrationNumber1   String
@@ -83,7 +83,6 @@ model DoctorLicense {
 
   @@map("doctor_licenses")
 }
-
 
 
 model Account {
