@@ -9,6 +9,11 @@ export const GetDoctorById = async (id: string) => {
         id: id,
         role: 'DOCTOR',
       },
+      include: {
+        doctorProfile: true,
+        doctorAvailabilityDetails: true,
+      },
+      
     });
 
     if (!doctor) {
@@ -16,32 +21,7 @@ export const GetDoctorById = async (id: string) => {
       return null;
     }
 
-    const profile = await db.doctorProfile.findFirst({
-      where: {
-        userId: doctor.id,
-      },
-    });
-
-    const availability = await db.doctorAvailabilityDetails.findFirst({
-      where: {
-        userId: doctor.id,
-      },
-    });
-
-    const liscense = await db.doctorLicense.findFirst({
-      where: {
-        userId: doctor.id,
-      },
-    });
-
-    const doctorWithDetails = {
-      ...doctor,
-      profile,
-      availability,
-      liscense
-    };
-
-    return doctorWithDetails;
+    return doctor;
   } catch (error) {
     console.error('Error fetching doctor with details:', error);
     return null;

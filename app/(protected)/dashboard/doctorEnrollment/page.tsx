@@ -35,7 +35,7 @@ export default function Page(){
             country: "",
             state: "",
             city: "",
-            BookedAppointment:0
+            bookedAppointment:0
         }
     });
 

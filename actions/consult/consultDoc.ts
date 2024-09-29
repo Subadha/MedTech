@@ -2,42 +2,67 @@
 
 import { db } from "@/lib/db";
 
-export const getAllDoctorsWithDetails = async () => {
-    try {
-      const doctors = await db.user.findMany({
-        where: {
-          role: 'DOCTOR',
-        },
-      });
-  
-      const userIds = doctors.map(doctor => doctor.id);
-  
-      const profiles = await db.doctorProfile.findMany({
-        where: {
-          userId: { in: userIds },
-        },
-      });
-  
-      const availabilityDetails = await db.doctorAvailabilityDetails.findMany({
-        where: {
-          userId: { in: userIds },
-        },
-      });      
-  
-      const doctorsWithDetails = doctors.map(doctor => {
-        const profile = profiles.find(p => p.userId === doctor.id);
-        const availability = availabilityDetails.find(a => a.userId === doctor.id);
-        return {
-          ...doctor,
-          profile,
-          availability,
-        };
-      });
-  
-      return doctorsWithDetails;
-    } catch (error) {
-      console.error('Error fetching doctors with details:', error);
-      return null;
-    }
+// Define the filter type
+interface DoctorFilters {
+  specialization?: string;
+  experienceYears?: string;
+  country?: string;
+  state?: string;
+  city?: string;
+  qualification?: string;
+}
+
+// Define the type for the return value (optional but recommended)
+interface DoctorWithDetails {
+  id: string;
+  name?: string;
+  email?: string;
+  role: string;
+  phone?: string;
+  doctorProfile?: {
+    specialization: string;
+    experienceYears: string;
+    country: string;
+    state: string;
+    city: string;
+    qualification: string;
   };
-  
+  doctorAvailabilityDetails: {
+    sessionFees: string;
+    sessionLength: string;
+    languages: string[];
+    availableDays: string[];
+    availableTimeFrom: string;
+    availableTimeSlot: string[];
+  }[];
+}
+
+// Main function to get doctors with details
+export const getAllDoctorsWithDetails = async (filters: DoctorFilters = {}): Promise<DoctorWithDetails[] | null> => {
+  const { specialization, experienceYears, country, state, city, qualification } = filters;
+
+  try {
+    const doctors = await db.user.findMany({
+      where: {
+        role: 'DOCTOR',
+        doctorProfile: {
+          ...(specialization && { specialization }),
+          ...(experienceYears && { experienceYears }),
+          ...(country && { country }),
+          ...(state && { state }),
+          ...(city && { city }),
+          ...(qualification && { qualification }),
+        },
+      },
+      include: {
+        doctorProfile: true,
+        doctorAvailabilityDetails: true,
+      },
+    });
+
+    return doctors as any;
+  } catch (error) {
+    console.error('Error fetching doctors with details:', error);
+    return null;
+  }
+};

@@ -27,7 +27,7 @@ const AppointmentSchema = z.object({
 export default function Appoint1({ details, onChangeApp }: any) {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-
+ 
   // Initialize form
   const form = useForm({
     resolver: zodResolver(AppointmentSchema),
@@ -57,7 +57,7 @@ export default function Appoint1({ details, onChangeApp }: any) {
           <h3 className="text-xl font-bold">Select date</h3>
           <DatePickerDemo
             setDate={(e: any) => form.setValue("date", e)} // Set date on selection
-            availableDays={details?.availability?.availableDays}
+            availableDays={details?.doctorAvailabilityDetails?.availableDays}
           />
         </div>
         <hr className="border-gray-300 my-4" />
@@ -75,7 +75,7 @@ export default function Appoint1({ details, onChangeApp }: any) {
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {details?.availability?.availableTimeSlot.map((val: string) => (
+            {details?.doctorAvailabilityDetails?.availableTimeSlot.map((val: string) => (
               <SelectItem key={val} value={val}>
                 {val}
               </SelectItem>

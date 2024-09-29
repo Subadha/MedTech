@@ -28,8 +28,8 @@ model User {
   accounts                 Account[]
   
   doctorProfile            DoctorProfile?
-  doctorAvailabilityDetails DoctorAvailabilityDetails[]
-  doctorLicenses           DoctorLicense[]  // One-to-many relation with DoctorLicense
+  doctorAvailabilityDetails DoctorAvailabilityDetails?
+  doctorLicenses           DoctorLicense?
 
   @@map("users")
 }
@@ -47,7 +47,7 @@ model DoctorProfile {
   state                 String
   city                  String
   qualification         String
-  bookedAppointment     Float
+  bookedAppointment     Float 
   specialization        String
   subSpecialist         String
   experienceYears       String
@@ -58,8 +58,8 @@ model DoctorProfile {
 
 model DoctorAvailabilityDetails {
   id                    Int     @id @default(autoincrement())
-  userId                String
-  user                  User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                String @unique
+  user                  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   sessionFees           String
   sessionLength         String
@@ -73,8 +73,8 @@ model DoctorAvailabilityDetails {
 
 model DoctorLicense {
   id                    Int    @id @default(autoincrement())
-  userId                String
-  user                  User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId                String @unique
+  user                  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   imageUrl1             String
   imageUrl2             String

@@ -35,18 +35,19 @@ export const DoctorCard = ({ data }: any) => {
           <div className="flex gap-2">
             <Avatar className=" aspect-square h-16 w-16">
               <AvatarImage
-                src="https://avatar.iran.liara.run/public"
+                src={data.image|| "https://avatar.iran.liara.run/public"}
                 alt="@shadcn"
+                className=" object-cover"
               />
               <AvatarFallback>DR</AvatarFallback>
             </Avatar>
             <div className=" flex flex-col items-start gap-1">
               <p className="text-base font-semibold">
-                {data?.profile?.legalName}
+                {data?.doctorProfile?.legalName}
               </p>
               <div className="text-[12px] flex text-gray-600">
-                <span>{data?.profile?.specialization}</span>&nbsp;|&nbsp;
-                <span>{data?.profile?.experienceYears} Years</span>
+                <span>{data?.doctorProfile?.specialization}</span>&nbsp;|&nbsp;
+                <span>{data?.doctorProfile?.experienceYears} Years</span>
               </div>
               <Badge variant="secondary">{data?.profile?.subSpecialist}</Badge>
             </div>
@@ -59,9 +60,9 @@ export const DoctorCard = ({ data }: any) => {
               <IoMdTime />
               <div>
                 <p className="text-md leading-none flex font-medium">
-                  {data?.availability?.availableDays?.length >= 1 &&
-                  data?.availability?.availableDays?.length <= 3
-                    ? data.availability.availableDays.join(", ")
+                  {data?.doctorAvailabilityDetails?.availableDays?.length >= 1 &&
+                  data?.doctorAvailabilityDetails?.availableDays?.length <= 3
+                    ? data.doctorAvailabilityDetails.availableDays.join(", ")
                     : data?.available_days?.length > 0
                     ? `${data.available_days[0]} - ${
                         data.available_days[data.available_days.length - 1]
@@ -69,8 +70,8 @@ export const DoctorCard = ({ data }: any) => {
                     : "No available days"}
                 </p>
                 <span className="text-[12px] text-gray-600">
-                  {data?.availability?.availableTimeFrom} AM -{" "}
-                  {data?.availability?.availableTimeTo} PM
+                  {data?.doctorAvailabilityDetails?.availableTimeFrom} AM -{" "}
+                  {data?.doctorAvailabilityDetails?.availableTimeTo} PM
                 </span>
               </div>
             </div>
@@ -78,7 +79,7 @@ export const DoctorCard = ({ data }: any) => {
               <GiTwoCoins />
               <div>
                 <p className="text-md leading-none font-medium">
-                  Rs.{data?.profile?.consultationFees}
+                  Rs.{data?.doctorProfile?.consultationFees}
                 </p>
                 <span className="text-[12px] text-gray-600">Starting</span>
               </div>

@@ -11,6 +11,7 @@ const Page = () => {
       setDoctors(doc)
     })()
   },[])
+console.log(doctors);
 
   return (
     <>
