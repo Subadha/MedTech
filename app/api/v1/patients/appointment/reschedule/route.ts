@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { NextResponse } from "next/server";
 
 export const POST = async (req: any) => {
   try {
@@ -15,11 +16,11 @@ export const POST = async (req: any) => {
       data: details,
     });
     if (appointment) {
-      return { success: "Appointment rescheduled.", user: appointment };
+      return  NextResponse.json({ success: "Appointment rescheduled.", user: appointment });
     }
-    return { error: "Failed to book." };
+    return NextResponse.json({ error: "Failed to book." });
   } catch (error) {
     console.log(error);
-    return { error: "Failed to book the appointment." };
+    return NextResponse.json({ error: "Failed to book the appointment." });
   }
 };
