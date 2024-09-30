@@ -24,6 +24,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
+import { RescheduleSheet } from "./RescheduleSheet";
 
 
 export function AppointmentTable({data}:any) {
@@ -37,6 +38,8 @@ export function AppointmentTable({data}:any) {
     }
   }
  
+  const[open,setOpen]= useState('')
+
   return (
     <>
     
@@ -44,17 +47,13 @@ export function AppointmentTable({data}:any) {
         <div className="flex items-center">
           <p className="text-sm font-bold">
             <span className=" font-normal text-gray-500">Showing:</span>
-            10 Appoinments
+            {data.length} Appoinments
           </p>
         </div>
         <div className="flex items-center gap-6 justify-between">
           <span className="flex items-center gap-2">
             <Checkbox className="rounded" />
             Hide visited
-          </span>
-          <span className="flex items-center gap-2">
-            <Checkbox className="rounded" />
-            Show Empty
           </span>
           <NavigationMenu>
             <NavigationMenuList>
@@ -104,7 +103,7 @@ export function AppointmentTable({data}:any) {
               <TableCell>{appointment.doctorName}</TableCell>
               <TableCell>{appointment.purpose}</TableCell>
               <TableCell>
-                <Button variant="link" className="pl-0">
+                <Button onClick={()=>setOpen(appointment.id)} variant="link" className="pl-0">
                   Reschedule
                 </Button>
               </TableCell>
@@ -131,6 +130,7 @@ export function AppointmentTable({data}:any) {
           ))}
         </TableBody>
       </Table>
+      <RescheduleSheet open={open} close={()=>setOpen('')} />
     </>
   );
 }
