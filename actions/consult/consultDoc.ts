@@ -45,6 +45,10 @@ export const getAllDoctorsWithDetails = async (filters: DoctorFilters = {}): Pro
     const doctors = await db.user.findMany({
       where: {
         role: 'DOCTOR',
+        NOT: {
+          doctorProfile: null,
+          doctorLicenses: null,
+        },
         doctorProfile: {
           ...(specialization && { specialization }),
           ...(experienceYears && { experienceYears }),
@@ -57,6 +61,7 @@ export const getAllDoctorsWithDetails = async (filters: DoctorFilters = {}): Pro
       include: {
         doctorProfile: true,
         doctorAvailabilityDetails: true,
+        doctorLicenses:true
       },
     });
 

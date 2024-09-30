@@ -3,15 +3,16 @@ import { NextResponse } from "next/server";
 
 export const POST = async (req: any) => {
   try {
-    const body = await req.json();
+    const body = await req.json();    
     const { id, time, date } = body;
 
     const details = {
-      time: time as string,
+      time: time ,
       date: date,
       status:'Rescheduled'
     };
-
+    console.log(details);
+    
     const appointment = await db.bookedAppointment.update({
       where: { id: id },
       data: details,
@@ -19,9 +20,9 @@ export const POST = async (req: any) => {
     if (appointment) {
       return  NextResponse.json({ success: "Appointment rescheduled.", user: appointment });
     }
-    return NextResponse.json({ error: "Failed to book." });
+    return NextResponse.json({ error: "Failed to rescheduled." });
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ error: "Failed to book the appointment." });
+    return NextResponse.json({ error: "Failed to rescheduled the appointment." });
   }
 };
