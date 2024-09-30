@@ -5,8 +5,15 @@ export const POST = async (req: Request) => {
   try {
     const body = await req.json();
     const { id } = body;
+
+    const appointment = await db.bookedAppointment.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
     const availability = await db.doctorAvailabilityDetails.findFirst({
-      where: { userId: id },
+      where: { userId: appointment?.doctor_id },
     });
     if (availability) {
       return NextResponse.json({

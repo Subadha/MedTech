@@ -12,13 +12,71 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { DatePickerDemo } from "../AppointmentModal/DatePicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export function RescheduleSheet({ open, close }: any) {
   const [details, setDetails] = useState({
     time: "",
     date: "",
   });
+  const [availableDate, setAvailableDate] = useState([]);
+  const [availableSlots, setAvailableSlots] = useState([]);
+
+  useEffect(() => {
+    const Detail = async () => {
+      try {
+        if (!open) {
+          return;
+        }
+        const result = await fetch(
+          "/api/v1/patients/appointment/available-days",
+          { method: "POST", body: JSON.stringify({ id: open }) }
+        );
+        const data = await result.json();
+        setAvailableDate(data.days);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    Detail();
+  }, [open]);
+
+  console.log(details)
+
+  const fetchTime = async (e: any) => {
+    try {
+      const result = await fetch(
+        "/api/v1/patients/appointment/available-slots",
+        { method: "POST", body: JSON.stringify({ id: open, date: e }) }
+      );
+      const data = await result.json();
+      setAvailableSlots(data.availableSlots);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const Update=async()=>{
+    try {
+      const result = await fetch(
+        "/api/v1/patients/appointment/reschedule",
+        { method: "POST", body: JSON.stringify({ id:open,...details }) }
+      );
+      const data = await result.json();
+      setAvailableSlots(data.availableSlots);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <Sheet open={open} onOpenChange={close}>
@@ -30,31 +88,48 @@ export function RescheduleSheet({ open, close }: any) {
           </SheetDescription>
         </SheetHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
+          <div className="flex flex-col gap-4">
+            <Label htmlFor="name" className="">
               Name
             </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
-            <div className="flex flex-col gap-2">
-              <h3 className="text-xl font-bold">Select date</h3>
-              {/* <DatePickerDemo
-                setDate={(e: any) => form.setValue("date", e)} // Set date on selection
-                availableDays={
-                  details?.doctorAvailabilityDetails?.availableDays
-                }
-              /> */}
-            </div>
+            <DatePickerDemo
+              setDate={(e: any) => {
+                setDetails({ time: "", date: e });
+                fetchTime(e);
+              }}
+              availableDays={availableDate}
+            />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
-              Username
+          <div className="flex flex-col gap-4">
+            <Label htmlFor="username" className="">
+              Select time slot
             </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
+            <Select
+             onValueChange={(value) => {
+              setDetails((prevState: any) => ({
+                ...prevState,
+                time: value
+              }))}}
+              defaultValue={details.time}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select time" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {availableSlots?.map((val: string) => (
+                    <SelectItem key={val} value={val}>
+                      {val}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
+            <Button onClick={Update}>Save changes</Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>

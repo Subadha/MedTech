@@ -36,8 +36,7 @@ export function AppointmentTable({data}:any) {
     } else {
       setSelected([...selected, id]);
     }
-  }
- 
+  } 
   const[open,setOpen]= useState('')
 
   return (
@@ -109,7 +108,7 @@ export function AppointmentTable({data}:any) {
               </TableCell>
               <TableCell>
                 <span className="flex items-center ">
-                  {appointment.status === "Scheduled" ? (
+                  {appointment.status === "Rescheduled" ? (
                     <CalendarDays className="mr-2 w-4 text-green-600 " />
                   ) : appointment.status === "Not confirmed" ? (
                     <Clock8 className="mr-2 w-4 text-yellow-500 " />

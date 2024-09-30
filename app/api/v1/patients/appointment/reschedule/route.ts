@@ -9,6 +9,7 @@ export const POST = async (req: any) => {
     const details = {
       time: time as string,
       date: date,
+      status:'Rescheduled'
     };
 
     const appointment = await db.bookedAppointment.update({

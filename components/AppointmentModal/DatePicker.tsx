@@ -37,7 +37,7 @@ export function DatePickerDemo({ availableDays,setDate }: { availableDays: strin
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
-          className={`w-[280px] justify-start text-left font-normal ${
+          className={`w-full justify-start text-left font-normal ${
             !date ? "text-muted-foreground" : ""
           }`}
         >

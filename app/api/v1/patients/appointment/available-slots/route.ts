@@ -6,9 +6,14 @@ export const POST = async (req: Request) => {
     const body = await req.json();
     const { id, date } = body;
 
-    // Fetch the availability for the doctor on the given date
+    const appointment = await db.bookedAppointment.findFirst({
+      where: {
+        id: id,
+      },
+    });
+
     const availability = await db.doctorAvailabilityDetails.findFirst({
-      where: { userId: id },
+      where: { userId: appointment?.doctor_id },
     });
 
     // Get the available time slots for the doctor
@@ -20,7 +25,7 @@ export const POST = async (req: Request) => {
 
     // Fetch the booked appointments for the doctor on the given date
     const bookedAppointments = await db.bookedAppointment.findMany({
-      where: { doctor_id: id, date: date },
+      where: { doctor_id:appointment?.doctor_id, date: date },
       select: {
         time: true, 
       },
