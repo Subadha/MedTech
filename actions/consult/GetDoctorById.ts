@@ -12,7 +12,6 @@ export const GetDoctorById = async (id: string) => {
       include: {
         doctorProfile: true,
         doctorAvailabilityDetails: true,
-        reviews: true        
       },
       
     });

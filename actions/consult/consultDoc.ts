@@ -61,9 +61,8 @@ export const getAllDoctorsWithDetails = async (filters: DoctorFilters = {}): Pro
       include: {
         doctorProfile: true,
         doctorAvailabilityDetails: true,
-        doctorLicenses:true,
-        reviews: true,
-      },
+        doctorLicenses:true,  
+          },
     });
 
     return doctors as any;
