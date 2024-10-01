@@ -28,7 +28,7 @@ export const POST = async (req: any) => {
         where: { id: appointment?.doctor_id },
       });
       if(!doctor ||!doctor.email) {
-        return  NextResponse.json({ success: "Appointment cancled.", user: appointment });
+        return  NextResponse.json({ success: "Appointment canceled.", user: appointment });
       }
       console.log(doctor);
       
@@ -36,16 +36,16 @@ export const POST = async (req: any) => {
         from: "onboarding@resend.dev",
         to: doctor.email,
         subject: "OTP for verification",
-        html: `<p>Your Appointment with <strong>${appointment.name}</strong> is cancled because of patient request.</p>`,
+        html: `<p>Your Appointment with <strong>${appointment.name}</strong> is canceled because of patient request.</p>`,
       });
 
 
     if (appointment) {
-      return  NextResponse.json({ success: "Appointment cancled.", user: appointment });
+      return  NextResponse.json({ success: "Appointment canceled.", user: appointment });
     }
-    return NextResponse.json({ error: "Failed to cancled." });
+    return NextResponse.json({ error: "Failed to canceled." });
   } catch (error) {
     console.log(error);
-    return NextResponse.json({ error: "Failed to cancled the appointment." });
+    return NextResponse.json({ error: "Failed to canceled the appointment." });
   }
 };
