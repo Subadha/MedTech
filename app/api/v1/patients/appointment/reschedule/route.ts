@@ -11,7 +11,6 @@ export const POST = async (req: any) => {
       date: date,
       status:'Rescheduled'
     };
-    console.log(details);
     
     const appointment = await db.bookedAppointment.update({
       where: { id: id },
