@@ -62,6 +62,7 @@ model Reviews {
   rating                String
   message               String
   patientName           String
+  patientProfilePic     String
   patientId             String
   @@map("reviews")
 }
