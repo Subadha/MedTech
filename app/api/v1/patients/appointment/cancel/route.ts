@@ -30,6 +30,8 @@ export const POST = async (req: any) => {
       if(!doctor ||!doctor.email) {
         return  NextResponse.json({ success: "Appointment cancled.", user: appointment });
       }
+      console.log(doctor);
+      
       await transporter.sendMail({
         from: "onboarding@resend.dev",
         to: doctor.email,
