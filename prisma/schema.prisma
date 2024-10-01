@@ -30,7 +30,7 @@ model User {
   doctorProfile            DoctorProfile?
   doctorAvailabilityDetails DoctorAvailabilityDetails?
   doctorLicenses           DoctorLicense?
-  reviews                  Reviews?
+  reviews                  Reviews[]
   @@map("users")
 }
 
@@ -57,7 +57,7 @@ model DoctorProfile {
 }
 model Reviews {
   id                    Int    @id @default(autoincrement())
-  userId                String @unique
+  userId                String 
   user                  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   rating                String
   message               String

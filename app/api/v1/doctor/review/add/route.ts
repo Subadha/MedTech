@@ -22,6 +22,8 @@ export const POST = async (req: Request) => {
         }  
         return NextResponse.json({message:"Unable to add review"})
     } catch (error) {
+        console.log(error);
+        
         return NextResponse.json({message:"Internal Error",error})
     }
 }
