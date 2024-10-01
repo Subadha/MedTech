@@ -17,7 +17,7 @@ export const POST = async (req: any) => {
     const {id} = body;
 
     const details = {
-      status:'Cancled'
+      status:'Canceled'
     };
     
     const appointment = await db.bookedAppointment.update({
@@ -30,7 +30,6 @@ export const POST = async (req: any) => {
       if(!doctor ||!doctor.email) {
         return  NextResponse.json({ success: "Appointment canceled.", user: appointment });
       }
-      console.log(doctor);
       
       await transporter.sendMail({
         from: "onboarding@resend.dev",
