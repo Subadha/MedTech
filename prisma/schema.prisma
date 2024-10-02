@@ -57,10 +57,10 @@ model Reviews {
   rating            String
   message           String
   patientName       String
-  appointmentId     Float
   patientId         String
   patientProfilePic String
   createdAt         DateTime @default(now())
+  appointmentId     Float
   user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("reviews")
@@ -203,6 +203,7 @@ model ConversationParticipant {
   conversationId String
   userId         String
   joinedAt       DateTime     @default(now())
+  unreadCount    Int          @default(0)
   Conversation   Conversation @relation(fields: [conversationId], references: [id])
   users          User         @relation(fields: [userId], references: [id])
 
