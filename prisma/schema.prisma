@@ -52,15 +52,17 @@ model DoctorProfile {
 }
 
 model Reviews {
-  id                Int    @id @default(autoincrement())
+  id                Int      @id @default(autoincrement())
   userId            String
   rating            String
   message           String
   patientName       String
+  appointmentId     Float
   patientId         String
   patientProfilePic String
-  user              User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt         DateTime @default(now())
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@map("reviews")
 }
 

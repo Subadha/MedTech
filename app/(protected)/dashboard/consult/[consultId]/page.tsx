@@ -15,7 +15,7 @@ interface ConsultDoctorProps {
 }
 
 export default async function ConsultDoctor({ params }: ConsultDoctorProps) {
-  const data:any = await GetDoctorById(params.consultId);
+  const {doctor:data}:any = await GetDoctorById(params.consultId);
   
     return (
       <>
