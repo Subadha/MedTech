@@ -9,7 +9,6 @@ export const POST = async (req: any) => {
     const details = {
       time: time ,
       date: date,
-      status:'Rescheduled'
     };
     
     const appointment = await db.bookedAppointment.update({

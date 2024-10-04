@@ -1,6 +1,7 @@
 "use server";
 import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
+import { NOT_CONFIRM } from "@/lib/constants";
 
 export const BookAppointment = async (data: any) => {
   try {
@@ -27,7 +28,7 @@ export const BookAppointment = async (data: any) => {
       purpose: data.purpose as string, 
       reschedule: "false",
       reviewed:"false",
-      status: "Not confirmed",
+      status:NOT_CONFIRM,
       mode: data.mode || "both", 
       age: data.age, 
       name: data.name as string, 

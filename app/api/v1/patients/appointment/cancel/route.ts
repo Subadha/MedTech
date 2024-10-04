@@ -1,3 +1,4 @@
+import { CANCELED } from "@/lib/constants";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
@@ -17,7 +18,7 @@ export const POST = async (req: any) => {
     const {id} = body;
 
     const details = {
-      status:'Canceled',
+      status:CANCELED,
     };
     
     const appointment = await db.bookedAppointment.update({
