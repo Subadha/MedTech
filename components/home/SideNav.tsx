@@ -96,6 +96,24 @@ export const menuItems: MenuItem[] = [
   },
 ];
 
+export const adminItems: MenuItem[] = [
+  {
+    name: "Dashboard",
+    icon: "LayoutDashboard",
+    href: "/dashboard",
+  },
+  {
+    name: "Chat",
+    icon: "MessageCircle",
+    href: "/dashboard/chat",
+  },
+  {
+    name: "Sign Out",
+    icon: "LogOut",
+    href: "/dashboard/signout",
+  },
+];
+
 type SideNavProps = {
   userName: string;
   role: string;
@@ -151,7 +169,7 @@ export default function SideNav({ userName, role }: SideNavProps) {
             );
           })}
         {role === "ADMIN" &&
-          menuItems.map((item) => {
+          adminItems.map((item) => {
             const Icon = icons[item.icon];
             return (
               <Link

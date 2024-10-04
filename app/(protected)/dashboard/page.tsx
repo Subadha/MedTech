@@ -14,8 +14,7 @@ const Settings = async () => {
 
   return (
     <div className="p-3 grid gap-4 grid-cols-6">
-
-      {role&&role === "USER" ? <User id={id} /> : <Doctor id={id} />}
+      {role&&role === "USER" ? <User id={id} /> :role === "DOCTOR"? <Doctor id={id} />:role === "ADMIN"? <Admin id={id} />:null}
     </div>
   );
 };
@@ -41,6 +40,16 @@ const Doctor = ({ id }: any) => {
       <div className=" col-span-6 lg:col-span-4">
         <DocCarausel />
         <PatientList />
+      </div>
+      <CalenderAndAppointments />
+    </>
+  );
+};
+const Admin = ({ id }: any) => {
+  return (
+    <>
+      <div className=" col-span-6 lg:col-span-4">
+        
       </div>
       <CalenderAndAppointments />
     </>
