@@ -8,7 +8,7 @@ export const POST = async (req: Request) => {
     const { appointmentId, rating, message }: any = body;
 
     const details = {
-      rating:'true',
+      reviewed:'true',
     };
     
     const appointment = await db.bookedAppointment.update({
