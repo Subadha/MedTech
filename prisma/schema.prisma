@@ -182,6 +182,7 @@ model BookedAppointment {
   doctorName String
   purpose    String
   reschedule String
+  reviewed   String
   status     String
   mode       String
   age        Float
@@ -211,16 +212,27 @@ model ConversationParticipant {
 }
 
 model Message {
-  id             Int          @id @default(autoincrement())
+  id             Int           @id @default(autoincrement())
   content        String
   senderId       String
   conversationId String
-  createdAt      DateTime     @default(now())
+  createdAt      DateTime      @default(now())
   fileName       String?
   filePath       String?
   fileType       String?
-  Conversation   Conversation @relation(fields: [conversationId], references: [id])
-  users          User         @relation(fields: [senderId], references: [id])
+  Conversation   Conversation  @relation(fields: [conversationId], references: [id])
+  users          User          @relation(fields: [senderId], references: [id])
+  SeenMessage    SeenMessage[]
+}
+
+model SeenMessage {
+  id        Int      @id @default(autoincrement())
+  messageId Int
+  userId    String
+  seenAt    DateTime @default(now())
+  Message   Message  @relation(fields: [messageId], references: [id])
+
+  @@unique([messageId, userId])
 }
 
 enum UserRole {

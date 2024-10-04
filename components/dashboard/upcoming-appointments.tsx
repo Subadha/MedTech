@@ -1,13 +1,9 @@
 "use client";
-import React, {
-  useEffect,
-  useState,
-  useTransition,
-} from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa";
-import { getAllAppointment } from "@/actions/appointment/getOppintments";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface ProfileProps {
   id: string | undefined;
@@ -15,22 +11,22 @@ interface ProfileProps {
 const UpcomingAppointments = ({ id }: ProfileProps) => {
   const [data, setData] = useState<any>([]);
   const [isPending, startTransition] = useTransition();
-  
+
   const handleFetchAppointment = () => {
-    startTransition(() => {
-      getAllAppointment(id || "")
-        .then((appointments) => {
-          if (appointments) {
-            setData(appointments.data);
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching profile data:", error);
+    startTransition(async () => {
+      try {
+        const data = await fetch("/api/v1/patients/dashboard/upcomming-appoinments",{
+          method:"POST",
+          body:JSON.stringify({userId:id})
         });
+        const result = await data.json();
+        setData(result.data);
+      } catch (error) {
+        console.log(error);
+      }
     });
   };
- console.log(data);
- 
+
   useEffect(() => handleFetchAppointment(), []);
 
   const formatDate = (date: Date) => {
@@ -54,19 +50,20 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
         </div>
       </CardHeader>
       <CardContent>
+        <ScrollArea>
         {data?.length > 0 ? (
           <div className=" flex flex-col gap-4">
-            {data?.map((appointment:any,index:number) => (
+            {data?.map((appointment: any, index: number) => (
               <div key={appointment.id} className="flex items-center gap-2">
                 <span className=" font-bold">{++index}.</span>
-                  <div className="h-10 w-10 bg-primary rounded-full" />
-                  <div>
-                    <div className="text-sm font-medium">
-                      {appointment?.doctorName}
-                    </div>
-                    <div className="text-[10px] text-primary">
-                      {formatDate(appointment.date)}
-                    </div>
+                <div className="h-10 w-10 bg-primary rounded-full" />
+                <div>
+                  <div className="text-sm font-medium">
+                    {appointment?.doctorName}
+                  </div>
+                  <div className="text-[10px] text-primary">
+                    {formatDate(appointment.date)}
+                  </div>
                 </div>
               </div>
             ))}
@@ -78,6 +75,7 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
             </p>
           </div>
         )}
+        </ScrollArea>
       </CardContent>
     </Card>
   );

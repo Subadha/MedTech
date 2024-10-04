@@ -13,6 +13,7 @@ import {
   Clock8,
   MessageCircle,
   Phone,
+  Star,
 } from "lucide-react";
 import { Checkbox } from "../ui/checkbox";
 import { Button } from "../ui/button";
@@ -25,9 +26,9 @@ import {
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
 import { RescheduleSheet } from "./RescheduleSheet";
+import { RatingSheet } from "./RatingSheet";
 
-
-export function AppointmentTable({data}:any) {
+export function AppointmentTable({ data }: any) {
   const [selected, setSelected] = useState<string[]>([]);
 
   function changeSelection(id: string) {
@@ -36,12 +37,12 @@ export function AppointmentTable({data}:any) {
     } else {
       setSelected([...selected, id]);
     }
-  } 
-  const[open,setOpen]= useState('')
+  }
+  const [open, setOpen] = useState("");
+  const [openRating, setOpenRating] = useState("");
 
   return (
     <>
-    
       <div className="flex mt-4 gap-4 lg:h-20 lg:flex-row flex-col items-center justify-between">
         <div className="flex items-center">
           <p className="text-sm font-bold">
@@ -82,7 +83,7 @@ export function AppointmentTable({data}:any) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data?.map((appointment:any, index:number) => (
+          {data?.map((appointment: any, index: number) => (
             <TableRow
               key={index}
               className={
@@ -102,7 +103,11 @@ export function AppointmentTable({data}:any) {
               <TableCell>{appointment.doctorName}</TableCell>
               <TableCell>{appointment.purpose}</TableCell>
               <TableCell>
-                <Button onClick={()=>setOpen(appointment.id)} variant="link" className="pl-0">
+                <Button
+                  onClick={() => setOpen(appointment.id)}
+                  variant="link"
+                  className="pl-0"
+                >
                   Reschedule
                 </Button>
               </TableCell>
@@ -125,11 +130,15 @@ export function AppointmentTable({data}:any) {
                   <MessageCircle size={18} />
                 </div>
               </TableCell>
+             {appointment.status === "completed"&&<TableCell>
+                <Star className="text-yellow-500 cursor-pointer" onClick={()=>setOpenRating(appointment.id)} />
+              </TableCell>}
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <RescheduleSheet open={open} close={()=>setOpen('')} />
+      <RescheduleSheet open={open} close={() => setOpen("")} />
+      <RatingSheet open={openRating} close={() => setOpenRating("")} />
     </>
   );
 }

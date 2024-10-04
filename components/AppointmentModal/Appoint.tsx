@@ -35,9 +35,13 @@ export default function Appoint({ details, user }: any) {
       gender: data.gender,
     }));
     setAppointStep(2);
+    Submit()
   };
  const Submit = async ()=>{
-  const result = BookAppointment(appointmentData)
+  const result = await BookAppointment(appointmentData)
+  const data = await result
+  console.log(data);
+  
  }
 
   return (
@@ -58,7 +62,7 @@ export default function Appoint({ details, user }: any) {
           <div className="p-4">
             {appointStep === 0 && <Appoint1 details={details} onChangeApp={handleAppoint1Data} />}
             {appointStep === 1 && <Appoint2 onChangeApp={handleAppoint2Data} />}
-            {appointStep === 2 && <Appoint3 user={user}  Submit={Submit} />}
+            {appointStep === 2 && <Appoint3 user={user} />}
           </div>
         </DialogContent>
       </DialogOverlay>

@@ -26,6 +26,7 @@ export const BookAppointment = async (data: any) => {
       doctorName: doctor.name?? "",
       purpose: data.purpose as string, 
       reschedule: "false",
+      reviewed:"false",
       status: "Not confirmed",
       mode: data.mode || "both", 
       age: data.age, 

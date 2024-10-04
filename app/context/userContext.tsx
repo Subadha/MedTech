@@ -7,6 +7,7 @@ interface UserContextProps {
   role: string;
   id: string;
   email: string;
+  image: string;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -25,10 +26,11 @@ interface UserProviderProps {
   children: React.ReactNode;
   id:string
   email:string;
+  image:string;
 }
 
-export const UserProvider: React.FC<UserProviderProps> = ({ userName, role,email,id, children }) => (
-  <UserContext.Provider value={{ userName, role,id,email  }}>
+export const UserProvider: React.FC<UserProviderProps> = ({ userName, role,email,id, children,image }) => (
+  <UserContext.Provider value={{ userName, role,id,email,image  }}>
     {children}
   </UserContext.Provider>
 );

@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader } from "../ui/card";
 import { FaAngleRight } from "react-icons/fa";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -10,6 +11,24 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 
 const RecommendedDoctors = () => {
+
+  const [data,setData]= useState([])
+
+  useEffect(() => {
+    const Get = async () => {
+      try {
+        const data = await fetch("/api/v1/patients/dashboard/recomended-doctor");
+        const result = await data.json();
+        console.log(result);
+        if (result.data?.length > 0) {
+        setData(result.data);}
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    Get();
+  }, []);
+
   return (
     <Card className=" col-span-6">
       <div className="p-3 flex justify-between items-center">
@@ -17,17 +36,19 @@ const RecommendedDoctors = () => {
           Recommended Doctors
         </h1>
         <span className=" text-sm text-primary font-medium gap-1 flex items-center hover:underline">
-          View all <FaAngleRight />
+         <Link href={"consult"} className="flex items-center">View all <FaAngleRight /></Link>
         </span>
       </div>
-      <CardContent className=" grid grid-cols-6 gap-3"></CardContent>
+      <CardContent className=" grid grid-cols-6 gap-3">
+        {data.map((value,ind)=>(<DoctorCard data={value} key={ind}/>))}
+      </CardContent>
     </Card>
   );
 };
 
 export default RecommendedDoctors;
 
-export const DoctorCard = ({ data }: any) => {
+ const DoctorCard = ({ data }: any) => {
   return (
     <div className=" col-span-6 md:col-span-3 lg:col-span-2">
       <Card className="p-2">
@@ -35,7 +56,7 @@ export const DoctorCard = ({ data }: any) => {
           <div className="flex gap-2">
             <Avatar className=" aspect-square h-16 w-16">
               <AvatarImage
-                src={data.image|| "https://avatar.iran.liara.run/public"}
+                src={data.image || "https://avatar.iran.liara.run/public"}
                 alt="@shadcn"
                 className=" object-cover"
               />
@@ -43,13 +64,13 @@ export const DoctorCard = ({ data }: any) => {
             </Avatar>
             <div className=" flex flex-col items-start gap-1">
               <p className="text-base font-semibold">
-                {data?.doctorProfile?.legalName}
+                {data?.legalName}
               </p>
               <div className="text-[12px] flex text-gray-600">
-                <span>{data?.doctorProfile?.specialization}</span>&nbsp;|&nbsp;
-                <span>{data?.doctorProfile?.experienceYears} Years</span>
+                <span>{data?.specialization}</span>&nbsp;|&nbsp;
+                <span>{data?.experienceYears} Years</span>
               </div>
-              <Badge variant="secondary">{data?.profile?.subSpecialist}</Badge>
+              <Badge variant="secondary">{data?.subSpecialist}</Badge>
             </div>
           </div>
         </CardContent>
@@ -60,7 +81,8 @@ export const DoctorCard = ({ data }: any) => {
               <IoMdTime />
               <div>
                 <p className="text-md leading-none flex font-medium">
-                  {data?.doctorAvailabilityDetails?.availableDays?.length >= 1 &&
+                  {data?.doctorAvailabilityDetails?.availableDays?.length >=
+                    1 &&
                   data?.doctorAvailabilityDetails?.availableDays?.length <= 3
                     ? data.doctorAvailabilityDetails.availableDays.join(", ")
                     : data?.available_days?.length > 0
@@ -70,8 +92,8 @@ export const DoctorCard = ({ data }: any) => {
                     : "No available days"}
                 </p>
                 <span className="text-[12px] text-gray-600">
-                  {data?.doctorAvailabilityDetails?.availableTimeFrom} AM -{" "}
-                  {data?.doctorAvailabilityDetails?.availableTimeTo} PM
+                  {data?.availableTimeFrom} AM -{" "}
+                  {data?.doctorAvailabilityDetails?.availableTimeSlot[data?.doctorAvailabilityDetails?.availableTimeSlot?.length-1]} PM
                 </span>
               </div>
             </div>
@@ -79,7 +101,7 @@ export const DoctorCard = ({ data }: any) => {
               <GiTwoCoins />
               <div>
                 <p className="text-md leading-none font-medium">
-                  Rs.{data?.doctorProfile?.consultationFees}
+                  Rs.{data?.consultationFees}
                 </p>
                 <span className="text-[12px] text-gray-600">Starting</span>
               </div>

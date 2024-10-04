@@ -1,5 +1,4 @@
 "use client";
-import { Menu } from "lucide-react";
 import React from "react";
 import { SearchBar } from "./search-bar";
 import { GoBell } from "react-icons/go";
@@ -18,8 +17,9 @@ import MobSideBar from "./mob-sidebar";
 type HeaderProps = {
   userName: string;
   role: string;
+  image: string;
 };
-const Header = ({ userName,role }: HeaderProps) => {
+const Header = ({ userName,role, image }: HeaderProps) => {
   return (
     <header className="flex items-center justify-between border-b border-gray-200 lg:h-20 p-2 lg:p-4">
       <div className=" block lg:hidden">
@@ -41,7 +41,7 @@ const Header = ({ userName,role }: HeaderProps) => {
           <GoBell className="text-xl" />
           <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarImage src={image||"https://github.com/shadcn.png"} alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <p className="text-sm lg:block hidden font-medium">{userName.split(" ")[0]}</p>

@@ -50,8 +50,6 @@ export function RescheduleSheet({ open, close }: any) {
     Detail();
   }, [open]);
 
-  console.log(details)
-
   const fetchTime = async (e: any) => {
     try {
       const result = await fetch(

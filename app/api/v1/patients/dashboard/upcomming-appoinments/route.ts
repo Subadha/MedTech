@@ -4,8 +4,10 @@ import { NextResponse } from "next/server";
 export const POST = async (req: any) => {
   try {
     const request = await req.json();
+    console.log(request);
     const { userId } = request;
 
+  
     // Get today's date in UTC, but strip the time part
     const today = new Date();
     today.setUTCHours(0, 0, 0, 0); // Set time to 00:00 UTC to compare only the date

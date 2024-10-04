@@ -7,11 +7,15 @@ export const POST = async (req: Request) => {
     const body = await req.json();
     const { appointmentId, rating, message }: any = body;
 
-    const appointment = await db.bookedAppointment.findFirst({
-      where: {
-        id: appointmentId,
-      },
+    const details = {
+      rating:'true',
+    };
+    
+    const appointment = await db.bookedAppointment.update({
+      where: { id: appointmentId },
+      data: details,
     });
+
     if (!appointment) {
       return NextResponse.json({ error: "Appointment not found" });
     }
