@@ -195,7 +195,7 @@ model Conversation {
   createdAt               DateTime                  @default(now())
   type                    ConversationType          @default(PRIVATE)
   communityName           String?
-  ConversationParticipant ConversationParticipant[]
+  participants ConversationParticipant[]
   Message                 Message[]
 }
 
@@ -205,7 +205,7 @@ model ConversationParticipant {
   userId         String
   joinedAt       DateTime     @default(now())
   unreadCount    Int          @default(0)
-  Conversation   Conversation @relation(fields: [conversationId], references: [id])
+  conversation   Conversation @relation(fields: [conversationId], references: [id])
   users          User         @relation(fields: [userId], references: [id])
 
   @@unique([conversationId, userId])
