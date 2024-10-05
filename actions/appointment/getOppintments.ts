@@ -1,16 +1,24 @@
 "use server"
 import { db } from "@/lib/db";
 
-export const getAllAppointment = async (id: string) => {
+export const  getAllAppointment = async (id: string,role:string) => {
+  let appointments
   try {    
     if (typeof id !== 'string' || !id.trim()) {
       throw new Error('Invalid ID format');
     }
-
-    const appointments = await db.bookedAppointment.findMany({
+    console.log("Role = ",role)
+if(role!='DOCTOR'){
+    appointments = await db.bookedAppointment.findMany({
       where: { userId: id },
     });
-
+  }
+  else{
+     appointments = await db.bookedAppointment.findMany({
+      where: { doctor_id: id },
+    });
+  }
+  console.log("appointments = ",appointments)
     if (!appointments || appointments?.length === 0) {
       return { success: true, message: "No appointments found for this user." };
     }
