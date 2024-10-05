@@ -14,7 +14,7 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from '
 import { getAllDoctorsWithDetails } from '@/actions/consult/consultDoc';
 import { getAllDoctors } from '@/actions/chat/GetAllDoctors';
 import { Socket } from 'socket.io-client';
-import { GetCommunityConversations } from '@/actions/chat/GetCommunityConversatons';
+import { GetCommunityConversations } from '@/actions/chat/GetCommunityConversations';
 
 interface MailItem {
     userId: string;
