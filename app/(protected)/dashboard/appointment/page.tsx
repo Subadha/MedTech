@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { RoleContextImpl } from "twilio/lib/rest/conversations/v1/role";
 
 const Page = () => {
   const { id } = useUser();
@@ -13,13 +14,14 @@ const Page = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const getAllAppointments = async () => {
-    const data = await getAllAppointment(id);
-    if (data.data && data.data?.length) {
-      setList(data.data);
-      console.log(data.data);
-      
-    }
-  };
+    const data = await fetch ("/api/v1/patient/appointment/get-all",{
+      method:"POST",
+      body: JSON.stringify({userId:id,status:''})
+    })
+    const result = await data.json()
+     if (result && result.data?.length) {
+       setList(result.data); 
+  };}
 
   useEffect(() => {
     getAllAppointments();

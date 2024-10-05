@@ -1,36 +1,36 @@
 
-"use server"
-import { db } from "@/lib/db";
+// "use server"
+// import { db } from "@/lib/db";
 
 
-async function createConversation(currentUserId, targetUserId) {
-    const targetUser = await db.user.findUnique({
-      where: { id: targetUserId },
-    });
+// async function createConversation(currentUserId:any, targetUserId:any) {
+//     const targetUser = await db.user.findUnique({
+//       where: { id: targetUserId },
+//     });
   
-    if (!targetUser) {
-      throw new Error("Target user does not exist");
-    }
+//     if (!targetUser) {
+//       throw new Error("Target user does not exist");
+//     }
   
-    const newConversation = await db.conversation.create({
-      data: {
-        name: `Chat with ${targetUser.name}`,
-      },
-    });
+//     const newConversation = await db.conversation.create({
+//       data: {
+//         name: `Chat with ${targetUser.name}`,
+//       },
+//     });
   
-    await db.conversationParticipant.createMany({
-      data: [
-        {
-          userId: currentUserId,
-          conversationId: newConversation.id,
-        },
-        {
-          userId: targetUserId,
-          conversationId: newConversation.id,
-        },
-      ],
-    });
+//     await db.conversationParticipant.createMany({
+//       data: [
+//         {
+//           userId: currentUserId,
+//           conversationId: newConversation.id,
+//         },
+//         {
+//           userId: targetUserId,
+//           conversationId: newConversation.id,
+//         },
+//       ],
+//     });
   
-    return newConversation; // Return the newly created conversation
-  }
+//     return newConversation; // Return the newly created conversation
+//   }
   

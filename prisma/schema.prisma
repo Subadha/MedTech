@@ -244,4 +244,5 @@ enum UserRole {
 enum ConversationType {
   PRIVATE
   COMMUNITY
+  ADMIN_SUPPORT
 }

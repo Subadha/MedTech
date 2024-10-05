@@ -53,11 +53,11 @@ const VideoCall: React.FC<VideoCallProps> = ({
     let userIds = [clientId, doctorId];
     socket.emit('getSocketIds', userIds);
 
-    socket.on("socketIds", (socketIds) => {
+    socket.on("socketIds", (socketIds:any) => {
       setMe(socketIds[id]);
-      if(doctorId===id){
+      if(doctorId===id && clientId!==null) {
         setIdToCall(socketIds[clientId])
-      }else{
+      }else if(doctorId!==null){
         setIdToCall(socketIds[doctorId])
       }
     });
@@ -129,7 +129,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
       }
     });
 
-    socket.once('callAccepted', (signal) => {
+    socket.once('callAccepted', (signal:any) => {
       setCallAccepted(true);
       if (connectionRef.current) {
         connectionRef.current.signal(signal)
