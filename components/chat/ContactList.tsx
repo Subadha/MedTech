@@ -135,7 +135,7 @@ const ContactList = ({socket, items,sheetState,messageCount }: ChatListProps) =>
 
     setCommunityMembers((prev) => [...prev, selection.id]);
     
-    setcomunitymembersNames((prev)=>[...prev,selection.name])
+    setcomunitymembersNames((prev):any=>[...prev,selection.name])
     setSearchTerm('');
   };
 console.log("Comunitynames",comunitymembersNames)
