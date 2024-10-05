@@ -14,7 +14,7 @@ const Page = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const getAllAppointments = async () => {
-    const data = await fetch ("/api/v1/patient/appointment/get-all",{
+    const data = await fetch ("/api/v1/patients/appointment/get-all",{
       method:"POST",
       body: JSON.stringify({userId:id,status:''})
     })
