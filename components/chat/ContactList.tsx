@@ -44,9 +44,6 @@ const ContactList = ({
 }: ChatListProps) => {
   const { id, role } = useUser();
   const [mail, setMail] = useMail();
-  const [members, setmembers] = useState<any>([]);
-
-  const [randomNumber, setRandomNumber] = useState(0);
   const [isCreatingCommunity, setIsCreatingCommunity] = useState(false);
   const [newCommunityName, setNewCommunityName] = useState("");
   const [communityMembers, setCommunityMembers] = useState<string[]>([]);

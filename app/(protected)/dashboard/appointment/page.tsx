@@ -1,12 +1,10 @@
 "use client";
-import { getAllAppointment } from "@/actions/appointment/getOppintments";
 import { useUser } from "@/app/context/userContext";
 import { AppointmentTable } from "@/components/appointment/AppointmentTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { RoleContextImpl } from "twilio/lib/rest/conversations/v1/role";
 
 const Page = () => {
   const { id } = useUser();
