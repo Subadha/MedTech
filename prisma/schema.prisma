@@ -191,12 +191,12 @@ model BookedAppointment {
 }
 
 model Conversation {
-  id                      String                    @id
-  createdAt               DateTime                  @default(now())
-  type                    ConversationType          @default(PRIVATE)
-  communityName           String?
-  participants ConversationParticipant[]
-  Message                 Message[]
+  id            String                    @id
+  createdAt     DateTime                  @default(now())
+  type          ConversationType          @default(PRIVATE)
+  communityName String?
+  participants  ConversationParticipant[]
+  Message       Message[]
 }
 
 model ConversationParticipant {
