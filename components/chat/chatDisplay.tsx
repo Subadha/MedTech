@@ -140,7 +140,7 @@ const uploadFile = async () => {
   formData.append("file", file);
 
   try {
-    const res = await fetch("https://mtapi.adarsh.tech/api/upload", {
+    const res = await fetch("http://localhost:8000/api/upload", {
       method: "POST",
       body: formData,
     });
