@@ -48,7 +48,7 @@ const Page = () => {
           />
         </div>
       </div>
-      <AppointmentTable data={filteredList} />
+      <AppointmentTable data={filteredList} fetchData={getAllAppointments} />
     </div>
   );
 };

@@ -13,6 +13,7 @@ import {
   CircleCheckBig,
   CircleX,
   Clock8,
+  EllipsisVertical,
   MessageCircle,
   Phone,
   Star,
@@ -28,11 +29,20 @@ import {
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
 import { RescheduleSheet } from "./RescheduleSheet";
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
+import { useUser } from "@/app/context/userContext";
+import { useToast } from "../ui/use-toast";
 
-export function AppointmentTable({ data }: any) {
+export function AppointmentTable({ data,fetchData }: any) {
+  const {id:userId}= useUser()
   const [selected, setSelected] = useState<string[]>([]);
-
+  const [cancleDialog,setCancleDialog]= useState('')
   function changeSelection(id: string) {
     if (selected.includes(id)) {
       setSelected(selected.filter((item) => item !== id));
@@ -41,6 +51,34 @@ export function AppointmentTable({ data }: any) {
     }
   }
   const [open, setOpen] = useState("");
+  const {toast}= useToast()
+  const CancleFunction=async (id:string)=>{
+    try {
+      const canceled = await fetch("/api/v1/doctor/appointment/cancel",{
+        method: "POST",
+        body: JSON.stringify({id,userId})
+      })
+      const result = await canceled.json()
+      console.log(result.success);
+      if(result) {
+        fetchData()
+        toast({
+          title:result.success,
+          variant:'success'
+        })
+      }
+      else{toast({
+        title:"Unable to cancle",
+        variant:'destructive'
+      })}
+    } catch (error) {
+      console.log(error);
+      toast({
+        title:"Unable to cancle, try again",
+        variant:'destructive'
+      })
+    }
+  }
 
   return (
     <>
@@ -133,30 +171,42 @@ export function AppointmentTable({ data }: any) {
                 </div>
               </TableCell>
               <TableCell>
-                <DropdownMenu>
+              {appointment.status !== "canceled" && ( <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline">Open</Button>
+                    <EllipsisVertical />
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-56">
-                    <DropdownMenuLabel>Appearance</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuCheckboxItem
-                    >
-                      Status Bar
-                    </DropdownMenuCheckboxItem>
-                    <DropdownMenuCheckboxItem
-                      disabled
-                    >
-                      Activity Bar
-                    </DropdownMenuCheckboxItem>
+                  <DropdownMenuContent className="w-24">
+                    {appointment.status !== "canceled" && (
+                      <DropdownMenuCheckboxItem onClick={()=>setCancleDialog(appointment.id)}>
+                        Cancle
+                      </DropdownMenuCheckboxItem>
+                    )}
+                    {appointment.status === "not-confirm" && (
+                      <DropdownMenuCheckboxItem>
+                        Confirm
+                      </DropdownMenuCheckboxItem>
+                    )}
                   </DropdownMenuContent>
-                </DropdownMenu>
+                </DropdownMenu>)}
               </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <RescheduleSheet open={open} close={() => setOpen("")} />
+      <Dialog open={cancleDialog?true:false} onOpenChange={()=>setCancleDialog('')} >
+      <DialogContent className="sm:max-w-[425px]">
+      <DialogHeader>
+          <DialogTitle>Cancle</DialogTitle>
+          <DialogDescription>
+           This process is not reversible
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button onClick={()=>CancleFunction(cancleDialog)} variant="destructive">Cancle</Button>
+        </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

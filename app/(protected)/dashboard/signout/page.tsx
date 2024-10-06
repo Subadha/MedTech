@@ -1,7 +1,6 @@
 "use client"
 import { SignOut } from "@/actions/auth/signout";
 import { useRouter } from "next/navigation";
-import { useNavigation } from "react-day-picker";
 
 export default function Signout(){
 const router = useRouter()
