@@ -11,7 +11,7 @@ export async function POST(req: Request) {
 
   if (!image) {
     return NextResponse.json(
-      { error: "Image is required", data: null },
+      { error: "Image is required!", data: null },
       { status: 400 }
     );
   }
