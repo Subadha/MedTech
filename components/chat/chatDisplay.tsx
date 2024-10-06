@@ -105,7 +105,7 @@ const roomId = conversationType === "PRIVATE" ? `room_${doctorId}_${clientId}` :
    
     //const conversationType = mail.type === "COMMUNITY" ? "COMMUNITY" : "PRIVATE";
    // const roomId = conversationType === "PRIVATE" ? `room_${doctorId}_${clientId}` : convoId;
-reqid =conversationType === "PRIVATE" ?convoId:mail.selected
+    reqid =conversationType === "PRIVATE" ?convoId:mail.selected
   console.log('Sending message with convoId:', convoId); // Debugging log
 
     socket.emit("sendMessage", {
