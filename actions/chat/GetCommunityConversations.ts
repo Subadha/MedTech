@@ -22,7 +22,7 @@ export const GetCommunityConversations = async (userId: string) => {
 
         // Filter out conversations of type "COMMUNITY"
         const communityConversations = participantRecords
-            .map(participant => participant.conversation)
+            .map(participant => participant.Conversation)
             .filter(conversation => conversation.type === 'COMMUNITY');
 
         return communityConversations;
