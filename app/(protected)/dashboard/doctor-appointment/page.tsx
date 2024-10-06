@@ -1,6 +1,7 @@
 "use client";
+import { getAllAppointment } from "@/actions/appointment/getOppintments";
 import { useUser } from "@/app/context/userContext";
-import { AppointmentTable } from "@/components/appointment/AppointmentTable";
+import { AppointmentTable } from "@/components/doctor-appointment/AppointmentTable";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
@@ -12,14 +13,20 @@ const Page = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const getAllAppointments = async () => {
-    const data = await fetch ("/api/v1/patients/appointment/get-all",{
-      method:"POST",
-      body: JSON.stringify({userId:id,status:''})
-    })
-    const result = await data.json()
+   try {
+     const data = await fetch ("/api/v1/doctor/appointment/get-all",{
+       method:"POST",
+       body: JSON.stringify({userId:id,status:''})
+     })
+     const result = await data.json()
      if (result && result.data?.length) {
-       setList(result.data); 
-  };}
+       setList(result.data);       
+     }
+   } catch (error) {
+    console.log(error);
+    
+   }
+  };
 
   useEffect(() => {
     getAllAppointments();
@@ -35,14 +42,11 @@ const Page = () => {
       <div className="flex flex-col lg:flex-row gap-2 justify-between items-end lg:items-center">
         <div className="flex gap-4">
           <Input
-            placeholder="Search by doctor's name"
+            placeholder="Search by patients's name"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
-        <Link href="/dashboard/consult">
-          <Button>+ Book Appointment</Button>
-        </Link>
       </div>
       <AppointmentTable data={filteredList} />
     </div>

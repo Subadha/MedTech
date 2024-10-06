@@ -28,7 +28,7 @@ import {
   NavigationMenuTrigger,
 } from "../ui/navigation-menu";
 import { RescheduleSheet } from "./RescheduleSheet";
-import { RatingSheet } from "./RatingSheet";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 export function AppointmentTable({ data }: any) {
   const [selected, setSelected] = useState<string[]>([]);
@@ -41,7 +41,6 @@ export function AppointmentTable({ data }: any) {
     }
   }
   const [open, setOpen] = useState("");
-  const [openRating, setOpenRating] = useState("");
 
   return (
     <>
@@ -53,10 +52,6 @@ export function AppointmentTable({ data }: any) {
           </p>
         </div>
         <div className="flex items-center gap-6 justify-between">
-          <span className="flex items-center gap-2">
-            <Checkbox className="rounded" />
-            Hide visited
-          </span>
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -137,20 +132,31 @@ export function AppointmentTable({ data }: any) {
                   <MessageCircle size={18} />
                 </div>
               </TableCell>
-              {appointment.status === "completed" && (
-                <TableCell>
-                  <Star
-                    className="text-yellow-500 cursor-pointer"
-                    onClick={() => setOpenRating(appointment.id)}
-                  />
-                </TableCell>
-              )}
+              <TableCell>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline">Open</Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56">
+                    <DropdownMenuLabel>Appearance</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuCheckboxItem
+                    >
+                      Status Bar
+                    </DropdownMenuCheckboxItem>
+                    <DropdownMenuCheckboxItem
+                      disabled
+                    >
+                      Activity Bar
+                    </DropdownMenuCheckboxItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <RescheduleSheet open={open} close={() => setOpen("")} />
-      <RatingSheet open={openRating} close={() => setOpenRating("")} />
     </>
   );
 }

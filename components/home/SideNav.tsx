@@ -27,6 +27,16 @@ export const docItems: MenuItem[] = [
     href: "/dashboard/patient",
   },
   {
+    name: "Appointment",
+    icon: "UserRoundCheck",
+    href: "/dashboard/doctor-appointment",
+  },
+  {
+    name: "Chat",
+    icon: "MessageCircle",
+    href: "/dashboard/chat",
+  },
+  {
     name: "Profile",
     icon: "CircleUserRound",
     href: "/dashboard/profile",
