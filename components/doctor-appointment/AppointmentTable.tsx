@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/table";
 import {
   CalendarDays,
-  CircleCheck,
   CircleCheckBig,
   CircleX,
   Clock8,
@@ -38,11 +37,16 @@ import {
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
 import { useUser } from "@/app/context/userContext";
 import { useToast } from "../ui/use-toast";
+import { useMail } from "../chat/chat";
+import { useRouter } from "next/navigation";
 
 export function AppointmentTable({ data,fetchData }: any) {
+  const router =  useRouter();
   const {id:userId}= useUser()
+  const [mail, setMail] = useMail();
   const [selected, setSelected] = useState<string[]>([]);
   const [cancleDialog,setCancleDialog]= useState('')
+  const [confirmDialog,setConfirmDialog]= useState('')
   function changeSelection(id: string) {
     if (selected.includes(id)) {
       setSelected(selected.filter((item) => item !== id));
@@ -75,6 +79,37 @@ export function AppointmentTable({ data,fetchData }: any) {
       console.log(error);
       toast({
         title:"Unable to cancle, try again",
+        variant:'destructive'
+      })
+    }finally{
+      setCancleDialog('')
+    }
+  }
+  const ConfirmFunction=async (id:string)=>{
+    try {
+      const canceled = await fetch("/api/v1/doctor/appointment/confirm",{
+        method: "POST",
+        body: JSON.stringify({id,userId})
+      })
+      const result = await canceled.json()
+      console.log(result.success);
+      setConfirmDialog('')
+      if(result) { 
+        fetchData()
+        toast({
+          title:result.success,
+          variant:'success'
+        })
+      }
+      else{toast({
+        title:"Unable to confirm",
+        variant:'destructive'
+      })}
+    } catch (error) {
+      setConfirmDialog('')
+      console.log(error);
+      toast({
+        title:"Unable to confirm, try again",
         variant:'destructive'
       })
     }
@@ -167,7 +202,15 @@ export function AppointmentTable({ data,fetchData }: any) {
                 <div className="flex items-center gap-2">
                   <Phone size={18} />
 
-                  <MessageCircle size={18} />
+                  <MessageCircle size={18} className=" cursor-pointer"  onClick={
+                    () =>
+                      {setMail({
+                        ...mail,
+                        selected: appointment.doctor_id,
+                        name: appointment.doctorName,
+                        type: "PRIVATE",
+                      }); router.push('/dashboard/chat')}
+                  } />
                 </div>
               </TableCell>
               <TableCell>
@@ -182,7 +225,7 @@ export function AppointmentTable({ data,fetchData }: any) {
                       </DropdownMenuCheckboxItem>
                     )}
                     {appointment.status === "not-confirm" && (
-                      <DropdownMenuCheckboxItem>
+                      <DropdownMenuCheckboxItem onClick={()=>setConfirmDialog(appointment.id)}>
                         Confirm
                       </DropdownMenuCheckboxItem>
                     )}
@@ -204,6 +247,19 @@ export function AppointmentTable({ data,fetchData }: any) {
         </DialogHeader>
         <DialogFooter>
           <Button onClick={()=>CancleFunction(cancleDialog)} variant="destructive">Cancle</Button>
+        </DialogFooter>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={confirmDialog?true:false} onOpenChange={()=>setConfirmDialog('')} >
+      <DialogContent className="sm:max-w-[425px]">
+      <DialogHeader>
+          <DialogTitle>Confirm</DialogTitle>
+          <DialogDescription>
+           Confirm the appointment that mean payment is done.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button onClick={()=>ConfirmFunction(confirmDialog)}>Confirm</Button>
         </DialogFooter>
         </DialogContent>
       </Dialog>
