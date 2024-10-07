@@ -112,6 +112,10 @@ export const otpVerify = z.object({
   }),
 });
 
+export const onlyOtpVerify = z.object({
+  otp: z.string(),
+});
+
 export const docEnroll = z.object({
   legalName: z.string().min(1, "Legal Name is required"),
   gender: z.enum(["Male", "Female", "Other"], {

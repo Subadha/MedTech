@@ -64,9 +64,9 @@ export function ChatDisplay({ socket,setMessages,isVideoCallActive,handleDecline
   useEffect(() => {
     
    
-    socket.on('messagesSeen', ({ userId, lastSeenMessageId, updatedMessages }:any) => {
-      setMessages((prevMessages:any) =>
-        prevMessages.map((msg:any) =>
+    socket.on('messagesSeen', ({ userId, lastSeenMessageId, updatedMessages }) => {
+      setMessages((prevMessages) =>
+        prevMessages.map((msg) =>
           msg.id <= lastSeenMessageId
             ? updatedMessages.find((updatedMsg: Message) => updatedMsg.id === msg.id) || msg
             : msg
@@ -77,7 +77,6 @@ export function ChatDisplay({ socket,setMessages,isVideoCallActive,handleDecline
 
     return () => {
       socket.off("previousMessages");
-
       socket.off("conversationId");
       socket.off("callUser");
       socket.off("callEnded");
@@ -89,7 +88,7 @@ export function ChatDisplay({ socket,setMessages,isVideoCallActive,handleDecline
 const conversationType = mail.type === "COMMUNITY" ? "COMMUNITY" : "PRIVATE";
 const roomId = conversationType === "PRIVATE" ? `room_${doctorId}_${clientId}` : convoId;
   useEffect(() => {
-    const lastMessage = messages[messages.length - 1];
+    const lastMessage = messages[messages?.length - 1];
     if (lastMessage && lastMessage.id !== lastSeenMessageRef.current) {
       lastSeenMessageRef.current = lastMessage.id;
       socket.emit('markAsSeen', {
@@ -102,22 +101,23 @@ const roomId = conversationType === "PRIVATE" ? `room_${doctorId}_${clientId}` :
   reqid =conversationType === "PRIVATE" ?convoId:mail.selected
 
   const sendMessage = () => {
-   
+   if(message.length>0){
     //const conversationType = mail.type === "COMMUNITY" ? "COMMUNITY" : "PRIVATE";
    // const roomId = conversationType === "PRIVATE" ? `room_${doctorId}_${clientId}` : convoId;
-    reqid =conversationType === "PRIVATE" ?convoId:mail.selected
+reqid =conversationType === "PRIVATE" ?convoId:mail.selected
+console.log("reqid  = =  =",reqid)
   console.log('Sending message with convoId:', convoId); // Debugging log
 
     socket.emit("sendMessage", {
       conversationType,
-      conversationId: reqid, // Use the stored convoId
+      conversationId: reqid, 
       roomId,
       message,
       senderId: role === "DOCTOR" ? doctorId : clientId,
     });
 
     setMessage(""); // Clear the message input
-
+  }
 }
 const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   if (event.target.files && event.target.files[0]) {
@@ -226,7 +226,7 @@ const renderFilePreview = (filePath: string, fileType: string, fileName: string)
 
 console.log("message",messages)
   console.log("here=",mail) 
- if(mail.selected)
+ if(mail.selected){
   return (
     
    <div className="flex relative  h-full flex-col">
@@ -320,7 +320,7 @@ console.log("message",messages)
  <ScrollArea className="h-[calc(100%-96px)] relative overflow-auto">
  <div className="flex lg:w-[70%] mx-auto p-4 pb-8 gap-2 flex-col">
    {messages?.length > 0 ? (
-     messages?.map((item:any, index:any) => {
+     messages?.map((item, index) => {
        const currentDate = new Date(item.createdAt);
        const previousDate =
          index > 0 ? new Date(messages[index - 1].createdAt) : null;
@@ -365,7 +365,7 @@ console.log("message",messages)
            {isLastMessage && (
              (() => {
                const targetUserId = role === "DOCTOR" ? clientId : doctorId;
-               const seenTime = item.seenBy?.find((seen:any) => seen.userId === targetUserId)?.seenAt;
+               const seenTime = item.seenBy?.find(seen => seen.userId === targetUserId)?.seenAt;
 
                if (seenTime) {
                  return (
@@ -390,7 +390,9 @@ console.log("message",messages)
 </ScrollArea>
 
 {/* Input area */}
-{mail.selected && (
+
+
+{(conversationType==="PRIVATE"||role=="DOCTOR" )&&(
  <div className="sticky right-0 lg:h-24 lg:bg-background bottom-0 w-full flex items-start justify-center">
    <div className="flex gap-2 h-14 items-center w-full lg:w-[70%] py-3 px-4 bg-muted lg:rounded-t-md lg:rounded-l-md">
      {previewUrl ? (
@@ -417,7 +419,8 @@ console.log("message",messages)
        </>
      ) : (
        // If no file is selected, show the message input and file selection option
-       <>
+  
+    <>
          <Popover open={open}>
            <PopoverTrigger asChild>
              <Smile size={25} onClick={() => setOpen(true)} />
@@ -457,16 +460,19 @@ console.log("message",messages)
            {isLoading ? <Loader className="animate-spin" /> : "Send"}
          </Button>
        </>
+
      )}
    </div>
  </div>
 )}
+
      </>
       )}
 
 </div>
 
 )
+ }
 else{
   return(
     <NoChatSelected/>

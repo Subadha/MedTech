@@ -1,33 +1,58 @@
 "use server"
-
-import { ResetSchema } from "@/schema"
+import crypto from "crypto";
+import { ResetSchema } from "@/schema";
 import * as z from "zod";
 import { getUserByEmail } from "@/data/user";
-import { sendPasswordReset } from "@/lib/mail";
+import { sendPasswordResetMail } from "@/lib/mail";
 import { generatePasswordResetToken } from "@/lib/tokens";
+import { db } from "@/lib/db";
 
+export const reset = async (values: z.infer<typeof ResetSchema>) => {
+  const validatedFields = ResetSchema.safeParse(values);
 
-export const reset = async(values:z.infer<typeof ResetSchema>)=>{
-    const validatedFileds = ResetSchema.safeParse(values);
+  if (!validatedFields.success) {
+    return { error: "Invalid email" };
+  }
 
-    if(!validatedFileds.success){
-        return {error : "Invalid emial"}
-    }
+  const { email } = validatedFields.data;
 
-    const {email} = validatedFileds.data;
+  const existingUser = await getUserByEmail(email);
 
-    const existingUser = await getUserByEmail(email);
+  if (!existingUser) {
+    return { error: "Email not found" };
+  }
 
-    if(!existingUser){
-        return {error:"Email Not found"}
-    }
+  const passwordResetToken = await generatePasswordResetToken(email);
 
-    const passowrdResetToken = await generatePasswordResetToken(email);
-    await sendPasswordReset(
-        passowrdResetToken.email,
-        passowrdResetToken.token
-    ) 
+  const phone = existingUser.phone; // Assuming phone is a property of existingUser
 
-    return {sucess:"Reset Mail Sent"}
+  if (!phone) {
+    return { error: "Phone number not found" };
+  }
 
-}
+  const otp = crypto.randomInt(100000, 999999).toString();
+
+  await db.otp.deleteMany({
+    where: {
+      phone: phone,
+    },
+  });
+
+  await db.otp.create({
+    data: {
+      phone: phone,
+      otp: otp,
+      expiry: new Date(Date.now() + 10 * 60 * 1000),
+    },
+  });
+
+  await sendPasswordResetMail(passwordResetToken.email, otp);
+
+  // Optionally, you can send a password reset link instead of just an OTP
+  // await sendPasswordReset(
+  //   passwordResetToken.email,
+  //   passwordResetToken.token
+  // );
+
+  return { sucess: "Reset mail sent" };
+};
