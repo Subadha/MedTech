@@ -22,7 +22,7 @@ import {
   SelectValue,
 } from "../ui/select";
 
-export function RescheduleSheet({ open, close }: any) {
+export function RescheduleSheet({ open,refresh, close }: any) {
   const [details, setDetails] = useState({
     time: "",
     date: "",
@@ -41,6 +41,7 @@ export function RescheduleSheet({ open, close }: any) {
           { method: "POST", body: JSON.stringify({ id: open }) }
         );
         const data = await result.json();
+        refresh()
         setAvailableDate(data.days);
       } catch (error) {
         console.log(error);

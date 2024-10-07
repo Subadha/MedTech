@@ -16,10 +16,9 @@ export default function DocProfile({id}:any) {
    },[])
    const getDetails =async()=>{
     const resp=await GetDoctorById(id)
-    setData(resp)
+    if(resp?.doctor){setData(resp)}
 }
 const[data,setData]=useState<any>([])
-console.log(data)
     const [current, setCurrent] = useState(1);
 
     return (
@@ -30,17 +29,17 @@ console.log(data)
                     <Image src={img} alt="doc" className="object-cover" />
                 </div>
                 <div className="flex flex-col gap-3">
-                    <h1 className="text-lg md:text-xl font-semibold">{data?.name}</h1>
-                    <h2 className="text-sm md:text-md">{data?.profile?.specialization}</h2>
-                    <h2 className="text-sm md:text-md">⭐ 4.5 Stars</h2>
+                    <h1 className="text-lg md:text-xl font-semibold">{data.doctor?.name}</h1>
+                    <h2 className="text-sm md:text-md">{data?.doctor?.doctorProfile?.specialization}</h2>
+                    <h2 className="text-sm md:text-md">⭐{data.avgRating}({data?.totalReviews}) Stars</h2>
                     <div className="flex gap-5">
                         <div className="flex gap-2 items-center">
                             <CgAwards className="text-lg md:text-xl" />
-                            <h3 className="text-sm md:text-md">{data?.profile?.experienceYears} Years</h3>
+                            <h3 className="text-sm md:text-md">{data?.doctor?.doctorProfile?.experienceYears} Years</h3>
                         </div>
                         <div className="flex gap-2 items-center">
                             <IoMdPeople className="text-lg md:text-xl" />
-                            <h3 className="text-sm md:text-md">700+ patients</h3>
+                            <h3 className="text-sm md:text-md">{data?.doctor?.doctorProfile?.bookedAppointment}+ patients</h3>
                         </div>
                     </div>
                 </div>
@@ -57,11 +56,11 @@ console.log(data)
                     </div>
                 </div>
 
-                {/* Conditional Rendering of Components */}
+                {/* Conditional Rendering of Component */}
                 <div className="w-full">
-                    {current === 1 && <About id={id} refresh={getDetails} about={data?.about} />}
-                    {current === 2 && <Review />}
-                    {current === 3 && <Edit id={id} refresh={getDetails} data={data} />}
+                    {current === 1 && <About id={id} refresh={getDetails} about={data?.doctor?.about} />}
+                    {current === 2 && <Review id={id} />}
+                    {current === 3 && <Edit id={id} refresh={getDetails} data={data?.doctor} />}
                     {current === 4 && <Password id={id} />}
                 </div>
             </div>

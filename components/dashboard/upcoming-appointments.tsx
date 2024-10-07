@@ -3,7 +3,7 @@ import React, { useEffect, useState, useTransition } from "react";
 import { Card, CardContent, CardHeader } from "../ui/card";
 import Link from "next/link";
 import { FaAngleRight } from "react-icons/fa";
-import { ScrollArea } from "../ui/scroll-area";
+import Image from "next/image";
 
 interface ProfileProps {
   id: string | undefined;
@@ -34,7 +34,7 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
   };
 
   return (
-    <Card className="col-span-6  lg:col-span-2">
+    <Card className="col-span-6  relative lg:col-span-2">
       <CardHeader className="p-3">
         <div className="flex justify-between">
           <h1 className="text-lg lg:text-[1.4vw] font-semibold">
@@ -50,13 +50,16 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
         </div>
       </CardHeader>
       <CardContent>
-        <ScrollArea>
         {data?.length > 0 ? (
           <div className=" flex flex-col gap-4">
-            {data?.map((appointment: any, index: number) => (
+            {data?.slice(0,8).map((appointment: any, index: number) =>{
+              let nameArray = appointment?.doctorName.split(' ');
+              return(
               <div key={appointment.id} className="flex items-center gap-2">
-                <span className=" font-bold">{++index}.</span>
-                <div className="h-10 w-10 bg-primary rounded-full" />
+                <span className=" min-w-6 font-bold">{++index}.</span>
+                <div className="h-10 w-10 overflow-hidden bg-primary rounded-full" >
+                  <Image alt="pp" width={60} height={60} src={`https://ui-avatars.com/api/?name=${nameArray[0]}+${nameArray[1]}`} />
+                </div>
                 <div>
                   <div className="text-sm font-medium">
                     {appointment?.doctorName}
@@ -66,7 +69,7 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
                   </div>
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         ) : (
           <div className="text-center">
@@ -75,7 +78,6 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
             </p>
           </div>
         )}
-        </ScrollArea>
       </CardContent>
     </Card>
   );

@@ -44,7 +44,7 @@ const Page = () => {
           <Button>+ Book Appointment</Button>
         </Link>
       </div>
-      <AppointmentTable data={filteredList} />
+      <AppointmentTable data={filteredList} refresh={getAllAppointments} />
     </div>
   );
 };

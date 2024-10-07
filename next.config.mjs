@@ -5,7 +5,7 @@ const nextConfig = {
     return config;
   },
   images: {
-    domains: ['avatar.iran.liara.run','res.cloudinary.com'],
+    domains: ['avatar.iran.liara.run','res.cloudinary.com','ui-avatars.com'],
   },
 };
 

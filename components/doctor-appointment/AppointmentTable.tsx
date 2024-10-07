@@ -221,7 +221,7 @@ export function AppointmentTable({ data,fetchData }: any) {
                   <DropdownMenuContent className="w-24">
                     {appointment.status !== "canceled" && (
                       <DropdownMenuCheckboxItem onClick={()=>setCancleDialog(appointment.id)}>
-                        Cancle
+                        Cancel
                       </DropdownMenuCheckboxItem>
                     )}
                     {appointment.status === "not-confirm" && (
@@ -240,7 +240,7 @@ export function AppointmentTable({ data,fetchData }: any) {
       <Dialog open={cancleDialog?true:false} onOpenChange={()=>setCancleDialog('')} >
       <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
-          <DialogTitle>Cancle</DialogTitle>
+          <DialogTitle>Cancel</DialogTitle>
           <DialogDescription>
            This process is not reversible
           </DialogDescription>

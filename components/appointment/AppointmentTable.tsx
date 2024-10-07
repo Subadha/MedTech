@@ -29,10 +29,13 @@ import {
 } from "../ui/navigation-menu";
 import { RescheduleSheet } from "./RescheduleSheet";
 import { RatingSheet } from "./RatingSheet";
+import { useRouter } from "next/navigation";
+import { useMail } from "../chat/chat";
 
-export function AppointmentTable({ data }: any) {
+export function AppointmentTable({ data,refresh }: any) {
   const [selected, setSelected] = useState<string[]>([]);
-
+  const router =  useRouter();
+  const [mail, setMail] = useMail();
   function changeSelection(id: string) {
     if (selected.includes(id)) {
       setSelected(selected.filter((item) => item !== id));
@@ -81,7 +84,7 @@ export function AppointmentTable({ data }: any) {
             <TableHead>Problems</TableHead>
             <TableHead>Reschedule</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead>Mode</TableHead>
+            <TableHead>Chat</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -132,25 +135,32 @@ export function AppointmentTable({ data }: any) {
               </TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <Phone size={18} />
-
-                  <MessageCircle size={18} />
+                  <MessageCircle size={18} className="cursor-pointer"
+                  onClick={
+                    () =>
+                      {setMail({
+                        ...mail,
+                        selected: appointment.doctor_id,
+                        name: appointment.doctorName,
+                        type: "PRIVATE",
+                      }); router.push('/dashboard/chat')}
+                  } />
                 </div>
               </TableCell>
-              {/* {appointment.status === "completed" && ( */}
+              {(appointment.status === "completed"&& appointment.reviewed=='false')&&(
                 <TableCell>
                   <Star
                     className="text-yellow-500 cursor-pointer"
                     onClick={() => setOpenRating(appointment.id)}
                   />
                 </TableCell>
-              {/* )} */}
+              )}
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <RescheduleSheet open={open} close={() => setOpen("")} />
-      <RatingSheet open={openRating} close={() => setOpenRating("")} />
+      <RescheduleSheet open={open} refresh={refresh} close={() => setOpen("")} />
+      <RatingSheet open={openRating} refresh={refresh} close={() => setOpenRating("")} />
     </>
   );
 }

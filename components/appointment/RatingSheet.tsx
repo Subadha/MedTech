@@ -15,7 +15,7 @@ import { useState } from "react";
 import { useToast } from "../ui/use-toast";
 import { Textarea } from "../ui/textarea";
 
-export function RatingSheet({ open, close }: any) {
+export function RatingSheet({ open,refresh, close }: any) {
   const [details, setDetails] = useState({
     rating: "",  // Storing the rating value
     message: "", // Storing the message value
@@ -44,6 +44,7 @@ export function RatingSheet({ open, close }: any) {
       });
       const data = await result.json();
       if (data?.success) {
+        refresh()
         toast({ variant: "success", title: data?.success });
       }
       if (data?.error) {
