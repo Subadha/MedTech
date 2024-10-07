@@ -1,7 +1,7 @@
 import { FaPhoneAlt } from "react-icons/fa";
 import { FaVideo } from "react-icons/fa6";
 
-export default function Appoint3({user}:any){
+export default function Appoint3({id}:any){
     
     return(
         <div className="flex flex-col p-5 text-center">
@@ -14,7 +14,7 @@ export default function Appoint3({user}:any){
                 <p className="text-purple-500 text-5xl font-bold">1037</p>
             </div>
             <div className="p-3">
-                <h1>We have sent email to {user.email} and SMS to {user.phone} with details</h1>
+                {/* <h1>We have sent email to {user.email} and SMS to {user.phone} with details</h1> */}
             </div>
             <hr/>
             <div className="flex flex-col p-3">

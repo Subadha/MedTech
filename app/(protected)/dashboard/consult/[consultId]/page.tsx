@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import img from "@/app/images/doc1.png";
 import { FaUserDoctor } from "react-icons/fa6";
@@ -8,26 +9,43 @@ import { FaRegMoneyBillAlt } from "react-icons/fa";
 import Appoint0 from "@/components/AppointmentModal/Appoint0";
 import { GetDoctorById } from "@/actions/consult/GetDoctorById";
 import { Star } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface ConsultDoctorProps {
   params: {
     consultId: string;
   };
 }
-export default async function ConsultDoctor({ params }: ConsultDoctorProps) {
-  const {
-    doctor: data,
-    totalReviews,
-    avgRating,
-  }: any = await GetDoctorById(params.consultId);
-  const reviews = await fetch(
-    `${process.env.NEXT_PUBLIC_URL}/api/v1/doctor/review/get`,
-    {
-      method: "POST",
-      body: JSON.stringify({ doctorId: params.consultId }),
+export default function ConsultDoctor({ params }: ConsultDoctorProps) {
+  const [data, setData] = useState<any>();
+  const [totalReviews, setTotalreview] = useState<any>();
+  const [avgRating, setAvgRating] = useState<any>();
+  const [reviews, setReviews] = useState<any>([]);
+  const Getdetails = async () => {
+    try {
+      const resp = await GetDoctorById(params.consultId);
+      setData(resp?.doctor);
+      setTotalreview(resp?.totalReviews);
+      setAvgRating(resp?.avgRating);
+      const reviews = await fetch(
+        `${process.env.NEXT_PUBLIC_URL}/api/v1/doctor/review/get`,
+        {
+          method: "POST",
+          body: JSON.stringify({ doctorId: params.consultId }),
+        }
+      );
+      const result = await reviews.json();      
+      if(result?.reviews.length > 0) {
+      setReviews(result.reviews)}
+    } catch (error) {
+      console.log(error);
+      
     }
-  );
-  const result = await reviews.json();
+  };
+
+  useEffect(()=>{
+    Getdetails()
+  },[])
 
   return (
     <>
@@ -36,7 +54,7 @@ export default async function ConsultDoctor({ params }: ConsultDoctorProps) {
           <div className="flex flex-col text-center sm:text-left md:flex-row rounded-xl border border-gray-300 shadow-lg p-5 bg-white">
             <div className="w-full md:w-1/4 text-center sm:text-left flex flex-col items-center">
               <Image
-                src={data?.image||''}
+                src={data?.image || ""}
                 alt="Doctor"
                 width={200}
                 height={250}
@@ -168,7 +186,15 @@ export default async function ConsultDoctor({ params }: ConsultDoctorProps) {
                       <p className="text-base md:text-lg font-semibold">
                         {day}
                       </p>
-                      <p className="text-base md:text-lg">{data?.doctorAvailabilityDetails.availableTimeFrom} To {data?.doctorAvailabilityDetails?.availableTimeSlot[data?.doctorAvailabilityDetails?.availableTimeSlot?.length-1]} </p>
+                      <p className="text-base md:text-lg">
+                        {data?.doctorAvailabilityDetails.availableTimeFrom} To{" "}
+                        {
+                          data?.doctorAvailabilityDetails?.availableTimeSlot[
+                            data?.doctorAvailabilityDetails?.availableTimeSlot
+                              ?.length - 1
+                          ]
+                        }{" "}
+                      </p>
                     </div>
                   )
                 )}
@@ -178,7 +204,7 @@ export default async function ConsultDoctor({ params }: ConsultDoctorProps) {
               <p className="text-purple-500 text-lg md:text-xl font-bold">
                 Patient Reviews
               </p>
-              {result?.reviews?.map((_: any, index: any) => (
+              {reviews?.map((_: any, index: any) => (
                 <div
                   key={index}
                   className="flex items-center p-5 mt-4 border-t border-gray-300"
