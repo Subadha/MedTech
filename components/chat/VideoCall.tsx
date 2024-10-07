@@ -3,6 +3,7 @@ import Peer from 'simple-peer';
 import { useUser } from '@/app/context/userContext';
 import { Phone, PhoneOff, Video, VideoOff, MicOff, Mic } from 'lucide-react';
 import { useMail } from "./chat";
+
 interface VideoCallProps {
   socket: any;
   setIsVideoCallActive: (active: boolean) => void;
@@ -26,84 +27,84 @@ const VideoCall: React.FC<VideoCallProps> = ({
   onAcceptCall,
   onDeclineCall
 }) => {
-
-
   const [me, setMe] = useState<string>('');
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [receivingCall, setReceivingCall] = useState<boolean>(false);
   const [callAccepted, setCallAccepted] = useState<boolean>(false);
   const [callEnded, setCallEnded] = useState<boolean>(false);
-  const { id } = useUser();
-  const [idToCall,setIdToCall]=useState<string>("")
+  const { id, userName } = useUser();
+  const [idToCall, setIdToCall] = useState<string>("");
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [isVideoOff, setIsVideoOff] = useState<boolean>(false);
+  const [remoteVideoOff, setRemoteVideoOff] = useState<boolean>(false);
+  const [remoteAudioMuted, setRemoteAudioMuted] = useState<boolean>(false);
   const myVideo = useRef<HTMLVideoElement | null>(null);
   const userVideo = useRef<HTMLVideoElement | null>(null);
   const connectionRef = useRef<Peer.Instance | null>(null);
-  const [mail, setMail] = useMail();
-  const {userName} = useUser();
+
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((stream) => {
       setStream(stream);
-      if (myVideo.current) {
-        myVideo.current.srcObject = stream;
-      }
-    });
+    });
 
     let userIds = [clientId, doctorId];
     socket.emit('getSocketIds', userIds);
 
-    socket.on("socketIds", (socketIds:any) => {
+    socket.on("socketIds", (socketIds) => {
       setMe(socketIds[id]);
-      if(doctorId===id && clientId!==null) {
-        setIdToCall(socketIds[clientId])
-      }else if(doctorId!==null){
-        setIdToCall(socketIds[doctorId])
-      }
+      setIdToCall(id === doctorId ? socketIds[clientId] : socketIds[doctorId]);
     });
 
     if (isReceivingCall) {
       setReceivingCall(true);
     }
 
-    socket.once('callEnded', () => {
-      leaveCall();
-      setIsVideoCallActive(false);
-
+    socket.on('callEnded', () => {
+      handleCallEnded();
     });
-    
-    socket.on('endCall', () => {
-      setCallEnded(true);
-      if (connectionRef.current) {
-        connectionRef.current.destroy();
-      }
-      setIsVideoCallActive(false);
+
+    socket.on('toggleRemoteVideo', (videoOff) => {
+      setRemoteVideoOff(videoOff);
     });
-  
-    
 
-
-
+    socket.on('toggleRemoteAudio', (audioMuted) => {
+      setRemoteAudioMuted(audioMuted);
+    });
 
     return () => {
       socket.off('socketIds');
       socket.off('callEnded');
-      socket.off('endCall');
-
-      cleanupListeners()
+      socket.off('toggleRemoteVideo');
+      socket.off('toggleRemoteAudio');
+      cleanupListeners();
     };
   }, [socket, id, clientId, doctorId, isReceivingCall, caller]);
 
+  useEffect(() => {
+    let attempts = 0;
+    const maxAttempts = 5;
+    const checkAndSetStream = () => {
+      if (stream && myVideo.current) {
+        myVideo.current.srcObject = stream;
+      } else if (attempts < maxAttempts) {
+        attempts++;
+        setTimeout(checkAndSetStream, 1000); // Retry after 1 second
+      } else {
+        console.error("Failed to set video stream after multiple attempts");
+      }
+    };
+    checkAndSetStream();
+  }, [stream]);
 
   const cleanupListeners = () => {
-    socket.off('callAccepted'); // Remove previous 'callAccepted' listener
-    socket.off('callEnded'); // Remove previous 'callEnded' listener
+    socket.off('callAccepted');
+    socket.off('callEnded');
   };
 
   const callUser = (id: string) => {
     if (connectionRef.current) {
       connectionRef.current.destroy();
-      connectionRef.current=null; // Destroy any previous connection
+      connectionRef.current = null;
     }
 
     cleanupListeners();
@@ -129,25 +130,18 @@ const VideoCall: React.FC<VideoCallProps> = ({
       }
     });
 
-    socket.once('callAccepted', (signal:any) => {
+    socket.once('callAccepted', (signal) => {
       setCallAccepted(true);
-      if (connectionRef.current) {
-        connectionRef.current.signal(signal)
-      }
+      peer.signal(signal);
     });
 
     connectionRef.current = peer;
   };
 
   const answerCall = () => {
-    if (connectionRef.current) {
-      connectionRef.current.destroy(); // Destroy any previous connection
-      connectionRef.current = null;
-    }
-
-    cleanupListeners();
     setCallAccepted(true);
     onAcceptCall();
+
     const peer = new Peer({
       initiator: false,
       trickle: false,
@@ -168,34 +162,30 @@ const VideoCall: React.FC<VideoCallProps> = ({
     connectionRef.current = peer;
   };
 
-  const leaveCall = () => {
+  const handleCallEnded = () => {
     setCallEnded(true);
-
-    // Emit endCall event to both parties
-    socket.emit('endCall', { to: idToCall });
-
     if (connectionRef.current) {
       connectionRef.current.destroy();
       connectionRef.current = null;
     }
+
     cleanupListeners();
-    
-    
-    
-    // Clean up the local state
     setIsVideoCallActive(false);
     setCallAccepted(false);
     setReceivingCall(false);
     
-    // Stop all tracks in the stream
     if (stream) {
       stream.getTracks().forEach(track => track.stop());
     }
     setStream(null);
     
-    // Clear video elements
     if (myVideo.current) myVideo.current.srcObject = null;
     if (userVideo.current) userVideo.current.srcObject = null;
+  };
+
+  const leaveCall = () => {
+    socket.emit('endCall', { to: idToCall });
+    handleCallEnded();
   };
 
   const toggleMute = () => {
@@ -203,6 +193,12 @@ const VideoCall: React.FC<VideoCallProps> = ({
       const audioTrack = stream.getAudioTracks()[0];
       audioTrack.enabled = !audioTrack.enabled;
       setIsMuted(!audioTrack.enabled);
+
+      if (connectionRef.current) {
+        connectionRef.current.send(JSON.stringify({ type: 'toggleAudio', audioMuted: !audioTrack.enabled }));
+      }
+      
+      socket.emit('toggleAudio', { to: idToCall, audioMuted: !audioTrack.enabled });
     }
   };
 
@@ -211,8 +207,27 @@ const VideoCall: React.FC<VideoCallProps> = ({
       const videoTrack = stream.getVideoTracks()[0];
       videoTrack.enabled = !videoTrack.enabled;
       setIsVideoOff(!videoTrack.enabled);
+
+      if (connectionRef.current) {
+        connectionRef.current.send(JSON.stringify({ type: 'toggleVideo', videoOff: !videoTrack.enabled }));
+      }
+      
+      socket.emit('toggleVideo', { to: idToCall, videoOff: !videoTrack.enabled });
     }
   };
+
+  useEffect(() => {
+    if (connectionRef.current) {
+      connectionRef.current.on('data', (data) => {
+        const parsedData = JSON.parse(data);
+        if (parsedData.type === 'toggleVideo') {
+          setRemoteVideoOff(parsedData.videoOff);
+        } else if (parsedData.type === 'toggleAudio') {
+          setRemoteAudioMuted(parsedData.audioMuted);
+        }
+      });
+    }
+  }, [connectionRef.current]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
@@ -222,7 +237,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
           
           <div className="flex justify-center items-center mb-6 space-x-4">
             <button
-              onClick={toggleMute}
+              onClick={()=>{toggleMute()}}
               className={`p-3 rounded-full ${
                 isMuted ? 'bg-red-500 hover:bg-red-600' : 'bg-gray-200 hover:bg-gray-300'
               } transition-colors duration-200`}
@@ -270,17 +285,25 @@ const VideoCall: React.FC<VideoCallProps> = ({
                 />
               )}
               <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded">
-                You
+                You {isVideoOff ? '(Video Off)' : ''} {isMuted ? '(Muted)' : ''}
               </div>
             </div>
             <div className="relative w-full md:w-1/2 aspect-video bg-gray-200 rounded-lg overflow-hidden">
               {callAccepted && !callEnded ? (
-                <video
-                  className="absolute inset-0 w-full h-full object-cover"
-                  playsInline
-                  ref={userVideo}
-                  autoPlay
-                />
+                <>
+             <video
+  className="absolute inset-0 w-full h-full object-cover"
+  playsInline
+  ref={userVideo}
+  autoPlay
+  muted={isMuted} // Conditionally apply the muted attribute
+/>
+                  {remoteVideoOff && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-gray-800 text-white">
+                      <p>Remote Video Off</p>
+                    </div>
+                  )}
+                </>
               ) : (
                 <div className="flex items-center justify-center h-full">
                   <p className="text-gray-500">Waiting for connection...</p>
@@ -288,7 +311,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
               )}
               {callAccepted && !callEnded && (
                 <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded">
-                  {userName}
+                  {userName} {remoteVideoOff ? '(Video Off)' : ''} {remoteAudioMuted ? '(Muted)' : ''}
                 </div>
               )}
             </div>
