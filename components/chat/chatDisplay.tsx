@@ -47,7 +47,7 @@ interface Message {
 
 export function ChatDisplay({ socket,setMessages,isVideoCallActive,handleDeclineCall,isReceivingCall,handleAcceptCall,caller,callerSignal ,setIsVideoCallActive,messages,doctorId,convoId,clientId, removedata }: any) {
   const [mail, setMail] = useMail();
-  const [message, setMessage] = useState<string>("");
+  const [message, setMessage] = useState<any>("");
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -64,9 +64,9 @@ export function ChatDisplay({ socket,setMessages,isVideoCallActive,handleDecline
   useEffect(() => {
     
    
-    socket.on('messagesSeen', ({ userId, lastSeenMessageId, updatedMessages }) => {
-      setMessages((prevMessages) =>
-        prevMessages.map((msg) =>
+    socket.on('messagesSeen', ({ userId, lastSeenMessageId, updatedMessages }:any) => {
+      setMessages((prevMessages:any) =>
+        prevMessages.map((msg:any) =>
           msg.id <= lastSeenMessageId
             ? updatedMessages.find((updatedMsg: Message) => updatedMsg.id === msg.id) || msg
             : msg
@@ -186,7 +186,7 @@ const uploadFile = async () => {
 };
 const handleEmojiClick = (event: any) => {
   setOpen(false);
-  setMessage((prev) => prev + event.emoji);
+  setMessage((prev:any) => prev + event.emoji);
 };
 const cancelFileUpload = () => {
   setFile(null);
@@ -320,7 +320,7 @@ console.log("message",messages)
  <ScrollArea className="h-[calc(100%-96px)] relative overflow-auto">
  <div className="flex lg:w-[70%] mx-auto p-4 pb-8 gap-2 flex-col">
    {messages?.length > 0 ? (
-     messages?.map((item, index) => {
+     messages?.map((item:any, index:any) => {
        const currentDate = new Date(item.createdAt);
        const previousDate =
          index > 0 ? new Date(messages[index - 1].createdAt) : null;
@@ -365,7 +365,7 @@ console.log("message",messages)
            {isLastMessage && (
              (() => {
                const targetUserId = role === "DOCTOR" ? clientId : doctorId;
-               const seenTime = item.seenBy?.find(seen => seen.userId === targetUserId)?.seenAt;
+               const seenTime = item.seenBy?.find((seen:any) => seen.userId === targetUserId)?.seenAt;
 
                if (seenTime) {
                  return (
