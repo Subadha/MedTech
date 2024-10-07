@@ -19,6 +19,33 @@ const domain = process.env.NEXT_PUBLIC_URL;
 //     });
 // }
 
+export const sendPasswordResetMail = async (email: string, otp: string) => {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    port: 465,
+    secure: true, // use SSL
+    auth: {
+      user: "subadha.co.in@gmail.com",
+      pass: "fdqv fzjl zxna qhmp", // Use an app-specific password
+    },
+  });
+
+  try {
+    // Send email
+    await transporter.sendMail({
+      from: "onboarding@yourdomain.com",
+      to: email,
+      subject: "Reset Your Password",
+      html: `<p>Your OTP is ${otp}</p>`,
+    });
+
+    console.log("Password reset email sent successfully.");
+  } catch (error) {
+    console.error("Error sending password reset email:", error);
+    throw new Error("Failed to send password reset email.");
+  }
+};
+
 export const sendPasswordReset = async (email:string, token:string) => {
   const resetLink = `${domain}/auth/new-password?token=${token}`;
 
