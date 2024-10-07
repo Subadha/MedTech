@@ -306,7 +306,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
   playsInline
   ref={userVideo}
   autoPlay
-  muted={isMuted} // Conditionally apply the muted attribute
+  muted={remoteAudioMuted} // Conditionally apply the muted attribute
 />
                   {remoteVideoOff && (
                     <div className="absolute inset-0 flex items-center justify-center bg-gray-800 text-white">
