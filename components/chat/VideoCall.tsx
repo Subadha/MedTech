@@ -50,9 +50,19 @@ const VideoCall: React.FC<VideoCallProps> = ({
     let userIds = [clientId, doctorId];
     socket.emit('getSocketIds', userIds);
 
-    socket.on("socketIds", (socketIds) => {
-      setMe(socketIds[id]);
-      setIdToCall(id === doctorId ? socketIds[clientId] : socketIds[doctorId]);
+    socket.on("socketIds", (socketIds: any) => {
+      if (socketIds) {
+        // Ensure the id, doctorId, and clientId are valid and exist in socketIds
+        setMe(socketIds[id] || null);
+    
+        if (id === doctorId&&clientId!==null) {
+          setIdToCall(socketIds[clientId] || null);  // If id is doctorId, set socket for clientId
+        } else if(doctorId!==null) {
+          setIdToCall(socketIds[doctorId] || null);  // Otherwise, set socket for doctorId
+        }
+      } else {
+        console.warn("Received empty socketIds object.");
+      }
     });
 
     if (isReceivingCall) {
@@ -63,11 +73,11 @@ const VideoCall: React.FC<VideoCallProps> = ({
       handleCallEnded();
     });
 
-    socket.on('toggleRemoteVideo', (videoOff) => {
+    socket.on('toggleRemoteVideo', (videoOff:any) => {
       setRemoteVideoOff(videoOff);
     });
 
-    socket.on('toggleRemoteAudio', (audioMuted) => {
+    socket.on('toggleRemoteAudio', (audioMuted:any) => {
       setRemoteAudioMuted(audioMuted);
     });
 
@@ -130,7 +140,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
       }
     });
 
-    socket.once('callAccepted', (signal) => {
+    socket.once('callAccepted', (signal:any) => {
       setCallAccepted(true);
       peer.signal(signal);
     });

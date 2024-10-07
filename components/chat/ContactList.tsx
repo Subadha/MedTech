@@ -47,24 +47,29 @@ const ContactList = ({socket, items,sheetState,messageCount }: ChatListProps) =>
     const [communityMembers, setCommunityMembers] = useState<string[]>([]);
     const [isCommunityView, setIsCommunityView] = useState(false);
     const [combinedData, setCombinedData] = useState<any[]>([]); // State to store combined items and fetched doctors
-    const [communities,setCommunities] = useState([])
-    const [comunitymembersNames,setcomunitymembersNames] = useState([])
+    const [communities,setCommunities] = useState<any>([])
+    const [comunitymembersNames,setcomunitymembersNames] = useState<any>([])
     console.log("type = ",items )
   
     const GetAllDoctorsWithDetails = async () => {
-      const [doctors] = await getAllDoctors();
-      const doctorIds = doctors.map((doc):any => ({id:doc.id,name:doc.name,role:doc.role}));
-      const userIds = items.map(item => ({id:item.userId,name:item.name,role:item.role}));
+      // Fetch all doctors and make sure it's an array or provide an empty array fallback
+      const doctors = await getAllDoctors();
+      const doctorIds = doctors?.map((doc: any) => ({ id: doc.id, name: doc.name, role: doc.role })) || []; // Provide fallback for undefined
+    
+      // Assuming 'items' is an array fetched from somewhere, ensure it's an array
+      const userIds = (items || []).map(item => ({ id: item.userId, name: item.name, role: item.role }));
+    
       if (doctors) {
+        // Combine the two arrays
         const combined = [...userIds, ...doctorIds];
-        setCombinedData(combined); 
-        console.log(combined)
-
+        setCombinedData(combined);
+        console.log(combined);
       }
     };
+    
     const handleRemoveMember = (index: number) => {
-      setCommunityMembers((prev) => prev.filter((_, i) => i !== index));
-      setcomunitymembersNames((prev) => prev.filter((_, i) => i !== index));
+      setCommunityMembers((prev) => prev.filter((_:any, i) => i !== index));
+      setcomunitymembersNames((prev:any) => prev.filter((_:any, i:any) => i !== index));
     };
     
     useEffect(() => {
@@ -115,9 +120,9 @@ const ContactList = ({socket, items,sheetState,messageCount }: ChatListProps) =>
  
   const handleSelectSuggestion = (selection: any) => {
 
-    setCommunityMembers((prev) => [...prev, selection.id]);
+    setCommunityMembers((prev:any) => [...prev, selection.id]);
     
-    setcomunitymembersNames((prev)=>[...prev,selection.name])
+    setcomunitymembersNames((prev:any)=>[...prev,selection.name])
     setSearchTerm('');
   };
 console.log("Comunitynames",comunitymembersNames)
@@ -205,7 +210,7 @@ if(role!="DOCTOR"){
         </button>
       ))}
     </div>: <div className="origin-top-right flex flex-col mt-4 p-3 pt-0">
-    {communities?.map((item,index) => (
+    {communities?.map((item:any,index:any) => (
         <button
           key={item.id}
           className={cn(
@@ -310,7 +315,7 @@ else{
             />
             {searchTerm && (
               <div className="suggestions-list">
-                {filteredSuggestions.map((suggestion) => (
+                {filteredSuggestions?.map((suggestion:any) => (
                   <div
                     key={suggestion.id}
                     className="suggestion-item cursor-pointer hover:bg-muted"
@@ -322,7 +327,7 @@ else{
               </div>
             )}
 <div className="selected-members mt-4 flex flex-row flex-wrap gap-2">
-  {comunitymembersNames?.map((member, index) => (
+  {comunitymembersNames?.map((member:any, index:any) => (
     <div
       key={index}
       className="flex items-center space-x-2 bg-purple-600 text-white rounded-full px-4 py-2"
@@ -409,7 +414,7 @@ else{
         </button>
       ))}
     </div>:  <div className="origin-top-right flex flex-col mt-4 p-3 pt-0">
-    {communities?.map((item,index) => (
+    {communities?.map((item:any,index:any) => (
         <button
           key={item.id}
           className={cn(
