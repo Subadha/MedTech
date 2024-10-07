@@ -1,4 +1,4 @@
-import {Resend} from "resend"
+import { Resend } from "resend";
 import nodemailer from "nodemailer";
 import { db } from "./db";
 import crypto from "crypto";
@@ -12,14 +12,14 @@ const domain = process.env.NEXT_PUBLIC_URL;
 // ) =>{
 //     const resetLink = `${domain}/auth/new-password?token=${token}`;
 //     await resend.emails.send({
-//         from:"onboarding@resend.dev",   
+//         from:"onboarding@resend.dev",
 //         to:email,
 //         subject:"Reset Your Password",
 //         html:`<p>Click<a href="${resetLink}"> here </a> to conform mail</p>`
 //     });
 // }
 
-export const sendPasswordReset = async (email:string, token:string) => {
+export const sendPasswordReset = async (email: string, token: string) => {
   const resetLink = `${domain}/auth/new-password?token=${token}`;
 
   // Create a transporter using nodemailer
@@ -55,15 +55,14 @@ export const sendPasswordReset = async (email:string, token:string) => {
 // ) =>{
 //     const conformLink = `${domain}/auth/new-verification?token=${token}`;
 //     await resend.emails.send({
-//         from:"onboarding@resend.dev",   
+//         from:"onboarding@resend.dev",
 //         to:email,
 //         subject:"Conform your email",
 //         html:`<p>Click<a href="${conformLink}"> here </a> to conform mail</p>`
 //     });
 // }
 
-export const sendVerificationEmail = async (email:string) => {
-
+export const sendVerificationEmail = async (email: string) => {
   // Create a transporter using nodemailer
   const transporter = nodemailer.createTransport({
     service: "gmail",
@@ -93,12 +92,63 @@ export const sendVerificationEmail = async (email:string) => {
       from: "onboarding@resend.dev",
       to: email,
       subject: "OTP for verification",
-      html: `<p>Your OTP for verification is: <strong>${otp}</strong></p>`,
+      html: `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OTP Verification</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+      color: #333333;
+      font-size: 24px;
+    }
+    p {
+      color: #555555;
+      font-size: 16px;
+    }
+    .otp {
+      font-size: 20px;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 12px;
+      color: #999999;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>OTP Verification</h1>
+    <p>Your OTP for verification is:</p>
+    <p class="otp">${otp}</p>
+    <p>Please use this OTP to complete your verification. The code is valid for 10 minutes. If you did not request this OTP, please ignore this email.</p>
+    <div class="footer">
+      <p>Best regards,<br/>MedTech Team</p>
+    </div>
+  </div>
+</body>
+</html>
+`,
     });
-
   } catch (error) {
     console.error("Error sending verification email:", error);
     throw new Error("Failed to send verification email.");
   }
-
-}
+};
