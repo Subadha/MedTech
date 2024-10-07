@@ -35,7 +35,7 @@ interface Message {
 
 
 const defaultLayout = [265, 360, 655]
-const socket = io("wss://mtapi.adarsh.tech");
+const socket = io("http://localhost:8000");
 
 const Page = () => {
   const [mail,setMail] = useMail();
@@ -81,7 +81,7 @@ const [callerSignal, setCallerSignal] = useState(null);
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
+  
   useEffect(() => {
     let doctorId = role === "DOCTOR" ? id : mail.selected;
     let clientId = role === "DOCTOR" ? mail.selected : id;
@@ -105,9 +105,10 @@ const [callerSignal, setCallerSignal] = useState(null);
     }
     socket.on("conversationId", (Dataid) => {
       setConvoId(Dataid); // Store the received convoId
-      console.log("Received conversationId:", Dataid);
 
     });
+    console.log("Received conversationId:", convoId);
+
     socket.on("previousMessages", (previousMessages:any) => {
       console.log("prev",previousMessages)
       setMessages(previousMessages.message);
@@ -117,6 +118,7 @@ const [callerSignal, setCallerSignal] = useState(null);
     socket.on("callDeclined", handleCallEnded);
     socket.on("callUser", handleIncomingCall);
     socket.emit("getsetId", { userId: id });
+    let  room =mail.type === "COMMUNITY" ?`community_${mail.selected}`:roomId
 
     socket.on("receivedMessage", (newMessage: Message) => {
       console.log("rec",newMessage)
@@ -132,10 +134,11 @@ const [callerSignal, setCallerSignal] = useState(null);
  
 
     return () => {
+      socket.emit("onLeaveroom",room)
+
      socket.off("previousMessages");
       socket.off("receivedMessage");
       socket.off("conversationId");
-
     };
   }, [doctorId, clientId,mail.selected]);
 
@@ -148,7 +151,7 @@ const [callerSignal, setCallerSignal] = useState(null);
     }
   };
 
-  let reqid;
+  
 
   const handleAcceptCall = () => {
     setIsReceivingCall(false);
@@ -222,4 +225,3 @@ const [callerSignal, setCallerSignal] = useState(null);
 };
 
 export default Page;
-
