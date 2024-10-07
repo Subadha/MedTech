@@ -137,14 +137,14 @@ export function AppointmentTable({ data }: any) {
                   <MessageCircle size={18} />
                 </div>
               </TableCell>
-              {appointment.status === "completed" && (
+              {/* {appointment.status === "completed" && ( */}
                 <TableCell>
                   <Star
                     className="text-yellow-500 cursor-pointer"
                     onClick={() => setOpenRating(appointment.id)}
                   />
                 </TableCell>
-              )}
+              {/* )} */}
             </TableRow>
           ))}
         </TableBody>

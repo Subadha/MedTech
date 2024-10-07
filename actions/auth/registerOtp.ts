@@ -21,10 +21,10 @@ export const registerOtp = async (phone:string) => {
   const otp = crypto.randomInt(100000, 999999).toString();
 
   const client = twilio(
-    process.env.TWILIO_ACCOUNT_SID,
+    process.env.TWILIO_ACCOUNT_SID!,
     process.env.TWILIO_AUTH_TOKEN
   );
-
+  
   try {
     if (otpData == null) {
       await db.otp.create({
@@ -46,7 +46,7 @@ export const registerOtp = async (phone:string) => {
     }
 
     const result = await client.messages.create({
-      body: `Your OTP is: ${otp}`,
+      body: `Your OTP code is ${otp}. It is valid for the next 10 minutes. Do not share this code with anyone. MedTech.`,
       from: process.env.TWILIO_PHONE_NUMBER,
       to: phone,
     });

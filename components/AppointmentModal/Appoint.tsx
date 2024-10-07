@@ -6,8 +6,10 @@ import Appoint1 from "./Appoint1";
 import Appoint2 from "./Appoint2";
 import Appoint3 from "./Appoint3";
 import { BookAppointment } from "@/actions/appointment/appoint";
+import { useUser } from "@/app/context/userContext";
 
-export default function Appoint({ details, user }: any) {
+export default function Appoint({ details }: any) {
+  const {id}= useUser()
   const [dialogOpen, setDialogOpen] = useState(false);
   const [appointStep, setAppointStep] = useState(0);
   const [appointmentData, setAppointmentData] = useState({
@@ -18,7 +20,7 @@ export default function Appoint({ details, user }: any) {
     age: null,
     gender: "",
     doctor_id:details?.id,
-    userId:user?.id
+    userId:id
   });
  
   const handleAppoint1Data = (data: any) => {    
@@ -51,7 +53,7 @@ export default function Appoint({ details, user }: any) {
         age: null,
         gender: "",
         doctor_id:details?.id,
-        userId:user?.id
+        userId:id
       })
     }
   }, [appointStep]);
@@ -80,7 +82,7 @@ export default function Appoint({ details, user }: any) {
           <div className="p-4">
             {appointStep === 0 && <Appoint1 details={details} onChangeApp={handleAppoint1Data} />}
             {appointStep === 1 && <Appoint2 onChangeApp={handleAppoint2Data} />}
-            {appointStep === 2 && <Appoint3 user={user} />}
+            {appointStep === 2 && <Appoint3 id={id} />}
           </div>
         </DialogContent>
       </DialogOverlay>

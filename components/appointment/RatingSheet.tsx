@@ -43,7 +43,6 @@ export function RatingSheet({ open, close }: any) {
         body: JSON.stringify({ appointmentId: open, ...details }),
       });
       const data = await result.json();
-      console.log(data);
       if (data?.success) {
         toast({ variant: "success", title: data?.success });
       }

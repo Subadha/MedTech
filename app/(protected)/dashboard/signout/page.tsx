@@ -1,11 +1,14 @@
 "use client"
 import { SignOut } from "@/actions/auth/signout";
+import { useRouter } from "next/navigation";
 
 export default function Signout(){
-
+const router = useRouter()
     const handleLogout = async (e: React.FormEvent) => {
         e.preventDefault();
         await SignOut(); // Sign out the user
+        router.push('/auth/login')
+
     };
 
     return(

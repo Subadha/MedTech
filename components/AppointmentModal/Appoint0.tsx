@@ -1,12 +1,9 @@
 import { auth } from "@/auth";
 import Appoint from "./Appoint";
 
-export default async function Appoint0({ details }: any){
-
-    const session = await auth();
-    const user = session?.user;
+export default function Appoint0({ details }: any){
 
     return(
-        <Appoint user={user} details={details}/>
+        <Appoint details={details}/>
     )
 }
