@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Country, State, City } from "country-state-city";
+import { X } from "lucide-react";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { GiTwoCoins } from "react-icons/gi";
@@ -41,10 +42,26 @@ const Page = () => {
 
   useEffect(() => {
     (async () => {
-      const doc = await getAllDoctorsWithDetails();
-      setDoctors(doc);
+      const doc = await fetch("/api/v1/patients/doctor-list", {
+        method: "POST",
+        body: JSON.stringify({
+          country: selectedCountry,
+          state: selectedState,
+          city: selectedCity,
+        }),
+      });
+      const data = await doc.json();
+      console.log(data);
+
+      setDoctors(data);
     })();
-  }, []);
+  }, [selectedCountry, selectedState, selectedCity]);
+
+  const Clear=()=>{
+    setSelectedCountry('')
+    setSelectedState('')
+    setSelectedCity('')
+  }
 
   return (
     <>
@@ -58,7 +75,7 @@ const Page = () => {
             side="bottom"
             align="end"
           >
-            <h2 className=" font-semibold">Filter</h2>
+            <div className="flex justify-between"><h2 className=" font-semibold">Filter</h2> <Button onClick={Clear}><X/> Clear</Button></div>
             {/* Country Filter */}
             <Select
               value={selectedCountry}
