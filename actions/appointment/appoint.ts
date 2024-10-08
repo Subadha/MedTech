@@ -5,6 +5,8 @@ import { NOT_CONFIRM } from "@/lib/constants";
 import nodemailer from "nodemailer";
 
 export const BookAppointment = async (data: any) => {
+  console.log(data);
+  
   const transporter = nodemailer.createTransport({
     service: "gmail",
     port: 465,

@@ -20,7 +20,7 @@ export default function Appoint2({ onChangeApp }: any) {
         defaultValues: {
             purpose: "",
             name: "",
-            age: 0,
+            age:0,
             gender: "",
         },
     });
