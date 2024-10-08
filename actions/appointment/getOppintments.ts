@@ -10,12 +10,23 @@ export const  getAllAppointment = async (id: string,role:string) => {
     console.log("Role = ",role)
 if(role!='DOCTOR'){
     appointments = await db.bookedAppointment.findMany({
-      where: { userId: id },
+      where: { 
+        userId: id ,
+        // status:"confirmed"
+      },
+      distinct: ['doctor_id'], // Ensures one appointment per doctor
+     
+      
     });
   }
   else{
      appointments = await db.bookedAppointment.findMany({
-      where: { doctor_id: id },
+      where: { 
+        doctor_id: id,
+        // status:"confirmed"
+       },
+      distinct: ['userId'], // Ensures one appointment per user (for doctor)
+
     });
   }
   console.log("appointments = ",appointments)

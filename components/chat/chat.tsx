@@ -4,7 +4,8 @@ import { atom, useAtom } from "jotai";
 const configAtom = atom<any>({
   selected: null,
   name: '',
-  type: ""
+  type: "",
+  status:""
 });
 
 export function useMail() {

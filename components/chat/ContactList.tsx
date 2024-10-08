@@ -25,7 +25,8 @@ interface MailItem {
     read: boolean;
     date: string;
     labels: string[];
-    role:string
+    role:string;
+    status:string;
   }
   
   interface ChatListProps {
@@ -137,7 +138,8 @@ if(role!="DOCTOR"){
     ...mail,
     selected: "",
     name: "",
-    type: ""
+    type: "",
+    status:"",
   });
 }}>
   {isCommunityView ? 'Switch to User Chats' : 'Switch to Community Chats'}
@@ -159,9 +161,10 @@ if(role!="DOCTOR"){
               ...mail,
               selected: item.doctor_id,
               name:item.doctorName,
-              type:"PRIVATE"
+              type:"PRIVATE",
+              status:item.status,
             })
-            // socket.emit('resetUnreadCount', { userId: id, conversationId: item.id })
+            
 
           }
         >
@@ -364,7 +367,8 @@ else{
               ...mail,
               selected: item.userId,
               name:item.name,
-              type:"PRIVATE"
+              type:"PRIVATE",
+              status:item.status,
             })
           }
         }
