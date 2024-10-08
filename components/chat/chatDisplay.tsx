@@ -45,7 +45,7 @@ interface Message {
 }
 
 
-export function ChatDisplay({callerName, socket,setMessages,isVideoCallActive,handleDeclineCall,isReceivingCall,handleAcceptCall,caller,callerSignal ,setIsVideoCallActive,messages,doctorId,convoId,clientId, removedata }: any) {
+export function ChatDisplay({list,callerName, socket,setMessages,isVideoCallActive,handleDeclineCall,isReceivingCall,handleAcceptCall,caller,callerSignal ,setIsVideoCallActive,messages,doctorId,convoId,clientId, removedata }: any) {
   const [mail, setMail] = useMail();
   const [message, setMessage] = useState<any>("");
   const [open, setOpen] = useState(false);
@@ -53,6 +53,9 @@ export function ChatDisplay({callerName, socket,setMessages,isVideoCallActive,ha
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { id, role } = useUser();
+  const [confirmedAppointments, setConfirmedAppointments] = useState<any[]>([]);
+  const [searchId,setSearchId] = useState<string |null>("")
+
 
   const lastSeenMessageRef = useRef<number | null>(null);
 
@@ -60,10 +63,19 @@ export function ChatDisplay({callerName, socket,setMessages,isVideoCallActive,ha
     setIsVideoCallActive(true);
   };
   let reqid:any;
-
+  
   useEffect(() => {
-    
+ 
+
+  const searchIdKey = role === 'DOCTOR' ? "userId" : "doctor_id";
+          
+    setConfirmedAppointments(list
+    .filter((lis) => lis[searchIdKey] === mail.selected)
+    .filter((lis)=> lis.status === "confirmed"))
+
    
+    
+  
     socket.on('messagesSeen', ({ userId, lastSeenMessageId, updatedMessages }:any) => {
       setMessages((prevMessages:any) =>
         prevMessages.map((msg:any) =>
@@ -98,8 +110,9 @@ const roomId = conversationType === "PRIVATE" ? `room_${doctorId}_${clientId}` :
       });
     }
   }, [messages, id, convoId, socket]);
+  
   reqid =conversationType === "PRIVATE" ?convoId:mail.selected
-
+  console.log("These are confirmed Appointments",confirmedAppointments);
   const sendMessage = () => {
    if(message.length>0){
     //const conversationType = mail.type === "COMMUNITY" ? "COMMUNITY" : "PRIVATE";
@@ -197,7 +210,7 @@ const Remove = () => {
   setMail({ selected: null, name: "" });
   removedata();
 };
-console.log(mail.status);
+
 useEffect(() => {
   setOpen(false);
   setMessage("");
@@ -396,7 +409,7 @@ console.log("message",messages)
 
 
 
-{((conversationType==="PRIVATE" && mail.status === "confirmed")||(role=="DOCTOR" && conversationType==="COMMUNITY") )&&(
+{((conversationType==="PRIVATE" && (confirmedAppointments.length > 0))||(role=="DOCTOR" && conversationType==="COMMUNITY") )&&(
  <div className="sticky right-0 lg:h-24 lg:bg-background bottom-0 w-full flex items-start justify-center">
    <div className="flex gap-2 h-14 items-center w-full lg:w-[70%] py-3 px-4 bg-muted lg:rounded-t-md lg:rounded-l-md">
      {previewUrl ? (
