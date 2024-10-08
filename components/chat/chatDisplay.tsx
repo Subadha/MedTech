@@ -197,7 +197,7 @@ const Remove = () => {
   setMail({ selected: null, name: "" });
   removedata();
 };
-
+console.log(mail.status);
 useEffect(() => {
   setOpen(false);
   setMessage("");
@@ -393,7 +393,10 @@ console.log("message",messages)
 {/* Input area */}
 
 
-{(conversationType==="PRIVATE"||role=="DOCTOR" )&&(
+
+
+
+{((conversationType==="PRIVATE" && mail.status === "confirmed")||(role=="DOCTOR" && conversationType==="COMMUNITY") )&&(
  <div className="sticky right-0 lg:h-24 lg:bg-background bottom-0 w-full flex items-start justify-center">
    <div className="flex gap-2 h-14 items-center w-full lg:w-[70%] py-3 px-4 bg-muted lg:rounded-t-md lg:rounded-l-md">
      {previewUrl ? (

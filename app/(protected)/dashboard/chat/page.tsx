@@ -97,7 +97,7 @@ const [callerSignal, setCallerSignal] = useState(null);
       const conversationId = mail.selected
       console.log("convoid ",conversationId)
     socket.emit("joinCommunity", { conversationId, userId });
-      
+     
     }else{
     socket.emit("joinRoom", { doctorId, clientId });
     
