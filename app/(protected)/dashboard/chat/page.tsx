@@ -44,7 +44,7 @@ const Page = () => {
   const [message, setMessage] = useState([]);
   const [sheetState, setSheetState] = useState(false);
   const [list, setList] = useState<any[]>([]);
-
+  const [callerName,setCallerName] = useState('');
   const [cookie, setCookie] = useCookies([
     "react-resizable-panels:collapsed",
     "react-resizable-panels:layout",
@@ -175,6 +175,7 @@ const [callerSignal, setCallerSignal] = useState(null);
     setCaller(data.from);
     setCallerSignal(data.signal);
     setIsVideoCallActive(true);
+    setCallerName(data.name)
   };
 
 
@@ -211,12 +212,12 @@ const [callerSignal, setCallerSignal] = useState(null);
         {isMobile ? (
           mail.selected ? (
             <ResizablePanel defaultSize={defaultLayout[2]}>
-              <ChatDisplay handleAcceptCall={handleAcceptCall}  setMessages={setMessages} caller={caller} callerSignal={callerSignal} isReceivingCall={isReceivingCall} setIsVideoCallActive={setIsVideoCallActive} isVideoCallActive={isVideoCallActive} socket={socket} doctorId={doctorId} clientId={clientId} convoId = {convoId} messages={messages} removedata={() => setMessage([])} />
+              <ChatDisplay handleDeclineCall={handleDeclineCall}  callerName={callerName} handleAcceptCall={handleAcceptCall}  setMessages={setMessages} caller={caller} callerSignal={callerSignal} isReceivingCall={isReceivingCall} setIsVideoCallActive={setIsVideoCallActive} isVideoCallActive={isVideoCallActive} socket={socket} doctorId={doctorId} clientId={clientId} convoId = {convoId} messages={messages} removedata={() => setMessage([])} />
               </ResizablePanel>
           ) : null
         ) : (
           <ResizablePanel defaultSize={defaultLayout[2]}>
-              <ChatDisplay handleAcceptCall={handleAcceptCall} setMessages={setMessages} caller={caller} callerSignal={callerSignal} isReceivingCall={isReceivingCall} setIsVideoCallActive={setIsVideoCallActive} isVideoCallActive={isVideoCallActive} socket={socket} doctorId={doctorId} clientId={clientId} convoId = {convoId} messages={messages} removedata={() => setMessage([])} />
+              <ChatDisplay handleDeclineCall={handleDeclineCall}  callerName={callerName} handleAcceptCall={handleAcceptCall} setMessages={setMessages} caller={caller} callerSignal={callerSignal} isReceivingCall={isReceivingCall} setIsVideoCallActive={setIsVideoCallActive} isVideoCallActive={isVideoCallActive} socket={socket} doctorId={doctorId} clientId={clientId} convoId = {convoId} messages={messages} removedata={() => setMessage([])} />
               </ResizablePanel>
         )}
       </ResizablePanelGroup>

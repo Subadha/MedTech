@@ -4,7 +4,22 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { Country, State, City } from "country-state-city";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { GiTwoCoins } from "react-icons/gi";
@@ -12,20 +27,103 @@ import { IoMdTime } from "react-icons/io";
 
 const Page = () => {
   const [doctors, setDoctors] = useState<any>([]);
+  const [selectedCountry, setSelectedCountry] = useState<string>("");
+  const [selectedState, setSelectedState] = useState<string>("");
+  const [selectedCity, setSelectedCity] = useState<string>("");
+
+  const countries = Country.getAllCountries();
+  const states = selectedCountry
+    ? State.getStatesOfCountry(selectedCountry)
+    : [];
+  const cities = selectedState
+    ? City.getCitiesOfState(selectedCountry, selectedState)
+    : [];
+
   useEffect(() => {
     (async () => {
       const doc = await getAllDoctorsWithDetails();
       setDoctors(doc);
     })();
   }, []);
-  console.log(doctors);
 
   return (
     <>
       <div className="p-4 flex flex-col lg:flex-row justify-between h-20 lg:items-center gap-4">
         <h2 className=" text-2xl font-medium">All Doctors</h2>
-        <span className=" text-primary font-medium">Filter</span>
+        <Popover>
+          <PopoverTrigger>Filter</PopoverTrigger>
+          <PopoverContent
+            className="flex flex-col gap-2"
+            sideOffset={10}
+            side="bottom"
+            align="end"
+          >
+            <h2 className=" font-semibold">Filter</h2>
+            {/* Country Filter */}
+            <Select
+              value={selectedCountry}
+              onValueChange={(value) => setSelectedCountry(value)}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a country" />
+              </SelectTrigger>
+              <SelectContent>
+                {countries.map((country) => (
+                  <SelectItem key={country.isoCode} value={country.isoCode}>
+                    {country.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* State Filter */}
+            <Select
+              value={selectedState}
+              onValueChange={(value) => setSelectedState(value)}
+              disabled={!selectedCountry} // Disabled until a country is selected
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a state" />
+              </SelectTrigger>
+              <SelectContent>
+                {states.length > 0 ? (
+                  states.map((state) => (
+                    <SelectItem key={state.isoCode} value={state.isoCode}>
+                      {state.name}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <p>No cities available</p>
+                )}
+              </SelectContent>
+            </Select>
+
+            {/* City Filter */}
+            <Select
+              value={selectedCity}
+              onValueChange={(value) => setSelectedCity(value)}
+              disabled={!selectedState} // Disabled until a state is selected
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select a city" />
+              </SelectTrigger>
+              <SelectContent>
+                {cities.length > 0 ? (
+                  cities.map((city) => (
+                    <SelectItem key={city.name} value={city.name}>
+                      {city.name}
+                    </SelectItem>
+                  ))
+                ) : (
+                  <p>No cities available</p>
+                )}
+              </SelectContent>
+            </Select>
+          </PopoverContent>
+        </Popover>
       </div>
+
+      {/* Displaying the filtered doctors */}
       <div className="grid grid-cols-6 gap-3 p-4">
         {doctors?.map((data: any) => (
           <DoctorCard key={data.id} data={data} />
@@ -59,7 +157,9 @@ const DoctorCard = ({ data }: any) => {
                 <span>{data?.doctorProfile?.specialization}</span>&nbsp;|&nbsp;
                 <span>{data?.doctorProfile?.experienceYears} Years</span>
               </div>
-              <Badge variant="secondary">{data?.doctorProfile?.subSpecialist}</Badge>
+              <Badge variant="secondary">
+                {data?.doctorProfile?.subSpecialist}
+              </Badge>
             </div>
           </div>
         </CardContent>
@@ -83,7 +183,12 @@ const DoctorCard = ({ data }: any) => {
                 </p>
                 <span className="text-[12px] text-gray-600">
                   {data?.doctorAvailabilityDetails?.availableTimeFrom} AM -{" "}
-                  {data?.doctorAvailabilityDetails?.availableTimeSlot[data?.doctorAvailabilityDetails?.availableTimeSlot?.length-1]}
+                  {
+                    data?.doctorAvailabilityDetails?.availableTimeSlot[
+                      data?.doctorAvailabilityDetails?.availableTimeSlot
+                        ?.length - 1
+                    ]
+                  }
                 </span>
               </div>
             </div>

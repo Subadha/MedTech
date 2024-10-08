@@ -10,6 +10,7 @@ interface VideoCallProps {
   clientId: string | null;
   doctorId: string | null;
   isReceivingCall: boolean;
+  callerName:string;
   caller: string;
   callerSignal: any;
   onAcceptCall: () => void;
@@ -18,6 +19,7 @@ interface VideoCallProps {
 
 const VideoCall: React.FC<VideoCallProps> = ({
   socket,
+  callerName,
   setIsVideoCallActive,
   clientId,
   doctorId,
@@ -321,7 +323,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
               )}
               {callAccepted && !callEnded && (
                 <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded">
-                  {userName} {remoteVideoOff ? '(Video Off)' : ''} {remoteAudioMuted ? '(Muted)' : ''}
+                  {callerName} {remoteVideoOff ? '(Video Off)' : ''} {remoteAudioMuted ? '(Muted)' : ''}
                 </div>
               )}
             </div>
@@ -332,7 +334,7 @@ const VideoCall: React.FC<VideoCallProps> = ({
       {receivingCall && !callAccepted && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-xl">
-            <h2 className="text-xl font-semibold mb-4">{userName} is calling...</h2>
+            <h2 className="text-xl font-semibold mb-4">{callerName} is calling...</h2>
             <div className="flex space-x-4">
               <button
                 onClick={answerCall}

@@ -1,8 +1,8 @@
 "use server";
 import { getUserOtp } from "@/data/user";
 import { getUserByNumber } from "@/data/user";
-import { generatePasswordResetToken, getVerificationToken } from "@/lib/tokens";
-import { onlyOtpVerify, otpVerify } from "@/schema";
+import { generatePasswordResetToken} from "@/lib/tokens";
+import { onlyOtpVerify} from "@/schema";
 import { z } from "zod";
 
 export const verifyOtp3 = async (values: z.infer<typeof onlyOtpVerify>) => {

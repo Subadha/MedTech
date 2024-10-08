@@ -45,7 +45,7 @@ interface Message {
 }
 
 
-export function ChatDisplay({ socket,setMessages,isVideoCallActive,handleDeclineCall,isReceivingCall,handleAcceptCall,caller,callerSignal ,setIsVideoCallActive,messages,doctorId,convoId,clientId, removedata }: any) {
+export function ChatDisplay({callerName, socket,setMessages,isVideoCallActive,handleDeclineCall,isReceivingCall,handleAcceptCall,caller,callerSignal ,setIsVideoCallActive,messages,doctorId,convoId,clientId, removedata }: any) {
   const [mail, setMail] = useMail();
   const [message, setMessage] = useState<any>("");
   const [open, setOpen] = useState(false);
@@ -233,6 +233,7 @@ console.log("message",messages)
      {isVideoCallActive ? (
         <div className="fixed inset-0 z-50 bg-background">
           <VideoCall
+          callerName={callerName}
             socket={socket}
             setIsVideoCallActive={setIsVideoCallActive}
             clientId={clientId}

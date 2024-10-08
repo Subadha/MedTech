@@ -32,6 +32,8 @@ export const NumberRegister = async (
       phone,
     },
   });
+  
+  let nameArray = name.split(' ');
 
   if (valid) {
     const result = await db.user.create({
@@ -40,6 +42,7 @@ export const NumberRegister = async (
         role,
         phone,
         numberVerified: true,
+        image:`https://ui-avatars.com/api/?name=${nameArray[0]}+${nameArray[1]}`
       },
     });
     if (result?.id) {

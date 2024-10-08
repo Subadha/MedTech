@@ -30,6 +30,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
  if (numberUsed){
   return { error: "Phone number is already used"}
  }
+ let nameArray = name.split(' ');
   const data= await db.user.create({
     data: {
       name,
@@ -37,6 +38,7 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
       password: hashedPassword,
       role,
       phone, 
+      image:`https://ui-avatars.com/api/?name=${nameArray[0]}+${nameArray[1]}`
     },
   });
 
