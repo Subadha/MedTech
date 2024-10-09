@@ -1,25 +1,28 @@
 "use client";
 import Image from "next/image";
-import img from "@/app/images/doc1.png";
 import { FaRegMessage } from "react-icons/fa6";
 import { useEffect, useState } from "react";
-import { getPatientsByDoctorId } from "@/actions/patient/GetPatientsByDoctorId";
 import { useUser } from "@/app/context/userContext";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { ArrowUpRight } from "lucide-react";
 
 export default function PatientDetails() {
   const { id } = useUser();
+  const router = useRouter();
   const [patient, setPatient] = useState<any>([]);
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const result = await fetch("/api/v1/doctor/all-patients-by-id",{
-            method: "POST",
-            body: JSON.stringify({userId:id})
+        const result = await fetch("/api/v1/doctor/all-patients-by-id", {
+          method: "POST",
+          body: JSON.stringify({ userId: id }),
         });
-        const data = await result.json();
+        const { data } = await result.json();
         console.log(data);
-        
-       // setPatient(result);
+
+        setPatient(data);
       } catch (error) {
         console.error("Error fetching patients:", error);
       }
@@ -35,23 +38,34 @@ export default function PatientDetails() {
           All Patients
         </h1>
       </div>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-        {patient?.map((_: any, index: any) => (
-          <div
-            key={index}
-            className="flex flex-col md:flex-row gap-4 border-2 rounded-lg bg-gray-100 p-4"
-          >
-            <div className="w-full md:w-[40%] flex justify-center">
-              <Image src={img} alt="doc" className="rounded-lg" />
-            </div>
-            <div className="flex flex-col p-5 gap-3 w-full">
-              <div className="flex flex-col">
-                <h1 className="font-bold text-lg md:text-xl">{_.name}</h1>
-                <h1 className="text-purple-600 text-sm md:text-base">
-                  Pregnancy Patient
-                </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {patient?.map((_: any, index: any) => {
+          let nameArray = _.name.split(" ");
+          return (
+            <Card
+              key={index}
+              className="flex flex-col md:flex-row gap-2 rounded-lg p-4"
+            >
+              <div className="flex justify-center">
+                <Image
+                  width={400}
+                  height={600}
+                  src={
+                    _.image ||
+                    `https://ui-avatars.com/api/?name=${nameArray[0]}+${nameArray[1]}`
+                  }
+                  alt="doc"
+                  className="rounded-lg object-cover"
+                />
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col p-5 gap-3 w-full">
+                <div className="flex flex-col">
+                  <h1 className="font-bold text-lg md:text-xl">{_.name}</h1>
+                  <p className="text-purple-600 text-sm md:text-base">
+                    {_.about}
+                  </p>
+                </div>
+                {/* <div className="flex flex-wrap gap-2">
                 <span className="border-2 bg-gray-300 rounded-lg p-2 text-xs md:text-sm">
                   Patient
                 </span>
@@ -61,21 +75,25 @@ export default function PatientDetails() {
                 <span className="border-2 bg-gray-300 rounded-lg p-2 text-xs md:text-sm">
                   Maternity
                 </span>
-              </div>
-              <div>
-                <p className="text-xs md:text-sm">{_.purpose} </p>
-              </div>
-              <div className="flex gap-3">
-                <div className="flex border-2 rounded-sm w-[30%] md:w-[8vw] h-[8vw] md:h-[3vw] justify-center items-center text-center">
-                  <FaRegMessage />
+              </div> */}
+                <div>
+                  <p className="text-xs md:text-sm">{_.purpose} </p>
                 </div>
-                <div className="flex border-2 rounded-sm w-full h-[8vw] md:h-[3vw] justify-center items-center text-center bg-purple-600 text-white">
-                  <p>See Details</p>
+                <div className="flex gap-3">
+                  <Button
+                    onClick={() => router.push("/dashboard/chat")}
+                    variant="outline"
+                  >
+                    <FaRegMessage />
+                  </Button>
+                  <Button>
+                    Report <ArrowUpRight />
+                  </Button>
                 </div>
               </div>
-            </div>
-          </div>
-        ))}
+            </Card>
+          );
+        })}
       </div>
     </div>
   );
