@@ -2,52 +2,49 @@
 import { db } from "@/lib/db";
 
 export const getAllAppointment = async (id: string, role: string) => {
-  let appointments;
   try {
     if (typeof id !== 'string' || !id.trim()) {
-      throw new Error('Invalid ID format');
+      return { success: false, message: 'Invalid ID format' };
     }
 
-    console.log("Role = ", role);
+    const appointments = await db.bookedAppointment.findMany({
+      where: role === 'DOCTOR' ? { doctor_id: id } : { userId: id },
+    });
 
-    if (role !== 'DOCTOR') {
-      appointments = await db.bookedAppointment.findMany({
-        where: { userId: id },
-      });
-    } else {
-      appointments = await db.bookedAppointment.findMany({
-        where: { doctor_id: id },
-      });
+    if (!appointments || appointments.length === 0) {
+      return { success: true, message: "No appointments found for this user.", data: [] };
     }
 
     const uniqueAppointmentsMap = new Map();
-
-    const statusPriority = { confirmed: 1, completed: 2, 'not-confirm': 3,canceled:4 };
+    const statusPriority = { CONFIRMED: 1, COMPLETED: 2, NOT_CONFIRMED: 3, CANCELED: 4 };
 
     for (const appointment of appointments) {
-      const existingAppointment = uniqueAppointmentsMap.get(appointment.doctor_id);
+      // Create a unique key using both doctor_id and userId
+      const uniqueKey = `${appointment.doctor_id}-${appointment.userId}`;
+      
+      const existingAppointment = uniqueAppointmentsMap.get(uniqueKey);
+      const currentPriority = statusPriority[appointment.status.toUpperCase()] || Infinity;
+      const existingPriority = existingAppointment 
+        ? (statusPriority[existingAppointment.status.toUpperCase()] || Infinity) 
+        : Infinity;
 
-      if (!existingAppointment) {
-        uniqueAppointmentsMap.set(appointment.doctor_id, appointment);
-      } else {
-        if (statusPriority[appointment.status] < statusPriority[existingAppointment.status]) {
-          uniqueAppointmentsMap.set(appointment.doctor_id, appointment);
-        }
+      if (!existingAppointment || currentPriority < existingPriority) {
+        uniqueAppointmentsMap.set(uniqueKey, appointment);
       }
     }
 
     const uniqueAppointments = Array.from(uniqueAppointmentsMap.values());
+console.log("uniqueAppointments",uniqueAppointments);
+console.log("ALLAppointments",appointments);
 
-    console.log("These are unique appointments:", uniqueAppointments);
-
-    if (!appointments || appointments.length === 0) {
-      return { success: true, message: "No appointments found for this user." };
-    }
-
-    return { success: true, data: appointments,updatedData: uniqueAppointments };
+    return { 
+      success: true, 
+      data: appointments, 
+      updatedData: uniqueAppointments 
+    };
 
   } catch (err) {
     console.error("Error fetching appointments:", err);
-    return { error: "Internal server error" };
+    return { success: false, message: "Internal server error" };
   }
 };
