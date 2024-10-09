@@ -70,8 +70,8 @@ export function ChatDisplay({list,callerName, socket,setMessages,isVideoCallActi
   const searchIdKey = role === 'DOCTOR' ? "userId" : "doctor_id";
           
     setConfirmedAppointments(list
-    .filter((lis) => lis[searchIdKey] === mail.selected)
-    .filter((lis)=> lis.status === "confirmed"))
+    .filter((lis:any) => lis[searchIdKey] === mail.selected)
+    .filter((lis:any)=> lis.status === "confirmed"))
 
    
     
