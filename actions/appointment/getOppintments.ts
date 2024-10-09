@@ -16,7 +16,7 @@ export const getAllAppointment = async (id: string, role: string) => {
     }
 
     const uniqueAppointmentsMap = new Map();
-    const statusPriority = { CONFIRMED: 1, COMPLETED: 2, NOT_CONFIRMED: 3, CANCELED: 4 };
+    const statusPriority:any = { CONFIRMED: 1, COMPLETED: 2, NOT_CONFIRMED: 3, CANCELED: 4 };
 
     for (const appointment of appointments) {
       // Create a unique key using both doctor_id and userId
