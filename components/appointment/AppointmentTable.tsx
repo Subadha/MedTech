@@ -13,6 +13,7 @@ import {
   CircleCheckBig,
   CircleX,
   Clock8,
+  EllipsisVertical,
   MessageCircle,
   Phone,
   Star,
@@ -31,8 +32,15 @@ import { RescheduleSheet } from "./RescheduleSheet";
 import { RatingSheet } from "./RatingSheet";
 import { useRouter } from "next/navigation";
 import { useMail } from "../chat/chat";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
+import { useToast } from "../ui/use-toast";
+import { useUser } from "@/app/context/userContext";
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
 
 export function AppointmentTable({ data,refresh }: any) {
+  const [cancleDialog,setCancleDialog]= useState('')
+  const {toast}= useToast()
+  const {id:userId}= useUser()
   const [selected, setSelected] = useState<string[]>([]);
   const router =  useRouter();
   const [mail, setMail] = useMail();
@@ -46,6 +54,35 @@ export function AppointmentTable({ data,refresh }: any) {
   const [open, setOpen] = useState("");
   const [openRating, setOpenRating] = useState("");
 
+  const CancleFunction=async (id:string)=>{
+    try {
+      const canceled = await fetch("/api/v1/patient/appointment/cancel",{
+        method: "POST",
+        body: JSON.stringify({id,userId})
+      })
+      const result = await canceled.json()
+      console.log(result.success);
+      if(result) {
+        refresh()
+        toast({
+          title:result.success,
+          variant:'success'
+        })
+      }
+      else{toast({
+        title:"Unable to cancle",
+        variant:'destructive'
+      })}
+    } catch (error) {
+      console.log(error);
+      toast({
+        title:"Unable to cancle, try again",
+        variant:'destructive'
+      })
+    }finally{
+      setCancleDialog('')
+    }
+  }
   return (
     <>
       <div className="flex mt-4 gap-4 lg:h-20 lg:flex-row flex-col items-center justify-between">
@@ -155,12 +192,39 @@ export function AppointmentTable({ data,refresh }: any) {
                   />
                 </TableCell>
               )}
+              <TableCell>
+               {(appointment.status !== "canceled"&&appointment.status !== "completed") && ( <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <EllipsisVertical />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-24">
+                    {appointment.status !== "canceled" && (
+                      <DropdownMenuCheckboxItem onClick={()=>setCancleDialog(appointment.id)}>
+                        Cancel
+                      </DropdownMenuCheckboxItem>
+                    )}
+                  </DropdownMenuContent>
+                </DropdownMenu>)}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
       <RescheduleSheet open={open} refresh={refresh} close={() => setOpen("")} />
       <RatingSheet open={openRating} refresh={refresh} close={() => setOpenRating("")} />
+      <Dialog open={cancleDialog?true:false} onOpenChange={()=>setCancleDialog('')} >
+      <DialogContent className="sm:max-w-[425px]">
+      <DialogHeader>
+          <DialogTitle>Cancel</DialogTitle>
+          <DialogDescription>
+           This process is not reversible
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <Button onClick={()=>CancleFunction(cancleDialog)} variant="destructive">Cancle</Button>
+        </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   );
 }
