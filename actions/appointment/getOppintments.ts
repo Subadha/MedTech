@@ -47,4 +47,4 @@ console.log("ALLAppointments",appointments);
     console.error("Error fetching appointments:", err);
     return { success: false, message: "Internal server error" };
   }
-};
+}; 
