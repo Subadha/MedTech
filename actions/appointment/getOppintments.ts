@@ -22,7 +22,7 @@ export const getAllAppointment = async (id: string, role: string) => {
 
     const uniqueAppointmentsMap = new Map();
 
-    const statusPriority = { confirmed: 1, completed: 2, 'not confirmed': 3,cancled:4 };
+    const statusPriority = { confirmed: 1, completed: 2, 'not-confirm': 3,canceled:4 };
 
     for (const appointment of appointments) {
       const existingAppointment = uniqueAppointmentsMap.get(appointment.doctor_id);
