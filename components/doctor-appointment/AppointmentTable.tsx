@@ -200,14 +200,12 @@ export function AppointmentTable({ data,fetchData }: any) {
               </TableCell>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <Phone size={18} />
-
                   <MessageCircle size={18} className=" cursor-pointer"  onClick={
                     () =>
                       {setMail({
                         ...mail,
-                        selected: appointment.doctor_id,
-                        name: appointment.doctorName,
+                        selected: appointment.userId,
+                        name: appointment.name,
                         type: "PRIVATE",
                       }); router.push('/dashboard/chat')}
                   } />
