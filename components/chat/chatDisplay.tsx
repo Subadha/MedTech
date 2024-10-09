@@ -293,7 +293,8 @@ console.log("message",messages)
               <Search size={20} />
               <Tooltip>
                 <TooltipTrigger asChild>
-            {conversationType!=="COMMUNITY"?
+            {((conversationType==="PRIVATE" && (confirmedAppointments.length > 0))||(role=="DOCTOR" && conversationType==="COMMUNITY") )&&(
+
                   (<Button
                     variant="ghost"
                     size="icon"
@@ -303,7 +304,7 @@ console.log("message",messages)
                     <Video className="h-5 w-5" />
                     <span className="sr-only">Start Video Call</span>
                   </Button>
-                  ):<></>}
+                  ))}
                 </TooltipTrigger>
                 <TooltipContent>Start Video Call</TooltipContent>
               </Tooltip>
