@@ -4,6 +4,7 @@ import { auth } from "@/auth";
 import Header from "@/components/dashboard/header";
 import SideNav from "@/components/home/SideNav";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { redirect } from "next/navigation";
 import React from "react";
 
 export default async function Layout({
@@ -17,7 +18,11 @@ export default async function Layout({
   const id = session?.user.id || "";
   const email = session?.user.email || "";
   const image = session?.user.image || "";
- 
+  console.log(session);
+  if(!session){
+    redirect("auth/login");
+  }
+
   return (
     <UserProvider userName={userName} role={role} image={image} id={id} email={email} >
     <TooltipProvider>

@@ -17,6 +17,7 @@ import FormSuccess from "../auth/form-sucess";
 import FormError from "../auth/form-error";
 import CharacterRevealText from "./TextReveal"; 
 import { motion } from "framer-motion";
+import { HomeMainCarausel } from "./hero-carausel";
 
 interface FormValues extends z.infer<typeof Appointment> { }
 
@@ -80,13 +81,8 @@ const Hero: React.FC = () => {
               promote physical, mental, and spiritual wellness.
             </p>
           </div>
-          <div className="relative lg:col-span-5 xl:col-span-6 h-64 lg:h-[60vh]">
-            <Image
-              src={currentImage.src} // Access the path of the image
-              alt="Health innovation image"
-              layout="fill"
-              className="w-full h-full"
-            />
+          <div className="relative lg:col-span-5 xl:col-span-6 lg:mt-10 lg:h-[60vh]">
+          <HomeMainCarausel/>
           </div>
         </div>
       </div>

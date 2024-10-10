@@ -39,7 +39,7 @@ const CharacterRevealText: React.FC<CharacterRevealTextProps> = ({ onTextChange 
                         // Change text after animation completes
                         setTimeout(() => {
                             setCurrentIndex((prevIndex) => (prevIndex + 1) % texts?.length);
-                        }, 2000); // Adjust delay if needed
+                        }, 2500); // Adjust delay if needed
                     }
                 }
             );

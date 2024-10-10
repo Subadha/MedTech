@@ -33,6 +33,23 @@ export default function Profile({
 
  useEffect(() => handleFetchProfileData(),[])
 
+
+ const updateProfileImage = async (event: any) => {
+  console.log("called updateProfileImage");
+  
+  if (!event.target.files[0] || !id) return;
+  const formData = new FormData();
+  formData.append("image", event.target.files[0]);
+  formData.append("userId", id);
+
+  const response = await fetch(`/api/v1/profile/profile-pic`, {
+    method: "POST",
+    body: formData,
+  });
+  handleFetchProfileData();
+};
+
+
   return (
     <>
       <div className="p-10 h-[80vh]">
@@ -43,32 +60,44 @@ export default function Profile({
           <div className="bg-white shadow-xl box-border rounded-lg sm:w-[30vw] sm:mx-[100px] sm:h-[100vh] -mt-[50px] mb-[100px] sm:mb-0 pb-10 sm:pb-0">
             <div className="flex justify-between pr-2 lg:pr-4 pl-20 py-2 lg:py-4">
              <div className="w-20 h-20 rounded-full overflow-hidden relative">
+             <input
+                  type="file"
+                  accept="image/*"
+                  onChange={updateProfileImage}
+                  className="hidden"
+                  id="fileInput"
+                  placeholder="he"
+                />
+                <label htmlFor="fileInput">
                 <Image
                   src={data?.image || img}
                   alt="No Image"
+                  className=""
                   layout="fill"
                   objectFit="cover"
                 />
+                </label>
+            
               </div>
               <Modal details={data} refresh={handleFetchProfileData} />
             </div>
             <div className="rounded-lg sm:mx-[30px] mx-[20px] sm:text-[1vw] text-[3vw] shadow-lg box-border pb-4 border-2 border-gray-300">
               <div className="flex flex-col mx-[20px] pt-2">
-                <p>Your Name</p>
+                <p className="font-medium" >Your Name</p>
                 <div className="flex justify-between pt-2">
-                  <p className="">{data?.name}</p>
+                  <p className=" text-sm">{data?.name}</p>
                 </div>
               </div>
               <div className="flex flex-col mx-[20px] pt-2">
-                <p>Email</p>
+                <p className="font-medium">Email</p>
                 <div className="flex justify-between pt-2">
-                  <p className="">{data?.email}</p>
+                  <p className=" text-sm">{data?.email}</p>
                 </div>
               </div>
               <div className="flex flex-col mx-[20px] pt-2">
-                <p>Phone Number</p>
+                <p className="font-medium">Phone Number</p>
                 <div className="flex justify-between pt-2">
-                  <p className="">{data?.phone}</p>
+                  <p className=" text-sm">{data?.phone}</p>
                 </div>
                 {!data?.numberVerified && <PhoneVerify details={data} data1={data?.phone} refresh={handleFetchProfileData} />}
               </div>

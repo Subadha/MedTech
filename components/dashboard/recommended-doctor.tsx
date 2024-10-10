@@ -20,7 +20,7 @@ const RecommendedDoctors = () => {
         const data = await fetch("/api/v1/patients/dashboard/recomended-doctor");
         const result = await data.json();
         console.log(result);
-        if (result.data?.length > 0) {
+        if (result.data?.length > 0) {          
         setData(result.data);}
       } catch (error) {
         console.log(error);
@@ -36,7 +36,7 @@ const RecommendedDoctors = () => {
           Recommended Doctors
         </h1>
         <span className=" text-sm text-primary font-medium gap-1 flex items-center hover:underline">
-         <Link href={"consult"} className="flex items-center">View all <FaAngleRight /></Link>
+         <Link href={"/dashboard/consult"} className="flex items-center">View all <FaAngleRight /></Link>
         </span>
       </div>
       <CardContent className=" grid grid-cols-6 gap-3">
@@ -56,8 +56,8 @@ export default RecommendedDoctors;
           <div className="flex gap-2">
             <Avatar className=" aspect-square h-16 w-16">
               <AvatarImage
-                src={data.image || "https://avatar.iran.liara.run/public"}
-                alt="@shadcn"
+                src={data.user.image || "https://avatar.iran.liara.run/public"}
+                alt="DR"
                 className=" object-cover"
               />
               <AvatarFallback>DR</AvatarFallback>
@@ -76,24 +76,30 @@ export default RecommendedDoctors;
         </CardContent>
         <Separator className="my-2" />
         <CardFooter className="p-2 w-full flex flex-col gap-2 ">
-          <div className="flex py-2 w-full gap-3">
+        <div className="flex py-2 w-full gap-3">
             <div className="flex gap-1 ">
               <IoMdTime />
               <div>
                 <p className="text-md leading-none flex font-medium">
-                  {data?.doctorAvailabilityDetails?.availableDays?.length >=
-                    1 &&
-                  data?.doctorAvailabilityDetails?.availableDays?.length <= 3
-                    ? data.doctorAvailabilityDetails.availableDays.join(", ")
-                    : data?.available_days?.length > 0
-                    ? `${data.available_days[0]} - ${
-                        data.available_days[data.available_days.length - 1]
-                      }`
+                  {data?.availabilityDetails?.availableDays?.length
+                    ? data.availabilityDetails.availableDays.length <= 3
+                      ? data.availabilityDetails.availableDays.join(", ")
+                      : `${data.availabilityDetails.availableDays[0]} - ${
+                          data.availabilityDetails.availableDays[
+                            data.availabilityDetails.availableDays
+                              .length - 1
+                          ]
+                        }`
                     : "No available days"}
                 </p>
                 <span className="text-[12px] text-gray-600">
-                  {data?.availableTimeFrom} AM -{" "}
-                  {data?.doctorAvailabilityDetails?.availableTimeSlot[data?.doctorAvailabilityDetails?.availableTimeSlot?.length-1]} PM
+                  {data?.availabilityDetails?.availableTimeFrom} AM -{" "}
+                  {
+                    data?.availabilityDetails?.availableTimeSlot[
+                      data?.availabilityDetails?.availableTimeSlot
+                        ?.length - 1
+                    ]
+                  }
                 </span>
               </div>
             </div>
@@ -107,7 +113,7 @@ export default RecommendedDoctors;
               </div>
             </div>
           </div>
-          <Link className="w-full" href={`consult/${data.id}`}>
+          <Link className="w-full" href={`/dashboard/consult/${data.userId}`}>
             <Button className="w-full">Book an appointment</Button>
           </Link>
         </CardFooter>

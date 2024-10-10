@@ -1,14 +1,31 @@
-import { db } from "@/lib/db"
-import { NextResponse } from "next/server"
+import { db } from "@/lib/db";
+import { NextResponse } from "next/server";
 
-export const GET = async ()=>{
-    try {
-        const recommendedDoctors= await db.doctorProfile.findMany()
-        const top3Doctors = recommendedDoctors
-        .sort((a, b) => b.bookedAppointment - a.bookedAppointment)
-        .slice(0, 3);
-        return NextResponse.json({data:top3Doctors})
-    } catch (error) {
-       NextResponse.json(error)
-    }
-}
+export const GET = async () => {
+  try {
+    // Fetch all doctors and sort them based on the number of booked appointments
+    const recommendedDoctors = await db.doctorProfile.findMany({
+      include: {
+        user: true, // Fetch user information associated with each doctor
+      },
+    });
+
+    // Sort the doctors and get the top 3
+    const top3Doctors = recommendedDoctors
+      .sort((a, b) => b.bookedAppointment - a.bookedAppointment)
+      .slice(0, 3);
+
+    const doctorDetailsPromises = top3Doctors.map(async (doctor) => {
+      const availabilityDetails = await db.doctorAvailabilityDetails.findUnique({
+        where: { userId: doctor.userId },
+      });
+      return { ...doctor, availabilityDetails };
+    });
+
+    const top3DoctorsWithDetails = await Promise.all(doctorDetailsPromises);
+
+    return NextResponse.json({ data: top3DoctorsWithDetails });
+  } catch (error) {
+    return NextResponse.json({ error: error });
+  }
+};

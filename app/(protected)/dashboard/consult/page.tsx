@@ -75,7 +75,7 @@ const Page = () => {
             side="bottom"
             align="end"
           >
-            <div className="flex justify-between"><h2 className=" font-semibold">Filter</h2> <Button onClick={Clear}><X/> Clear</Button></div>
+            <div className="flex justify-between"><h2 className=" font-semibold">Filter</h2> <Button size='sm' onClick={Clear}><X/> Clear</Button></div>
             {/* Country Filter */}
             <Select
               value={selectedCountry}

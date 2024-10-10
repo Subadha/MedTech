@@ -13,6 +13,7 @@ import {
 } from "../ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import MobSideBar from "./mob-sidebar";
+import Link from "next/link";
 
 type HeaderProps = {
   userName: string;
@@ -39,13 +40,15 @@ const Header = ({ userName,role, image }: HeaderProps) => {
           <LanguageSelection />
           </div>
           <GoBell className="text-xl" />
-          <div className="flex items-center gap-2">
+         <Link href="/dashboard/profile">
+         <div className="flex items-center gap-2">
             <Avatar>
-              <AvatarImage src={image||"https://github.com/shadcn.png"} alt="@shadcn" />
+              <AvatarImage src={image||`https://avatar.iran.liara.run/username?username=${userName.split(" ")[0]}+${userName.split(" ")[1]}`} alt="@shadcn" />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <p className="text-sm lg:block hidden font-medium">{userName.split(" ")[0]}</p>
           </div>
+         </Link>
         </div>
       </div>
     </header>
