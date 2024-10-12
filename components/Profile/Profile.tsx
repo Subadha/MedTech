@@ -8,6 +8,8 @@ import { startTransition, useEffect, useState } from "react";
 import { getProfileData } from "@/actions/profile/getProfileData";
 import { User } from "@/data/user";
 import { PhoneVerify } from "./PhoneVerify";
+import { Button } from "../ui/button";
+import UploadDocument from "./upload-dialog";
 
 
 interface ProfileProps {
@@ -122,6 +124,9 @@ export default function Profile({
               <div className="flex justify-between mx-[20px] pt-2">
                 <p>About Sid</p>
               </div>
+            </div>
+            <div className="rounded-lg border-2 border-gray-300 sm:mx-[30px] mx-[20px] mt-4 sm:text-[1vw] text-[3vw] shadow-xl box-border pb-4">
+             <UploadDocument/> 
             </div>
           </div>
           <div className="bg-white shadow-xl box-border sm:w-[30vw] sm:text-[1vw] text-[3vw] h-[100vh] -mt-[50px] rounded-lg">

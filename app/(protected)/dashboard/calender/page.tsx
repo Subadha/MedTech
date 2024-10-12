@@ -14,42 +14,38 @@ const FullCalendar = dynamic(() => import("@fullcalendar/react"), {
   ssr: false,
 });
 
-
-
 const CalendarPage = () => {
-  const {id}= useUser()
+  const { id } = useUser();
   const [data, setData] = useState<any>([]);
-useEffect(() => {
-  const GetData = async () => {
-    try {
-      const data = await fetch("/api/v1/patients/calender", {
-        method: "POST",
-        body: JSON.stringify({ userId: id || '' }),
-      });
-      const result = await data.json();
-      if(result.success){
-        setData(result.data);
+  useEffect(() => {
+    const GetData = async () => {
+      try {
+        const data = await fetch("/api/v1/patients/calender", {
+          method: "POST",
+          body: JSON.stringify({ userId: id || "" }),
+        });
+        const result = await data.json();
+        if (result.success) {
+          setData(result.data);
+        }
+      } catch (error) {
+        console.log(error);
       }
-      
-    } catch (error) {
-      console.log(error);
-      
-     }
-  };
-  GetData();
-}, []);
+    };
+    GetData();
+  }, []);
 
-  const updatedEvents = data.map((event:any) => {
+  const updatedEvents = data.map((event: any) => {
     const color = randomColor();
     const formattedDate = new Date(event.date).toISOString().slice(0, 19);
     return {
       title: event.doctorName,
-      start:formattedDate,
+      start: formattedDate,
       backgroundColor: color,
     };
   });
- console.log(updatedEvents);
- 
+  console.log(updatedEvents);
+
   return (
     <div className="pt-10 px-6 min-h-[90vh] lg:py-10 lg:px-12">
       <Card className="lg:p-4 p-1 h-[calc(100vh-100px)] lg:h-full overflow-y-auto">
@@ -81,7 +77,7 @@ useEffect(() => {
 export default CalendarPage;
 
 function renderEventContent(eventInfo: any) {
-  console.log(eventInfo)
+  console.log(eventInfo);
   const { backgroundColor } = eventInfo;
   let bgColorWithOpacity = backgroundColor;
 

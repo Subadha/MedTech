@@ -26,7 +26,8 @@ model User {
   doctorLicenses            DoctorLicense?
   doctorProfile             DoctorProfile?
   reviews                   Reviews[]
-
+  patientReportsDoc         PatientReportsDoc?
+  
   @@map("users")
 }
 
@@ -90,6 +91,15 @@ model DoctorLicense {
   user                User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("doctor_licenses")
+}
+
+model PatientReportsDoc {
+  id                  Int    @id @default(autoincrement())
+  userId              String @unique
+  imageUrl1           String
+  imageUrl2           String
+  user                User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("patient_report")
 }
 
 model Account {
