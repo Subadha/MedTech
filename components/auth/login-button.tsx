@@ -12,7 +12,7 @@ export default function LoginButton({children,mode="redirect",asChild}:LoginButt
     const router = useRouter();
 
     const onClick =()=>{
-        router.push("auth/login");
+        router.push("comingsoon");
     }
 
     if(mode==="modal"){
