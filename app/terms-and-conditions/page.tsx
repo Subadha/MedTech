@@ -13,8 +13,9 @@ const page = () => {
         signatures. This document is published in accordance with the provisions
         of Rule 3 (1) of the Information Technology (Intermediaries guidelines)
         Rules, 2011 that require publishing the rules and regulations, privacy
-        policy and Terms of Use for access or usage of domain name
-        https://www.kaustubhamedtech.com/ ('Website'), including the related
+        policy and Terms of Use for access or usage of domain name</p>
+        <a href="https://www.kaustubhamedtech.com/" >https://www.kaustubhamedtech.com/</a> 
+        <p>('Website'), including the related
         mobile site and mobile application (hereinafter referred to as
         'Platform'). The Platform is owned by Kaustubha Medtech Private Limited,
         a company incorporated under the Companies Act, 1956 with its registered
@@ -94,8 +95,8 @@ const page = () => {
         This Privacy Policy describes how Kaustubha Medtech Private Limited and
         its affiliates (collectively &quot;Kaustubha Medtech Private Limited,
         we, our, us&quot;) collect, use, share, protect or otherwise process
-        your information/ personal data through our website
-        https://www.kaustubhamedtech.com/ (hereinafter referred to as Platform).
+        your information/ personal data through our website</p>
+        <a href="https://www.kaustubhamedtech.com/" >https://www.kaustubhamedtech.com/</a>  <p>(hereinafter referred to as Platform).
         Please note that you may be able to browse certain sections of the
         Platform without registering with us.We do not offer any product/service
         under this Platform outside India and your personal data will primarily
