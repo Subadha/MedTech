@@ -19,13 +19,13 @@ const page = () => {
         Rules&apos; 2011 that require publishing the rules and regulations&apos; privacy
         policy and Terms of Use for access or usage of domain name</p>
         <a href="https://www.kaustubhamedtech.com/" >https://www.kaustubhamedtech.com/</a> 
-        <p>('Website')&apos; including the related
+        <p>(&apos;Website&apos;)&apos; including the related
         mobile site and mobile application (hereinafter referred to as
-        'Platform'). The Platform is owned by Kaustubha Medtech Private Limited&apos;
+        &apos;Platform&apos;). The Platform is owned by Kaustubha Medtech Private Limited&apos;
         a company incorporated under the Companies Act&apos; 1956 with its registered
         office at Foundation for CfHE&apos; Indian Institute of Hyderabad&apos; Kandi&apos; &apos;
         Medak&apos; Sangareddy&apos; TELANGANA&apos; 502285 (hereinafter referred to as
-        ?Platform Owner?&apos; 'we'&apos; 'us'&apos; 'our').. Your use of the Platform and
+        ?Platform Owner?&apos; &apos;we&apos;&apos; &apos;us&apos;&apos; &apos;our&apos;).. Your use of the Platform and
         services and tools are governed by the following terms and conditions
         (?Terms of Use?) as applicable to the Platform including the applicable
         policies which are incorporated herein by way of reference. If You
@@ -35,13 +35,13 @@ const page = () => {
         terms and conditions including the policies constitute Your binding
         obligations&apos; with Platform Owner. These Terms of Use relate to your use
         of our website&apos; goods (as applicable) or services (as applicable)
-        (collectively&apos; 'Services'). Any terms and conditions proposed by You
+        (collectively&apos; &apos;Services&apos;). Any terms and conditions proposed by You
         which are in addition to or which conflict with these Terms of Use are
         expressly rejected by the Platform Owner and shall be of no force or
         effect. These Terms of Use can be modified at any time without assigning
         any reason. It is your responsibility to periodically review these Terms
         of Use to stay informed of updates.. For the purpose of these Terms of
-        Use&apos; wherever the context so requires ?you?&apos; 'your' or ?user? shall mean
+        Use&apos; wherever the context so requires ?you?&apos; &apos;your&apos; or ?user? shall mean
         any natural or legal person who has agreed to become a user/buyer on the
         Platform.. ACCESSING&apos; BROWSING OR OTHERWISE USING THE PLATFORM INDICATES
         YOUR AGREEMENT TO ALL THE TERMS AND CONDITIONS UNDER THESE TERMS OF USE&apos;
@@ -80,7 +80,7 @@ const page = () => {
         the Platform Owner for the Services.. You shall indemnify and hold
         harmless Platform Owner&apos; its affiliates&apos; group companies (as applicable)
         and their respective officers&apos; directors&apos; agents&apos; and employees&apos; from
-        any claim or demand&apos; or actions including reasonable attorney's fees&apos;
+        any claim or demand&apos; or actions including reasonable attorney&apos;s fees&apos;
         made by any third party or penalty imposed due to or arising out of Your
         breach of this Terms of Use&apos; privacy Policy and other Policies&apos; or Your
         violation of any law&apos; rules or regulations or the rights (including
