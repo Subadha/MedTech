@@ -125,7 +125,11 @@ export default function Profile({
                 <p>About Sid</p>
               </div>
             </div>
-            <div className="rounded-lg border-2 border-gray-300 sm:mx-[30px] mx-[20px] mt-4 sm:text-[1vw] text-[3vw] shadow-xl box-border pb-4">
+            <div className="rounded-lg border-2 items-center flex justify-between p-4 border-gray-300 sm:mx-[30px] mx-[20px] mt-4 sm:text-[1vw] text-[3vw] shadow-xl box-border pb-4">
+             <div>
+             <h1 className="text-lg font-medium" >Reports</h1>
+             <p className=" text-[12px]">Doctors are able to see your report</p>
+             </div>
              <UploadDocument/> 
             </div>
           </div>

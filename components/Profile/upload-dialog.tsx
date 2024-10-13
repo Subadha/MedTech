@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -11,14 +11,17 @@ import {
 import { Button } from "../ui/button";
 import Image from "next/image";
 import { useUser } from "@/app/context/userContext";
+import { useToast } from "../ui/use-toast";
 
 const UploadDocument = () => {
-    const{id}=useUser()
+  const { id } = useUser();
   // State to store the selected files and their previews
   const [image1, setImage1] = useState<File | null>(null);
   const [image2, setImage2] = useState<File | null>(null);
   const [preview1, setPreview1] = useState<string | null>(null);
   const [preview2, setPreview2] = useState<string | null>(null);
+
+  const { toast } = useToast();
 
   // Function to handle file input change and set the image and preview states
   const handleImageChange = (
@@ -33,16 +36,32 @@ const UploadDocument = () => {
     }
   };
 
-  const handleSubmit = async () => {
-    if (!image1 || !image2) {
-      alert("Please select both documents before submitting.");
-      return;
-    }
+  const [data, setData] = useState<any>();
 
-    const formData = new FormData();
-    formData.append("document1", image1);
-    formData.append("document2", image2);
-    formData.append("userId", id); 
+  const FetchData = async () => {
+    try {
+      const data = await fetch(
+        `/api/v1/patients/document-upload/get?userId=${id}`,
+        {
+          method: "GET",
+        }
+      );
+      const response = await data.json();
+      setData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleSubmit = async () => {
+    const formData: any = new FormData();
+
+    if (image1) {
+      formData.append("document1", image1);
+    }
+    if (image2) {
+      formData.append("document2", image2);
+    }
+    formData.append("userId", id);
 
     try {
       const response = await fetch("/api/v1/patients/document-upload", {
@@ -51,19 +70,29 @@ const UploadDocument = () => {
       });
       const result = await response.json();
       if (result.status) {
-        alert("Documents uploaded successfully!");
+        FetchData();
+        toast({
+          title: "Document Upload Success",
+          variant: "success",
+        });
       } else {
-        alert("Failed to upload documents.");
+        toast({
+          title: "Failed to upload document ",
+          variant: "destructive",
+        });
       }
     } catch (error) {
       console.error("Error uploading documents:", error);
     }
   };
+  useEffect(() => {
+    FetchData();
+  }, []);
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">Edit Profile</Button>
+        <Button variant="outline">Check Reports</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -73,7 +102,7 @@ const UploadDocument = () => {
         <div className="grid gap-4 py-4">
           {/* Document 1 Upload */}
           <div className="grid grid-cols-4 items-center gap-4">
-            <p>Document 1</p>
+            <p className=" whitespace-nowrap">Document 1</p>
             <input
               type="file"
               accept="image/*"
@@ -83,7 +112,7 @@ const UploadDocument = () => {
             />
             <label htmlFor="fileInput1" className="cursor-pointer">
               <Image
-                src={preview1 || "/placeholder-image.png"}
+                src={preview1 || data?.imageUrl1}
                 alt="Document 1 Preview"
                 width={50}
                 height={50}
@@ -93,7 +122,7 @@ const UploadDocument = () => {
           </div>
           {/* Document 2 Upload */}
           <div className="grid grid-cols-4 items-center gap-4">
-            <p>Document 2</p>
+            <p className=" whitespace-nowrap">Document 2</p>
             <input
               type="file"
               accept="image/*"
@@ -103,7 +132,7 @@ const UploadDocument = () => {
             />
             <label htmlFor="fileInput2" className="cursor-pointer">
               <Image
-                src={preview2 || "/placeholder-image.png"}
+                src={preview2 || data?.imageUrl2}
                 alt="Document 2 Preview"
                 width={50}
                 height={50}
@@ -113,7 +142,9 @@ const UploadDocument = () => {
           </div>
         </div>
         <DialogFooter>
-          <Button onClick={handleSubmit} type="submit">Save changes</Button>
+          <Button onClick={handleSubmit} type="submit">
+            Save changes
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
