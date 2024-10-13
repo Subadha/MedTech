@@ -10,7 +10,7 @@ const page = () => {
         <h1 className="text-3xl font-bold mb-4">Privacy Policy</h1>
         <p>
           This Privacy Policy outlines how Kaustubha Medtech Private Limited
-          ("we", "us", "our") collects, uses, discloses, and protects your
+          (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) collects, uses, discloses, and protects your
           information when you visit or interact with our website at
           <a
             href="https://www.kaustubhamedtech.com/"
@@ -18,7 +18,7 @@ const page = () => {
           >
             https://www.kaustubhamedtech.com/
           </a>
-          (the "Platform").
+          (the &quot;Platform&quot;).
         </p>
 
         <h2 className="text-2xl font-semibold mt-6 mb-2">
