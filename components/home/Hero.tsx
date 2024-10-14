@@ -17,7 +17,7 @@ import FormSuccess from "../auth/form-sucess";
 import FormError from "../auth/form-error";
 import CharacterRevealText from "./TextReveal"; 
 import { motion } from "framer-motion";
-import { HomeMainCarausel } from "./hero-carausel";
+import { HomeMainCarousel } from "./hero-carausel";
 
 interface FormValues extends z.infer<typeof Appointment> { }
 
@@ -82,7 +82,7 @@ const Hero: React.FC = () => {
             </p>
           </div>
           <div className="relative lg:col-span-5 xl:col-span-6 lg:mt-10 lg:h-[60vh]">
-          <HomeMainCarausel/>
+          <HomeMainCarousel/>
           </div>
         </div>
       </div>

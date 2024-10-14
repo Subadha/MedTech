@@ -86,6 +86,7 @@ export default function PatientDetails() {
                   >
                     <FaRegMessage />
                   </Button>
+
                   <Button>
                     Report <ArrowUpRight />
                   </Button>

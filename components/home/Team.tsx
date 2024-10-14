@@ -91,7 +91,7 @@ export default function Team() {
           delay: 6000,
         }),
       ]}
-      className="lg:w-[80%] my-10 mx-auto w-[85%]"
+      className="lg:w-[80%] my-10 mx-auto w-[70%]"
     >
       <CarouselContent>
         {teamMembers.map((_, index) => (
@@ -122,8 +122,8 @@ export default function Team() {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="md:block hidden" />
-      <CarouselNext className="md:block hidden" />
+      <CarouselPrevious />
+      <CarouselNext />
     </Carousel>
   );
 }
