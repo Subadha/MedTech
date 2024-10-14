@@ -8,25 +8,60 @@ export const POST = async (req: any) => {
   try {
     const parser = new DataURIParser();
     const formData = await req.formData();
+
+    // Extract fields from formData
     const userId = formData.get("userId");
     const registrationNumber1 = formData.get("registrationNumber1");
     const registrationNumber2 = formData.get("registrationNumber2");
     const image1 = formData.get("document1") as File;
     const image2 = formData.get("document2") as File;
 
-    const existingProfile = await db.doctorLicense.findFirst({
-      where: { userId: userId },
-    });
-    if (existingProfile) {
+    // Validate input
+    if (!userId || !registrationNumber1 || !registrationNumber2) {
       return NextResponse.json({
-        message: "Already added",
+        message: "User ID and registration numbers are required.",
         status: false,
       });
     }
 
     if (!image1 || !image2) {
       return NextResponse.json({
-        message: "Both certificates are required",
+        message: "Both certificates are required.",
+        status: false,
+      });
+    }
+
+    // Check file types (optional)
+    if (image1.type !== "image/png" && image1.type !== "image/jpeg") {
+      return NextResponse.json({
+        message: "Invalid file type for document1. Only PNG and JPEG are allowed.",
+        status: false,
+      });
+    }
+
+    if (image2.type !== "image/png" && image2.type !== "image/jpeg") {
+      return NextResponse.json({
+        message: "Invalid file type for document2. Only PNG and JPEG are allowed.",
+        status: false,
+      });
+    }
+
+    // Check file sizes (optional, e.g., limit to 2MB)
+    const MAX_SIZE = 2 * 1024 * 1024; // 2 MB
+    if (image1.size > MAX_SIZE || image2.size > MAX_SIZE) {
+      return NextResponse.json({
+        message: "File size for both documents must be less than 2MB.",
+        status: false,
+      });
+    }
+
+    // Check if profile already exists
+    const existingProfile = await db.doctorLicense.findFirst({
+      where: { userId: userId },
+    });
+    if (existingProfile) {
+      return NextResponse.json({
+        message: "Already added",
         status: false,
       });
     }
