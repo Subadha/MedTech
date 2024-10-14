@@ -42,7 +42,7 @@ export const Footer = () => {
               <hr className="my-4 border-t-2 border-blue-800 w-16" />
               <ul className="space-y-4 text-sm font-medium">
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a href="https://www.kaustubhamedtech.com/privacy-policy" className="hover:underline">
                     Privacy Policy
                   </a>
                 </li>
@@ -57,7 +57,7 @@ export const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a href="https://www.kaustubhamedtech.com/terms-and-conditions" className="hover:underline">
                     Terms and Conditions
                   </a>
                 </li>
@@ -68,8 +68,13 @@ export const Footer = () => {
               <hr className="my-4 border-t-2 border-blue-800 w-16" />
               <ul className="space-y-4 text-sm font-medium">
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a href="https://www.kaustubhamedtech.com/privacy-policy" className="hover:underline">
                     Privacy Policy
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.kaustubhamedtech.com/refund-policy" className="hover:underline">
+                    Refund Policy
                   </a>
                 </li>
                 <li>
@@ -83,7 +88,7 @@ export const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a href="https://www.kaustubhamedtech.com/terms-and-conditions" className="hover:underline">
                     Terms and Conditions
                   </a>
                 </li>

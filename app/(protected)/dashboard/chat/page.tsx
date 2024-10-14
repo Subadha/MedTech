@@ -35,7 +35,7 @@ interface Message {
 
 
 const defaultLayout = [265, 360, 655]
-const socket = io("wss://mtapi.adarsh.tech");
+const socket = io("wss://chatapi.kaustubhamedtech.com");
 
 const Page = () => {
   const [mail,setMail] = useMail();

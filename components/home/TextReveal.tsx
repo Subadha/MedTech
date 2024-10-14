@@ -16,6 +16,10 @@ const CharacterRevealText: React.FC<CharacterRevealTextProps> = ({ onTextChange 
         "Comfort Beyond Compare"
     ];
 
+    // Define fixed durations
+    const animationDuration = 1.0; // Total animation duration in seconds
+    const displayDuration = 2.0; // Time to display the text after animation in seconds
+
     const animateText = () => {
         if (textRef.current) {
             const currentText = texts[currentIndex];
@@ -30,16 +34,16 @@ const CharacterRevealText: React.FC<CharacterRevealTextProps> = ({ onTextChange 
                 {
                     opacity: 1,
                     y: 0,
-                    stagger: 0.05,
-                    duration: 0.5,
+                    stagger: animationDuration / characters.length, // Spread out over the animation duration
+                    duration: animationDuration,
                     ease: 'power3.out',
                     onComplete: () => {
                         // Notify parent component of the text change
                         onTextChange(currentIndex, currentText);
                         // Change text after animation completes
                         setTimeout(() => {
-                            setCurrentIndex((prevIndex) => (prevIndex + 1) % texts?.length);
-                        }, 2500); // Adjust delay if needed
+                            setCurrentIndex((prevIndex) => (prevIndex + 1) % texts.length);
+                        }, displayDuration * 1000); // Convert to milliseconds
                     }
                 }
             );
