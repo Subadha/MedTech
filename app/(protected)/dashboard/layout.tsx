@@ -19,7 +19,7 @@ export default async function Layout({
   const email = session?.user.email || "";
   const image = session?.user.image || "";
   console.log(session);
-  if(!session){
+  if(!session?.user){
     redirect("auth/login");
   }
 
