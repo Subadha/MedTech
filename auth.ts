@@ -46,6 +46,9 @@ export const {
   },
   callbacks: {
     async signIn({ user, account }) {  
+      if (!user) {
+        return false; // This should prevent redirection if the user is not valid.
+      }
       if (account?.provider === "credentials" || account?.provider === "otp") {
         if (typeof user.id !== "string") return false;
         const existingUser = await getUserById(user.id);

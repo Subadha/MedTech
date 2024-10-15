@@ -11,6 +11,7 @@ import Facebook from "next-auth/providers/facebook";
 import Google from "next-auth/providers/google";
 
 export default {
+  trustHost: true,
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -21,6 +22,7 @@ export default {
       clientId: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECRET,
     }),
+    
     Credentials({
       id: "credentials",
       name: "Email and Password Login",
