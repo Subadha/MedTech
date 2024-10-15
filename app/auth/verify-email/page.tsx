@@ -32,8 +32,7 @@ const Page = () => {
      if(email){ const result = await VerifyOtp(otp,email)
       if(result){
         router.push('/auth/login')
-      }
-      setError("Enter valid otp")}
+      }else {setError("Enter valid otp")}}
     });
   };
 

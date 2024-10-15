@@ -28,6 +28,9 @@ export const POST = async (req: any) => {
           in: uniquePatientIds,
         },
       },
+      include: {
+        patientReportsDoc: true,
+      }
     });
 
     return NextResponse.json({ success: "Success", data: patients });

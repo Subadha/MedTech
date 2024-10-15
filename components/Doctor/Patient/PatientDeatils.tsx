@@ -21,7 +21,7 @@ export default function PatientDetails() {
         });
         const { data } = await result.json();
         console.log(data);
-
+   
         setPatient(data);
       } catch (error) {
         console.error("Error fetching patients:", error);
@@ -30,6 +30,8 @@ export default function PatientDetails() {
 
     fetchPatients();
   }, [id]);
+
+  
 
   return (
     <div className="flex flex-col p-5 gap-5">

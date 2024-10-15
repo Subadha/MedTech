@@ -58,7 +58,7 @@ export const RegisterForm = () => {
         if(data.data){localStorage.setItem('email', data?.data.email||'');}
         setError(data?.error);
         setSucess(data?.success);
-        if(!data.data?.emailVerified){
+        if(!data.data?.emailVerified && !data?.error){
          router.push('/auth/verify-email')
         }
       });
