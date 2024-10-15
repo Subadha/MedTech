@@ -35,6 +35,7 @@ export const {
     signIn: "/auth/login",
     error: "/auth/error",
   },
+  trustHost: process.env.NEXT_PUBLIC_URL === 'https://kaustubhamedtech.com' ? true : false,
   events: {
     async linkAccount({ user }) {  
       await db.user.update({
