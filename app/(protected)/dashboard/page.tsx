@@ -7,19 +7,27 @@ import CalenderAndAppointments from "@/components/doctor-dashboard/doc-calender"
 import { DocCarausel } from "@/components/doctor-dashboard/doc-Carausel";
 import PatientList from "@/components/doctor-dashboard/doc-patientList";
 
-const Settings = async () => {
+const page = async () => {
   const session = await auth();
-  const id = session?.user.id||'';
+  const id = session?.user.id || "";
   const role = session?.user.role;
 
   return (
     <div className="p-3 grid gap-4 grid-cols-6">
-      {role&&role === "USER" ? <User id={id} /> :role === "DOCTOR"? <Doctor id={id} />:role === "ADMIN"? <Admin id={id} />:null}
+      {role && role === "USER" ? (
+        <User id={id} />
+      ) : role === "DOCTOR" ? (
+        <Doctor id={id} />
+      ) : role === "ADMIN" ? (
+        <Admin id={id} />
+      ) : (
+        <h1>Unauthorized</h1>
+      )}
     </div>
   );
 };
 
-export default Settings;
+export default page;
 
 const User = ({ id }: any) => {
   return (
@@ -48,11 +56,8 @@ const Doctor = ({ id }: any) => {
 const Admin = ({ id }: any) => {
   return (
     <>
-      <div className=" col-span-6 lg:col-span-4">
-        
-      </div>
+      <div className=" col-span-6 lg:col-span-4"></div>
       <CalenderAndAppointments />
     </>
   );
 };
-

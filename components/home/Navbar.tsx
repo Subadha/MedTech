@@ -50,7 +50,7 @@ export default function NavBar() {
               <li key={item.name}>
                 <a
                   href={item.href}
-                  className="text-sm font-semibold text-black hover:text-blue-600"
+                  className="text-sm font-semibold text-black hover:text-primary"
                 >
                   {item.name}
                 </a>
@@ -58,7 +58,7 @@ export default function NavBar() {
             ))}
           </ul>
           <LoginButton>
-            <Button className='bg-blue-600 hover:bg-blue-500'>Sign in</Button>
+            <Button>Sign in</Button>
           </LoginButton>
         </div>
         <div className="lg:hidden">

@@ -19,10 +19,10 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
 export function HomeMainCarousel() {
   const Url = [
-    "/homepage-image/01.webp",
-    "/homepage-image/02.webp",
-    "/homepage-image/03.webp",
-    "/homepage-image/04.webp",
+    "/homepage-image/1.png",
+    "/homepage-image/2.png",
+    "/homepage-image/3.png",
+    "/homepage-image/4.png",
   ];
 
   return (
