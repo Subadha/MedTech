@@ -17,7 +17,7 @@ const page = () => {
             <li>You must have a valid reason related to the quality of the service provided by the doctor.</li>
           </ol>
           <p>
-          Please note that refunds will not be applicable for consultations that have been fully completed or if the dissatisfaction is due to factors outside of the doctor's control.
+          Please note that refunds will not be applicable for consultations that have been fully completed or if the dissatisfaction is due to factors outside of the doctor&apos;s control.
           <br /><br />
           <strong>Exceptions to Refund Policy</strong>
           <br />
