@@ -67,14 +67,6 @@ const MobSideBar = ({ userName, role }: HeaderProps) => {
               </a>
             );
           })}
-          <form onSubmit={handleLogout} className="mt-4">
-            <button
-              type="submit"
-              className="w-full py-2 px-3 text-left rounded hover:bg-purple-700"
-            >
-              Sign Out
-            </button>
-          </form>
         </nav>
       </SheetContent>
     </Sheet>
