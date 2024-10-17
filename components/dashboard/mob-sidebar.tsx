@@ -9,7 +9,7 @@ import {
 } from "../ui/sheet";
 import { icons, Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { menuItems } from "../home/SideNav";
+import { docItems, menuItems } from "../home/SideNav";
 import { SignOut } from "@/actions/auth/signout";
 import { usePathname } from "next/navigation";
 
@@ -20,7 +20,7 @@ type HeaderProps = {
 
 interface MenuItem {
   name: string;
-  icon: keyof typeof icons; 
+  icon: keyof typeof icons;
   href: string;
 }
 const MobSideBar = ({ userName, role }: HeaderProps) => {
@@ -50,23 +50,41 @@ const MobSideBar = ({ userName, role }: HeaderProps) => {
           <SheetDescription className="opacity-85">{role}</SheetDescription>
         </SheetHeader>
         <nav className="p-4 space-y-2">
-          {menuItems.map((item) => {
-            const Icon = icons[item.icon];
-            return (
-              <a
-                key={item.name}
-                href={item.href}
-                className={`flex gap-2 py-2 px-3 rounded ${
-                  item.href === location ? "bg-primary text-white" : ""
-                }`}
-              >
-                <span>
-                  <Icon className="w-5" />
-                </span>
-                {item.name}
-              </a>
-            );
-          })}
+          {role === "USER"
+            ? menuItems.map((item) => {
+                const Icon = icons[item.icon];
+                return (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className={`flex gap-2 py-2 px-3 rounded ${
+                      item.href === location ? "bg-primary text-white" : ""
+                    }`}
+                  >
+                    <span>
+                      <Icon className="w-5" />
+                    </span>
+                    {item.name}
+                  </a>
+                );
+              })
+            : docItems.map((item) => {
+                const Icon = icons[item.icon];
+                return (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className={`flex gap-2 py-2 px-3 rounded ${
+                      item.href === location ? "bg-primary text-white" : ""
+                    }`}
+                  >
+                    <span>
+                      <Icon className="w-5" />
+                    </span>
+                    {item.name}
+                  </a>
+                );
+              })}
         </nav>
       </SheetContent>
     </Sheet>
