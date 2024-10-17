@@ -10,7 +10,7 @@ import authConfig from "./auth.config";
 declare module "next-auth/jwt" {
   interface JWT {
     role?: UserRole;
-    phone?:string;
+    phone?: string;
   }
 }
 
@@ -35,9 +35,9 @@ export const {
     signIn: "/auth/login",
     error: "/auth/error",
   },
-  trustHost:true,
+  trustHost: true,
   events: {
-    async linkAccount({ user }) {  
+    async linkAccount({ user }) {
       await db.user.update({
         where: { id: user.id },
         data: { emailVerified: new Date() },
@@ -45,16 +45,16 @@ export const {
     },
   },
   callbacks: {
-    async signIn({ user, account }) {  
+    async signIn({ user, account }) {
       if (!user) {
         return false; // This should prevent redirection if the user is not valid.
       }
       if (account?.provider === "credentials" || account?.provider === "otp") {
         if (typeof user.id !== "string") return false;
         const existingUser = await getUserById(user.id);
-         console.log(user);
-         
-        if (account.provider === "otp" ) {
+        console.log(user);
+
+        if (account.provider === "otp") {
           return true;
         }
         if (!existingUser) return false;
@@ -64,20 +64,23 @@ export const {
         }
       }
 
-           if (account?.provider === "google") {
-             if (!user.email) {
-               throw new Error("Google user email is not available");
-             }
-             const existingUser = await getUserByEmail(user.email);
-             if (!existingUser) {
-               throw new Error("User not found in the database");
-             }
-             return true;
-           }
-      
+      if (account?.provider === "google") {
+        if (!user.email) {
+          throw new Error("Google user email is not available");
+        }
+        const existingUser = await getUserByEmail(user.email);
+        if (!existingUser) {
+          throw new Error("User not found in the database");
+        }
+        return true;
+      }
+
       return true;
     },
 
+    async redirect({ url, baseUrl }) {
+      return url === baseUrl ? `${baseUrl}/dashboard` : url;
+    },
     async session({ token, session }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
@@ -86,7 +89,7 @@ export const {
         session.user.role = token.role as UserRole;
       }
       if (token.phone && session.user) {
-         session.user.phone = token.phone ?? undefined; 
+        session.user.phone = token.phone ?? undefined;
       }
       return session;
     },
@@ -100,7 +103,7 @@ export const {
         return token;
       }
       token.role = existingUser.role;
-      token.phone = existingUser.phone ?? undefined; 
+      token.phone = existingUser.phone ?? undefined;
       return token;
     },
   },
