@@ -6,11 +6,16 @@ export const POST = async (req: any) => {
     const request = await req.json();
     const { userId, status } = request;
 
-    // Build query object conditionally, handle multiple statuses if passed as an array
-    const query = {
+    const query:any = {
       where: {
         userId: userId,
-        ...(status && { status: Array.isArray(status) ? { in: status } : status }),  // Use 'in' for multiple statuses
+        ...(status && { status: Array.isArray(status) ? { in: status } : status }), // Use 'in' for multiple statuses
+      },
+      include: {
+        doctor: true, 
+      },
+      orderBy: {
+        date: 'asc', 
       },
     };
 

@@ -27,8 +27,9 @@ model User {
   doctorProfile             DoctorProfile?
   reviews                   Reviews[]
   patientReportsDoc         PatientReportsDoc?
-  
-  @@map("users")
+ appointmentsAsDoctor BookedAppointment[] @relation(name: "DoctorAppointment")
+  appointmentsAsPatient BookedAppointment[] @relation(name: "PatientAppointment") 
+   @@map("users")
 }
 
 model DoctorProfile {
@@ -198,6 +199,9 @@ model BookedAppointment {
   age        Float
   name       String
   gender     String
+  
+  doctor     User   @relation(name: "DoctorAppointment", fields: [doctor_id], references: [id])
+  patient    User   @relation(name: "PatientAppointment", fields: [userId], references: [id])
 }
 
 model Conversation {

@@ -17,6 +17,8 @@ const Page = () => {
       body: JSON.stringify({userId:id,status:''})
     })
     const result = await data.json()
+    console.log(result);
+    
      if (result && result.data?.length) {
        setList(result.data); 
   };}
