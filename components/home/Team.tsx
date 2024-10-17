@@ -82,6 +82,7 @@ export default function Team() {
 
   return (
     <Carousel
+      id="team"
       opts={{
         align: "start",
         loop: true,
