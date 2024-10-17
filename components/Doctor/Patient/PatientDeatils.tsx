@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
 export default function PatientDetails() {
   const { id } = useUser();
@@ -89,9 +90,11 @@ export default function PatientDetails() {
                     <FaRegMessage />
                   </Button>
 
-                  <Button>
+                 {_?.patientReportsDoc&&<Link target="#" href={_?.patientReportsDoc.imageUrl1} >
+                 <Button>
                     Report <ArrowUpRight />
                   </Button>
+                 </Link>}
                 </div>
               </div>
             </Card>
