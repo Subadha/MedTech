@@ -79,7 +79,10 @@ export const {
     },
 
     async redirect({ url, baseUrl }) {
-      return url === baseUrl ? `${baseUrl}/dashboard` : url;
+      if (url.startsWith(baseUrl)) {
+        return `${baseUrl}/dashboard`;
+      }
+      return baseUrl;
     },
     async session({ token, session }) {
       if (token.sub && session.user) {
