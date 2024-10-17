@@ -15,7 +15,7 @@ export default function Home() {
     <>
     <NavBar/>
     <Hero/>
-    <TextCard/>
+    {/* <TextCard/> */}
     <Services/>
     <Team/>
     <Narrative/>

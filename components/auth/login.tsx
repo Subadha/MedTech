@@ -12,13 +12,13 @@ export const Loginnew = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2">
         <div className="relative flex items-end px-4 pb-10 pt-60 sm:px-6 sm:pb-16 md:justify-center lg:px-8 lg:pb-24">
           <div className="absolute inset-0">
-            <Image
+            {/* <Image
               width={1400}
               height={1000}
               className="h-full w-full rounded-md object-cover object-top"
               src={loginBg}
               alt="login"
-            />
+            /> */}
           </div>
         </div>
         <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-24">

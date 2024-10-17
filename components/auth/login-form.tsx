@@ -134,7 +134,7 @@ export const LoginForm = () => {
       </Dialog>
       <div className="flex justify-evenly h-[100vh]">
         <div className="">
-          <Image alt="Login Image" src={img} fill />
+          {/* <Image alt="Login Image" src={img} fill /> */}
         </div>
         <div className="absolute sm:top-4 sm:left-10 z-10 w-20 h-20">
           <Link href="/">
