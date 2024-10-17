@@ -51,16 +51,6 @@ const Page = () => {
   ]);
   
 
-  // const GetMessages = useCallback(async () => {
-  //   if (!mail.selected) {
-  //     return;
-  //   }
-  //   let data = await fetch(
-  //     `https://devapi.beyondchats.com/api/get_chat_messages?chat_id=${mail.selected}`
-  //   );
-  //   data = await data.json();
-  //   console.log("messages = ",data)
-  // }, [mail.selected]);
 
   const [doctorId,setdoctorId] = useState<string|null>("");
   const [clientId,setclientId] = useState<string|null>("");

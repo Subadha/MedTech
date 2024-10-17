@@ -84,8 +84,8 @@ export const POST = async (req: any) => {
       result = await db.patientReportsDoc.update({
         where: { id: existingReport.id },
         data: {
-          imageUrl1: createdImage1?.secure_url || existingReport.imageUrl1,
-          imageUrl2: createdImage2?.secure_url || existingReport.imageUrl2,
+          imageUrl1: createdImage1?.secure_url || '',
+          imageUrl2: createdImage2?.secure_url || '',
         },
       });
     } else {
