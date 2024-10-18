@@ -73,12 +73,12 @@ export default function NewPasswordOtp() {
                 </Link>
             </div>
             <div className="">
-                <Image
+                {/* <Image
                     alt="Reset Password Image"
                     src={img}
                     className="w-screen h-full"
                     fill
-                />
+                /> */}
             </div>
             <div className="sm:flex sm:w-[50vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
                 <CardWrapper

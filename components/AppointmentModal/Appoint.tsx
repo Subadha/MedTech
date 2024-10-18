@@ -50,7 +50,6 @@ export default function Appoint({ details }: any) {
     try {
       const result = await BookAppointment(appointmentData);
       console.log(result);
-      // Reset state after submission
       resetAppointmentData();
     } catch (error) {
       console.error("Error booking appointment:", error);
@@ -82,8 +81,13 @@ export default function Appoint({ details }: any) {
     setAppointStep(0);
   };
 
+  const DialogChange=()=>{
+    setAppointStep(0)
+    setDialogOpen(!dialogOpen);
+  }
+
   return (
-    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+    <Dialog open={dialogOpen} onOpenChange={DialogChange}>
       <DialogTrigger asChild>
         <h2 className="cursor-pointer" onClick={() => setDialogOpen(true)}>
           Consult Online

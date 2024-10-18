@@ -50,7 +50,7 @@ const PatientList = () => {
                height={40}
                className=" aspect-square w-12"
                 alt="Patient"
-                src={`https://avatar.iran.liara.run/username?username=${
+                src={data?.patient?.image||`https://avatar.iran.liara.run/username?username=${
                   data?.name.split(" ")[0]
                 }${data?.name.split(" ")[1]?`+${data?.name.split(" ")[1]}`:''}`}
               />

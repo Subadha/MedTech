@@ -134,7 +134,7 @@ export default function SideNav({ userName, role }: SideNavProps) {
   const location = usePathname();
 
   const [enrolled, setEnrolled] = useState(true);
-  const [filtered, setFiltered] = useState<any>([]);
+  const [filtered, setFiltered] = useState<any>(docItems);
 
  useEffect(()=>{
   const Check= async ()=>{
@@ -161,7 +161,7 @@ export default function SideNav({ userName, role }: SideNavProps) {
       </div>
       <nav className="p-4 space-y-2">
         {role === "USER" &&
-          menuItems.map((item) => {
+          menuItems?.map((item) => {
             const Icon = icons[item.icon];
             return (
               <Link
@@ -179,7 +179,7 @@ export default function SideNav({ userName, role }: SideNavProps) {
             );
           })}
         {role === "ADMIN" &&
-          adminItems.map((item) => {
+          adminItems?.map((item) => {
             const Icon = icons[item.icon];
             return (
               <Link
@@ -197,7 +197,7 @@ export default function SideNav({ userName, role }: SideNavProps) {
             );
           })}
         {role === "DOCTOR" &&
-          filtered.map((item:any) => {
+          filtered?.map((item:any) => {
             const Icon = icons[item.icon as keyof typeof icons]; 
             return (
               <Link

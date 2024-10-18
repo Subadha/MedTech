@@ -20,6 +20,14 @@ export const POST = async (req: any) => {
         },
         ...(status && { status }),  // Conditionally add the 'status' filter if provided
       },
+      include: {
+        doctor: {
+          select: {
+            image: true,
+            name: true,
+          },
+        },
+      },
       orderBy: {
         date: 'asc',
       },

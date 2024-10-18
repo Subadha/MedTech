@@ -56,12 +56,11 @@ export function AppointmentTable({ data,refresh }: any) {
 
   const CancleFunction=async (id:string)=>{
     try {
-      const canceled = await fetch("/api/v1/patient/appointment/cancel",{
+      const canceled = await fetch("/api/v1/patients/appointment/cancel",{
         method: "POST",
         body: JSON.stringify({id,userId})
       })
       const result = await canceled.json()
-      console.log(result.success);
       if(result) {
         refresh()
         toast({

@@ -12,7 +12,12 @@ export const POST=async (req:any)=>{
             ...(status && { status }),  
           },
           include: {
-            patient: true, 
+            patient: {
+              select: {
+                image: true,
+                name: true,
+              },
+            },
           },
           orderBy: {
             date: 'asc', 

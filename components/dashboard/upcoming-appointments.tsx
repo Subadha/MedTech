@@ -21,6 +21,7 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
         });
         const result = await data.json();
         setData(result.data);
+        
       } catch (error) {
         console.log(error);
       }
@@ -58,7 +59,7 @@ const UpcomingAppointments = ({ id }: ProfileProps) => {
               <div key={appointment.id} className="flex items-center gap-2">
                 <span className=" min-w-6 font-bold">{++index}.</span>
                 <div className="h-10 w-10 overflow-hidden bg-primary rounded-full" >
-                  <Image alt="pp" width={60} height={60} src={`https://ui-avatars.com/api/?name=${nameArray[0]}+${nameArray[1]}`} />
+                  <Image className=" aspect-square " alt="pp" width={70} height={70} src={appointment?.doctor?.image||`https://ui-avatars.com/api/?name=${nameArray[0]}+${nameArray[1]}`} />
                 </div>
                 <div>
                   <div className="text-sm font-medium">

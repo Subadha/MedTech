@@ -19,6 +19,8 @@ export default function Review({ id }: any) {
       if (result?.reviews.length > 0) {
         setReviews(result.reviews);
       }
+      console.log(result);
+      
     } catch (error) {
       console.log(error);
     }
@@ -36,15 +38,15 @@ export default function Review({ id }: any) {
 
       {/* Repeating Review Block */}
       {reviews.map((_:any, index:number) => (
-        <div key={index} className="flex flex-col">
+        <div key={_.id} className="flex flex-col">
           <div className="border-2 rounded-lg bg-gray-200">
             <div className="flex flex-col md:flex-row justify-between p-3 items-center">
               <div className="flex items-center mb-3 md:mb-0">
                 <div className="w-10 h-10 rounded-full overflow-hidden mr-3">
-                  <Image src={img} alt="doc" className="object-cover" />
+                  <Image width={80} height={80} src={_.patient.image} alt="patient" className="object-cover aspect-square" />
                 </div>
                 <div className="flex flex-col justify-center">
-                  <h1 className="text-sm md:text-md font-semibold">{_.patientName}</h1>
+                  <h1 className="text-sm md:text-md font-semibold">{_.patient.name}</h1>
                   <div className="flex gap-1">
                   {[...Array(+_.rating)].map((ind) => (
                           <Star key={ind} className=" text-yellow-500 w-4" />

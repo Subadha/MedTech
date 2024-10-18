@@ -9,6 +9,7 @@ import About from "./About";
 import Edit from "./Edit";
 import Password from "./Password";
 import { GetDoctorById } from "@/actions/consult/GetDoctorById";
+import Payments from "./Payments";
 
 export default function DocProfile({id}:any) {
    useEffect(()=>{
@@ -26,7 +27,11 @@ const[data,setData]=useState<any>([])
             {/* Left Side: Profile Info */}
             <div className="h-full flex flex-col items-center justify-center text-center border-2 rounded-lg shadow-md p-5 md:p-10 bg-gray-200 w-full md:w-1/3">
                 <div className="w-20 h-20 rounded-full overflow-hidden mb-3">
-                    <Image src={img} alt="doc" className="object-cover" />
+                    <Image width={80}
+                     height={80}
+                    src={data?.doctor?.image||`https://avatar.iran.liara.run/username?username=${
+                  data?.doctor?.name.split(" ")[0]
+                }${data?.doctor?.name.split(" ")[1]?`+${data?.name.split(" ")[1]}`:''}`} alt="doc" className="object-cover" />
                 </div>
                 <div className="flex flex-col gap-3">
                     <h1 className="text-lg md:text-xl font-semibold">{data.doctor?.name}</h1>
@@ -49,10 +54,11 @@ const[data,setData]=useState<any>([])
             <div className="flex flex-col gap-5 md:gap-10 md:pl-5 w-full">
                 <div className="flex flex-col md:flex-row w-full border-2 rounded-lg bg-gray-200 justify-center items-center">
                     <div className="flex flex-col md:flex-row p-4 w-full gap-5 md:gap-10 justify-center items-center">
-                        <h1 className={`cursor-pointer ${current === 1 ? 'text-blue-500' : ''}`} onClick={() => setCurrent(1)}>About Me</h1>
-                        <h1 className={`cursor-pointer ${current === 2 ? 'text-blue-500' : ''}`} onClick={() => setCurrent(2)}>Reviews</h1>
-                        <h1 className={`cursor-pointer ${current === 3 ? 'text-blue-500' : ''}`} onClick={() => setCurrent(3)}>Edit Profile</h1>
-                        <h1 className={`cursor-pointer ${current === 4 ? 'text-blue-500' : ''}`} onClick={() => setCurrent(4)}>Change Password</h1>
+                        <h1 className={`cursor-pointer ${current === 1 ? 'text-primary' : ''}`} onClick={() => setCurrent(1)}>About Me</h1>
+                        <h1 className={`cursor-pointer ${current === 2 ? 'text-primary' : ''}`} onClick={() => setCurrent(2)}>Reviews</h1>
+                        <h1 className={`cursor-pointer ${current === 3 ? 'text-primary' : ''}`} onClick={() => setCurrent(3)}>Edit Profile</h1>
+                        <h1 className={`cursor-pointer ${current === 4 ? 'text-primary' : ''}`} onClick={() => setCurrent(4)}>Payments</h1>
+                        <h1 className={`cursor-pointer ${current === 5 ? 'text-primary' : ''}`} onClick={() => setCurrent(5)}>Change Password</h1>
                     </div>
                 </div>
 
@@ -61,7 +67,8 @@ const[data,setData]=useState<any>([])
                     {current === 1 && <About id={id} refresh={getDetails} about={data?.doctor?.about} />}
                     {current === 2 && <Review id={id} />}
                     {current === 3 && <Edit id={id} refresh={getDetails} data={data?.doctor} />}
-                    {current === 4 && <Password id={id} />}
+                    {current === 4 && <Payments id={id} />}
+                    {current === 5 && <Password id={id} />}
                 </div>
             </div>
         </div>

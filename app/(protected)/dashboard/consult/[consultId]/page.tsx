@@ -211,16 +211,16 @@ export default function ConsultDoctor({ params }: ConsultDoctorProps) {
                 >
                   <div className="w-16 h-16 rounded-full overflow-hidden">
                     <Image
-                      src={_.patientProfilePic}
+                      src={_.patient.image}
                       alt="reviews"
-                      width={60}
-                      height={60}
-                      className="object-cover"
+                      width={70}
+                      height={70}
+                      className="object-cover aspect-square"
                     />
                   </div>
                   <div className="pl-5">
                     <div className="flex gap-2 items-center">
-                      <h1 className="font-bold text-lg">{_.patientName}</h1>
+                      <h1 className="font-bold text-lg">{_.patient.name}</h1>
                       <div className="flex">
                         {[...Array(+_.rating)].map((ind) => (
                           <Star key={ind} className=" text-yellow-500 w-4" />

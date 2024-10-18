@@ -12,7 +12,12 @@ export const POST = async (req: any) => {
         ...(status && { status: Array.isArray(status) ? { in: status } : status }), // Use 'in' for multiple statuses
       },
       include: {
-        doctor: true, 
+        doctor: {
+          select: {
+            image: true,
+            name: true,
+          },
+        },
       },
       orderBy: {
         date: 'asc', 

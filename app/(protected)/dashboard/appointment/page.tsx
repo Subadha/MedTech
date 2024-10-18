@@ -16,9 +16,7 @@ const Page = () => {
       method:"POST",
       body: JSON.stringify({userId:id,status:''})
     })
-    const result = await data.json()
-    console.log(result);
-    
+    const result = await data.json()    
      if (result && result.data?.length) {
        setList(result.data); 
   };}

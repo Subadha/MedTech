@@ -19,7 +19,6 @@ const RecommendedDoctors = () => {
       try {
         const data = await fetch("/api/v1/patients/dashboard/recomended-doctor");
         const result = await data.json();
-        console.log(result);
         if (result.data?.length > 0) {          
         setData(result.data);}
       } catch (error) {

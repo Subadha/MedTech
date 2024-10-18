@@ -15,6 +15,14 @@ export const POST = async (req: Request) => {
             where: {
                 userId: doctorId,
             },
+            include: {
+                patient: {
+                  select: {
+                    image: true,
+                    name: true,
+                  },
+                },
+              },
             orderBy: {
                 createdAt: 'desc',
             },

@@ -51,8 +51,6 @@ const Page = () => {
         }),
       });
       const data = await doc.json();
-      console.log(data);
-
       setDoctors(data);
     })();
   }, [selectedCountry, selectedState, selectedCity]);

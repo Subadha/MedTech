@@ -6,7 +6,12 @@ export const GET = async () => {
     // Fetch all doctors and sort them based on the number of booked appointments
     const recommendedDoctors = await db.doctorProfile.findMany({
       include: {
-        user: true, // Fetch user information associated with each doctor
+        user: {
+          select: {
+            image: true,
+            name: true,
+          },
+        },
       },
     });
 

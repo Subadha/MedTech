@@ -82,19 +82,25 @@ export default function PatientDetails() {
                 <div>
                   <p className="text-xs md:text-sm">{_.purpose} </p>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex flex-col gap-3">
                   <Button
+                  size="sm"
                     onClick={() => router.push("/dashboard/chat")}
                     variant="outline"
                   >
                     <FaRegMessage />
                   </Button>
 
-                 {_?.patientReportsDoc&&<Link target="#" href={_?.patientReportsDoc.imageUrl1} >
-                 <Button>
-                    Report <ArrowUpRight />
+                <div className="flex gap-2"> {_?.patientReportsDoc?.imageUrl1&&<Link target="#" href={_?.patientReportsDoc.imageUrl1} >
+                 <Button size="sm" >
+                    Doc 1 <ArrowUpRight />
                   </Button>
                  </Link>}
+                 {_?.patientReportsDoc?.imageUrl2&&<Link target="#" href={_?.patientReportsDoc.imageUrl2} >
+                 <Button size="sm">
+                    Doc 2 <ArrowUpRight />
+                  </Button>
+                 </Link>}</div>
                 </div>
               </div>
             </Card>

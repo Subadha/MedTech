@@ -60,12 +60,12 @@ export default function NewVerificationForm() {
                 <Link href="/"><Image src={logo} alt="Logo" layout="fill" objectFit="contain" /></Link>
             </div>
             <div className="relative w-[50vw] bg-black">
-                <Image
+                {/* <Image
                     alt="Verification Image"
                     src={img}
                     className="w-screen h-full"
                     fill
-                />
+                /> */}
             </div>
             <div className="flex w-[50vw] justify-center items-center">
                 <CardWrapper

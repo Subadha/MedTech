@@ -9,6 +9,20 @@ export const getAllAppointment = async (id: string, role: string) => {
 
     const appointments = await db.bookedAppointment.findMany({
       where: role === 'DOCTOR' ? { doctor_id: id } : { userId: id },
+      include: {
+        patient: role === 'DOCTOR' ? {
+          select: {
+            name: true,   
+            image: true,   
+          }
+        } : false, // Don't include patient if role is not DOCTOR
+        doctor: role === 'PATIENT' ? {
+          select: {
+            name: true,   
+            image: true,   
+          }
+        } : false  // Don't include doctor if role is not PATIENT
+      },
     });
 
     if (!appointments || appointments.length === 0) {
@@ -34,8 +48,6 @@ export const getAllAppointment = async (id: string, role: string) => {
     }
 
     const uniqueAppointments = Array.from(uniqueAppointmentsMap.values());
-console.log("uniqueAppointments",uniqueAppointments);
-console.log("ALLAppointments",appointments);
 
     return { 
       success: true, 

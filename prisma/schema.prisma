@@ -25,7 +25,8 @@ model User {
   doctorAvailabilityDetails DoctorAvailabilityDetails?
   doctorLicenses            DoctorLicense?
   doctorProfile             DoctorProfile?
-  reviews                   Reviews[]
+   reviews                   Reviews[]                  @relation("Reviewer") 
+  patientReviews            Reviews[]                  @relation("PatientReviews") 
   patientReportsDoc         PatientReportsDoc?
  appointmentsAsDoctor BookedAppointment[] @relation(name: "DoctorAppointment")
   appointmentsAsPatient BookedAppointment[] @relation(name: "PatientAppointment") 
@@ -63,8 +64,8 @@ model Reviews {
   patientProfilePic String
   createdAt         DateTime @default(now())
   appointmentId     Float
-  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
+  user              User     @relation("Reviewer", fields: [userId], references: [id], onDelete: Cascade) // Relation to user (doctor)
+  patient           User     @relation("PatientReviews", fields: [patientId], references: [id], onDelete: Cascade) // Relation to patient
   @@map("reviews")
 }
 

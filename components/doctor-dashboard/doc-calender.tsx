@@ -24,6 +24,7 @@ const CalenderAndAppointments = () => {
       console.log(error);
     }
   };
+console.log(upcomingOne);
 
   useEffect(() => {
     GetData();
@@ -54,7 +55,7 @@ const CalenderAndAppointments = () => {
             <Card className="flex gap-2 p-2 w-full">
               <Avatar className=" h-12 w-12">
                 <AvatarImage
-                   src={`https://avatar.iran.liara.run/username?username=${
+                   src={upcomingOne.patient.image||`https://avatar.iran.liara.run/username?username=${
                     upcomingOne?.name.split(" ")[0]
                   }${upcomingOne?.name.split(" ")[1]?`+${upcomingOne?.name.split(" ")[1]}`:''}`}
                   alt="@shadcn"
