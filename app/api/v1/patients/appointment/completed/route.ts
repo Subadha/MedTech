@@ -36,6 +36,17 @@ export const POST = async (req: any) => {
       where: { id: appointment?.userId },
     });
 
+    if (doctor?.id) {
+      await db.doctorProfile.update({
+        where: { userId: doctor.id },
+        data: {
+          bookedAppointment: {
+            increment: 1, // Increment bookedAppointment by 1
+          },
+        },
+      });
+    }
+
     // Ensure both doctor and patient have valid emails
     if (!doctor || !doctor.email || !patient || !patient.email) {
       return NextResponse.json({ success: "Appointment completed.", user: appointment });

@@ -19,6 +19,9 @@ export const POST = async (req: any) => {
           gte: new Date(), 
         },
       },
+      include: {
+        patient: true, 
+      },
       orderBy: {
         date: 'asc', 
       },

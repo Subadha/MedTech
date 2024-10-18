@@ -1,3 +1,4 @@
+import Patient from "@/app/(protected)/dashboard/patient/page";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 
@@ -5,10 +6,16 @@ export const POST=async (req:any)=>{
     try{
         const request =await req.json()
         const {userId,status}=request
-        const query = {
+        const query:any = {
           where: {
             doctor_id: userId,
             ...(status && { status }),  
+          },
+          include: {
+            patient: true, 
+          },
+          orderBy: {
+            date: 'asc', 
           },
         };
         const appointments = await db.bookedAppointment.findMany(query);

@@ -44,6 +44,9 @@ export const POST = async (req: any) => {
           lte: endDate,
         },
       },
+      include: {
+        patient: true, 
+      },
       orderBy: {
         date: "asc", // Order appointments by ascending date and time
       },
