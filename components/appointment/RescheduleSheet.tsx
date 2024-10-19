@@ -1,6 +1,5 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Sheet,
@@ -11,7 +10,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { DatePickerDemo } from "../AppointmentModal/DatePicker";
 import { useEffect, useState } from "react";
 import {
   Select,
@@ -22,13 +20,22 @@ import {
   SelectValue,
 } from "../ui/select";
 
-export function RescheduleSheet({ open,refresh, close }: any) {
+import { isBefore } from "date-fns";
+import { Calendar } from "../ui/calendar";
+import { useToast } from "../ui/use-toast";
+
+export function RescheduleSheet({ open, refresh, close }: any) {
+
+  const {toast}=useToast()
+
   const [details, setDetails] = useState({
     time: "",
     date: "",
   });
+  const [date, setDate] = useState<Date>();
   const [availableDate, setAvailableDate] = useState([]);
   const [availableSlots, setAvailableSlots] = useState([]);
+  console.log(date);
 
   useEffect(() => {
     const Detail = async () => {
@@ -41,7 +48,7 @@ export function RescheduleSheet({ open,refresh, close }: any) {
           { method: "POST", body: JSON.stringify({ id: open }) }
         );
         const data = await result.json();
-        refresh()
+        refresh();
         setAvailableDate(data.days);
       } catch (error) {
         console.log(error);
@@ -51,11 +58,14 @@ export function RescheduleSheet({ open,refresh, close }: any) {
     Detail();
   }, [open]);
 
-  const fetchTime = async (e: any) => {
+  const fetchTime = async (selectedDate: Date) => {
     try {
       const result = await fetch(
         "/api/v1/patients/appointment/available-slots",
-        { method: "POST", body: JSON.stringify({ id: open, date: e }) }
+        {
+          method: "POST",
+          body: JSON.stringify({ id: open, date: selectedDate }),
+        }
       );
       const data = await result.json();
       setAvailableSlots(data.availableSlots);
@@ -64,18 +74,60 @@ export function RescheduleSheet({ open,refresh, close }: any) {
     }
   };
 
-  const Update=async()=>{
+  const handleDateSelect = (selectedDate: Date | undefined) => {
+    if (selectedDate) {
+      setDate(selectedDate);
+      setDetails((prevDetails:any) => ({
+        ...prevDetails,
+        date: selectedDate, // Save date in a consistent format
+      }));
+      fetchTime(selectedDate); // Fetch available time slots for the selected date
+    }
+  };
+
+  const Update = async () => {
     try {
-      const result = await fetch(
-        "/api/v1/patients/appointment/reschedule",
-        { method: "POST", body: JSON.stringify({ id:open,...details }) }
-      );
+      const result = await fetch("/api/v1/patients/appointment/reschedule", {
+        method: "POST",
+        body: JSON.stringify({ id: open, ...details }),
+      });
       const data = await result.json();
-      setAvailableSlots(data.availableSlots);
+      if(data.success) {
+        refresh()
+        toast({
+          title:data.success,
+          variant:'success'
+        })
+      }
+      else{toast({
+        title:"Unable to reschedule",
+        variant:'destructive'
+      })}
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  const getDayNumber = (dayName: string) => {
+    const dayMap: { [key: string]: number } = {
+      Sun: 0,
+      Mon: 1,
+      Tue: 2,
+      Wed: 3,
+      Thu: 4,
+      Fri: 5,
+      Sat: 6,
+    };
+    return dayMap[dayName];
+  };
+
+  const today = new Date();
+  const availableDayNumbers = availableDate.map(getDayNumber);
+
+  const isDaySelectable = (date: Date) => {
+    const dayOfWeek = date.getDay(); // Sunday = 0, Monday = 1, ..., Saturday = 6
+    return !isBefore(date, today) && availableDayNumbers.includes(dayOfWeek);
+  };
 
   return (
     <Sheet open={open} onOpenChange={close}>
@@ -88,27 +140,25 @@ export function RescheduleSheet({ open,refresh, close }: any) {
         </SheetHeader>
         <div className="grid gap-4 py-4">
           <div className="flex flex-col gap-4">
-            <Label htmlFor="name" className="">
-              Name
-            </Label>
-            <DatePickerDemo
-              setDate={(e: any) => {
-                setDetails({ time: "", date: e });
-                fetchTime(e);
-              }}
-              availableDays={availableDate}
+            <Label htmlFor="name">Select Date</Label>
+            <Calendar
+              className="mx-auto"
+              mode="single"
+              selected={date}
+              onSelect={handleDateSelect} // Using the updated handler
+              initialFocus
+              disabled={(date) => !isDaySelectable(date)} // Disable dates that are not selectable
             />
           </div>
           <div className="flex flex-col gap-4">
-            <Label htmlFor="username" className="">
-              Select time slot
-            </Label>
+            <Label htmlFor="username">Select time slot</Label>
             <Select
-             onValueChange={(value) => {
-              setDetails((prevState: any) => ({
-                ...prevState,
-                time: value
-              }))}}
+              onValueChange={(value) => {
+                setDetails((prevState: any) => ({
+                  ...prevState,
+                  time: value,
+                }));
+              }}
               defaultValue={details.time}
             >
               <SelectTrigger className="w-full">

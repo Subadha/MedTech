@@ -77,13 +77,6 @@ export const {
 
       return true;
     },
-
-    async redirect({ url, baseUrl }) {
-      if (url.startsWith(baseUrl)) {
-        return `${baseUrl}/dashboard`;
-      }
-      return baseUrl;
-    },
     async session({ token, session }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;

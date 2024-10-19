@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { format, isBefore, isSameDay } from "date-fns";
+import { format, isBefore } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -20,9 +20,10 @@ const getDayNumber = (dayName: string) => {
   return dayMap[dayName];
 };
 
-export function DatePickerDemo({ availableDays,setDate }: { availableDays: string[],setDate:any}) {
+export function DatePickerDemo({ availableDays, setDate }: { availableDays: string[], setDate: any }) {
   const today = new Date(); // Current date
-  const [date,settDate]=React.useState()
+  const [selectedDate, setSelectedDate] = React.useState<any>(new Date()); // Initialize the state with null
+
   // Convert availableDays from string format to number format (for comparison)
   const availableDayNumbers = availableDays.map(getDayNumber);
 
@@ -32,26 +33,34 @@ export function DatePickerDemo({ availableDays,setDate }: { availableDays: strin
     return !isBefore(date, today) && availableDayNumbers.includes(dayOfWeek);
   };
 
+  const handleDateSelect = (date:any) => {
+    console.log(date);
+    
+    if (date && isDaySelectable(date)) { // Check if the selected date is valid
+      setSelectedDate(date);
+      setDate(date); // Call the external setDate function if needed
+    }
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
           className={`w-full justify-start text-left font-normal ${
-            !date ? "text-muted-foreground" : ""
+            !selectedDate ? "text-muted-foreground" : ""
           }`}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          {selectedDate ? format(selectedDate, "PPP") : <span>Pick a date</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="p-0">
         <Calendar
           mode="single"
-          selected={date}
-          onSelect={(e:any)=>{setDate(e);settDate(e)}}
-          // Disable dates in the past and days not in the user-provided availableDays
-          disabled={(date) => !isDaySelectable(date)} 
+          selected={selectedDate}
+          onSelect={(date) => handleDateSelect(date as Date | undefined)}          
+          disabled={(date) => !isDaySelectable(date)} // Disable dates not in availableDays or in the past
           initialFocus
         />
       </PopoverContent>
