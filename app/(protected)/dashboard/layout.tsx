@@ -23,21 +23,21 @@ export default async function Layout({
     redirect("auth/login");
   }
  let data;
-  if(role=="DOCTOR"){const enroll = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/doctor/enrollment-status`,{
-   method: "POST",
-   headers: {
-    "Content-Type": "application/json",
-  },
-   body:JSON.stringify({userId:session.user.id})    
-  })
-   data = await enroll.json()
-  }
+  // if(role=="DOCTOR"){const enroll = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/v1/doctor/enrollment-status`,{
+  //  method: "POST",
+  //  headers: {
+  //   "Content-Type": "application/json",
+  // },
+  //  body:JSON.stringify({userId:session.user.id})    
+  // })
+  //  data = await enroll.json()
+  // }
   
   return (
     <UserProvider userName={userName} role={role} image={image} id={id} email={email} >
     <TooltipProvider>
     <div className="flex h-screen w-[100vw]">
-      <SideNav userName={userName} role={role} enrollStatus={data} />
+      <SideNav userName={userName} role={role} />
       <div className=" h-screen w-full  lg:w-[calc(100vw-256px)]">
         <Header userName={userName} role={role} image={image} />
         <div className="w-full overflow-y-auto h-[calc(100vh-80px)]">
