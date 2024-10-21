@@ -4,14 +4,12 @@ import NavBar from "@/components/home/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@radix-ui/react-select";
-import { Phone } from "lucide-react";
 import { useState } from "react";
 import { FaPhoneAlt } from "react-icons/fa";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdEmail } from "react-icons/md";
 
-const page = () => {
+const Page = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -139,4 +137,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

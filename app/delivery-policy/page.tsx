@@ -4,7 +4,7 @@ import NavBar from '@/components/home/Navbar';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useState } from 'react';
 
-const page = () => {
+const Page = () => {
   const [policies] = useState([
     {
       title: 'Order Processing',
@@ -63,4 +63,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
