@@ -74,7 +74,8 @@ export default function Appoint({ details }: any) {
 
   const handlePayment = async (orderData: any) => {
     //setIsLoading(true);
-
+   console.log(orderData);
+   
     const res = await loadRazorpayScript();
     if (!res) {
       alert("Razorpay SDK failed to load. Please try again.");
@@ -93,6 +94,7 @@ export default function Appoint({ details }: any) {
       handler: async (response: any) => {
         alert(`Payment Successful. Razorpay Payment ID: ${response.razorpay_payment_id}`);
         const paymentData = {
+          amount: orderData.amount,
           appointmentId: orderData.appointmentId, 
           paymentId: response.razorpay_payment_id,
           status: "success",

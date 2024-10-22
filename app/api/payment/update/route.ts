@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 // API route for updating payment status
 export const POST = async (req: Request) => {
   try {
-    const { paymentId, appointmentId, status } = await req.json(); // Extract payment details from request body
+    const {amount, paymentId, appointmentId, status } = await req.json(); // Extract payment details from request body
 
     // Validate the input
     if (!paymentId || !appointmentId || !status) {
@@ -30,6 +30,7 @@ export const POST = async (req: Request) => {
         id: paymentRecord.id, 
       },
       data: {
+        amount_paid:amount/100,
         paymentStatus: status,
       },
     });
