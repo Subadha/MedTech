@@ -32,8 +32,7 @@ export default function Appoint({ details }: any) {
     date: "",
     age: null,
     gender: "",
-    amount:1 //details.doctorProfile?.consultationFees
-    ,
+    amount:parseInt(details.doctorProfile?.consultationFees,10),
     doctor_id: details?.id,
     userId: id,
   });
@@ -74,8 +73,8 @@ export default function Appoint({ details }: any) {
 
   const handlePayment = async (orderData: any) => {
     //setIsLoading(true);
-   console.log(orderData);
-   
+    console.log(orderData);
+
     const res = await loadRazorpayScript();
     if (!res) {
       alert("Razorpay SDK failed to load. Please try again.");
@@ -92,22 +91,12 @@ export default function Appoint({ details }: any) {
       image: logo,
       order_id: orderData.id,
       handler: async (response: any) => {
-        alert(`Payment Successful. Razorpay Payment ID: ${response.razorpay_payment_id}`);
-        const paymentData = {
-          amount: orderData.amount,
-          appointmentId: orderData.appointmentId, 
-          paymentId: response.razorpay_payment_id,
-          status: "success",
-        };
+        alert(
+          `Payment Successful. Razorpay Payment ID: ${response.razorpay_payment_id}`
+        );
         try {
-          const updateResponse = await fetch("/api/payment/update",
-            {
-              method: "POST", 
-              body: JSON.stringify(paymentData)
-            }
-          );
-          console.log("Payment status updated:", updateResponse);
-          
+          const result = await BookAppointment({...appointmentData,orderId:orderData.id});
+          console.log("Payment status updated:",result);
         } catch (error) {
           console.error("Error updating payment status:", error);
         }
@@ -135,11 +124,16 @@ export default function Appoint({ details }: any) {
   // Submit the appointment data
   const Submit = async () => {
     try {
-      const result: any = await BookAppointment(appointmentData);
-      if (result) {
-        const data = await handlePayment(result?.order);
+      // const result: any = await BookAppointment(appointmentData);
+      const result: any = await fetch("/api/payment", {
+        method: "POST",
+        body: JSON.stringify({amount:1}),
+      });
+      setDialogOpen(false)
+      const {order} = await result.json();
+      if (order) {
+        const data = await handlePayment(order);
       }
-      resetAppointmentData();
     } catch (error) {
       console.error("Error booking appointment:", error);
     } finally {
@@ -148,7 +142,7 @@ export default function Appoint({ details }: any) {
 
   // Trigger submission once appointment data is fully filled
   useEffect(() => {
-    if (appointStep <= 1 && appointmentData.age) {
+    if (appointStep <= 1 && appointmentData.age&&dialogOpen) {
       Submit();
     }
   }, [appointStep, appointmentData]);
@@ -161,8 +155,7 @@ export default function Appoint({ details }: any) {
       name: "",
       date: "",
       age: null,
-      amount: 1 //||details.doctorProfile?.consultationFees
-      ,
+      amount: parseInt(details.doctorProfile?.consultationFees,10),
       gender: "",
       doctor_id: details?.id,
       userId: id,
