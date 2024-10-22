@@ -17,6 +17,7 @@ export default async function Layout({
   const role = session?.user.role || "User";
   const id = session?.user.id || "";
   const email = session?.user.email || "";
+  const phone = session?.user.phone || "";
   const image = session?.user.image || "";
   console.log(session);
   if(!session?.user){
@@ -34,7 +35,7 @@ export default async function Layout({
   // }
   
   return (
-    <UserProvider userName={userName} role={role} image={image} id={id} email={email} >
+    <UserProvider userName={userName} role={role} image={image} id={id} phone={phone} email={email} >
     <TooltipProvider>
     <div className="flex h-screen w-[100vw]">
       <SideNav userName={userName} role={role} />

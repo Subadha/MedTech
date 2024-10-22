@@ -75,14 +75,12 @@ export default function Appoint1({ details, onChangeApp }: any) {
 
   const availableDayNumbers =
     details?.doctorAvailabilityDetails?.availableDays.map(getDayNumber);
-    console.log("Available Day Numbers:", availableDayNumbers);
     const isDaySelectable = (date: Date) => {
       const dayOfWeek = date.getDay();
     
       // Normalize both dates to midnight for comparison
       const todayStart = new Date();
       todayStart.setHours(0, 0, 0, 0); // Set today's date to midnight
-      console.log("Today:", todayStart);
       const selectedDateStart = new Date(date);
       selectedDateStart.setHours(0, 0, 0, 0); // Set the selected date to midnight
     
@@ -116,14 +114,14 @@ export default function Appoint1({ details, onChangeApp }: any) {
       <div>
         <hr className="border-gray-300 my-4" />
         <div className="flex flex-col gap-2">
-          <h3 className="text-xl font-bold">Select date & time</h3>
+          <h3 className="text-lg font-semibold">Select date & time</h3>
           <div className="flex justify-center">
             <Calendar
               mode="single"
               selected={selectedDate}
               onSelect={(e: any) => {
                 setSelectedDate(e);
-                form.setValue("date", e.toISOString());
+                form.setValue("date", e?.toISOString());
               }}
               disabled={(date) => !isDaySelectable(date)}
               className="rounded-md border"

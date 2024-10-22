@@ -4,6 +4,7 @@ import FormSucess from "../auth/form-sucess";
 import { Button } from "../ui/button";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 
 const AppointmentSchema = z.object({
     purpose: z.string().min(1, "Purpose is required"),
@@ -15,6 +16,8 @@ const AppointmentSchema = z.object({
 type AppointmentFormInputs = z.infer<typeof AppointmentSchema>;
 
 export default function Appoint2({ onChangeApp }: any) {
+    const [isLoading, setIsLoading] = useState(false);
+
     const form = useForm<AppointmentFormInputs>({
         resolver: zodResolver(AppointmentSchema),
         defaultValues: {
@@ -24,6 +27,7 @@ export default function Appoint2({ onChangeApp }: any) {
             gender: "",
         },
     });
+
 
     const onSubmit = async (values: AppointmentFormInputs) => {
         onChangeApp(values);
@@ -92,7 +96,7 @@ export default function Appoint2({ onChangeApp }: any) {
                         className="w-full h-10 mt-5 bg-purple-700 hover:bg-purple-500"
                         type="submit"
                     >
-                        Proceed
+                       {isLoading ? 'Processing...' : 'Pay Now'}
                     </Button>
                 </div>
             </div>

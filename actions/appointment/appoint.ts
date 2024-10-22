@@ -3,10 +3,9 @@ import { db } from "@/lib/db";
 import { getUserById } from "@/data/user";
 import { NOT_CONFIRM } from "@/lib/constants";
 import nodemailer from "nodemailer";
+import Razorpay from "razorpay";
 
-export const BookAppointment = async (data: any) => {
-  console.log(data);
-  
+export const BookAppointment = async (data: any) => {  
   const transporter = nodemailer.createTransport({
     service: "gmail",
     port: 465,
@@ -29,7 +28,7 @@ export const BookAppointment = async (data: any) => {
     if (!doctor) {
       return { error: "Doctor not found." };
     }
-
+ 
     const details = {
       userId: user.id,
       doctor_id: doctor.id,
@@ -50,6 +49,32 @@ export const BookAppointment = async (data: any) => {
     const appointment = await db.bookedAppointment.create({
       data: details,
     });
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID!, // Replace with your Razorpay Key ID
+      key_secret: process.env.RAZORPAY_SECRET!, // Replace with your Razorpay Secret
+    });
+    const options = {
+      amount: data.amount * 100,
+      currency: "INR",
+      receipt: `receipt_${new Date().getTime()}`,
+    };
+
+    const order = await razorpay.orders.create(options);
+
+    if(order&&appointment){
+       const store = await db.payment.create({
+      data: {
+        amount:data.amount * 100,
+        appointmentId:appointment.id,
+        doctorId: appointment.doctor_id,
+        paymentStatus: "pending",
+        patientId: appointment.userId,
+        paymentId: order.id,
+        currency: order.currency,
+        amount_paid: order.amount_paid,
+      },
+    });    
+    }
 
     // Prepare the email content for the doctor
     const doctorEmailContent = `
@@ -111,7 +136,7 @@ export const BookAppointment = async (data: any) => {
       });
     }
     if (appointment) {
-      return { success: "Appointment successfully booked.", user: appointment };
+      return { success: "Appointment successfully booked.", user: appointment, order:order };
     }
     return { error: "Failed to book." };
   } catch (error) {

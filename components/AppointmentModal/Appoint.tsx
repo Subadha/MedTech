@@ -1,15 +1,28 @@
 "use client";
 import { useEffect, useState } from "react";
-import { Dialog, DialogContent, DialogOverlay, DialogTrigger } from "../ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogOverlay,
+  DialogTrigger,
+} from "../ui/dialog";
 import { MdHealthAndSafety } from "react-icons/md";
 import Appoint1 from "./Appoint1";
 import Appoint2 from "./Appoint2";
 import Appoint3 from "./Appoint3";
 import { BookAppointment } from "@/actions/appointment/appoint";
 import { useUser } from "@/app/context/userContext";
+import logo from "@/app/images/logo.png";
 
+declare global {
+  interface Window {
+    Razorpay: any;
+  }
+}
+
+export {};
 export default function Appoint({ details }: any) {
-  const { id } = useUser();
+  const { id, userName, email, phone } = useUser();
   const [dialogOpen, setDialogOpen] = useState(false);
   const [appointStep, setAppointStep] = useState(0);
   const [appointmentData, setAppointmentData] = useState({
@@ -19,10 +32,11 @@ export default function Appoint({ details }: any) {
     date: "",
     age: null,
     gender: "",
+    amount:1 //details.doctorProfile?.consultationFees
+    ,
     doctor_id: details?.id,
     userId: id,
   });
-
   // Handle the first step (date and time)
   const handleAppoint1Data = (data: any) => {
     setAppointmentData((prevData) => ({
@@ -42,26 +56,97 @@ export default function Appoint({ details }: any) {
       age: data.age,
       gender: data.gender,
     }));
-    setAppointStep(2); // Move to the final step
+  };
+
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+      document.body.appendChild(script);
+    });
+  };
+
+  const handlePayment = async (orderData: any) => {
+    //setIsLoading(true);
+
+    const res = await loadRazorpayScript();
+    if (!res) {
+      alert("Razorpay SDK failed to load. Please try again.");
+      //setIsLoading(false);
+      return;
+    }
+
+    const options = {
+      key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      amount: orderData.amount,
+      currency: orderData.currency,
+      name: "Kaustubha Medtech Private Limited",
+      description: "Appointment booking Transaction",
+      image: logo,
+      order_id: orderData.id,
+      handler: async (response: any) => {
+        alert(`Payment Successful. Razorpay Payment ID: ${response.razorpay_payment_id}`);
+        const paymentData = {
+          appointmentId: orderData.appointmentId, 
+          paymentId: response.razorpay_payment_id,
+          status: "success",
+        };
+        try {
+          const updateResponse = await fetch("/api/payment/update",
+            {
+              method: "POST", 
+              body: JSON.stringify(paymentData)
+            }
+          );
+          console.log("Payment status updated:", updateResponse);
+          
+        } catch (error) {
+          console.error("Error updating payment status:", error);
+        }
+      },
+      prefill: {
+        name: userName,
+        email: email,
+        contact: phone,
+      },
+      notes: {
+        address: `${userName} has booked cunsultation with ${details.name} and paid ${orderData.amount} ${orderData.currency}`,
+      },
+      theme: {
+        color: "#5c32d9",
+      },
+      style: {
+        zIndex: 1000,
+      },
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
   };
 
   // Submit the appointment data
   const Submit = async () => {
     try {
-      const result = await BookAppointment(appointmentData);
-      console.log(result);
+      const result: any = await BookAppointment(appointmentData);
+      if (result) {
+        const data = await handlePayment(result?.order);
+      }
       resetAppointmentData();
     } catch (error) {
       console.error("Error booking appointment:", error);
     } finally {
-      // Close dialog after submission
-      setDialogOpen(false);
     }
   };
 
   // Trigger submission once appointment data is fully filled
   useEffect(() => {
-    if (appointStep === 2 && appointmentData.age) {
+    if (appointStep <= 1 && appointmentData.age) {
       Submit();
     }
   }, [appointStep, appointmentData]);
@@ -74,6 +159,8 @@ export default function Appoint({ details }: any) {
       name: "",
       date: "",
       age: null,
+      amount: 1 //||details.doctorProfile?.consultationFees
+      ,
       gender: "",
       doctor_id: details?.id,
       userId: id,
@@ -81,10 +168,10 @@ export default function Appoint({ details }: any) {
     setAppointStep(0);
   };
 
-  const DialogChange=()=>{
-    setAppointStep(0)
+  const DialogChange = () => {
+    setAppointStep(0);
     setDialogOpen(!dialogOpen);
-  }
+  };
 
   return (
     <Dialog open={dialogOpen} onOpenChange={DialogChange}>
@@ -102,7 +189,9 @@ export default function Appoint({ details }: any) {
             </div>
           </div>
           <div className="p-4">
-            {appointStep === 0 && <Appoint1 details={details} onChangeApp={handleAppoint1Data} />}
+            {appointStep === 0 && (
+              <Appoint1 details={details} onChangeApp={handleAppoint1Data} />
+            )}
             {appointStep === 1 && <Appoint2 onChangeApp={handleAppoint2Data} />}
             {appointStep === 2 && <Appoint3 id={id} />}
           </div>

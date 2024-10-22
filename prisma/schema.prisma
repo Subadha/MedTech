@@ -30,6 +30,9 @@ model User {
   patientReportsDoc         PatientReportsDoc?
  appointmentsAsDoctor BookedAppointment[] @relation(name: "DoctorAppointment")
   appointmentsAsPatient BookedAppointment[] @relation(name: "PatientAppointment") 
+   paymentsAsPatient         Payment[]                 @relation(name: "PatientPayment")
+  paymentsAsDoctor          Payment[]                 @relation(name: "DoctorPayment")
+
    @@map("users")
 }
 
@@ -200,9 +203,29 @@ model BookedAppointment {
   age        Float
   name       String
   gender     String
-  
+  payment    Payment?   @relation
+
   doctor     User   @relation(name: "DoctorAppointment", fields: [doctor_id], references: [id])
   patient    User   @relation(name: "PatientAppointment", fields: [userId], references: [id])
+}
+
+model Payment {
+  id                 String           @id @default(cuid())
+  amount             Float
+  paymentStatus      String
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  patientId          String            
+  doctorId           String
+  paymentId          String
+  currency           String
+  amount_paid        Float            @default(0)
+  appointmentId      Int              @unique
+  patient            User              @relation(name: "PatientPayment", fields: [patientId], references: [id])
+  doctor             User              @relation(name: "DoctorPayment", fields: [doctorId], references: [id])
+  appointment        BookedAppointment @relation(fields: [appointmentId], references: [id])
+
+  @@map("payments")
 }
 
 model Conversation {
@@ -261,3 +284,5 @@ enum ConversationType {
   COMMUNITY
   ADMIN_SUPPORT
 }
+
+

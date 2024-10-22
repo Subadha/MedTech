@@ -7,6 +7,7 @@ import Team from "@/components/home/Team";
 import Photo from "@/components/home/Photos";
 import Narrative from "@/components/home/Narrative";
 import News from "@/components/home/News";
+import RazorpayPaymentButton from "./payment/page";
 
 
   
@@ -15,6 +16,7 @@ export default function Home() {
     <>
     <NavBar/>
     <Hero/>
+    <RazorpayPaymentButton/>
     {/* <TextCard/> */}
     <Services/>
     <Team/>
