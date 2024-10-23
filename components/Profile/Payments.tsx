@@ -10,7 +10,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 export default function UserPayments({ id }: any) {
-  const [date, setDate] = useState<Date>(new Date())
+  const [date, setDate] = useState<any>(new Date())
   const [payments, setPayments] = useState<any>([]);
   useEffect(() => {
     const GetList = async () => {
