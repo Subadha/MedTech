@@ -35,7 +35,7 @@ export const POST = async (req: any) => {
         throw new Error("Invalid range type. Valid options are 'daily', 'weekly', or '15-days'.");
     }
 
-    // Fetch appointments for the specific doctor and date range
+    // Fetch the most recent 4 appointments for the specific doctor and date range
     const appointments = await db.bookedAppointment.findMany({
       where: {
         doctor_id: userId,
@@ -45,10 +45,10 @@ export const POST = async (req: any) => {
         },
       },
       include: {
-        patient: true, 
+        patient: true, // Include patient details
       },
       orderBy: {
-        date: "asc", // Order appointments by ascending date and time
+        date: "desc", // Order appointments by descending date (most recent first)
       },
     });
 

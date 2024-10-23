@@ -16,7 +16,6 @@ export default function Home() {
     <>
     <NavBar/>
     <Hero/>
-    <RazorpayPaymentButton/>
     {/* <TextCard/> */}
     <Services/>
     <Team/>

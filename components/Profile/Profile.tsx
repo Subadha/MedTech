@@ -10,6 +10,8 @@ import { User } from "@/data/user";
 import { PhoneVerify } from "./PhoneVerify";
 import { Button } from "../ui/button";
 import UploadDocument from "./upload-dialog";
+import UserPayments from "./Payments";
+import { ScrollArea } from "../ui/scroll-area";
 
 
 interface ProfileProps {
@@ -134,35 +136,7 @@ export default function Profile({
             </div>
           </div>
           <div className="bg-white shadow-xl box-border sm:w-[30vw] sm:text-[1vw] text-[3vw] h-[100vh] -mt-[50px] rounded-lg">
-            <div className="mx-[20px] p-[20px] shadow-xl box-border rounded-lg border-2 border-gray-300 mt-5">
-              <h1>Professional Details</h1>
-              <p>This are the professional details shown to users in the app</p>
-            </div>
-            <div className="mx-[20px] p-[20px] shadow-xl box-border rounded-lg border-2 border-gray-300 mt-5">
-              <h1>Appointments</h1>
-              <div className="w-[20vw] ">
-                <p className="py-2">15 Appointments</p>
-                <p>Of total Appointments</p>
-              </div>
-            </div>
-            <div className="mx-[20px] mt-5 p-[20px] shadow-xl box-border border-2 border-gray-300 rounded-lg">
-              <h1>Ratings</h1>
-              <p>4 stars</p>
-            </div>
-            <div className="mx-[20px] pt-5">
-              <h1>Doctors Review</h1>
-              <div className="border-2 border-gray-300 rounded-lg shadow-md p-3">
-                <h1>Ankit Srinvas</h1>
-                <p>
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Nostrum veniam dolore sed incidunt iusto obcaecati quis fuga
-                  cupiditate laboriosam ea, dolorem deleni
-                </p>
-              </div>
-            </div>
-            <div className="text-red-700 mx-[20px] pt-3">
-              <Link href="/">See all Reviews</Link>
-            </div>
+            <ScrollArea className="w-full h-full p-4"><UserPayments id={id} /></ScrollArea>
           </div>
         </div>
       </div>

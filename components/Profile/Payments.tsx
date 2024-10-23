@@ -9,16 +9,16 @@ import { CalendarIcon, CheckCircle, XCircle } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export default function Payments({ id }: any) {
+export default function UserPayments({ id }: any) {
   const [date, setDate] = useState<Date>(new Date())
   const [payments, setPayments] = useState<any>([]);
   useEffect(() => {
     const GetList = async () => {
       try {
-        const result = await fetch(`/api/v1/doctor/payment/get?doctorId=${id}&date=${date}`);
+        const result = await fetch(`/api/v1/patients/payment/get?userId=${id}&date=${date}`);
         const data = await result.json();
         console.log(data);
-        setPayments(data.data)
+        if(data?.data?.length){setPayments(data.data)}
       } catch (error) {
         console.log(error);
       }
@@ -28,7 +28,7 @@ export default function Payments({ id }: any) {
 
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex w-full flex-col gap-5">
       <div className="flex justify-between">
         <h1 className="font-bold text-lg md:text-xl">Payments</h1>
         <Popover>
@@ -68,14 +68,14 @@ export default function Payments({ id }: any) {
                   <Image
                    width={60}
                    height={60}
-                    src={payment?.patient?.image || img}
+                    src={payment?.doctor?.image || img}
                     alt="payer"
                     className="object-cover aspect-square"
                   />
                 </div>
                 <div className="flex flex-col justify-center">
                   <h1 className="text-sm md:text-md font-semibold">
-                    {payment?.patient?.name}
+                    {payment?.doctor?.name}
                   </h1>
                   <p className="text-sm md:text-md">
                     Amount: {payment.amount} ₹
@@ -93,7 +93,7 @@ export default function Payments({ id }: any) {
                 )}
               </div>
             </div>
-            <div className="px-5 pb-5 w-full md:w-[45vw]">
+            <div className="px-5 pb-5 w-full">
               <p
                 className={`text-sm md:text-md ${
                   payment.paymentStatus === "success"
