@@ -73,7 +73,6 @@ export default function Appoint({ details }: any) {
 
   const handlePayment = async (orderData: any) => {
     //setIsLoading(true);
-    console.log(orderData);
 
     const res = await loadRazorpayScript();
     if (!res) {
@@ -96,7 +95,6 @@ export default function Appoint({ details }: any) {
         );
         try {
           const result = await BookAppointment({...appointmentData,orderId:orderData.id});
-          console.log("Payment status updated:",result);
         } catch (error) {
           console.error("Error updating payment status:", error);
         }
@@ -127,7 +125,7 @@ export default function Appoint({ details }: any) {
       // const result: any = await BookAppointment(appointmentData);
       const result: any = await fetch("/api/payment", {
         method: "POST",
-        body: JSON.stringify({amount:1}),
+        body: JSON.stringify({amount:appointmentData.amount}),
       });
       setDialogOpen(false)
       const {order} = await result.json();
