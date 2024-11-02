@@ -36,6 +36,7 @@ const UploadDocument = () => {
     }
   };
 
+  const [dialog,setDialog] = useState(false)
   const [data, setData] = useState<any>();
 
   const FetchData = async () => {
@@ -75,6 +76,7 @@ const UploadDocument = () => {
           title: "Document Upload Success",
           variant: "success",
         });
+        setDialog(false);
       } else {
         toast({
           title: "Failed to upload document ",
@@ -90,7 +92,7 @@ const UploadDocument = () => {
   }, []);
 
   return (
-    <Dialog>
+    <Dialog open={dialog} onOpenChange={()=>setDialog(!dialog)}>
       <DialogTrigger asChild>
         <Button variant="outline">Check Reports</Button>
       </DialogTrigger>
