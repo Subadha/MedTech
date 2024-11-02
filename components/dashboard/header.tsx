@@ -34,12 +34,12 @@ const Header = ({ userName,role, image }: HeaderProps) => {
       </h3>
 
       <div className="flex items-center gap-3 lg:gap-[5vw]">
-        <SearchBar />
+        {/* <SearchBar /> */}
         <div className="flex items-center gap-3 lg:gap-6">
-          <div className=" lg:block hidden">
+          {/* <div className=" lg:block hidden">
           <LanguageSelection />
           </div>
-          <GoBell className="text-xl" />
+          <GoBell className="text-xl" /> */}
          <Link href="/dashboard/profile">
          <div className="flex items-center gap-2">
             <Avatar>
