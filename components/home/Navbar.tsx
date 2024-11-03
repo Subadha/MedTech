@@ -1,59 +1,71 @@
-'use client'
+"use client";
 
-import React from 'react'
-import { Menu, X } from 'lucide-react'
-import { Button } from '../ui/button'
-import LoginButton from '../auth/login-button'
-import Image from 'next/image'
-import logo from "@/app/images/logo.png"
+import React from "react";
+import { Menu, X } from "lucide-react";
+import { Button } from "../ui/button";
+import LoginButton from "../auth/login-button";
+import Image from "next/image";
+import logo from "@/app/images/logo.png";
 
 const menuItems = [
   {
-    name: 'Home',
-    href: '/',
+    name: "Home",
+    href: "/",
   },
   // {
   //   name: 'Product',
   //   href: '#product',
   // },
   {
-    name: 'Team',
-    href: '#team',
+    name: "Team",
+    href: "team",
   },
   {
-    name: 'News',
-    href: '#news',
+    name: "News",
+    href: "news",
   },
   {
-    name: 'Contact Us',
-    href: '#footer',
+    name: "Contact Us",
+    href: "footer",
   },
-]
+];
 
 export default function NavBar() {
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false)
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+    setIsMenuOpen(!isMenuOpen);
+  };
 
+  const handleScroll = (id: string) => {
+    const targetElement = document.getElementById(id);
+    if (targetElement) {
+      const offsetPosition =
+        targetElement.getBoundingClientRect().top + window.pageYOffset - 100;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
   return (
     <div className="relative w-full bg-white border-2 border-gray-100">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 sm:py-0 lg:px-8">
         <div className="inline-flex items-center space-x-2">
-          <Image src={logo} alt='logo' width={100} height={100}/>
+          <Image src={logo} alt="logo" width={100} height={100} />
         </div>
 
         <div className="hidden lg:block">
           <ul className="inline-flex space-x-10 mx-10">
             {menuItems.map((item) => (
               <li key={item.name}>
-                <a
-                  href={item.href}
-                  className="text-sm font-semibold text-black hover:text-primary"
+                <p
+                  onClick={() => handleScroll(item.href)}
+                  className="text-sm font-semibold cursor-pointer text-black hover:text-primary"
                 >
                   {item.name}
-                </a>
+                </p>
               </li>
             ))}
           </ul>
@@ -71,7 +83,7 @@ export default function NavBar() {
                 <div className="flex items-center justify-between">
                   <div className="inline-flex items-center space-x-2">
                     <div className="inline-flex items-center space-x-2">
-                      <Image src={logo} alt='logo' width={100} height={100} />
+                      <Image src={logo} alt="logo" width={100} height={100} />
                     </div>
                   </div>
                   <div className="-mr-2">
@@ -88,15 +100,15 @@ export default function NavBar() {
                 <div className="mt-6">
                   <nav className="grid gap-y-4">
                     {menuItems.map((item) => (
-                      <a
+                      <p
+                        onClick={() => handleScroll(item.href)}
                         key={item.name}
-                        href={item.href}
                         className="-m-3 flex items-center rounded-md p-3 text-sm font-semibold hover:bg-gray-50"
                       >
-                        <span className="ml-3 text-base font-medium text-gray-900">
+                        <span className="ml-3 text-base font-medium cursor-pointer text-gray-900">
                           {item.name}
                         </span>
-                      </a>
+                      </p>
                     ))}
                   </nav>
                 </div>
@@ -109,5 +121,5 @@ export default function NavBar() {
         )}
       </div>
     </div>
-  )
+  );
 }

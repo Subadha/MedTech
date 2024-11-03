@@ -42,6 +42,14 @@ export async function POST(request: Request) {
       data: { password: hashedPassword },
     });
 
+    const isSamePassword = await bcrypt.compare(password, existingUser?.password!);
+    if (isSamePassword) {
+      return NextResponse.json(
+        { error: "This password is already used" },
+        { status: 400 }
+      );
+    }
+
     await db.passwordReset.delete({
       where: { id: existingToken.id },
     });

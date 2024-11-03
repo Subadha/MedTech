@@ -38,9 +38,9 @@ const Page = () => {
 
   return (
     <div className="flex justify-evenly h-[100vh]">
-      <div className="">
+      {/* <div className="">
         <Image alt="Login Image" src={img} fill />
-      </div>
+      </div> */}
       <div className="absolute sm:top-4 sm:left-10 z-10 w-20 h-20">
         <Link href="/">
           <Image src={logo} alt="Logo" layout="fill" objectFit="contain" />

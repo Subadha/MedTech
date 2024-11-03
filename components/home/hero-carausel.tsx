@@ -36,12 +36,12 @@ export function HomeMainCarousel() {
       loop={true}
       pagination={{ clickable: true }}
       modules={[Autoplay, Pagination, Navigation]}
-      className="w-full"
+      className="w-full  md:w-3/5 lg:w-full"
     >
       {Url.map((imageUrl, index) => (
         <SwiperSlide key={index}>
           <Card className="p-0">
-            <CardContent className="h-[30vh] lg:h-[30vw] rounded-xl p-0 w-full overflow-hidden flex items-center justify-center">
+            <CardContent className="h-[30vh] md:h-[60vh] lg:h-[30vw] rounded-xl p-0 w-full  overflow-hidden flex items-center justify-center">
               <Image
                 alt={`Image ${index + 1}`}
                 className="h-[100%] object-cover"

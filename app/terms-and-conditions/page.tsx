@@ -32,12 +32,12 @@ const page = () => {
           company incorporated under the Companies Act&apos; 1956 with its
           registered office at Foundation for CfHE&apos; Indian Institute of
           Hyderabad&apos; Kandi&apos; &apos; Medak&apos; Sangareddy&apos;
-          TELANGANA&apos; 502285 (hereinafter referred to as ?Platform
-          Owner?&apos; &apos;we&apos;&apos; &apos;us&apos;&apos;
+          TELANGANA&apos; 502285 (hereinafter referred to as &quot;Platform
+          Owner&quot;&apos; &apos;we&apos;&apos; &apos;us&apos;&apos;
           &apos;our&apos;).
           <br />
           <br /> Your use of the Platform and services and tools are governed by
-          the following terms and conditions (?Terms of Use?) as applicable to
+          the following terms and conditions (&quot;Terms of Use&quot;) as applicable to
           the Platform including the applicable policies which are incorporated
           herein by way of reference.
           <br /> If You transact on the Platform&apos; You shall be subject to
@@ -55,8 +55,8 @@ const page = () => {
           Use can be modified at any time without assigning any reason. It is
           your responsibility to periodically review these Terms of Use to stay
           informed of updates.. For the purpose of these Terms of Use&apos;
-          wherever the context so requires ?you?&apos; &apos;your&apos; or
-          ?user? shall mean any natural or legal person who has agreed to become
+          wherever the context so requires &quot;you&quot;&apos; &apos;your&apos; or
+          &quot;user&quot; shall mean any natural or legal person who has agreed to become
           a user/buyer on the Platform.. ACCESSING&apos; BROWSING OR OTHERWISE
           USING THE PLATFORM INDICATES YOUR AGREEMENT TO ALL THE TERMS AND
           CONDITIONS UNDER THESE TERMS OF USE&apos; SO PLEASE READ THE TERMS OF
@@ -164,7 +164,7 @@ const page = () => {
           platforms. When such a third-party business partner collects your
           personal data directly from you&apos; you will be governed by their
           privacy policies. We shall not be responsible for the third-party
-          business partner?s privacy practices or the content of their privacy
+          business partner&quot;s privacy practices or the content of their privacy
           policies&apos; and we request you to read their privacy policies prior
           to disclosing any information.
           <br /> If you receive an email&apos; a call from a person/association
@@ -259,8 +259,8 @@ const page = () => {
           for the purposes specified in this Privacy Policy. You have an option
           to withdraw your consent that you have already provided by writing to
           the Grievance Officer at the contact information provided below.
-          <br /> Please mention ?Withdrawal of consent for processing personal
-          data? in your subject line of your communication. We may verify such
+          <br /> Please mention &quot;Withdrawal of consent for processing personal
+          data&quot; in your subject line of your communication. We may verify such
           requests before acting on our request. However&apos; please note that
           your withdrawal of consent will not be retrospective and will be in
           accordance with the Terms of Use&apos; this Privacy Policy&apos; and

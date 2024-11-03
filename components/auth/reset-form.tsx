@@ -33,6 +33,7 @@ export const ResetForm = () => {
     });
 
     const onSubmit = async (values: z.infer<typeof ResetSchema>) => {
+        localStorage.setItem('email',values.email);
         setError("");
         setSuccess("");
         startTransition(async () => {
@@ -65,6 +66,7 @@ export const ResetForm = () => {
     });
 
     const onSubmit1 = async (values: z.infer<typeof ResetUsingNumber>) => {
+        localStorage.setItem('phone',values.phone);
         setError1("");
         setSuccess1("");
         startTransition(async () => {
@@ -104,14 +106,14 @@ export const ResetForm = () => {
                     </Link>{" "}
                 </span>
             </div>
-            <div className="">
+            {/* <div className="">
                 <Image
                     alt="Reset Password Image"
                     src={img}
                     className="w-screen h-full"
                     fill
                 />
-            </div>
+            </div> */}
             <div className="sm:flex sm:w-[50vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
                 <CardWrapper
                     headerTitle="Reset Password"

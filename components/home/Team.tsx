@@ -98,7 +98,7 @@ export default function Team() {
         {teamMembers.map((_, index) => (
           <CarouselItem
             key={index}
-            className="md:basis-1/3 sm:basis-1/2 xl:basis-1/4 w-full"
+            className="md:basis-1/2 sm:basis-1/2 xl:basis-1/4 w-full"
           >
             <Card className="rounded-lg h-full border backdrop-blur-sm bg-[rgba(255,255,255,.1)]">
               <CardContent className="flex aspect-square flex-col lg:p-3 p-2">

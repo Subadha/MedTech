@@ -220,7 +220,7 @@ export function AppointmentTable({ data,refresh }: any) {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button onClick={()=>CancleFunction(cancleDialog)} variant="destructive">Cancle</Button>
+          <Button onClick={()=>CancleFunction(cancleDialog)} variant="destructive">Cancel</Button>
         </DialogFooter>
         </DialogContent>
       </Dialog>

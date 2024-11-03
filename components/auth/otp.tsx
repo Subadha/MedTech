@@ -2,7 +2,7 @@
 import { useForm, Controller, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp";
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp";
 import { REGEXP_ONLY_DIGITS_AND_CHARS } from "input-otp";
 import FormSuccess from "./form-sucess";
 import FormError from "./form-error";
@@ -31,13 +31,19 @@ const InputOTPPattern: React.FC<InputOTPPatternProps> = ({ control }) => (
         name="otp"
         control={control}
         render={({ field }) => (
-            <InputOTP {...field} maxLength={6} pattern={REGEXP_ONLY_DIGITS_AND_CHARS}>
-                <InputOTPGroup>
-                    {[...Array(6)].map((_, index) => (
-                        <InputOTPSlot key={index} index={index} {...field} />
-                    ))}
-                </InputOTPGroup>
-            </InputOTP>
+            <InputOTP maxLength={6} {...field}>
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+            </InputOTPGroup>
+            <InputOTPSeparator />
+            <InputOTPGroup>
+              <InputOTPSlot index={3} />
+              <InputOTPSlot index={4} />
+              <InputOTPSlot index={5} />
+            </InputOTPGroup>
+          </InputOTP>
         )}
     />
 );

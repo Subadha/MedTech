@@ -47,12 +47,12 @@ export const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a href="contact-us" className="hover:underline">
                     Support
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a href="/faqs" className="hover:underline">
                     FAQ
                   </a>
                 </li>
@@ -78,12 +78,12 @@ export const Footer = () => {
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a href="contact-us" className="hover:underline">
                     Support
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:underline">
+                  <a href="faqs" className="hover:underline">
                     FAQ
                   </a>
                 </li>
