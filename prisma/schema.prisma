@@ -19,21 +19,21 @@ model User {
   about                     String?
   emailVerified             DateTime?
   socket_id                 String?
+  appointmentsAsDoctor      BookedAppointment[]        @relation("DoctorAppointment")
+  appointmentsAsPatient     BookedAppointment[]        @relation("PatientAppointment")
   ConversationParticipant   ConversationParticipant[]
   Message                   Message[]
   accounts                  Account[]
   doctorAvailabilityDetails DoctorAvailabilityDetails?
   doctorLicenses            DoctorLicense?
   doctorProfile             DoctorProfile?
-   reviews                   Reviews[]                  @relation("Reviewer") 
-  patientReviews            Reviews[]                  @relation("PatientReviews") 
   patientReportsDoc         PatientReportsDoc?
- appointmentsAsDoctor BookedAppointment[] @relation(name: "DoctorAppointment")
-  appointmentsAsPatient BookedAppointment[] @relation(name: "PatientAppointment") 
-   paymentsAsPatient         Payment[]                 @relation(name: "PatientPayment")
-  paymentsAsDoctor          Payment[]                 @relation(name: "DoctorPayment")
+  paymentsAsDoctor          Payment[]                  @relation("DoctorPayment")
+  paymentsAsPatient         Payment[]                  @relation("PatientPayment")
+  patientReviews            Reviews[]                  @relation("PatientReviews")
+  reviews                   Reviews[]                  @relation("Reviewer")
 
-   @@map("users")
+  @@map("users")
 }
 
 model DoctorProfile {
@@ -67,8 +67,9 @@ model Reviews {
   patientProfilePic String
   createdAt         DateTime @default(now())
   appointmentId     Float
-  user              User     @relation("Reviewer", fields: [userId], references: [id], onDelete: Cascade) // Relation to user (doctor)
-  patient           User     @relation("PatientReviews", fields: [patientId], references: [id], onDelete: Cascade) // Relation to patient
+  patient           User     @relation("PatientReviews", fields: [patientId], references: [id], onDelete: Cascade)
+  user              User     @relation("Reviewer", fields: [userId], references: [id], onDelete: Cascade)
+
   @@map("reviews")
 }
 
@@ -99,11 +100,12 @@ model DoctorLicense {
 }
 
 model PatientReportsDoc {
-  id                  Int    @id @default(autoincrement())
-  userId              String @unique
-  imageUrl1           String
-  imageUrl2           String
-  user                User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        Int    @id @default(autoincrement())
+  userId    String @unique
+  imageUrl1 String
+  imageUrl2 String
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@map("patient_report")
 }
 
@@ -203,37 +205,36 @@ model BookedAppointment {
   age        Float
   name       String
   gender     String
-  payment    Payment?   @relation
-
-  doctor     User   @relation(name: "DoctorAppointment", fields: [doctor_id], references: [id])
-  patient    User   @relation(name: "PatientAppointment", fields: [userId], references: [id])
+  doctor     User     @relation("DoctorAppointment", fields: [doctor_id], references: [id])
+  patient    User     @relation("PatientAppointment", fields: [userId], references: [id])
+  payment    Payment?
 }
 
 model Payment {
-  id                 String           @id @default(cuid())
-  amount             Float
-  paymentStatus      String
-  createdAt          DateTime          @default(now())
-  updatedAt          DateTime          @updatedAt
-  patientId          String            
-  doctorId           String
-  paymentId          String
-  currency           String
-  amount_paid        Float            @default(0)
-  appointmentId      Int              @unique
-  patient            User              @relation(name: "PatientPayment", fields: [patientId], references: [id])
-  doctor             User              @relation(name: "DoctorPayment", fields: [doctorId], references: [id])
-  appointment        BookedAppointment @relation(fields: [appointmentId], references: [id])
+  id            String            @id @default(cuid())
+  amount        Float
+  paymentStatus String
+  createdAt     DateTime          @default(now())
+  updatedAt     DateTime          @updatedAt
+  patientId     String
+  doctorId      String
+  appointmentId Int               @unique
+  amount_paid   Float             @default(0)
+  currency      String
+  paymentId     String
+  appointment   BookedAppointment @relation(fields: [appointmentId], references: [id])
+  doctor        User              @relation("DoctorPayment", fields: [doctorId], references: [id])
+  patient       User              @relation("PatientPayment", fields: [patientId], references: [id])
 
   @@map("payments")
 }
 
 model PlatformReview {
-  id            String                    @id @default(cuid())
-  createdAt     DateTime                  @default(now())
-  rating         Float      
-  review        String
-  name          String
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  rating    Float
+  review    String
+  name      String
 }
 
 model Conversation {
@@ -292,5 +293,3 @@ enum ConversationType {
   COMMUNITY
   ADMIN_SUPPORT
 }
-
-
