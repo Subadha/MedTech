@@ -9,7 +9,7 @@ export const POST = async (req:any) => {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    const result = await db.PlatformReview.create({
+    const result = await db.platformReview.create({
       data: {
         rating: parseInt(rating), // Convert to string if `rating` is a number
         name: name,
