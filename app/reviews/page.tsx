@@ -5,7 +5,7 @@ import { Star } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export default function page() {
+export default function Page() {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
     const FetchReviews = async () => {
