@@ -4,6 +4,7 @@ import Image from "next/image";
 import logo from "@/app/images/logo.png"
 import { FaLinkedin, FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 export const Footer = () => {
   return (
@@ -19,7 +20,7 @@ export const Footer = () => {
             <Image alt="logo" src={logo} height={150} width={100} />
             <iframe allowFullScreen={true} src="https://www.youtube.com/embed/_Y66177Gtg8" className="text-md font-medium max-w-sm text-center md:text-left mb-4">
             </iframe> 
-            <Button variant='link' className="px-0 uppercase font-semibold">Get in touch &gt;</Button>
+            <Link href="/contact-us" className="px-0 text-primary uppercase font-semibold">Get in touch &gt;</Link>
             {/* <div className="w-full">
               <div className="relative pb-[56.25%] h-[60vh]"> 
                 <iframe

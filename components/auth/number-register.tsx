@@ -41,14 +41,14 @@ export const NumberRegisterForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [sucess, setSucess] = useState<string | undefined>("");
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
-  const [role, setRole] = useState<"USER" | "ADMIN">("USER"); // State for user role
+  const [role, setRole] = useState<"USER" | "DOCTOR">("USER"); // State for user role
 
   const form = useForm<z.infer<typeof RegisterwithPhoneSchema>>({
     resolver: zodResolver(RegisterwithPhoneSchema),
     defaultValues: {
       name: "",
       phone: "",
-      role: "USER",
+      role: role,
       otp: "",
     },
   });
@@ -128,12 +128,12 @@ export const NumberRegisterForm = () => {
                 </Button>
                 <Button
                   className={`w-1/2 ml-2 ${
-                    role === "ADMIN"
+                    role === "DOCTOR"
                       ? "bg-purple-700 hover:bg-purple-500"
                       : "bg-purple-400 hover:bg-purple-300"
                   }`}
                   type="button"
-                  onClick={() => setRole("ADMIN")}
+                  onClick={() => setRole("DOCTOR")}
                 >
                   Doctor
                 </Button>

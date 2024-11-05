@@ -1,10 +1,11 @@
+"use client"
 import { Footer } from "@/components/home/Footer";
 import NavBar from "@/components/home/Navbar";
 import React from "react";
 
-const page = () => {
+const Page = () => {
   return (
-    <>
+    <div>
       <NavBar />
       <div className="flex flex-col lg:px-20 px-10 py-8">
         <h1 className="text-3xl font-bold mb-4">Privacy Policy</h1>
@@ -105,8 +106,8 @@ const page = () => {
         </p>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 
-export default page;
+export default Page;

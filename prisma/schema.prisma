@@ -228,6 +228,14 @@ model Payment {
   @@map("payments")
 }
 
+model PlatformReview {
+  id            String                    @id @default(cuid())
+  createdAt     DateTime                  @default(now())
+  rating         Float      
+  review        String
+  name          String
+}
+
 model Conversation {
   id            String                    @id
   createdAt     DateTime                  @default(now())

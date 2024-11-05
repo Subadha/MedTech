@@ -1,11 +1,15 @@
 "use client";
 import Faq from "@/components/help/faq";
+import { Footer } from "@/components/home/Footer";
+import NavBar from "@/components/home/Navbar";
 import Script from "next/script";
 import React from "react";
+import ReviewCard from "./comp/Review";
 
 const page = () => {
   return (
-    <div className="flex flex-col relative h-full w-full pt-20 items-center gap-10">
+    <div className="flex flex-col relative h-full w-full items-center gap-10">
+      <NavBar/>
       {/* <Script
         id="tawk-to"
         strategy="afterInteractive"
@@ -24,9 +28,11 @@ const page = () => {
         }}
       /> */}
       <h1 className="text-2xl">Hello, how can we help? </h1>
-      <div className="flex relative w-full p-10 items-center gap-10">
+      <div className="flex flex-col lg:flex-row relative justify-center w-full p-4 lg:p-10 items-center gap-8">
         <Faq />
+        <ReviewCard/>
       </div>
+      <Footer />
     </div>
   );
 };

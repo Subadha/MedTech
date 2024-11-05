@@ -9,8 +9,7 @@ import {
 
 const Faq = () => {
   return (
-    <div className="w-1/2 flex flex-col gap-6">
-      <h2 className="text-primary font-semibold">FAQs</h2>
+    <div className="lg:w-1/2  flex flex-col gap-6">
       <Card className="p-4">
         <Accordion type="single" collapsible className="w-full">
           {data.map((data) => (

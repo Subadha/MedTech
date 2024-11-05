@@ -8,10 +8,6 @@ import Image from "next/image";
 import logo from "@/app/images/logo.png";
 
 const menuItems = [
-  {
-    name: "Home",
-    href: "/",
-  },
   // {
   //   name: 'Product',
   //   href: '#product',
@@ -23,11 +19,7 @@ const menuItems = [
   {
     name: "News",
     href: "news",
-  },
-  {
-    name: "Contact Us",
-    href: "footer",
-  },
+  }
 ];
 
 export default function NavBar() {
@@ -58,6 +50,8 @@ export default function NavBar() {
 
         <div className="hidden lg:block">
           <ul className="inline-flex space-x-10 mx-10">
+            <a href="/" className="text-sm font-semibold cursor-pointer text-black hover:text-primary">Home</a>
+            
             {menuItems.map((item) => (
               <li key={item.name}>
                 <p
@@ -68,6 +62,7 @@ export default function NavBar() {
                 </p>
               </li>
             ))}
+          <a href="/contact-us" className="text-sm font-semibold cursor-pointer text-black hover:text-primary">Contact us</a>
           </ul>
           <LoginButton>
             <Button>Sign in</Button>
