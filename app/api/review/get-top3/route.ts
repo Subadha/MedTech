@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export const GET = async () => {
     try {
-      const reviews = await db.platformReview.findMany({
+      const reviews = await db.PlatformReview.findMany({
         orderBy: [
           { rating: 'desc' },     
           { createdAt: 'desc' }, 
