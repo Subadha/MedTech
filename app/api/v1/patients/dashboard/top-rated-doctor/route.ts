@@ -14,10 +14,12 @@ export const GET = async () => {
     });
 
     // Step 2: Calculate the average rating for each doctor
-    const doctorsWithAverageRatings = doctorsWithReviews.map((doctor) => {
+    const doctorsWithAverageRatings = doctorsWithReviews
+    .filter((doctor) => doctor.reviews.length > 0) // Only include doctors with at least one review
+    .map((doctor) => {
       const ratings = doctor.reviews.map((review) => parseFloat(review.rating));
       const averageRating =
-        ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length || 0;
+        ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length;
       
       return {
         ...doctor,

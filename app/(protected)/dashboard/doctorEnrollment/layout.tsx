@@ -1,5 +1,8 @@
-import { auth } from "@/auth";
-import React from "react";
+"use client"
+import { IsDoctorEnrolled } from "@/actions/dashboard/IsDoctorEnrolled";
+import { useUser } from "@/app/context/userContext";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 import { BsPersonCircle } from "react-icons/bs";
 import { FaUserDoctor } from "react-icons/fa6";
 import { RiArrowDropUpFill } from "react-icons/ri";
@@ -9,6 +12,27 @@ export default async function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+    const router = useRouter();
+    const { id, role } = useUser();
+    useEffect(() => {
+        const Check = async () => {
+          const result = await IsDoctorEnrolled(id);
+          if (!result?.availability) {
+            router.push("/dashboard/doctorEnrollment/details");
+          }
+          if (!result?.profile) {
+            router.push("/dashboard/doctorEnrollment");
+          }
+          if (!result?.license){
+            router.push("/dashboard/doctorEnrollment/certificate-verification")
+          } 
+          if (result?.profile&&result?.availability&&result?.license){
+            router.push("/dashboard");
+          }  
+        };
+          Check();
+      }, []);
+
   return (
    <>
      <div className="flex w-full flex-col">

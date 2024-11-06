@@ -121,14 +121,7 @@ export const docEnroll = z.object({
   gender: z.enum(["Male", "Female", "Other"], {
     required_error: "Gender is required",
   }),
-  dateOfBirth: z.string().refine(
-    (value) => {
-      return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
-    },
-    {
-      message: "Date of birth must be in the format mm/dd/yyyy",
-    }
-  ),
+  dateOfBirth: z.string().min(1, "Date of birth is required"),
   qualification: z.string().min(1, "Qualification is required"),
   specialization: z.string().min(1, "Specialization is required"),
   subSpecialist: z.string().min(1, "Sub Specialist is required"),

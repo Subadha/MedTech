@@ -35,7 +35,8 @@ const NearbyDoctors = () => {
         </span>
       </div>
       <div className="grid grid-cols-6 gap-3">
-        {data.map((value:any)=>(<NearDoctorCard key={value.id} data={value} />))}
+        {data.length>0?data.map((value:any)=>(<NearDoctorCard key={value.id} data={value} />)):<p className=" col-span-3">No rated doctor is available</p>
+        }
       </div>
     </div>
   );
@@ -59,9 +60,9 @@ const NearDoctorCard = ({data}:any) => {
             />
             <div className="flex flex-col">
               <Link  href={`/dashboard/consult/${data.id}`} className="text-base font-semibold hover:underline cursor-pointer leading-none">
-                {data.name}
+                {data?.doctorProfile?.legalName}
               </Link>
-              <span className=" text-[12px] text-gray-600">Gynecologist</span>
+              <span className=" text-[12px] text-gray-600">{data?.doctorProfile?.qualification}</span>
             </div>
           </div>
         </CardContent>

@@ -4,7 +4,7 @@ import { icons, LogOut } from "lucide-react";
 import Image from "next/image";
 import logo from "@/app/images/logo.png";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/app/context/userContext";
 import { IsDoctorEnrolled } from "@/actions/dashboard/IsDoctorEnrolled";
 import { identity } from "@fullcalendar/core/internal";
@@ -130,26 +130,42 @@ type SideNavProps = {
 };
 
 export default function SideNav({ userName, role }: SideNavProps) {
-  const {id}=useUser()
+  const { id } = useUser();
   const location = usePathname();
-
-  const [enrolled, setEnrolled] = useState(true);
+  const router = useRouter();
+  const [enrolled, setEnrolled] = useState<any>({
+    profile: false,
+    availability: false,
+    license: false,
+  });
   const [filtered, setFiltered] = useState<any>(docItems);
+  const route = usePathname();
+  console.log(route);
+  useEffect(() => {
+    const Check = async () => {
+      const result = await IsDoctorEnrolled(id);
+      setEnrolled(result);
+      if (!result?.profile) {
+        router.push("/dashboard/doctorEnrollment");
+      }
+      if (!result?.availability) {
+        router.push("/dashboard/doctorEnrollment/details");
+      }
+      if (!result?.license) {
+        router.push("/dashboard/doctorEnrollment/certificate-verification");
+      }
+      const filteredDocItems = result?.license&&result?.profile&&result?.availability
+        ? docItems.filter((item) => item.name !== "Doctor Enrollment")
+        : docItems.filter((item) =>
+            ["Doctor Enrollment", "Sign Out", "Profile"].includes(item.name)
+          );
+      setFiltered(filteredDocItems);
+    };
+    if (!enrolled?.license) {
+      Check();
+    }
+  }, [route]);
 
- useEffect(()=>{
-  const Check= async ()=>{
-    const result = await IsDoctorEnrolled(id)
-    console.log(result);
-    setEnrolled(result);
- }
- Check()
- },[])
- useEffect(()=>{
-  const filteredDocItems = enrolled
-  ? docItems.filter((item) => item.name !== "Doctor Enrollment")
-  : docItems;
-  setFiltered(filteredDocItems)
- },[enrolled])
   return (
     <aside className={`lg:block hidden h-full w-64`}>
       <div className="flex items-center justify-between p-4">
@@ -197,8 +213,8 @@ export default function SideNav({ userName, role }: SideNavProps) {
             );
           })}
         {role === "DOCTOR" &&
-          filtered?.map((item:any) => {
-            const Icon = icons[item.icon as keyof typeof icons]; 
+          filtered?.map((item: any) => {
+            const Icon = icons[item.icon as keyof typeof icons];
             return (
               <Link
                 key={item.name}

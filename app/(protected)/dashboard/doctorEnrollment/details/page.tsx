@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button";
 import { EnrollDoctorDetails } from "@/actions/DoctorEnroll/enrollDoctorDetail";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/app/context/userContext";
+import { IsDoctorEnrolled } from "@/actions/dashboard/IsDoctorEnrolled";
 
 export default function Page() {
   const router = useRouter();
@@ -286,6 +287,7 @@ export default function Page() {
                         <Input
                           disabled={isPending}
                           type="number"
+                          min="0"
                           {...field}
                           placeholder="Enter your fee"
                         />
@@ -307,6 +309,7 @@ export default function Page() {
                       <FormControl className="text-center sm:text-left">
                         <Input
                         type="number"
+                        min="0"
                           disabled={isPending}
                           {...field}
                           placeholder="Enter session length in minutes"

@@ -32,19 +32,19 @@ export const POST = async (req: any) => {
     }
 
     // Check file types (optional)
-    if (image1.type !== "image/*" && image1.type !== "image/*") {
-      return NextResponse.json({
-        message: "Invalid file type for document1. Only PNG and JPEG are allowed.",
-        status: false,
-      });
-    }
+    // if (image1.type !== "image/*" && image1.type !== "image/*") {
+    //   return NextResponse.json({
+    //     message: "Invalid file type for document1. Only PNG and JPEG are allowed.",
+    //     status: false,
+    //   });
+    // }
 
-    if (image2.type !== "image/*" && image2.type !== "image/*") {
-      return NextResponse.json({
-        message: "Invalid file type for document2. Only PNG and JPEG are allowed.",
-        status: false,
-      });
-    }
+    // if (image2.type !== "image/*" && image2.type !== "image/*") {
+    //   return NextResponse.json({
+    //     message: "Invalid file type for document2. Only PNG and JPEG are allowed.",
+    //     status: false,
+    //   });
+    // }
 
     // Check file sizes (optional, e.g., limit to 2MB)
     const MAX_SIZE = 2 * 1024 * 1024; // 2 MB

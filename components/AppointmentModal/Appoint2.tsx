@@ -66,6 +66,7 @@ export default function Appoint2({ onChangeApp }: any) {
                             <div className="pt-3">
                                 <input
                                     type="number"
+                                     min="0"
                                     className="border-2 rounded-sm p-4 w-full"
                                     placeholder="Please Enter Age"
                                     {...form.register("age", { valueAsNumber: true })}

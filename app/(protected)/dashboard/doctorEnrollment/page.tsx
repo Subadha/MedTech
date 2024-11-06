@@ -9,16 +9,19 @@ import { Button } from "@/components/ui/button";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useTransition } from "react";
+import { useEffect, useTransition } from "react";
 import { useUser } from "@/app/context/userContext";
 import { useRouter } from "next/navigation";
 import { EnrollDoctorProfile } from "@/actions/DoctorEnroll/enrollDoctorProfile";
+import { IsDoctorEnrolled } from "@/actions/dashboard/IsDoctorEnrolled";
 
 
 export default function Page(){
     const router = useRouter();  
     const {id,role}= useUser()
+
    
+
     const [isPending, startTransition] = useTransition();
     const form = useForm<z.infer<typeof docEnroll>>({
         resolver: zodResolver(docEnroll),
@@ -128,9 +131,10 @@ export default function Page(){
                                         <FormLabel>Date of Birth</FormLabel>
                                         <FormControl>
                                             <Input
+                                                type="date"
                                                 disabled={isPending}
                                                 {...field}
-                                                placeholder="dd/mm/yyyy"
+                                                placeholder="ddmmyyyy"
                                                 className="sm:w-[20vw] w-[50vw]"
                                             />
                                         </FormControl>
@@ -213,6 +217,7 @@ export default function Page(){
                                         <FormControl>
                                             <Input
                                             type="number"
+                                            min="0"
                                                 disabled={isPending}
                                                 {...field}
                                                 placeholder="Enter Experience in Years"
@@ -233,6 +238,7 @@ export default function Page(){
                                         <FormLabel>Consultation Fees</FormLabel>
                                         <FormControl>
                                             <Input
+                                            min="0"
                                                 type="number"
                                                 disabled={isPending}
                                                 {...field}

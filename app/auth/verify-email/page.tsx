@@ -58,7 +58,9 @@ const Page = () => {
         <Card className="p-4">
           <form onSubmit={onSubmit}>
             <div>
-              <label className="block text-lg font-medium text-gray-700">Enter OTP</label>
+              <h1 className="text-lg">Email Verification</h1>
+              <p className=" text-sm">Check your registered mail for otp</p>
+              <label className="block text-sm mt-4 font-medium text-gray-700">Enter OTP</label>
               <div className="relative mt-2">
                 <InputOTP maxLength={6} value={otp} onChange={handleOtpChange}>
                   <InputOTPGroup>

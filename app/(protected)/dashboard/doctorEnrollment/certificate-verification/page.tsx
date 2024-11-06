@@ -1,18 +1,20 @@
 "use client";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { useUser } from "@/app/context/userContext";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
+import { IsDoctorEnrolled } from "@/actions/dashboard/IsDoctorEnrolled";
 
 export default function Page() {
   const { id, role } = useUser();
   const router = useRouter();
   const [preview1, setPreview1] = useState<string | null>(null);
   const [preview2, setPreview2] = useState<string | null>(null);
-const [loading,setLoading]=useState(false)
+  const [loading, setLoading] = useState(false);
   const formSchema = z.object({
     document1: z
       .any()
@@ -37,7 +39,8 @@ const [loading,setLoading]=useState(false)
     mode: "onBlur",
   });
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>,
+  const handleFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
     setPreview: React.Dispatch<React.SetStateAction<string | null>>,
     fieldName: "document1" | "document2"
   ) => {
@@ -48,10 +51,10 @@ const [loading,setLoading]=useState(false)
       form.setValue(fieldName, file);
     }
   };
-
+  const {toast}= useToast()
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      setLoading(true)
+      setLoading(true);
       const formData = new FormData();
       formData.append("userId", id);
       formData.append("registrationNumber1", data.registrationNumber1);
@@ -60,12 +63,21 @@ const [loading,setLoading]=useState(false)
       formData.append("document2", data.document2);
 
       // Post the data to the server (including files)
-      await fetch("/api/v1/doctor/enroll/certificate", {
+      const result = await fetch("/api/v1/doctor/enroll/certificate", {
         method: "POST",
         body: formData, // Use FormData directly
       });
-      setLoading(false)
-      router.push("/dashboard");
+      const res = await result.json();
+      setLoading(false);
+      if (res.status) {
+        router.push("/dashboard");
+      }else(
+        toast({
+          title:"Error",
+          variant:"destructive",
+          description: res.message
+        })
+      )
     } catch (error) {
       console.error("Error uploading documents: ", error);
     }
@@ -178,7 +190,7 @@ const [loading,setLoading]=useState(false)
           disabled={loading}
           type="submit"
         >
-         {loading?"Uploading":'Submit'}
+          {loading ? "Uploading" : "Submit"}
         </Button>
       </div>
     </form>

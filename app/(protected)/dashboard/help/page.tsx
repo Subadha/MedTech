@@ -24,7 +24,7 @@ const page = () => {
         }}
       /> */}
       <h1 className="text-2xl">Hello, how can we help? </h1>
-      <div className="flex relative w-full p-10 items-center gap-10">
+      <div className="flex relative w-full  justify-center p-10 items-center gap-10">
         <Faq />
       </div>
     </div>

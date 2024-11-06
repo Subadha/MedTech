@@ -92,11 +92,11 @@ export function AppointmentTable({ data,refresh }: any) {
           </p>
         </div>
         <div className="flex items-center gap-6 justify-between">
-          <span className="flex items-center gap-2">
+          {/* <span className="flex items-center gap-2">
             <Checkbox className="rounded" />
             Hide visited
-          </span>
-          <NavigationMenu>
+          </span> */}
+          {/* <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger>Display Columns</NavigationMenuTrigger>
@@ -109,7 +109,7 @@ export function AppointmentTable({ data,refresh }: any) {
                 </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
-          </NavigationMenu>
+          </NavigationMenu> */}
         </div>
       </div>
       <Table className="mt-4">
