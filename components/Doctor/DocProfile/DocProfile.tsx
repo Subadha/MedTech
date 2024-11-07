@@ -20,6 +20,8 @@ export default function DocProfile({id}:any) {
     if(resp?.doctor){setData(resp)}
 }
 const[data,setData]=useState<any>([])
+console.log(data);
+
     const [current, setCurrent] = useState(1);
 
     return (
@@ -64,7 +66,7 @@ const[data,setData]=useState<any>([])
 
                 {/* Conditional Rendering of Component */}
                 <div className="w-full">
-                    {current === 1 && <About id={id} refresh={getDetails} about={data?.doctor?.about} />}
+                    {current === 1 && <About id={id} refresh={getDetails} about={data?.doctor?.about} licenses={data?.doctor?.doctorLicenses} />}
                     {current === 2 && <Review id={id} />}
                     {current === 3 && <Edit id={id} refresh={getDetails} data={data?.doctor} />}
                     {current === 4 && <Payments id={id} />}

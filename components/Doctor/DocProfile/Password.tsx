@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogFooter, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import {UpdatePassword } from "@/actions/doctor-profile/Update"; // Import UpdatePassword
+import { Input } from "@/components/ui/input";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 export default function Edit({id }: any) {
     // State for managing password edit dialog
@@ -16,7 +18,11 @@ export default function Edit({id }: any) {
             console.error("Error updating password");
         }
     };
+    const [showPassword, setShowPassword] = useState(false);
 
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+      };
     return (
         <div className="flex flex-col gap-5 w-full md:w-[30vw]">
             <div>
@@ -42,13 +48,22 @@ export default function Edit({id }: any) {
             <Dialog open={isPasswordDialogOpen} onOpenChange={setIsPasswordDialogOpen}>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogTitle>Edit Password</DialogTitle>
-                    <input
-                        type="password"
-                        value={passwordValue}
-                        onChange={(e) => setPasswordValue(e.target.value)}
-                        className="border p-2 rounded w-full"
-                        placeholder="Enter new password"
-                    />
+                     <div className="relative">
+                            <Input
+                              value={passwordValue}
+                              onChange={(e) => setPasswordValue(e.target.value)}
+                              placeholder="Enter new password"
+                              type={showPassword ? "text" : "password"}
+                            />
+                            <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                              <button
+                                type="button"
+                                onClick={togglePasswordVisibility}
+                              >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                              </button>
+                            </div>
+                          </div>
                     <DialogFooter>
                         <Button onClick={savePasswordValue} disabled={!passwordValue}>
                             Save

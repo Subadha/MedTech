@@ -14,22 +14,22 @@ export default async function Layout({
 }>) {
     const router = useRouter();
     const { id, role } = useUser();
+    const Check = async () => {
+      const result = await IsDoctorEnrolled(id);
+      if (!result?.availability) {
+        router.push("/dashboard/doctorEnrollment/details");
+      }
+      if (!result?.profile) {
+        router.push("/dashboard/doctorEnrollment");
+      }
+      if (!result?.license){
+        router.push("/dashboard/doctorEnrollment/certificate-verification")
+      } 
+      if (result?.profile&&result?.availability&&result?.license){
+        router.push("/dashboard");
+      }  
+    };
     useEffect(() => {
-        const Check = async () => {
-          const result = await IsDoctorEnrolled(id);
-          if (!result?.availability) {
-            router.push("/dashboard/doctorEnrollment/details");
-          }
-          if (!result?.profile) {
-            router.push("/dashboard/doctorEnrollment");
-          }
-          if (!result?.license){
-            router.push("/dashboard/doctorEnrollment/certificate-verification")
-          } 
-          if (result?.profile&&result?.availability&&result?.license){
-            router.push("/dashboard");
-          }  
-        };
           Check();
       }, []);
 

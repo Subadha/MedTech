@@ -4,8 +4,10 @@ import { Dialog, DialogContent, DialogFooter, DialogTitle, DialogTrigger } from 
 import { Textarea } from "@/components/ui/textarea";
 import { FaPencilAlt } from "react-icons/fa";
 import { UpdateAbout } from "@/actions/doctor-profile/Update";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
+import Image from "next/image";
 
-export default function About({ about,refresh, id }: any) {
+export default function About({ about,licenses,refresh, id }: any) {
     const [text, setText] = useState(about);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
@@ -42,6 +44,19 @@ export default function About({ about,refresh, id }: any) {
                         </DialogFooter>
                     </DialogContent>
                 </Dialog>
+            </div>
+            <div>
+                <h1 className="font-bold">Licenses</h1>
+            </div>
+            <div className="flex flex-wrap justify-center border-2 gap-4 rounded-lg bg-gray-200 p-7">
+               <Card>
+                <CardTitle className="p-1 text-sm">ID: {licenses?.registrationNumber1}</CardTitle>
+                <CardContent className="p-2"><Image src={licenses?.imageUrl1} alt="licenses" width={200} height={100} /></CardContent>
+               </Card>
+               <Card>
+                <CardTitle className="p-1 text-sm">ID: {licenses?.registrationNumber2}</CardTitle>
+                <CardContent className="p-2"><Image src={licenses?.imageUrl2} alt="licenses" width={200} height={100} /></CardContent>
+               </Card>
             </div>
         </div>
     );
