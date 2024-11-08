@@ -140,7 +140,6 @@ export default function SideNav({ userName, role }: SideNavProps) {
   });
   const [filtered, setFiltered] = useState<any>(docItems);
   const route = usePathname();
-  console.log(route);
   useEffect(() => {
     const Check = async () => {
       const result = await IsDoctorEnrolled(id);
@@ -161,7 +160,7 @@ export default function SideNav({ userName, role }: SideNavProps) {
           );
       setFiltered(filteredDocItems);
     };
-    if (!enrolled?.license) {
+    if (!enrolled?.license&&role==="DOCTOR") {
       Check();
     }
   }, [route]);
