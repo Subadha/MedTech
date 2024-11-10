@@ -132,6 +132,7 @@ type SideNavProps = {
 export default function SideNav({ userName, role }: SideNavProps) {
   const { id } = useUser();
   const location = usePathname();
+  console.log(location)
   const router = useRouter();
   const [enrolled, setEnrolled] = useState<any>({
     profile: false,
@@ -147,10 +148,9 @@ export default function SideNav({ userName, role }: SideNavProps) {
       if (!result?.profile) {
         router.push("/dashboard/doctorEnrollment");
       }
-      if (!result?.availability) {
+        else if (!result?.availability) {
         router.push("/dashboard/doctorEnrollment/details");
-      }
-      if (!result?.license) {
+      } else if (!result?.license) {
         router.push("/dashboard/doctorEnrollment/certificate-verification");
       }
       const filteredDocItems = result?.license&&result?.profile&&result?.availability
@@ -160,7 +160,7 @@ export default function SideNav({ userName, role }: SideNavProps) {
           );
       setFiltered(filteredDocItems);
     };
-    if (!enrolled?.license&&role==="DOCTOR") {
+    if (!enrolled?.license&&role==="DOCTOR"&&location!=="/dashboard/profile"&&location!=="/dashboard/signout") {
       Check();
     }
   }, [route]);

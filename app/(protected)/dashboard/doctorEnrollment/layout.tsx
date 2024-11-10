@@ -16,13 +16,13 @@ export default async function Layout({
     const { id, role } = useUser();
     const Check = async () => {
       const result = await IsDoctorEnrolled(id);
-      if (!result?.availability) {
+      if (!result?.profile) {
         router.push("/dashboard/doctorEnrollment/details");
       }
-      if (!result?.profile) {
+       else if (!result?.availability) {
         router.push("/dashboard/doctorEnrollment");
       }
-      if (!result?.license){
+       else if (!result?.license){
         router.push("/dashboard/doctorEnrollment/certificate-verification")
       } 
       if (result?.profile&&result?.availability&&result?.license){
