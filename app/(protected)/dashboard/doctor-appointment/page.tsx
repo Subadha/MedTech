@@ -31,7 +31,7 @@ const Page = () => {
 
   // Filter the list based on the search term
   const filteredList = list.filter((appointment) =>
-    appointment.doctorName.toLowerCase().includes(searchTerm.toLowerCase())
+    appointment.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (

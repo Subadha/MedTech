@@ -99,13 +99,13 @@ export default function Appoint1({ details, onChangeApp }: any) {
         handleSubmit(); // Trigger the custom submission logic
       }}
     >
-      <div className="justify-between flex">
+      <div className="">
         <h2 className="text-2xl font-bold text-purple-600">{details?.name}</h2>
         <div>
           <p className="text-sm text-gray-600 mt-1 leading-none">
             {details?.doctorProfile.specialization}
           </p>
-          <p className="text-sm text-gray-600">
+          <p className="text-sm font-medium">
             {details?.doctorProfile.experienceYears} Years of experience
           </p>
         </div>
@@ -132,6 +132,7 @@ export default function Appoint1({ details, onChangeApp }: any) {
           onValueChange={(value) => {
             form.setValue("time", value);
           }}
+        
           defaultValue={form.getValues("time")}
         >
           <SelectTrigger className="w-full mt-4">

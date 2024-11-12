@@ -19,7 +19,7 @@ const menuItems = [
   {
     name: "News",
     href: "news",
-  }
+  },
 ];
 
 export default function NavBar() {
@@ -50,8 +50,13 @@ export default function NavBar() {
 
         <div className="hidden lg:block">
           <ul className="inline-flex space-x-10 mx-10">
-            <a href="/" className="text-sm font-semibold cursor-pointer text-black hover:text-primary">Home</a>
-            
+            <a
+              href="/"
+              className="text-sm font-semibold cursor-pointer text-black hover:text-primary"
+            >
+              Home
+            </a>
+
             {menuItems.map((item) => (
               <li key={item.name}>
                 <p
@@ -62,7 +67,12 @@ export default function NavBar() {
                 </p>
               </li>
             ))}
-          <a href="/contact-us" className="text-sm font-semibold cursor-pointer text-black hover:text-primary">Contact us</a>
+            <a
+              href="/contact-us"
+              className="text-sm font-semibold cursor-pointer text-black hover:text-primary"
+            >
+              Contact us
+            </a>
           </ul>
           <LoginButton>
             <Button>Sign in</Button>
@@ -92,23 +102,33 @@ export default function NavBar() {
                     </button>
                   </div>
                 </div>
-                <div className="mt-6">
+                <div className="mt-6 mb-4">
                   <nav className="grid gap-y-4">
+                    <a
+                      href="/"
+                      className="text-sm w-full font-semibold cursor-pointer text-black hover:text-primary"
+                    >
+                     <Button className="w-full font-semibold" variant="secondary">Home</Button> 
+                    </a>
+
                     {menuItems.map((item) => (
-                      <p
-                        onClick={() => handleScroll(item.href)}
-                        key={item.name}
-                        className="-m-3 flex items-center rounded-md p-3 text-sm font-semibold hover:bg-gray-50"
-                      >
-                        <span className="ml-3 text-base font-medium cursor-pointer text-gray-900">
+                        <Button variant='secondary' key={item.href}
+                          onClick={() => handleScroll(item.href)}
+                          className="text-sm font-semibold cursor-pointer text-black hover:text-primary"
+                        >
                           {item.name}
-                        </span>
-                      </p>
+                        </Button>
                     ))}
+                    <a
+                      href="/contact-us"
+                      className="text-sm font-semibold cursor-pointer text-black hover:text-primary"
+                    >
+                      <Button className="w-full font-semibold" variant="secondary">Contact us</Button>
+                    </a>
                   </nav>
                 </div>
                 <LoginButton>
-                  <Button>Sign in</Button>
+                  <Button className="w-full">Sign in</Button>
                 </LoginButton>
               </div>
             </div>

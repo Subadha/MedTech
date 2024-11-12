@@ -28,6 +28,7 @@ export default function Profile({
           if (data){
          setData(data); 
         }
+        
         })
         .catch((error) => {
           console.error("Error fetching profile data:", error);
@@ -37,9 +38,7 @@ export default function Profile({
 
  useEffect(() => handleFetchProfileData(),[])
 
-
  const updateProfileImage = async (event: any) => {
-  console.log("called updateProfileImage");
   
   if (!event.target.files[0] || !id) return;
   const formData = new FormData();
@@ -56,7 +55,7 @@ export default function Profile({
 
   return (
     <>
-      <div className="p-10 h-[80vh]">
+      <div className="p-3 lg:p-10 h-[80vh]">
         <div className="w-full h-[20vh] bg-purple-700 rounded-lg">
           <h1 className="text-white p-5">My Profile</h1>
         </div>
@@ -93,13 +92,31 @@ export default function Profile({
                 </div>
               </div>
               <div className="flex flex-col mx-[20px] pt-2">
-                <p className="font-medium">Email</p>
+                <p className="font-semibold">Email</p>
                 <div className="flex justify-between pt-2">
                   <p className=" text-sm">{data?.email}</p>
                 </div>
               </div>
               <div className="flex flex-col mx-[20px] pt-2">
-                <p className="font-medium">Phone Number</p>
+                <p className="font-semibold">Age</p>
+                <div className="flex justify-between pt-2">
+                  {data?.age&&<p className=" text-sm">{data?.age} years</p>}
+                </div>
+              </div>
+              <div className="flex flex-col mx-[20px] pt-2">
+                <p className="font-semibold">Gender</p>
+                <div className="flex justify-between pt-2">
+                  <p className=" text-sm">{data?.gender}</p>
+                </div>
+              </div>
+              <div className="flex flex-col mx-[20px] pt-2">
+                <p className="font-semibold">Location</p>
+                <div className="flex justify-between pt-2">
+                  <p className=" text-sm">{data?.city},{data?.state},{data?.country}</p>
+                </div>
+              </div>
+              <div className="flex flex-col mx-[20px] pt-2">
+                <p className="font-semibold">Phone Number</p>
                 <div className="flex justify-between pt-2">
                   <p className=" text-sm">{data?.phone}</p>
                 </div>

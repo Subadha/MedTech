@@ -24,7 +24,7 @@ const Header = ({ userName,role, image }: HeaderProps) => {
   return (
     <header className="flex items-center justify-between border-b border-gray-200 lg:h-20 p-2 lg:p-4">
       <div className=" block lg:hidden">
-       <MobSideBar userName={userName} role={role} />
+       <MobSideBar userName={userName} image={image} role={role} />
       </div>
       <h3 className="text-xl lg:block hidden font-bold">
         <span className="text-base font-normal text-gray-600">

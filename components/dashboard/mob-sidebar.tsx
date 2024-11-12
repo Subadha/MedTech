@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import {
   Sheet,
   SheetContent,
@@ -11,11 +12,15 @@ import { icons, Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { docItems, menuItems } from "../home/SideNav";
 import { SignOut } from "@/actions/auth/signout";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useUser } from "@/app/context/userContext";
+import { IsDoctorEnrolled } from "@/actions/dashboard/IsDoctorEnrolled";
 
 type HeaderProps = {
   userName: string;
   role: string;
+  image: string;
+
 };
 
 interface MenuItem {
@@ -23,12 +28,41 @@ interface MenuItem {
   icon: keyof typeof icons;
   href: string;
 }
-const MobSideBar = ({ userName, role }: HeaderProps) => {
-  const handleLogout = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await SignOut(); // Sign out the user
-  };
+const MobSideBar = ({ userName,image, role }: HeaderProps) => {
+
   const location = usePathname();
+  const { id } = useUser();
+  const router = useRouter  ();
+  const [enrolled, setEnrolled] = useState<any>({
+    profile: false,
+    availability: false,
+    license: false,
+  });
+  const [filtered, setFiltered] = useState<any>(docItems);
+  const route = usePathname();
+  useEffect(() => {
+    const Check = async () => {
+      const result = await IsDoctorEnrolled(id);
+      setEnrolled(result);
+      if (!result?.profile) {
+        router.push("/dashboard/doctorEnrollment");
+      }
+        else if (!result?.availability) {
+        router.push("/dashboard/doctorEnrollment/details");
+      } else if (!result?.license) {
+        router.push("/dashboard/doctorEnrollment/certificate-verification");
+      }
+      const filteredDocItems = result?.license&&result?.profile&&result?.availability
+        ? docItems.filter((item) => item.name !== "Doctor Enrollment")
+        : docItems.filter((item) =>
+            ["Doctor Enrollment", "Sign Out", "Profile"].includes(item.name)
+          );
+      setFiltered(filteredDocItems);
+    };
+    if (!enrolled?.license&&role==="DOCTOR"&&location!=="/dashboard/profile"&&location!=="/dashboard/signout") {
+      Check();
+    }
+  }, [route]);
   return (
     <Sheet>
       <SheetTrigger asChild className="lg:hidden block">
@@ -40,10 +74,10 @@ const MobSideBar = ({ userName, role }: HeaderProps) => {
             <Avatar className="h-16 w-16 ">
               <AvatarImage
                 className="rounded-full z-20"
-                src={`https://avatar.iran.liara.run/public`}
+                src={image||`https://avatar.iran.liara.run/public`}
                 alt="@shadcn"
               />
-              <AvatarFallback>PP</AvatarFallback>
+              <AvatarFallback>KM</AvatarFallback>
             </Avatar>
           </div>
           <SheetTitle className="text-xl">{userName}</SheetTitle>
@@ -68,8 +102,8 @@ const MobSideBar = ({ userName, role }: HeaderProps) => {
                   </a>
                 );
               })
-            : docItems.map((item) => {
-                const Icon = icons[item.icon];
+            : filtered.map((item:MenuItem) => {
+                const Icon:any = icons[item.icon];
                 return (
                   <a
                     key={item.name}

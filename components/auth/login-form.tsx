@@ -152,7 +152,7 @@ export const LoginForm = () => {
             </Link>{" "}
           </span>
         </div>
-        <div className="sm:flex sm:w-[50vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
+        <div className="sm:flex  w-[100vw] md:w-[50vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
           <CardWrapper
             headerTitle="Sign in"
             headerLabel="Welcome Back"

@@ -131,7 +131,7 @@ export function AppointmentTable({ data,fetchData }: any) {
                 <NavigationMenuTrigger>Display Columns</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="flex w-full flex-col gap-3 p-2  ">
-                    <li className=" whitespace-nowrap">Doctor Name</li>
+                    <li className=" whitespace-nowrap">Patient Name</li>
                     <li className="flex items-center gap-2">Problems</li>
                     <li className="flex items-center gap-2">Status</li>
                   </ul>
@@ -170,7 +170,7 @@ export function AppointmentTable({ data,fetchData }: any) {
                 />
                 <span className="ml-2">{appointment.time}</span>
               </TableCell>
-              <TableCell>{appointment.doctorName}</TableCell>
+              <TableCell>{appointment.name}</TableCell>
               <TableCell>{appointment.purpose}</TableCell>
               <TableCell>
                 <Button

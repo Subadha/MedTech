@@ -126,21 +126,21 @@ export const Footer = () => {
         <hr className="my-4 border-gray-600" />
         <div className="mx-auto max-w-6xl px-4 pt-2 pb-6 flex flex-col-reverse lg:flex-row justify-between">
           <p className="text-sm font-medium">Copyright © 2024. All rights reserved.</p>
-          <div className="flex space-x-4">
+          <div className="flex my-2 space-x-4">
               <a href="https://www.linkedin.com/company/kaustubha-medtech-private-limited" aria-label="LinkedIn">
-                <FaLinkedin className="text-2xl hover:text-blue-600" />
+                <FaLinkedin className="text-2xl text-blue-600" />
               </a>
               <a href="https://www.facebook.com/people/Kaustubha-Medtech/pfbid02riyqk8ErVMNeVKMZTdkPSLLtkHPpXX99mVnzMZbU9ak8MdZbv4acbvpdkQYSQnpBl/" aria-label="Facebook">
-                <FaFacebook className="text-2xl hover:text-blue-500" />
+                <FaFacebook className="text-2xl text-blue-500" />
               </a>
               <a href="https://www.instagram.com/kaustubhamedtech/" aria-label="Instagram">
-                <FaInstagram className="text-2xl hover:text-pink-600" />
+                <FaInstagram className="text-2xl text-pink-600" />
               </a>
               <a href="https://x.com/i/flow/login?redirect_after_login=%2FKaustubhamedtec" aria-label="Twitter">
-                <FaTwitter className="text-2xl hover:text-blue-400" />
+                <FaTwitter className="text-2xl text-blue-400" />
               </a>
               <a href="https://www.youtube.com/@kaustubhamedtech" aria-label="YouTube">
-                <FaYoutube className="text-2xl hover:text-red-500" />
+                <FaYoutube className="text-2xl text-red-500" />
               </a>
             </div>
         </div>

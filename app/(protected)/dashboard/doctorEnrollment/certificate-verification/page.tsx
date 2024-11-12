@@ -107,7 +107,7 @@ export default function Page() {
                   className="absolute inset-0 w-full h-full object-cover rounded-lg"
                 />
               ) : (
-                <p className="text-gray-500">Preview Document 1</p>
+                <p className="text-gray-500">(png,jpg,jpeg),<br/>(max. 2mb)</p>
               )}
             </div>
             <input
@@ -152,7 +152,7 @@ export default function Page() {
                   className="absolute inset-0 w-full h-full object-cover rounded-lg"
                 />
               ) : (
-                <p className="text-gray-500">Preview Document 2</p>
+                <p className="text-gray-500">(png,jpg,jpeg),<br/>(max. 2mb)</p>
               )}
             </div>
             <input

@@ -153,9 +153,8 @@ export default Page;
 const DoctorCard = ({ data }: any) => {
   return (
     <div className=" col-span-6 md:col-span-3 lg:col-span-2">
-      <Card className="p-2">
-        <CardContent className="rounded-xl overflow-hidden p-2 flex items-center">
-          <div className="flex gap-2">
+      <Card className="p-2 relative">
+        <CardContent className="rounded-x w-full gap-2 overflow-hidden p-2 flex items-center">
             <Avatar className=" aspect-square h-16 w-16">
               <AvatarImage
                 src={data.image || "https://avatar.iran.liara.run/public"}
@@ -164,19 +163,18 @@ const DoctorCard = ({ data }: any) => {
               />
               <AvatarFallback>DR</AvatarFallback>
             </Avatar>
-            <div className=" flex flex-col items-start gap-1">
+            <div className=" flex w-full flex-col items-start gap-1">
               <p className="text-base font-semibold">
                 {data?.doctorProfile?.legalName}
               </p>
-              <div className="text-[12px] flex text-gray-600">
-                <span>{data?.doctorProfile?.specialization}</span>&nbsp;|&nbsp;
-                <span>{data?.doctorProfile?.experienceYears} Years</span>
+              <div className="text-[12px] w-[80%] h-5 flex text-gray-600">
+                <div className="max-w-3/5 h-5 leading-tight overflow-hidden text-ellipsis whitespace-nowrap">{data?.doctorProfile?.specialization}</div>&nbsp;|&nbsp;
+                <span className=" whitespace-nowrap">{data?.doctorProfile?.experienceYears} Years</span>
               </div>
               <Badge variant="secondary">
                 {data?.doctorProfile?.subSpecialist}
               </Badge>
             </div>
-          </div>
         </CardContent>
         <Separator className="my-2" />
         <CardFooter className="p-2 w-full flex flex-col gap-2 ">

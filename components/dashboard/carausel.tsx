@@ -20,7 +20,7 @@ export function MainCarausel() {
     }}
     plugins={[
       emblaCarouselAutoplay({
-        delay: 2000,
+        delay: 4000,
       }),
     ]}
     className="w-full">

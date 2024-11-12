@@ -41,7 +41,7 @@ export function HomeMainCarousel() {
       {Url.map((imageUrl, index) => (
         <SwiperSlide key={index}>
           <Card className="p-0">
-            <CardContent className="h-[30vh] md:h-[60vh] lg:h-[30vw] rounded-xl p-0 w-full  overflow-hidden flex items-center justify-center">
+            <CardContent className="h-[35vh] md:h-[60vh] lg:h-[30vw] rounded-xl p-0 w-full  overflow-hidden flex items-center justify-center">
               <Image
                 alt={`Image ${index + 1}`}
                 className="h-[100%] object-cover"

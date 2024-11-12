@@ -64,41 +64,41 @@ export default function ConsultDoctor({ params }: ConsultDoctorProps) {
                 Available Today
               </p>
             </div>
-            <div className="mt-6 md:mt-0 md:ml-8 w-full md:w-3/4 flex flex-col">
+            <div className="mt-6 md:mt-0 md:ml-8 w-full  md:w-3/4 flex items-start flex-col">
               <h1 className="text-purple-600 font-bold text-xl md:text-3xl">
                 {data?.doctorProfile?.legalName}
               </h1>
-              <div className="flex flex-wrap items-center text-sm md:text-lg mt-2">
-                <p>{data?.doctorProfile?.specialization}</p>
-                <p className="ml-4">
+              <div className="flex flex-wrap text-sm md:text-base my-1">
+                <p className="font-semibold">
                   {data?.doctorProfile?.experienceYears} Years
                 </p>
               </div>
-              <div className="flex items-center mt-3 text-sm md:text-lg text-gray-600">
-                <FaUserDoctor className="text-purple-500 mr-2" />
-                <p className="font-bold">
+              <div className="flex mt-3  text-sm md:text-base text-gray-600">
+                <FaUserDoctor className="text-purple-500 w-6 text-xl mr-3" />
+                <p className="font-bold text-left w-[calc(100%-28px)] ">
                   {data?.doctorProfile?.specialization}
                 </p>
               </div>
-              <div className="flex items-center mt-3 text-sm md:text-lg text-gray-600">
-                <IoStarSharp className="text-yellow-400 mr-2" />
-                <p>
+              <div className="flex mt-3 text-sm md:text-base text-gray-600">
+                <IoStarSharp className="text-yellow-400 w-6 text-xl mr-2" />
+                <p className="pl-1">
                   {avgRating}({totalReviews})
                 </p>
               </div>
-              <div className="flex items-center mt-3 text-sm md:text-lg text-gray-600">
-                <LiaLanguageSolid className="text-blue-500 mr-2" />
+              <div className="flex  mt-3 text-sm md:text-base text-gray-600">
+                <LiaLanguageSolid className="text-blue-500 w-6 text-xl mr-2" />
                 {data?.doctorAvailabilityDetails?.languages.map(
                   (val: string) => (
-                    <p key={val} className="pl-2">
+                    <p key={val} className="pl-1">
                       {val}
                     </p>
                   )
                 )}
               </div>
-              <div className="flex items-center mt-3 text-sm md:text-lg text-gray-600">
-                <MdOutlineAddHomeWork className="text-red-500 mr-2" />
-                <p>{data?.doctorProfile?.address}</p>
+              <div className="flex justify-start gap-2 mt-3 text-sm md:text-base text-gray-600">
+                <MdOutlineAddHomeWork className="text-red-500 w-6 text-xl mr-2" />
+                <div className="flex justify-start"><h2 className="w-full text-left flex " >{data?.doctorProfile?.address}</h2>
+                </div>
               </div>
             </div>
             <div className="w-full md:w-[20vw] mt-6 md:mt-0 flex flex-col items-end text-right">

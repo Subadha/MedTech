@@ -281,7 +281,7 @@ export default function Page() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="font-semibold text-lg sm:text-left text-center">
-                        Fees Per Session
+                        Fees Per Session (INR)
                       </FormLabel>
                       <FormControl className="text-center sm:text-left">
                         <Input

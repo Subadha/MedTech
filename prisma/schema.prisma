@@ -17,6 +17,11 @@ model User {
   numberVerified            Boolean                    @default(false)
   image                     String?
   about                     String?
+  city String?
+  state String?
+  country String?
+  age String?
+  gender String?
   emailVerified             DateTime?
   socket_id                 String?
   appointmentsAsDoctor      BookedAppointment[]        @relation("DoctorAppointment")

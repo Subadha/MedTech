@@ -14,7 +14,7 @@ export const updateProfile = async (values: z.infer<typeof UpdateProfileSchema>,
       return { error: "Invalid data" };
     }  
     
-    const { email, name, password, about } = validate.data;
+    const { email, name, password, about,city,state,country,age,gender } = validate.data;
     let hashedPassword = undefined;
   
     if (password) {
@@ -26,6 +26,11 @@ export const updateProfile = async (values: z.infer<typeof UpdateProfileSchema>,
     const updateData: any = {
       name,
       about,
+      city,
+      country,
+      state,
+      age,
+      gender,
       password: hashedPassword || user?.password,
       emailVerified: email?null:user?.emailVerified,
     };

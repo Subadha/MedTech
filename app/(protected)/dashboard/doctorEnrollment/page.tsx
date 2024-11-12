@@ -235,10 +235,10 @@ export default function Page(){
                                 name="consultationFees"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Consultation Fees</FormLabel>
+                                        <FormLabel>Consultation Fees (INR)</FormLabel>
                                         <FormControl>
                                             <Input
-                                            min="0"
+                                                min="0"
                                                 type="number"
                                                 disabled={isPending}
                                                 {...field}

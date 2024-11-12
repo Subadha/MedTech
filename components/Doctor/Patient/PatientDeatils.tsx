@@ -20,9 +20,7 @@ export default function PatientDetails() {
           method: "POST",
           body: JSON.stringify({ userId: id }),
         });
-        const { data } = await result.json();
-        console.log(data);
-   
+        const { data } = await result.json();   
         setPatient(data);
       } catch (error) {
         console.error("Error fetching patients:", error);
@@ -37,8 +35,8 @@ export default function PatientDetails() {
   return (
     <div className="flex flex-col p-5 gap-5">
       <div className="pt-5 pb-5">
-        <h1 className="font-bold text-xl md:text-2xl lg:text-3xl">
-          All Patients
+        <h1 className="font-bold text-xl md:text-2xl">
+          {patient?.length>0?"All Patients":"No patients available"}
         </h1>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
