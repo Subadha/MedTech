@@ -11,25 +11,33 @@ export const getUserByEmail = async (email: string): Promise<User | null> => {
     }
     return null;
   } catch (error) {
-    console.error('Error fetching user by email:', error);
+    console.error("Error fetching user by email:", error);
     return null;
   }
 };
 
 export const getUserByNumber = async (phone: string): Promise<User | null> => {
   try {
-    const user:any = await db.user.findUnique({
+    const user: any = await db.user.findUnique({
       where: { phone },
     });
     if (user && user.password !== null) {
-      return { ...user, password: user.password! } as unknown as User;
+      return {
+        ...user,
+        password: user.password!,
+        age: user.age ?? null,
+        country: user.country ?? null,
+        state: user.state ?? null,
+        gender: user.gender ?? null,
+        city: user.city ?? null,
+      } as unknown as User;
     }
-    if(user){
+    if (user) {
       return user;
     }
     return null;
   } catch (error) {
-    console.error('Error fetching user by phone number:', error);
+    console.error("Error fetching user by phone number:", error);
     return null;
   }
 };
@@ -41,15 +49,15 @@ export const getUserByNumber2 = async (phone: string): Promise<User | null> => {
     });
     return user;
   } catch (error) {
-    console.error('Error fetching user by phone number:', error);
+    console.error("Error fetching user by phone number:", error);
     return null;
   }
 };
 
 export const getUserById = async (id: string): Promise<User | null> => {
   try {
-    if (typeof id !== 'string') {
-      throw new Error('Invalid ID format');
+    if (typeof id !== "string") {
+      throw new Error("Invalid ID format");
     }
     const user = await db.user.findUnique({
       where: { id },
@@ -73,11 +81,10 @@ export const getUserById = async (id: string): Promise<User | null> => {
     });
     return user ?? null;
   } catch (error) {
-    console.error('Error fetching user by ID:', error);
+    console.error("Error fetching user by ID:", error);
     return null;
   }
 };
-
 
 export const getUserOtp = async (otp: string) => {
   try {
@@ -86,7 +93,7 @@ export const getUserOtp = async (otp: string) => {
     });
     return user;
   } catch (error) {
-    console.error('Error fetching user by OTP:', error);
+    console.error("Error fetching user by OTP:", error);
     return null;
   }
 };
@@ -102,7 +109,6 @@ export const getOtp = async (otp: string) => {
     return null;
   }
 };
-
 
 export const getOtpData = async (phone: string) => {
   try {
@@ -120,16 +126,15 @@ export const getDoctors = async () => {
   try {
     const doctors = await db.user.findMany({
       where: {
-        role: 'DOCTOR',
+        role: "DOCTOR",
       },
     });
     return doctors;
   } catch (error) {
-    console.error('Error fetching doctors:', error);
+    console.error("Error fetching doctors:", error);
     return null;
   }
 };
-
 
 export type User = {
   id: string;
@@ -138,7 +143,7 @@ export type User = {
   emailVerified: Date | null;
   numberVerified: Boolean;
   password: string | null;
-  role: "USER" | "ADMIN"|"DOCTOR";
+  role: "USER" | "ADMIN" | "DOCTOR";
   about: string | null;
   age: string | null;
   country: string | null;
