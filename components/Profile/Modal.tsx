@@ -37,7 +37,7 @@ export function Modal({ details, refresh }: any) {
   const [success, setSuccess] = useState<string | undefined>("");
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const form = useForm<z.infer<typeof UpdateProfileSchema>>({
+  const form:any = useForm<z.infer<typeof UpdateProfileSchema>>({
     resolver: zodResolver(UpdateProfileSchema),
     defaultValues: {
       email: details?.email,
