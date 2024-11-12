@@ -18,7 +18,7 @@ export const getUserByEmail = async (email: string): Promise<User | null> => {
 
 export const getUserByNumber = async (phone: string): Promise<User | null> => {
   try {
-    const user = await db.user.findUnique({
+    const user:any = await db.user.findUnique({
       where: { phone },
     });
     if (user && user.password !== null) {
