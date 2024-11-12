@@ -52,10 +52,17 @@ export const getUserByNumber = async (phone: string): Promise<User | null> => {
 
 export const getUserByNumber2 = async (phone: string): Promise<User | null> => {
   try {
-    const user = await db.user.findUnique({
+    const user:any = await db.user.findUnique({
       where: { phone },
     });
-    return user;
+     return {
+      ...user,
+      age: user.age ?? null,
+      country: user.country ?? null,
+      state: user.state ?? null,
+      gender: user.gender ?? null,
+      city: user.city ?? null,
+    } as User;
   } catch (error) {
     console.error("Error fetching user by phone number:", error);
     return null;
