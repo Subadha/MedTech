@@ -12,6 +12,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { useUser } from "@/app/context/userContext";
 import { useToast } from "../ui/use-toast";
+import { PlusCircle } from "lucide-react";
 
 const UploadDocument = () => {
   const { id } = useUser();
@@ -104,7 +105,8 @@ const UploadDocument = () => {
         <div className="grid gap-4 py-4">
           {/* Document 1 Upload */}
           <div className="grid grid-cols-4 items-center gap-4">
-            <p className=" whitespace-nowrap">Document 1</p>
+            <p className=" whitespace-nowrap font-semibold">Document 1</p>
+            <div className="p-2 border rounded">
             <input
               type="file"
               accept="image/*"
@@ -113,19 +115,21 @@ const UploadDocument = () => {
               id="fileInput1"
             />
             <label htmlFor="fileInput1" className="cursor-pointer">
-              <Image
+             {preview1 || data?.imageUrl1? <Image
                 src={preview1 || data?.imageUrl1}
                 alt="Document 1 Preview"
-                width={50}
-                height={50}
-                className="object-cover"
-              />
+                width={200}
+                height={100}
+                className="object-cover  w-64 h-auto"
+              />: <PlusCircle/>}
             </label>
+            </div>
           </div>
           {/* Document 2 Upload */}
           <div className="grid grid-cols-4 items-center gap-4">
-            <p className=" whitespace-nowrap">Document 2</p>
-            <input
+            <p className=" whitespace-nowrap font-semibold">Document 2</p>
+           <div className="p-2 border rounded">
+           <input
               type="file"
               accept="image/*"
               onChange={(e) => handleImageChange(e, setImage2, setPreview2)}
@@ -133,14 +137,15 @@ const UploadDocument = () => {
               id="fileInput2"
             />
             <label htmlFor="fileInput2" className="cursor-pointer">
-              <Image
+             {preview2 || data?.imageUrl2?<Image
                 src={preview2 || data?.imageUrl2}
                 alt="Document 2 Preview"
-                width={50}
-                height={50}
-                className="object-cover"
-              />
+                width={200}
+                height={100}
+                className="object-cover w-64 h-auto"
+              />: <PlusCircle/>}
             </label>
+           </div>
           </div>
         </div>
         <DialogFooter>

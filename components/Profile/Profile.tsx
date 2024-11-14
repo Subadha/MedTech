@@ -60,7 +60,7 @@ export default function Profile({
           <h1 className="text-white p-5">My Profile</h1>
         </div>
         <div className="sm:flex">
-          <div className="bg-white shadow-xl box-border rounded-lg sm:w-[30vw] sm:mx-[100px] sm:h-[100vh] -mt-[50px] mb-[100px] sm:mb-0 pb-10 sm:pb-0">
+          <div className="bg-white shadow-xl box-border rounded-lg sm:w-[30vw] sm:mx-[100px] -mt-[50px] mb-[100px] sm:mb-0 pb-10 sm:pb-0">
             <div className="flex justify-between pr-2 lg:pr-4 pl-20 py-2 lg:py-4">
              <div className="w-20 h-20 rounded-full overflow-hidden relative">
              <input
@@ -131,17 +131,6 @@ export default function Profile({
                 <p>
                 {data?.about}
                  </p>
-              </div>
-            </div>
-            <div className="rounded-lg border-2 border-gray-300 sm:mx-[30px] mx-[20px] mt-4 sm:text-[1vw] text-[3vw] shadow-xl box-border pb-4">
-              <div className="mx-[30px] pt-5 sm:text-[1.4vw]">
-                <h1>Legal</h1>
-              </div>
-              <div className="flex justify-between mx-[20px] pt-2">
-                <p>About Sid</p>
-              </div>
-              <div className="flex justify-between mx-[20px] pt-2">
-                <p>About Sid</p>
               </div>
             </div>
             <div className="rounded-lg border-2 items-center flex justify-between p-4 border-gray-300 sm:mx-[30px] mx-[20px] mt-4 sm:text-[1vw] text-[3vw] shadow-xl box-border pb-4">

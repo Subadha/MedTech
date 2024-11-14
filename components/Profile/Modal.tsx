@@ -193,6 +193,10 @@ export function Modal({ details, refresh }: any) {
                           {...field}
                           placeholder="Enter your age"
                           type="number"
+                          onInput={(e:any) => {
+                            e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                        }}
+                        min={0}
                         />
                       </FormControl>
                       <FormMessage />
@@ -217,9 +221,9 @@ export function Modal({ details, refresh }: any) {
                           <option value="" disabled>
                             Select your gender
                           </option>
-                          <option value="Male">Male</option>
-                          <option value="Female">Female</option>
-                          <option value="Other">Other</option>
+                          <option value="male">Male</option>
+                          <option value="female">Female</option>
+                          <option value="other">Other</option>
                         </select>
                       </FormControl>
                       <FormMessage />

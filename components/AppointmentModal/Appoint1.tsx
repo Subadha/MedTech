@@ -93,7 +93,7 @@ export default function Appoint1({ details, onChangeApp }: any) {
    
   return (
     <form
-      className="space-y-1 lg:p-6 bg-white rounded-lg"
+      className="space-y-1 lg:p-6 overflow-y-auto bg-white rounded-lg"
       onSubmit={(e) => {
         e.preventDefault(); // Prevent the default form submission
         handleSubmit(); // Trigger the custom submission logic
