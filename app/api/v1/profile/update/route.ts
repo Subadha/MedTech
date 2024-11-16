@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 export const POST= async(req:any)=>{
    try{
    const request= await req.json()
-   const { email, name, password,phone, about,userId } = request;
+   const { email, name, password,city,country,state,age,gender, about,userId } = request;
    let hashedPassword = undefined;
  
    if (password) {
@@ -16,14 +16,16 @@ export const POST= async(req:any)=>{
    const user = await getUserById(userId);
  
    const updateData: any = {
-     name,
-     about,
-     phone,
-     email,
-     numberVerified:phone?false:user?.numberVerified,
-     password: hashedPassword || user?.password,
-     emailVerified: email?null:user?.emailVerified,
-   };
+    name,
+    about,
+    city,
+    country,
+    state,
+    age,
+    gender,
+    password: hashedPassword || user?.password,
+    emailVerified: email?null:user?.emailVerified,
+  };
 
    const updatedUser = await db.user.update({
      where: { id: userId },

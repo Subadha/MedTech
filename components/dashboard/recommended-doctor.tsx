@@ -48,6 +48,8 @@ const RecommendedDoctors = () => {
 export default RecommendedDoctors;
 
  const DoctorCard = ({ data }: any) => {
+  console.log(data);
+  
   return (
     <div className=" col-span-6 md:col-span-3 lg:col-span-2">
       <Card className="p-2">
@@ -61,16 +63,17 @@ export default RecommendedDoctors;
               />
               <AvatarFallback>DR</AvatarFallback>
             </Avatar>
-            <div className=" flex flex-col items-start gap-1">
+            <div className=" flex w-full flex-col items-start gap-1">
               <p className="text-base font-semibold">
                 {data?.legalName}
               </p>
-              <div className="text-[12px] flex text-gray-600">
-                <span>{data?.specialization}</span>&nbsp;|&nbsp;
-                <span>{data?.experienceYears} Years</span>
+              <div className="text-[12px] w-[60%] h-5 flex text-gray-600">
+                <div className="max-w-3/5 h-5 leading-tight overflow-hidden text-ellipsis whitespace-nowrap">{data?.specialization}</div>&nbsp;|&nbsp;
+                <span className=" whitespace-nowrap">{data?.experienceYears} Years</span>
               </div>
-              <Badge variant="secondary">{data?.subSpecialist}</Badge>
-            </div>
+              <Badge variant="secondary">
+                {data?.subSpecialist}
+              </Badge> </div>
           </div>
         </CardContent>
         <Separator className="my-2" />
