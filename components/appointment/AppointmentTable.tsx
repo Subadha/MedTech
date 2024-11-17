@@ -36,6 +36,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { useToast } from "../ui/use-toast";
 import { useUser } from "@/app/context/userContext";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "../ui/dropdown-menu";
+import { CANCELED, COMPLETED, CONFIRMED, NOT_CONFIRM } from "@/lib/constants";
 
 export function AppointmentTable({ data,refresh }: any) {
   const [cancleDialog,setCancleDialog]= useState('')
@@ -115,12 +116,12 @@ export function AppointmentTable({ data,refresh }: any) {
       <Table className="mt-4">
         <TableHeader>
           <TableRow>
-            <TableHead>Time</TableHead>
-            <TableHead>Doctor Name</TableHead>
-            <TableHead>Problems</TableHead>
-            <TableHead>Reschedule</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Chat</TableHead>
+            <TableHead className="px-4 whitespace-nowrap">Time</TableHead>
+            <TableHead className="px-4 whitespace-nowrap">Doctor Name</TableHead>
+            <TableHead className="px-4 whitespace-nowrap">Problems</TableHead>
+            <TableHead className="px-4 whitespace-nowrap">Reschedule</TableHead>
+            <TableHead className="px-4 whitespace-nowrap">Status</TableHead>
+            <TableHead className="px-4 whitespace-nowrap">Chat</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -133,17 +134,12 @@ export function AppointmentTable({ data,refresh }: any) {
                   : "" + " hover:bg-purple-100 "
               }
             >
-              <TableCell>
-                <Checkbox
-                  className="rounded"
-                  onClick={() => changeSelection(appointment.id)}
-                  checked={selected.includes(appointment.id)}
-                />
+              <TableCell className="px-4 whitespace-nowrap">
                 <span className="ml-2">{appointment.time}</span>
               </TableCell>
-              <TableCell>{appointment.doctorName}</TableCell>
-              <TableCell>{appointment.purpose}</TableCell>
-              <TableCell>
+              <TableCell className="px-4 whitespace-nowrap">{appointment.doctorName}</TableCell>
+              <TableCell className="px-4 whitespace-nowrap">{appointment.purpose}</TableCell>
+              <TableCell className="px-4 whitespace-nowrap">
                 <Button
                   onClick={() => setOpen(appointment.id)}
                   variant="link"
@@ -152,24 +148,24 @@ export function AppointmentTable({ data,refresh }: any) {
                   Reschedule
                 </Button>
               </TableCell>
-              <TableCell>
+              <TableCell className="px-4 whitespace-nowrap">
                 <span className="flex items-center ">
-                  {appointment.status === "confirmed" && (
+                  {appointment.status === CONFIRMED && (
                     <CalendarDays className="mr-2 w-4 text-green-600 " />
                   )}
-                  {appointment.status === "not-confirm" && (
+                  {appointment.status === NOT_CONFIRM && (
                     <Clock8 className="mr-2 w-4 text-yellow-500 " />
                   )}
-                  {appointment.status === "canceled" && (
+                  {appointment.status === CANCELED && (
                     <CircleX className="mr-2 w-4 text-gray-500 " />
                   )}
-                  {appointment.status === "completed" && (
+                  {appointment.status === COMPLETED && (
                     <CircleCheckBig className="mr-2 w-4 text-green-500 " />
                   )}
                   <span className=" text-sm">{appointment.status}</span>
                 </span>
               </TableCell>
-              <TableCell>
+              <TableCell className="px-4 whitespace-nowrap">
                 <div className="flex items-center gap-2">
                   <MessageCircle size={18} className="cursor-pointer"
                   onClick={

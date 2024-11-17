@@ -19,7 +19,6 @@ export default async function Layout({
   const email = session?.user.email || "";
   const phone = session?.user.phone || "";
   const image = session?.user.image || "";
-  console.log(session);
   if(!session?.user){
     redirect("auth/login");
   }
