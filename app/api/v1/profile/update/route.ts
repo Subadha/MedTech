@@ -6,7 +6,7 @@ import { db } from "@/lib/db";
 export const POST= async(req:any)=>{
    try{
    const request= await req.json()
-   const { email, name, password,city,country,state,age,gender, about,userId } = request;
+   const { email, name, password,city,country,phone,state,age,gender, about,userId } = request;
    let hashedPassword = undefined;
  
    if (password) {
@@ -22,6 +22,7 @@ export const POST= async(req:any)=>{
     country,
     state,
     age,
+    phone,
     gender,
     password: hashedPassword || user?.password,
     emailVerified: email?null:user?.emailVerified,
