@@ -26,6 +26,7 @@ export const POST= async(req:any)=>{
     gender,
     password: hashedPassword || user?.password,
     emailVerified: email?null:user?.emailVerified,
+    numberVerified: phone?false:user?.numberVerified,
   };
 
    const updatedUser = await db.user.update({
