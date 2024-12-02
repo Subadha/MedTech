@@ -58,6 +58,7 @@
     "framer-motion": "^11.3.19",
     "fs": "^0.0.1-security",
     "fullcalendar": "^6.1.15",
+    "google-auth-library": "^9.15.0",
     "gsap": "^3.12.5",
     "input-otp": "^1.2.4",
     "jotai": "^2.9.3",
