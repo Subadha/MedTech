@@ -44,6 +44,7 @@ export function Modal({ details, refresh }: any) {
       name: details?.name,
       about: details?.about,
       age: details?.age,
+      phone: details?.phone,
       gender: details?.gender,
       state: details?.state,
       city: details?.city,
@@ -133,6 +134,25 @@ export function Modal({ details, refresh }: any) {
                           {...field}
                           placeholder="Enter your email"
                           type="email"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Phone</FormLabel>
+                      <FormControl>
+                        <Input
+                          defaultValue={details?.phone}
+                          disabled={isPending}
+                          {...field}
+                          placeholder="Enter your phone"
+                          type="text"
                         />
                       </FormControl>
                       <FormMessage />
