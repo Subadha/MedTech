@@ -67,8 +67,14 @@ export function Modal({ details, refresh }: any) {
   };
 
   const onSubmit = (values: z.infer<typeof UpdateProfileSchema>) => {
-    startTransition(() => {
-      updateProfile({ ...values }, details.id).then((data) => {
+    console.log(values);
+    
+    startTransition(async() => {
+      const update = await fetch("/api/v1/profile/update",{
+        method: "POST",
+        body:JSON.stringify({...values,userId:details.id})
+      })
+      const data = await update.json()
         if (data.success) {
           toast({
             variant: "primary",
@@ -84,7 +90,6 @@ export function Modal({ details, refresh }: any) {
           });
           setError(data.error);
         }
-      });
     });
   };
 
