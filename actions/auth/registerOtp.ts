@@ -51,7 +51,7 @@ export const registerOtp = async (phone:string) => {
       const data = {
         variables_values: otp,
         route: route,
-        numbers: phone,
+        numbers: phone.slice(-10),
       };
     
       try {

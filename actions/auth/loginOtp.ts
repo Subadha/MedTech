@@ -36,7 +36,7 @@ export const loginOtp = async (
       const data = {
         variables_values: otp,
         route: route,
-        numbers: phone,
+        numbers: phone.slice(-10),
       };
     
       try {
