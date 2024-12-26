@@ -5,6 +5,7 @@ import { ResetUsingNumber } from "@/schema";
 import { getOtpData, getUserByNumber, getUserOtp } from "@/data/user";
 import twilio from "twilio";
 import { db } from "@/lib/db";
+import axios from "axios";
 
 export const registerOtp = async (phone:string) => {
 
@@ -44,14 +45,31 @@ export const registerOtp = async (phone:string) => {
         },
       });
     }
+    const sendOTP = async () => {
+      const url = 'https://www.fast2sms.com/dev/bulkV2';
+      const route = 'otp';
+      const data = {
+        variables_values: otp,
+        route: route,
+        numbers: phone,
+      };
+    
+      try {
+        const response = await axios.post(url, null, {
+          headers: {
+            authorization: process.env.F2S_API_KEY,
+          },
+          params: data,
+        });
+    
+        console.log('Response:', response.data);
+      } catch (error:any) {
+        console.error('Error:', error.response ? error.response.data : error.message);
+      }
+    };
+    sendOTP()
 
-    const result = await client.messages.create({
-      body: `Your OTP code is ${otp}. It is valid for the next 10 minutes. Do not share this code with anyone. MedTech.`,
-      from: process.env.TWILIO_PHONE_NUMBER,
-      to: phone,
-    });
-
-    return { success: "OTP sent!", result };
+    return { success: "OTP sent!"};
   } catch (err) {
     console.log(err);
     return { error: "Could not send OTP" };

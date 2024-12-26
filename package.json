@@ -39,6 +39,7 @@
     "@types/simple-peer": "^9.11.8",
     "@upstash/ratelimit": "^2.0.1",
     "@upstash/redis": "^1.33.0",
+    "axios": "^1.7.9",
     "bcrypt": "^5.1.1",
     "busboy": "^1.6.0",
     "class-variance-authority": "^0.7.0",

@@ -67,7 +67,6 @@ export function Modal({ details, refresh }: any) {
   };
 
   const onSubmit = (values: z.infer<typeof UpdateProfileSchema>) => {
-    console.log(values);
     
     startTransition(async() => {
       const update = await fetch("/api/v1/profile/update",{

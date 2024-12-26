@@ -6,6 +6,7 @@ import { ResetUsingNumber } from "@/schema";
 import { getUserByNumber } from "@/data/user";
 import twilio from "twilio";
 import { db } from "@/lib/db";
+import axios from "axios";
 
 export const loginOtp = async (
   values: z.infer<typeof ResetUsingNumber>
@@ -27,21 +28,31 @@ export const loginOtp = async (
 
   // Generate a six-digit OTP
   const otp = crypto.randomInt(100000, 999999).toString();
-  const hashedOtp = await bcrypt.hash(otp.toString(), 10);
 
-  // Send OTP via SMS
-  const client = twilio(
-    process.env.TWILIO_ACCOUNT_SID,
-    process.env.TWILIO_AUTH_TOKEN
-  );
   try {
-    await client.messages.create({
-      body: `Your OTP is: ${otp}`,
-      from: process.env.TWILIO_PHONE_NUMBER,
-      to: phone,
-    });
-
-    // Store the hashed OTP and phone number in the database
+    const sendOTP = async () => {
+      const url = 'https://www.fast2sms.com/dev/bulkV2';
+      const route = 'otp';
+      const data = {
+        variables_values: otp,
+        route: route,
+        numbers: phone,
+      };
+    
+      try {
+        const response = await axios.post(url, null, {
+          headers: {
+            authorization: process.env.F2S_API_KEY,
+          },
+          params: data,
+        });
+    
+        console.log('Response:', response.data);
+      } catch (error:any) {
+        console.error('Error:', error.response ? error.response.data : error.message);
+      }
+    };
+    sendOTP()
 
 await db.otp.deleteMany({
   where: {
