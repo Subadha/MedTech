@@ -28,7 +28,7 @@ export default auth((req)=>{
         return ;
     }
     if(!isLoggedIn && !isPublicRoute()){        
-        return Response.redirect(new URL("/auth/login",nextUrl));
+        return Response.redirect(process.env.NEXT_PUBLIC_URL+"/auth/login");
     }
     
     if(isApiAuthRoute){
