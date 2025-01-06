@@ -125,7 +125,7 @@ export default function Appoint({ details }: any) {
       // const result: any = await BookAppointment(appointmentData);
       const result: any = await fetch("/api/payment", {
         method: "POST",
-        body: JSON.stringify({amount:appointmentData.amount}),
+        body: JSON.stringify({amount:appointmentData.amount||1}),
       });
       setDialogOpen(false)
       const {order} = await result.json();
