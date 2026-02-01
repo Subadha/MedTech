@@ -3,7 +3,6 @@ import crypto from "crypto";
 import * as z from "zod";
 import { ResetUsingNumber } from "@/schema";
 import { getOtpData, getUserByNumber, getUserOtp } from "@/data/user";
-import twilio from "twilio";
 import { db } from "@/lib/db";
 import axios from "axios";
 
@@ -21,11 +20,6 @@ export const registerOtp = async (phone:string) => {
 
   const otp = crypto.randomInt(100000, 999999).toString();
 
-  const client = twilio(
-    process.env.TWILIO_ACCOUNT_SID!,
-    process.env.TWILIO_AUTH_TOKEN
-  );
-  
   try {
     if (otpData == null) {
       await db.otp.create({

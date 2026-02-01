@@ -57,7 +57,7 @@ export const getDoctorDashboardStats = async (doctorId: string) => {
     const uniqueToday = new Set(todayAppointments.map((a) => a.userId));
     let newPatientsToday = 0;
     let oldPatientsToday = 0;
-    for (const uid of uniqueToday) {
+    for (const uid of Array.from(uniqueToday)) {
       const firstVisit = firstVisitByPatient.get(uid);
       if (!firstVisit) continue;
       const isFirstVisitToday =
@@ -70,7 +70,7 @@ export const getDoctorDashboardStats = async (doctorId: string) => {
     const totalYesterday = yesterdayAppointments.length;
     let newPatientsYesterday = 0;
     let oldPatientsYesterday = 0;
-    for (const uid of uniqueYesterday) {
+    for (const uid of Array.from(uniqueYesterday)) {
       const firstVisit = firstVisitByPatient.get(uid);
       if (!firstVisit) continue;
       const isFirstVisitYesterday =

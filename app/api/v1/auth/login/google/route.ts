@@ -1,11 +1,13 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { OAuth2Client } from "google-auth-library";
 
-const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+export const runtime = "nodejs";
 
 export const POST = async (req: any) => {
   try {
+    const { OAuth2Client } = await import("google-auth-library");
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
     const { token } = await req.json();
 
     // Verify the Google token
