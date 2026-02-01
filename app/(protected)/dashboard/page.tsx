@@ -6,6 +6,9 @@ import UpcomingAppointments from "@/components/dashboard/upcoming-appointments";
 import CalenderAndAppointments from "@/components/doctor-dashboard/doc-calender";
 import { DocCarausel } from "@/components/doctor-dashboard/doc-Carausel";
 import PatientList from "@/components/doctor-dashboard/doc-patientList";
+import Link from "next/link";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { FileCheck } from "lucide-react";
 
 const page = async () => {
   const session = await auth();
@@ -56,7 +59,26 @@ const Doctor = ({ id }: any) => {
 const Admin = ({ id }: any) => {
   return (
     <>
-      <div className=" col-span-6 lg:col-span-4"></div>
+      <div className="col-span-6 lg:col-span-4 space-y-4">
+        <h2 className="text-xl font-semibold">Admin</h2>
+        <Link href="/dashboard/admin/verify-doctors">
+          <Card className="cursor-pointer hover:bg-muted/50 transition-colors">
+            <CardHeader className="pb-2">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <FileCheck className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <CardTitle className="text-base">Review Documents</CardTitle>
+                  <p className="text-sm text-muted-foreground">
+                    Verify or reject doctor document uploads
+                  </p>
+                </div>
+              </div>
+            </CardHeader>
+          </Card>
+        </Link>
+      </div>
       <CalenderAndAppointments />
     </>
   );

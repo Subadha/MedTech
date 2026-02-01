@@ -14,7 +14,7 @@ export default async function Layout({
 }>) {
   const session = await auth();
   const userName = session?.user.name || "User";
-  const role = session?.user.role || "User";
+  const role = (session?.user?.role ?? "USER").toString().toUpperCase();
   const id = session?.user.id || "";
   const email = session?.user.email || "";
   const phone = session?.user.phone || "";

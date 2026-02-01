@@ -99,7 +99,8 @@ model DoctorLicense {
   imageUrl2           String
   registrationNumber1 String
   registrationNumber2 String
-  user                User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  documentsVerified   Boolean @default(false) // Admin must verify before doctor appears in lists
+  user                User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("doctor_licenses")
 }

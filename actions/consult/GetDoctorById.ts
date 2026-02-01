@@ -8,6 +8,7 @@ export const GetDoctorById = async (id: string) => {
       where: {
         id: id,
         role: "DOCTOR",
+        doctorLicenses: { documentsVerified: true },
       },
       include: {
         doctorProfile: true,

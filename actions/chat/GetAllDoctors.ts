@@ -7,6 +7,7 @@ export const getAllDoctors = async () => {
       const doctors = await db.user.findMany({
         where: {
           role: 'DOCTOR',
+          doctorLicenses: { documentsVerified: true },
         },
       });
   

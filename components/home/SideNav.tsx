@@ -113,6 +113,11 @@ export const adminItems: MenuItem[] = [
     href: "/dashboard",
   },
   {
+    name: "Review Documents",
+    icon: "FileCheck",
+    href: "/dashboard/admin/verify-doctors",
+  },
+  {
     name: "Chat",
     icon: "MessageCircle",
     href: "/dashboard/chat",
@@ -129,10 +134,10 @@ type SideNavProps = {
   role: string;
 };
 
-export default function SideNav({ userName, role }: SideNavProps) {
+export default function SideNav({ userName, role: roleProp }: SideNavProps) {
+  const role = roleProp?.toUpperCase?.() ?? "USER";
   const { id } = useUser();
   const location = usePathname();
-  console.log(location)
   const router = useRouter();
   const [enrolled, setEnrolled] = useState<any>({
     profile: false,

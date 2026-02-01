@@ -10,7 +10,7 @@ import {
 } from "../ui/sheet";
 import { icons, Menu } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { docItems, menuItems } from "../home/SideNav";
+import { adminItems, docItems, menuItems } from "../home/SideNav";
 import { SignOut } from "@/actions/auth/signout";
 import { usePathname, useRouter } from "next/navigation";
 import { useUser } from "@/app/context/userContext";
@@ -28,8 +28,8 @@ interface MenuItem {
   icon: keyof typeof icons;
   href: string;
 }
-const MobSideBar = ({ userName,image, role }: HeaderProps) => {
-
+const MobSideBar = ({ userName, image, role: roleProp }: HeaderProps) => {
+  const role = roleProp?.toUpperCase?.() ?? "USER";
   const location = usePathname();
   const { id } = useUser();
   const router = useRouter  ();
@@ -102,23 +102,41 @@ const MobSideBar = ({ userName,image, role }: HeaderProps) => {
                   </a>
                 );
               })
-            : filtered.map((item:MenuItem) => {
-                const Icon:any = icons[item.icon];
-                return (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className={`flex gap-2 py-2 px-3 rounded ${
-                      item.href === location ? "bg-primary text-white" : ""
-                    }`}
-                  >
-                    <span>
-                      <Icon className="w-5" />
-                    </span>
-                    {item.name}
-                  </a>
-                );
-              })}
+            : role === "ADMIN"
+              ? adminItems.map((item) => {
+                  const Icon = icons[item.icon];
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className={`flex gap-2 py-2 px-3 rounded ${
+                        item.href === location ? "bg-primary text-white" : ""
+                      }`}
+                    >
+                      <span>
+                        <Icon className="w-5" />
+                      </span>
+                      {item.name}
+                    </a>
+                  );
+                })
+              : filtered.map((item:MenuItem) => {
+                  const Icon:any = icons[item.icon];
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      className={`flex gap-2 py-2 px-3 rounded ${
+                        item.href === location ? "bg-primary text-white" : ""
+                      }`}
+                    >
+                      <span>
+                        <Icon className="w-5" />
+                      </span>
+                      {item.name}
+                    </a>
+                  );
+                })}
         </nav>
       </SheetContent>
     </Sheet>

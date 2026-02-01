@@ -5,9 +5,12 @@ export const GET = async () => {
   try {
     // Step 1: Fetch all doctors with their reviews
     const doctorsWithReviews = await db.user.findMany({
-      where: { role: "DOCTOR" }, // Assuming role is used to identify doctors
+      where: {
+        role: "DOCTOR",
+        doctorLicenses: { documentsVerified: true },
+      },
       include: {
-        reviews: true, // Fetch all reviews for each doctor
+        reviews: true,
         doctorProfile: true,
         doctorAvailabilityDetails: true,
       },

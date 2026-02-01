@@ -49,6 +49,7 @@ export const getAllDoctorsWithDetails = async (filters: DoctorFilters = {}): Pro
           doctorProfile: null,
           doctorLicenses: null,
         },
+        doctorLicenses: { documentsVerified: true },
         doctorProfile: {
           ...(specialization && { specialization }),
           ...(experienceYears && { experienceYears }),
