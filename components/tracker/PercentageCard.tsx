@@ -32,34 +32,34 @@ export function PercentageCard({ progress, color, title }: PercentageCardProps) 
  }
   const chartData = [
     { browser: "completed", visitors: progress[selectedPeriod]||0, fill: color },
-    { browser: "remaining", visitors: 100 - progress[selectedPeriod]||0, fill: "#E0E0E0" },
+    { browser: "remaining", visitors: 100 - progress[selectedPeriod]||0, fill: "#E5E7EB" },
   ];
 
   const chartConfig = {
-    completed: {
-      label: "Chrome",
-      color: "hsl(var(--chart-1))",
-    },
+    completed: { label: "Completed", color },
   } satisfies ChartConfig;
 
   return (
-    <Card className="flex md:col-span-2 col-span-6 flex-col">
-      <CardHeader className=" flex-row justify-between items-center pb-0">
-        <CardTitle>{title}</CardTitle>
+    <Card className="flex flex-col bg-white rounded-xl shadow-sm border border-gray-100 p-5 h-full">
+      <CardHeader className="flex flex-row justify-between items-center p-0 pb-2">
+        <CardTitle className="text-slate-600 text-xs font-semibold uppercase tracking-wide">
+          {title}
+        </CardTitle>
         <Selection selectedPeriod={selectedPeriod} setSelectedPeriod={setSelectedPeriod} />
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <CardContent className="flex-1 p-0">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto aspect-square max-h-[250px]"
+          className="mx-auto aspect-square w-full max-w-[120px] max-h-[120px]"
         >
           <PieChart>
             <Pie
               data={chartData}
               dataKey="visitors"
               nameKey="browser"
-              innerRadius={65}
-              strokeWidth={3}
+              innerRadius={38}
+              strokeWidth={2}
+              stroke="none"
             >
               <Label
                 content={({ viewBox }) => {
@@ -74,7 +74,7 @@ export function PercentageCard({ progress, color, title }: PercentageCardProps) 
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="fill-foreground text-3xl font-bold"
+                          className="text-lg font-bold fill-slate-700"
                         >
                           {progress[selectedPeriod].toLocaleString()}%
                         </tspan>
@@ -102,12 +102,12 @@ function Selection({ selectedPeriod, setSelectedPeriod }: SelectionProps) {
       onValueChange={(value) => setSelectedPeriod(value as "daily" | "weekly" | "monthly")}
       value={selectedPeriod}
     >
-      <SelectTrigger className="w-[100px]">
-        <SelectValue placeholder="Select Period" />
+      <SelectTrigger className="w-[80px] h-7 rounded-md border border-slate-200 bg-white text-slate-600 text-[11px] font-medium shadow-none">
+        <SelectValue placeholder="Daily" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Select Period</SelectLabel>
+          <SelectLabel>Period</SelectLabel>
           <SelectItem value="daily">Daily</SelectItem>
           <SelectItem value="weekly">Weekly</SelectItem>
           <SelectItem value="monthly">Monthly</SelectItem>

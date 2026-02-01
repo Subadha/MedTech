@@ -81,13 +81,22 @@ export default function PatientDetails() {
                   <p className="text-xs md:text-sm">{_.purpose} </p>
                 </div>
                 <div className="flex flex-col gap-3">
-                  <Button
-                  size="sm"
-                    onClick={() => router.push("/dashboard/chat")}
-                    variant="outline"
-                  >
-                    <FaRegMessage />
-                  </Button>
+                  <div className="flex flex-wrap gap-2">
+                    <Button
+                      size="sm"
+                      onClick={() => router.push(`/dashboard/patient/${_.id}?name=${encodeURIComponent(_.name || "")}`)}
+                      className="bg-primary text-primary-foreground hover:bg-primary/90"
+                    >
+                      See Details
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={() => router.push("/dashboard/chat")}
+                      variant="outline"
+                    >
+                      <FaRegMessage />
+                    </Button>
+                  </div>
 
                 <div className="flex gap-2"> {_?.patientReportsDoc?.imageUrl1&&<Link target="#" href={_?.patientReportsDoc.imageUrl1} >
                  <Button size="sm" >

@@ -6,6 +6,7 @@ import UpcomingAppointments from "@/components/dashboard/upcoming-appointments";
 import CalenderAndAppointments from "@/components/doctor-dashboard/doc-calender";
 import { DocCarausel } from "@/components/doctor-dashboard/doc-Carausel";
 import PatientList from "@/components/doctor-dashboard/doc-patientList";
+import { OverallVisitorsCard } from "@/components/doctor-dashboard/overall-visitors-card";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileCheck } from "lucide-react";
@@ -52,7 +53,10 @@ const Doctor = ({ id }: any) => {
         <DocCarausel />
         <PatientList />
       </div>
-      <CalenderAndAppointments />
+      <div className="col-span-6 lg:col-span-2 flex flex-col gap-4">
+        <CalenderAndAppointments />
+        <OverallVisitorsCard />
+      </div>
     </>
   );
 };

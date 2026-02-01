@@ -8,6 +8,8 @@ export const getDoctorOverallVisitors = async (doctorId: string) => {
     }
 
     const now = new Date();
+    const startOfToday = new Date(now);
+    startOfToday.setUTCHours(0, 0, 0, 0);
     const endOfToday = new Date(now);
     endOfToday.setUTCHours(23, 59, 59, 999);
     const startOfLast7Days = new Date(now);
@@ -39,6 +41,17 @@ export const getDoctorOverallVisitors = async (doctorId: string) => {
       select: { userId: true },
     });
 
+    // Today's appointments count
+    const todayAppointments = await db.bookedAppointment.findMany({
+      where: {
+        doctor_id: doctorId,
+        date: { gte: startOfToday, lte: endOfToday },
+        status: { in: ["confirmed", "completed"] },
+      },
+      select: { id: true },
+    });
+    const todayCount = todayAppointments.length;
+
     const totalLast7 = last7DaysAppointments.length;
     const totalPrevious7 = previous7DaysAppointments.length;
     const percentChange =
@@ -54,6 +67,7 @@ export const getDoctorOverallVisitors = async (doctorId: string) => {
         totalVisitors: totalLast7,
         previousPeriodVisitors: totalPrevious7,
         percentChange,
+        todayCount,
         description: `Data obtained for the last 7 days from ${totalPrevious7.toLocaleString()} Visitor to ${totalLast7.toLocaleString()} Visitor.`,
       },
     };

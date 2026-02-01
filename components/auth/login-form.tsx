@@ -22,7 +22,6 @@ import FormError from "./form-error";
 import Link from "next/link";
 import Image from "next/image";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import img from "@/app/images/Display.png";
 import logo from "@/app/images/logo.png";
 import { useSearchParams } from "next/navigation";
 import { Dialog, DialogContent } from "../ui/dialog";
@@ -132,28 +131,46 @@ export const LoginForm = () => {
           </div>
         </DialogContent>
       </Dialog>
-      <div className="flex justify-evenly h-[100vh]">
-        <div className="">
-          {/* <Image alt="Login Image" src={img} fill /> */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[100vh]">
+        {/* Left panel: image + tagline */}
+        <div className="relative hidden lg:flex flex-col bg-[#f0f4f8] rounded-tr-2xl rounded-br-2xl overflow-hidden">
+          <div className="flex-1 flex flex-col justify-center px-8 xl:px-12 py-12">
+            <p className="text-gray-700 text-lg xl:text-xl leading-relaxed text-center max-w-md mx-auto mb-8">
+              Sign in to shaping the future of health with breakthrough innovations that promote physical, mental, and spiritual wellness.
+            </p>
+            <div className="relative w-full max-w-lg mx-auto aspect-[4/3] flex items-center justify-center">
+              <Image
+                src="/images/login-wellness.png"
+                alt="Wellness and health"
+                fill
+                className="object-contain object-center"
+                priority
+                sizes="(max-width: 1024px) 0vw, 50vw"
+              />
+            </div>
+          </div>
         </div>
-        <div className="absolute sm:top-4 sm:left-10 z-10 w-20 h-20">
-          <Link href="/">
-            <Image src={logo} alt="Logo" layout="fill" objectFit="contain" />
-          </Link>
-        </div>
-        <div className="absolute sm:top-10 top-[100px] sm:right-10 z-20 text-gray-600">
-          <span className="font-bold">
-            Dont have an account?{" "}
-            <Link
-              href="/auth/register"
-              className="text-purple-700 font-bold-700"
-            >
-              Sign up
-            </Link>{" "}
-          </span>
-        </div>
-        <div className="sm:flex  w-[100vw] md:w-[50vw] sm:mt-0 mt-[140px] justify-center z-10 items-center">
-          <CardWrapper
+
+        {/* Right panel: form */}
+        <div className="relative flex flex-col bg-white lg:bg-[#fdfdfd] min-h-[100vh]">
+          <div className="absolute top-4 left-6 lg:left-10 z-10 w-16 h-16 lg:w-20 lg:h-20">
+            <Link href="/" className="block relative w-full h-full">
+              <Image src={logo} alt="Logo" fill className="object-contain" />
+            </Link>
+          </div>
+          <div className="absolute top-4 right-4 lg:top-10 lg:right-10 z-20 text-gray-600 text-sm lg:text-base">
+            <span className="font-bold">
+              Don&apos;t have an account?{" "}
+              <Link
+                href="/auth/register"
+                className="text-purple-700 font-bold hover:underline"
+              >
+                Sign up
+              </Link>
+            </span>
+          </div>
+          <div className="flex-1 flex items-center justify-center px-4 sm:px-6 py-20 lg:py-24">
+            <CardWrapper
             headerTitle="Sign in"
             headerLabel="Welcome Back"
             backButtonLabel="Dont have an Account"
@@ -233,6 +250,7 @@ export const LoginForm = () => {
               </form>
             </Form>
           </CardWrapper>
+          </div>
         </div>
       </div>
     </>
