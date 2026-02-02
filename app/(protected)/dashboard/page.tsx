@@ -4,9 +4,9 @@ import NearbyDoctors from "@/components/dashboard/nearby-doctors";
 import RecommendedDoctors from "@/components/dashboard/recommended-doctor";
 import UpcomingAppointments from "@/components/dashboard/upcoming-appointments";
 import CalenderAndAppointments from "@/components/doctor-dashboard/doc-calender";
-import { DocCarausel } from "@/components/doctor-dashboard/doc-Carausel";
 import PatientList from "@/components/doctor-dashboard/doc-patientList";
 import { OverallVisitorsCard } from "@/components/doctor-dashboard/overall-visitors-card";
+import { VisitsForTodayCard } from "@/components/doctor-dashboard/visits-for-today-card";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import { FileCheck } from "lucide-react";
@@ -49,8 +49,8 @@ const User = ({ id }: any) => {
 const Doctor = ({ id }: any) => {
   return (
     <>
-      <div className=" col-span-6 lg:col-span-4">
-        <DocCarausel />
+      <div className=" col-span-6 lg:col-span-4 space-y-4">
+        <VisitsForTodayCard />
         <PatientList />
       </div>
       <div className="col-span-6 lg:col-span-2 flex flex-col gap-4">
