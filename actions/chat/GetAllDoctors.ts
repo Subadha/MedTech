@@ -7,11 +7,11 @@ export const getAllDoctors = async () => {
       const doctors = await db.user.findMany({
         where: {
           role: 'DOCTOR',
-          doctorLicenses: { documentsVerified: true },
+          doctorLicenses: { is: { documentsVerified: true } },
         },
       });
   
-     return([doctors])
+     return doctors
   }catch (error) {
       console.error('Error fetching doctors with details:', error);
       return null;
